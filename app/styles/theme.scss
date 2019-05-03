@@ -1,0 +1,19 @@
+@import './variables.scss';
+@import './global-styles.scss';
+
+
+body {
+  .button {
+    &.ui {
+      &.primary {
+        color: $text-primary;
+        background-color: $button-primary;
+      }
+  
+      &.secondary {
+        color: $text-primary;
+        background-color: $button-secondary;
+      }
+    }
+  }
+}
