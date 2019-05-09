@@ -2,7 +2,6 @@
  * Module dependencies.
  */
 import { getAllUsers, getUser, getUserPhoto } from '../services/cit.service';
-import _ from 'underscore';
 
 /**
  * List of Users
@@ -18,13 +17,13 @@ export const all = (req, res) => {
       res.jsonp(result.content);
     }
   });
-}
+};
 
 /**
  * Get one user
  */
 export const me = (req, res) => {
-  const capcoId = req.params.capcoId;
+  const { capcoId } = req.params.capcoId;
 
   getUser(capcoId, (err, result) => {
     if (err) {
@@ -37,11 +36,11 @@ export const me = (req, res) => {
       res.jsonp(result);
     }
   });
-}
+};
 
 export const getPhoto = (req, res) => {
   // This needs to be numeric user id not Capco 4 letter id
-  const capcoId = req.params.capcoId;
+  const { capcoId } = req.params.capcoId;
 
   getUserPhoto(capcoId, (err, result) => {
     if (err) {
@@ -56,4 +55,4 @@ export const getPhoto = (req, res) => {
       res.end(result.photo);
     }
   });
-}
+};

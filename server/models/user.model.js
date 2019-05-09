@@ -1,14 +1,14 @@
 /**
  * Module dependencies.
  */
-import  mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose.Schema;
 
 /**
  * User Schema
  */
-let UserSchema = new Schema({
+const UserSchema = new Schema({
   name: String,
   username: {
     type: String,
@@ -35,8 +35,8 @@ let UserSchema = new Schema({
 });
 
 UserSchema.statics = {
-  load: function (id, cb) {
-    this.findOne({ _id : id }).exec(cb);
+  load(id, cb) {
+    this.findOne({ _id: id }).exec(cb);
   }
 };
 
