@@ -5,7 +5,8 @@ import {
   Grid, Segment, Header, Image, Container, List, Button, Divider
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import RegistrationForm from '../register';
 import Banner from './images/banner.png';
 import './style.scss';
 
@@ -68,11 +69,11 @@ class HomePage extends React.Component {
                   <Divider horizontal><FormattedMessage id="homepage.register" /></Divider>
 
                   <div className="registration-form-container">
-
+                    <RegistrationForm />
                   </div>
 
                   <div className="progress-button-container">
-                    <Button color="black" basic size="massive" as="a" to="/progress">
+                    <Button color="black" basic size="massive" as="a" href="/progress">
                       <FormattedMessage id="homepage.progress" />
                     </Button>
                   </div>
@@ -88,8 +89,6 @@ class HomePage extends React.Component {
 
 HomePage.propTypes = {
   sampleDispatch: PropTypes.func,
-  value: PropTypes.string,
-  intl: PropTypes.object
 };
 
-export default injectIntl(HomePage);
+export default HomePage;
