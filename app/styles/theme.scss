@@ -6,13 +6,17 @@ body {
   .button {
     &.ui {
       &.primary {
-        color: $text-primary;
+        color: $text-primary !important;
         background-color: $button-primary;
       }
   
       &.secondary {
-        color: $text-primary;
+        color: $text-secondary;
         background-color: $button-secondary;
+
+        &:hover {
+          background-color: $button-secondary-hover;
+        }
       }
     }
   }
