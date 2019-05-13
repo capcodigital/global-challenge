@@ -11,10 +11,13 @@ body {
       }
   
       &.secondary {
-        color: $text-secondary;
-        background-color: $button-secondary;
+        color: $text-tertiary;
+        background-color: $button-primary;
+        border: 1px solid $button-secondary;
 
         &:hover {
+          border: none;
+          color: $text-secondary;
           background-color: $button-secondary-hover;
         }
       }

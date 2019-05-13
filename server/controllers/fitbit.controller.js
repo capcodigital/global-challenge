@@ -81,6 +81,22 @@ const getStats = (user, today) => {
   newReq.end();
 };
 
+/**
+ * Calculate expiration date
+ */
+const getExpirationDate = (result) => {
+  const date = new Date();
+  const datemillis = date.getTime();
+
+  const expiresTime = new Date(result.expires_in * 1000);
+  const expiresTimeMillis = expiresTime.getTime();
+
+  const expiration = new Date();
+  expiration.setTime(datemillis + expiresTimeMillis);
+
+  return expiration;
+};
+
 const save = (user, res) => {
   user.save((err) => {
     if (err) {
@@ -113,18 +129,9 @@ const updateUser = (user) => {
       if (err) {
         console.log(err);
       } else {
-        const date = new Date();
-        const datemillis = date.getTime();
-
-        const expiresTime = new Date(result.expires_in * 1000);
-        const expiresTimeMillis = expiresTime.getTime();
-
-        const expiration = new Date();
-        expiration.setTime(datemillis + expiresTimeMillis);
-
         user.access_token = result.access_token;
         user.refresh_token = result.refresh_token;
-        user.expires_in = expiration;
+        user.expires_in = getExpirationDate(result);
       }
 
       newReq2.end();
@@ -162,33 +169,22 @@ export const authorize = (req, res) => {
             res.status(403)
               .send({ errormsg: 'Could not find your Capco ID' });
           } else {
-            const user = new User();
-
-            const date = new Date();
-            const datemillis = date.getTime();
-
-            const expiresTime = new Date(result.expires_in * 1000);
-            const expiresTimeMillis = expiresTime.getTime();
-
-            const expiration = new Date();
-            expiration.setTime(datemillis + expiresTimeMillis);
-
-            user.username = username;
-            user.user_id = result.user_id;
-            user.token_type = result.token_type;
-            user.expires_in = expiration;
-            user.access_token = result.access_token;
-            user.refresh_token = result.refresh_token;
-
-            user.level = profile.title;
-            user.name = profile.displayName;
-            user.location = profile.locationName;
-            user.picName = profile.profilePictureName;
-
-            user.totalSteps = 0;
-            user.totalCalories = 0;
-            user.totalDistance = 0;
-            user.totalDuration = 0;
+            const user = new User({
+              username,
+              user_id: result.user_id,
+              token_type: result.token_type,
+              access_token: result.access_token,
+              refresh_token: result.refresh_token,
+              level: profile.title,
+              name: profile.displayName,
+              location: profile.locationName,
+              picName: profile.profilePictureName,
+              expires_in: getExpirationDate(result),
+              totalCalories: 0,
+              totalDistance: 0,
+              totalDuration: 0,
+              totalSteps: 0
+            });
 
             save(user, res);
           }
@@ -219,7 +215,6 @@ export const update = (req, res) => {
     }
   });
 };
-
 
 /**
  * Refresh user fitbit data every minutes
