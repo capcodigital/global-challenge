@@ -7,6 +7,6 @@
 
   "register.label": "Register with Fitbit",
 
-  "sample.component": "Sample component",
-  "sample.functional.component": "Sample functional component"
+  "dashboard.steps": "Steps",
+  "dashboard.average": "Average"
 }

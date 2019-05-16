@@ -12,6 +12,7 @@ import { Route, Switch } from 'react-router-dom';
 import Header from 'components/header';
 import HomePage from 'components/homepage/homepage.container';
 import './style.scss';
+import Dashboard from './dashboard/dashboard.component';
 
 const App = () => (
   <div className="app-wrapper">
@@ -24,6 +25,7 @@ const App = () => (
     <Header />
     <Switch>
       <Route exact path="/" component={HomePage} />
+      <Route exact path="/progress" component={Dashboard} />
     </Switch>
   </div>
 );

@@ -1,0 +1,20 @@
+.dashboard { 
+  .counter-wrapper {
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+
+  .map-container {
+    padding-top: 2rem;
+  }
+
+  .content-container {
+    height: 330px;
+    padding: 2rem;
+    border-bottom: 1px solid #d9d9d9;
+
+    .header {
+      text-align: center;
+    }
+  }
+}
