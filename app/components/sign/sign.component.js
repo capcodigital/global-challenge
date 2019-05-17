@@ -4,8 +4,8 @@ import './style.scss';
 import { Image } from 'semantic-ui-react';
 import Handle from './images/handle.png';
 
-const Sign = ({ children }) => (
-  <div className="sign-container">
+const Sign = ({ children, className }) => (
+  <div className={`sign-container ${className}`}>
     <div className="sign">
       <div className="handle-container">
         <Image className="handle" src={Handle} />
@@ -19,7 +19,8 @@ const Sign = ({ children }) => (
 );
 
 Sign.propTypes = {
-  children: PropTypes.array
+  children: PropTypes.array,
+  className: PropTypes.string
 };
 
 export default Sign;

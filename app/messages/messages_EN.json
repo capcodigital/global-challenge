@@ -8,5 +8,9 @@
   "register.label": "Register with Fitbit",
 
   "dashboard.steps": "Steps",
-  "dashboard.average": "Average"
+  "dashboard.average": "Average",
+  "dashboard.locations": "Locations",
+  "dashboard.leaderboard": "Leaderboard",
+  "dashboard.stepsByLevel": "Steps by Level",
+  "dashboard.stepsByOffice": "Steps by Office"
 }

@@ -8,10 +8,6 @@ class Map extends React.PureComponent {
     this.state = {
       city: {}
     };
-
-    this.handleCountryClick = this.handleCountryClick.bind(this);
-    this.handleCityClick = this.handleCityClick.bind(this);
-    this.projection = this.projection.bind(this);
   }
 
   projection = () => {
@@ -28,15 +24,42 @@ class Map extends React.PureComponent {
   handleCountryClick = (countryIndex) => {
     const { worldData } = this.props;
     const country = worldData[countryIndex];
-    console.log(country);
   }
 
   handleCityClick = (cityIndex) => {
     const { cities } = this.props;
     const city = cities[cityIndex];
-    this.setState({
-      city
-    });
+  }
+
+  getArc = (d, s) => {
+    const dx = d.destination.x - d.origin.x;
+    const dy = d.destination.y - d.origin.y;
+    const dr = Math.sqrt(dx * dx + dy * dy);
+    const spath = !s ? ' 0 0,0 ' : ' 0 0,1 ';
+    return `M${d.origin.x},${d.origin.y}A${dr},${dr}${spath}${d.destination.x},${d.destination.y}`;
+  }
+
+  getRoute = (city, i) => {
+    const { cities } = this.props;
+
+    const source = cities[i];
+    const destination = cities[i + 1];
+
+    const sourcePosition = this.projection()(source.coordinates);
+    const destinationPosition = destination ? this.projection()(destination.coordinates) : destination;
+
+    const connection = [sourcePosition, destinationPosition];
+
+    if (destination) {
+      const d = {
+        origin: { x: connection[0][0], y: connection[0][1] },
+        destination: { x: connection[1][0], y: connection[1][1] }
+      };
+      const s = d.destination.x > d.origin.x;
+
+      return this.getArc(d, s);
+    }
+    return '';
   }
 
   render() {
@@ -78,7 +101,17 @@ class Map extends React.PureComponent {
         </g>
 
         <g className="routes">
-
+          {
+            cities.map((office, i) => (
+              <path
+                key={`route-${i + 0}`}
+                d={this.getRoute(office, i)}
+                className="route-path"
+                fill="none"
+                stroke="#4682b4"
+              />
+            ))
+          }
         </g>
       </svg>
     );

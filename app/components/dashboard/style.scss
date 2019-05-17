@@ -1,7 +1,14 @@
 .dashboard { 
   .counter-wrapper {
     width: 100%;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+    font-size: 2.5em;
+    vertical-align: middle;
+    overflow: hidden;
+
+    .sign-content-container {
+      display: inline-flex;
+    }
   }
 
   .map-container {

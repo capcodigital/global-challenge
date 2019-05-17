@@ -1,6 +1,11 @@
 .sign-container {
   padding-top: 100px;
   position: relative;
+  margin: 0 auto;
+
+  &.counter {
+    max-width: 680px;
+  }
 
   .sign {
     background-color: #d9d9d9;
@@ -10,11 +15,6 @@
     .header {
       font-size: 1rem !important;
       text-transform: uppercase !important;
-    }
-
-    &.counter {
-      min-width: 680px;
-      padding: 1rem;
     }
   }
 

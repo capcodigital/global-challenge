@@ -4,12 +4,18 @@ import {
   Segment, Grid, Container, Image, Header, Dropdown
 } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
+import { Counter } from 'components/common';
+import Map from 'components/map/map.component';
+import Sign from 'components/sign/sign.component';
+import convertNumberToArray from '../../utils/covertNumberToArray';
+
 import {
   offices, allCities, geometries, officeMap
 } from './constants';
-import Map from '../map/map.component';
-import Sign from '../sign/sign.component';
+import Logo from './images/capco.png';
 import './style.scss';
+
+const TOTAL = 23000;
 
 class Dashboard extends React.Component {
   constructor() {
@@ -120,7 +126,6 @@ class Dashboard extends React.Component {
       cities, worldData, width, height, filter, region, geoCenter, scale
     } = this.state;
 
-    console.log(scale, geoCenter);
     return (
       <div>
         <Container>
@@ -137,11 +142,26 @@ class Dashboard extends React.Component {
         </Container>
 
         <Segment className="primary dashboard">
+          <Container className="counter-wrapper">
+            <Sign className="counter">
+              <div className="logo-container">
+                <Image src={Logo} size="small" />
+              </div>
+              <div className="counter-container">
+                <Counter
+                  digits={8}
+                  data={convertNumberToArray(TOTAL, 10000000)}
+                />
+              </div>
+            </Sign>
+          </Container>
           <Grid container stackable columns={3} divided verticalAlign="middle">
             <Grid.Row>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium">Locations</Header>
+                  <Header>
+                    <FormattedMessage id="dashboard.locations" />
+                  </Header>
                   <Dropdown
                     placeholder="Select an office"
                     selection
@@ -165,13 +185,17 @@ class Dashboard extends React.Component {
               </Grid.Column>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium">Steps by Office</Header>
+                  <Header size="medium">
+                    <FormattedMessage id="dashboard.stepsByOffice" />
+                  </Header>
                   <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
                 </div>
               </Grid.Column>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium">Steps by Level</Header>
+                  <Header size="medium">
+                    <FormattedMessage id="dashboard.stepsByLevel" />
+                  </Header>
                   <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
                 </div>
               </Grid.Column>
@@ -180,7 +204,9 @@ class Dashboard extends React.Component {
             <Grid.Row>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium">Leaderboard</Header>
+                  <Header size="medium">
+                    <FormattedMessage id="dashboard.leaderboard" />
+                  </Header>
                   <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
                 </div>
               </Grid.Column>
