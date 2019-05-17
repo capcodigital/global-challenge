@@ -15,7 +15,6 @@ const DURATION = 1000;
 
 const numbers = d3.range(10);
 
-
 /**
  * Component is described here
  */
