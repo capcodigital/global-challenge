@@ -1,0 +1,27 @@
+.dashboard { 
+  .counter-wrapper {
+    width: 100%;
+    margin-bottom: 2rem;
+    font-size: 2.5em;
+    vertical-align: middle;
+    overflow: hidden;
+
+    .sign-content-container {
+      display: inline-flex;
+    }
+  }
+
+  .map-container {
+    padding-top: 2rem;
+  }
+
+  .content-container {
+    height: 330px;
+    padding: 2rem;
+    border-bottom: 1px solid #d9d9d9;
+
+    .header {
+      text-align: center;
+    }
+  }
+}

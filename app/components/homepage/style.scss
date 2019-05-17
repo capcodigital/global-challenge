@@ -1,0 +1,31 @@
+@import '../../styles/variables.scss';
+
+.homepage {
+  .banner {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+    
+  .header {
+    font-size: 1.5rem !important;
+    text-transform: uppercase !important;
+  }
+
+  .progress-button {
+    box-shadow: 0 0 0 1px $text-primary inset !important
+
+  }
+
+  .registration {
+    a {
+        margin-top: 2rem;
+    }
+    div {
+      margin-bottom: 2rem;
+    }
+  }
+
+  a {
+    color: #00AABB;
+  }
+}

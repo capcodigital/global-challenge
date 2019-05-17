@@ -1,0 +1,52 @@
+.sign-container {
+  padding-top: 100px;
+  position: relative;
+  margin: 0 auto;
+
+  &.counter {
+    max-width: 680px;
+  }
+
+  .sign {
+    background-color: #d9d9d9;
+    margin: 0 auto;
+    text-align: center;
+
+    .header {
+      font-size: 1rem !important;
+      text-transform: uppercase !important;
+    }
+  }
+
+  .sign-content-container {
+    padding: 2rem;
+
+    .stats-container {
+      margin-top: 1.5rem;
+      margin-top: 1.5rem;
+
+      .label {
+        font-size: 1rem !important;
+        text-transform: uppercase !important;
+        margin-top: 1.5rem;
+      }
+  
+      .number {
+        font-size: 3rem;
+        vertical-align: top;
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  .handle {
+    position: absolute !important;
+    height: 120px;
+    right: 20px;
+    top: 0;
+
+    &.left {
+      left: 20px;
+    }
+  }
+}
