@@ -1,5 +1,6 @@
 import React from 'react';
 import { feature } from 'topojson-client';
+import PropTypes from 'prop-types';
 import {
   Segment, Grid, Container, Image, Header, Dropdown
 } from 'semantic-ui-react';
@@ -115,16 +116,28 @@ class Dashboard extends React.Component {
     });
   }
 
-  handleCountryChange = (e, { value }) => {
+  onCountryChange = (e, { value }) => {
+    const { filterActivities } = this.props;
+
     this.setState({ filter: value }, () => {
       this.getRegion();
+      filterActivities(value);
     });
+  }
+
+  refreshActivies() {
+    const { getActivities } = this.props;
+    getActivities();
   }
 
   render() {
     const {
       cities, worldData, width, height, filter, region, geoCenter, scale
     } = this.state;
+
+    const {
+      isLoading, filteredActivities
+    } = this.props;
 
     return (
       <div>
@@ -168,7 +181,7 @@ class Dashboard extends React.Component {
                     fluid
                     value={filter}
                     options={offices}
-                    onChange={this.handleCountryChange}
+                    onChange={this.onCountryChange}
                   />
 
                   <div className="map-container">
@@ -236,5 +249,17 @@ class Dashboard extends React.Component {
     );
   }
 }
+
+Dashboard.propTypes = {
+  filteredActivities: PropTypes.array,
+  getActivities: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  error: PropTypes.shape({}),
+  filterActivities: PropTypes.func.isRequired,
+};
+
+Dashboard.defaultProps = {
+  filteredActivities: [],
+};
 
 export default Dashboard;
