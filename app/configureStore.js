@@ -7,8 +7,6 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import homepage from 'components/homepage/reducer';
-import dashboard from 'components/dashboard/reducer';
-import dashbaordSaga from 'components/dashboard/saga';
 import createReducer from './reducers';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -32,8 +30,8 @@ export default function configureStore(initialState = {}, history) {
     : compose;
   /* eslint-enable */
 
-  const reducers = { homepage, dashboard };
-  const sagas = { dashbaordSaga };
+  const reducers = { homepage };
+  const sagas = { };
   const store = createStore(createReducer(reducers), fromJS(initialState), composeEnhancers(...enhancers));
 
   // Extensions

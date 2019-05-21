@@ -5,7 +5,7 @@ import {
   Segment, Grid, Container, Image, Header, Dropdown
 } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
-import { Counter } from 'components/common';
+import { Counter, ListView } from 'components/common';
 import Map from 'components/map/map.component';
 import Sign from 'components/sign/sign.component';
 import convertNumberToArray from '../../utils/covertNumberToArray';
@@ -16,11 +16,9 @@ import {
 import Logo from './images/capco.png';
 import './style.scss';
 
-const TOTAL = 23000;
-
 class Dashboard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       worldData: [],
       height: 450,
@@ -34,6 +32,8 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
+    const { getActivities } = this.props;
+
     fetch('https://raw.githubusercontent.com/zimrick/react-svg-maps-tutorial/master/public/world-110m.json')
       .then((response) => {
         if (response.status !== 200) {
@@ -48,6 +48,8 @@ class Dashboard extends React.Component {
 
     this.measure();
     this.getRegion();
+
+    getActivities();
     window.addEventListener('resize', this.measure);
   }
 
@@ -136,7 +138,7 @@ class Dashboard extends React.Component {
     } = this.state;
 
     const {
-      isLoading, filteredActivities
+      isLoading, activities, filteredActivities, total, average, breakdown, leaderboard
     } = this.props;
 
     return (
@@ -163,7 +165,7 @@ class Dashboard extends React.Component {
               <div className="counter-container">
                 <Counter
                   digits={8}
-                  data={convertNumberToArray(TOTAL, 10000000)}
+                  data={convertNumberToArray(total, 10000000)}
                 />
               </div>
             </Sign>
@@ -172,7 +174,7 @@ class Dashboard extends React.Component {
             <Grid.Row>
               <Grid.Column>
                 <div className="content-container">
-                  <Header>
+                  <Header className="container-header">
                     <FormattedMessage id="dashboard.locations" />
                   </Header>
                   <Dropdown
@@ -198,18 +200,30 @@ class Dashboard extends React.Component {
               </Grid.Column>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium">
+                  <Header size="medium" className="container-header">
                     <FormattedMessage id="dashboard.stepsByOffice" />
                   </Header>
-                  <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+
+                  <div>
+                    <ListView
+                      list={breakdown.offices}
+                      prefix={'No of steps'}
+                    />
+                  </div>
                 </div>
               </Grid.Column>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium">
+                  <Header size="medium" className="container-header">
                     <FormattedMessage id="dashboard.stepsByLevel" />
                   </Header>
-                  <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+
+                  <div>
+                    <ListView
+                      list={breakdown.levels}
+                      prefix={'No of steps'}
+                    />
+                  </div>
                 </div>
               </Grid.Column>
             </Grid.Row>
@@ -217,20 +231,26 @@ class Dashboard extends React.Component {
             <Grid.Row>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium">
+                  <Header size="medium" className="container-header">
                     <FormattedMessage id="dashboard.leaderboard" />
                   </Header>
-                  <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+                  
+                  <div>
+                    <ListView
+                      list={leaderboard}
+                      prefix={'No of steps'}
+                    />
+                  </div>
                 </div>
               </Grid.Column>
               <Grid.Column>
                 <div className="content-container">
                   <Sign>
-                    <Header as="h4">
+                    <Header as="h4" className="container-header">
                       <FormattedMessage id="dashboard.average" />
                     </Header>
                     <div className="stats-container">
-                      <div className="number">{ 0 }</div>
+                      <div className="number">{ average }</div>
                       <div className="label"><FormattedMessage id="dashboard.steps" /></div>
                     </div>
                   </Sign>
@@ -238,7 +258,7 @@ class Dashboard extends React.Component {
               </Grid.Column>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium">Top Net Contributors</Header>
+                  <Header size="medium" className="container-header">Top Net Contributors</Header>
                   <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
                 </div>
               </Grid.Column>
@@ -251,15 +271,20 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  filteredActivities: PropTypes.array,
+  filteredActivities: PropTypes.object,
+  activities: PropTypes.object,
   getActivities: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.shape({}),
+  total: PropTypes.number,
+  average: PropTypes.number,
+  breakdown: PropTypes.object,
+  leaderboard: PropTypes.array,
   filterActivities: PropTypes.func.isRequired,
 };
 
 Dashboard.defaultProps = {
-  filteredActivities: [],
+  filteredActivities: {},
 };
 
 export default Dashboard;
