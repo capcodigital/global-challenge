@@ -17,10 +17,10 @@ import Dashboard from './dashboard/dashboard.component';
 const App = () => (
   <div className="app-wrapper">
     <Helmet
-      titleTemplate="%s - Capco react / redux boilerplate"
-      defaultTitle="Capco react / redux boilerplate"
+      titleTemplate="%s - Capco Global Step Challenge"
+      defaultTitle="Capco Global Step Challenge"
     >
-      <meta name="description" content="Capco react / redux boilerplate" />
+      <meta name="description" content="Capco Global Step Challenge" />
     </Helmet>
     <Header />
     <Switch>
