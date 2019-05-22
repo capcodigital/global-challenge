@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {
   Segment, Grid, Container, Image, Header, Dropdown
 } from 'semantic-ui-react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 import { Counter, ListView } from 'components/common';
 import Map from 'components/map/map.component';
 import Sign from 'components/sign/sign.component';
@@ -150,7 +150,7 @@ class Dashboard extends React.Component {
     const {
       isLoading, activities, total, average, breakdown, leaderboard
     } = this.props;
-    
+
     return (
       <div className="dashboard">
         <Segment loading={isLoading} className="secondary">
@@ -258,6 +258,7 @@ class Dashboard extends React.Component {
                     <ListView
                       list={breakdown.levels}
                       prefix={'No of steps'}
+                      image
                     />
                   </div>
                 </div>
@@ -286,7 +287,7 @@ class Dashboard extends React.Component {
                       <FormattedMessage id="dashboard.average" />
                     </Header>
                     <div className="stats-container">
-                      <div className="number">{ average }</div>
+                      <div className="number"><FormattedNumber value={average} /></div>
                       <div className="label"><FormattedMessage id="dashboard.steps" /></div>
                     </div>
                   </Sign>
