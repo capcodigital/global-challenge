@@ -49,7 +49,6 @@ const withReducer = injectReducer({ key: 'dashboard', reducer });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-
 export default compose(
   // Put `withReducer` before `withConnect`
   withReducer,

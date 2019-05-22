@@ -12,11 +12,17 @@
   }
 
   .challenge-description {
+    font-size: 1.5rem;
+    position: relative;
+
     .total-steps {
       font-size: 4rem;
       color: #d9d9d9;
-      position: absolute;
-      bottom: 100px;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 0.125rem;
     }
   }
 

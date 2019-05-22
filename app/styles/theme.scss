@@ -12,6 +12,13 @@ body {
         border-right: none;
         border-left: none;
       }
+
+      &.secondary {
+        padding: 0;
+        box-shadow: none;
+        border: none;
+        background: #fff;
+      }
     }
   }
   .button {

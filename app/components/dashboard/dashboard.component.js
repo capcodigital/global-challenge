@@ -1,5 +1,6 @@
 import React from 'react';
 import { feature } from 'topojson-client';
+import { keyBy } from 'lodash';
 import PropTypes from 'prop-types';
 import {
   Segment, Grid, Container, Image, Header, Dropdown
@@ -28,6 +29,7 @@ class Dashboard extends React.Component {
       geoCenter: [0, 10],
       filter: 'Global',
       cities: allCities,
+      statistics: {}
     };
   }
 
@@ -51,6 +53,14 @@ class Dashboard extends React.Component {
 
     getActivities();
     window.addEventListener('resize', this.measure);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { breakdown } = nextProps;
+    if (breakdown.offices && breakdown.offices.length) {
+      const statistics = keyBy(breakdown.offices, 'name');
+      this.setState({ statistics });
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -134,29 +144,54 @@ class Dashboard extends React.Component {
 
   render() {
     const {
-      cities, worldData, width, height, filter, region, geoCenter, scale
+      cities, worldData, width, height, filter, region, geoCenter, scale, statistics
     } = this.state;
 
     const {
-      isLoading, activities, filteredActivities, total, average, breakdown, leaderboard
+      isLoading, activities, total, average, breakdown, leaderboard
     } = this.props;
-
+    
     return (
-      <div>
-        <Container>
-          <div ref={this.saveRef}>
-            <Map
-              worldData={worldData}
-              cities={cities}
-              width={width}
-              scale={150}
-              geoCenter={[0, 10]}
-              height={height}
-            />
-          </div>
-        </Container>
+      <div className="dashboard">
+        <Segment loading={isLoading} className="secondary">
+          <Container>
+            <div ref={this.saveRef}>
+              <Map
+                worldData={worldData}
+                statistics={statistics}
+                cities={cities}
+                width={width}
+                scale={150}
+                geoCenter={[0, 10]}
+                height={height}
+              />
+            </div>
 
-        <Segment className="primary dashboard">
+            <div className="challenge-description">
+              <p className="total-steps"><FormattedMessage id="dashboard.fiftyMillionSteps" /></p>
+              <p>
+                <FormattedMessage
+                  id="dashboard.numberOfOffices"
+                  defaultMessage="Across {numberOfOffices} locations"
+                  values={{
+                    numberOfOffices: cities.length
+                  }}
+                />
+              </p>
+              <p>
+                <FormattedMessage
+                  id="dashboard.activeParticipants"
+                  defaultMessage="With {activeParticipants} employees participating in the challenge"
+                  values={{
+                    activeParticipants: activities.size
+                  }}
+                />
+              </p>
+            </div>
+          </Container>
+        </Segment>
+
+        <Segment loading={isLoading} className="primary">
           <Container className="counter-wrapper">
             <Sign className="counter">
               <div className="logo-container">
@@ -196,9 +231,6 @@ class Dashboard extends React.Component {
                       cities={[]}
                     />
 
-                    <div className="challenge-description">
-                      <p className="total-steps"><FormattedMessage id="dashboard.fiftyMillionSteps" /></p>
-                    </div>
                   </div>
                 </div>
               </Grid.Column>
@@ -238,7 +270,7 @@ class Dashboard extends React.Component {
                   <Header size="medium" className="container-header">
                     <FormattedMessage id="dashboard.leaderboard" />
                   </Header>
-                  
+
                   <div>
                     <ListView
                       list={leaderboard}

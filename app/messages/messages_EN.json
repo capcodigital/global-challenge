@@ -13,5 +13,7 @@
   "dashboard.leaderboard": "Leaderboard",
   "dashboard.stepsByLevel": "Steps by Level",
   "dashboard.stepsByOffice": "Steps by Office",
-  "dashboard.fiftyMillionSteps": "50 Million Steps"
+  "dashboard.fiftyMillionSteps": "50 Million Steps",
+  "dashboard.numberOfOffices": "Across {numberOfOffices} locations",
+  "dashboard.activeParticipants": "With {activeParticipants} employees participating in the challenge"
 }
