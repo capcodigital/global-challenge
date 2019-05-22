@@ -195,6 +195,10 @@ class Dashboard extends React.Component {
                       geoCenter={geoCenter}
                       cities={[]}
                     />
+
+                    <div className="challenge-description">
+                      <p className="total-steps"><FormattedMessage id="dashboard.fiftyMillionSteps" /></p>
+                    </div>
                   </div>
                 </div>
               </Grid.Column>
