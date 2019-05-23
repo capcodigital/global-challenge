@@ -12,7 +12,7 @@ import { Route, Switch } from 'react-router-dom';
 import Header from 'components/header';
 import HomePage from 'components/homepage/homepage.container';
 import './style.scss';
-import Dashboard from './dashboard/dashboard.component';
+import Dashboard from './dashboard/dashboard.container';
 
 const App = () => (
   <div className="app-wrapper">

@@ -1,15 +1,13 @@
 import React from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import PropTypes from 'prop-types';
+import { scaleLinear } from 'd3-scale';
+
+const SCALE = scaleLinear()
+  .domain([0, 8000000])
+  .range([2, 20]);
 
 class Map extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      city: {}
-    };
-  }
-
   projection = () => {
     const {
       width, height, geoCenter, scale
@@ -19,16 +17,6 @@ class Map extends React.PureComponent {
       .center(geoCenter)
       .scale(scale)
       .translate([width / 2, height / 2]);
-  }
-
-  handleCountryClick = (countryIndex) => {
-    const { worldData } = this.props;
-    const country = worldData[countryIndex];
-  }
-
-  handleCityClick = (cityIndex) => {
-    const { cities } = this.props;
-    const city = cities[cityIndex];
   }
 
   getArc = (d, s) => {
@@ -64,7 +52,7 @@ class Map extends React.PureComponent {
 
   render() {
     const {
-      worldData, cities, width, height
+      worldData, cities, width, height, statistics
     } = this.props;
 
     return (
@@ -79,7 +67,6 @@ class Map extends React.PureComponent {
                 fill={`rgba(38,50,36,${1 / worldData.length * (i + 1)})`}
                 stroke="#fff"
                 strokeWidth={0.5}
-                onClick={() => this.handleCountryClick(i)}
               />
             ))
           }
@@ -91,10 +78,9 @@ class Map extends React.PureComponent {
                 key={`marker-${i + 0}`}
                 cx={this.projection()(city.coordinates)[0]}
                 cy={this.projection()(city.coordinates)[1]}
-                r={(city.steps || 3000000) / 3000000}
+                r={statistics[city.name] ? SCALE(statistics[city.name].steps) : SCALE(0)}
                 fill="#e91e63"
                 opacity={0.7}
-                onClick={() => this.handleCityClick(i)}
               />
             ))
           }
@@ -120,6 +106,7 @@ class Map extends React.PureComponent {
 
 Map.propTypes = {
   worldData: PropTypes.array.isRequired,
+  statistics: PropTypes.object,
   cities: PropTypes.array.isRequired,
   geoCenter: PropTypes.array.isRequired,
   scale: PropTypes.number,

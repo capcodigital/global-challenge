@@ -1,6 +1,9 @@
 import {
-  call, put, delay, select, takeEvery, takeLatest
+  call, put, select, takeEvery, takeLatest
 } from 'redux-saga/effects';
+
+import { delay } from 'redux-saga';
+
 import {
   activitiesRecieved,
   activitiesFailed,

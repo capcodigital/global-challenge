@@ -1,3 +1,33 @@
+export const levelMap = {
+  Analyst: 'Associate',
+  Associate: 'Associate',
+  'Associate Designer': 'Associate',
+  'Associate Innovation Developer': 'Associate',
+
+  Contractor: 'Contractor',
+  'Administrator I': 'Contractor',
+  'Administrator II': 'Contractor',
+  'Administrator III': 'Contractor',
+  'Administrator iV': 'Contractor',
+
+  Consultant: 'Consultant',
+  Designer: 'Consultant',
+  'Senior Analyst': 'Consultant',
+
+  Specialist: 'Senior Consultant',
+  'Senior Consultant': 'Senior Consultant',
+
+  Manager: 'Principal Consultant',
+  'Principal Consultant': 'Principal Consultant',
+
+  Director: 'Managing Principal',
+  'Managing Principal': 'Managing Principal',
+  'Associate Director': 'Managing Principal',
+
+  Partner: 'Partner',
+  'Associate Partnaer': 'Associate Partner'
+};
+
 export const offices = [
   {
     key: 'Global',

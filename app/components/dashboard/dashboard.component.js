@@ -1,10 +1,12 @@
 import React from 'react';
 import { feature } from 'topojson-client';
+import { keyBy } from 'lodash';
+import PropTypes from 'prop-types';
 import {
   Segment, Grid, Container, Image, Header, Dropdown
 } from 'semantic-ui-react';
-import { FormattedMessage } from 'react-intl';
-import { Counter } from 'components/common';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
+import { Counter, ListView } from 'components/common';
 import Map from 'components/map/map.component';
 import Sign from 'components/sign/sign.component';
 import convertNumberToArray from '../../utils/covertNumberToArray';
@@ -15,11 +17,9 @@ import {
 import Logo from './images/capco.png';
 import './style.scss';
 
-const TOTAL = 23000;
-
 class Dashboard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       worldData: [],
       height: 450,
@@ -29,10 +29,13 @@ class Dashboard extends React.Component {
       geoCenter: [0, 10],
       filter: 'Global',
       cities: allCities,
+      statistics: {}
     };
   }
 
   componentDidMount() {
+    const { getActivities } = this.props;
+
     fetch('https://raw.githubusercontent.com/zimrick/react-svg-maps-tutorial/master/public/world-110m.json')
       .then((response) => {
         if (response.status !== 200) {
@@ -47,7 +50,17 @@ class Dashboard extends React.Component {
 
     this.measure();
     this.getRegion();
+
+    getActivities();
     window.addEventListener('resize', this.measure);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { breakdown } = nextProps;
+    if (breakdown.offices && breakdown.offices.length) {
+      const statistics = keyBy(breakdown.offices, 'name');
+      this.setState({ statistics });
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -115,33 +128,70 @@ class Dashboard extends React.Component {
     });
   }
 
-  handleCountryChange = (e, { value }) => {
+  onCountryChange = (e, { value }) => {
+    const { filterActivities } = this.props;
+
     this.setState({ filter: value }, () => {
       this.getRegion();
+      filterActivities(value);
     });
+  }
+
+  refreshActivies() {
+    const { getActivities } = this.props;
+    getActivities();
   }
 
   render() {
     const {
-      cities, worldData, width, height, filter, region, geoCenter, scale
+      cities, worldData, width, height, filter, region, geoCenter, scale, statistics
     } = this.state;
 
-    return (
-      <div>
-        <Container>
-          <div ref={this.saveRef}>
-            <Map
-              worldData={worldData}
-              cities={cities}
-              width={width}
-              scale={150}
-              geoCenter={[0, 10]}
-              height={height}
-            />
-          </div>
-        </Container>
+    const {
+      isLoading, activities, total, average, breakdown, leaderboard
+    } = this.props;
 
-        <Segment className="primary dashboard">
+    return (
+      <div className="dashboard">
+        <Segment loading={isLoading} className="secondary">
+          <Container>
+            <div ref={this.saveRef}>
+              <Map
+                worldData={worldData}
+                statistics={statistics}
+                cities={cities}
+                width={width}
+                scale={150}
+                geoCenter={[0, 10]}
+                height={height}
+              />
+            </div>
+
+            <div className="challenge-description">
+              <p className="total-steps"><FormattedMessage id="dashboard.fiftyMillionSteps" /></p>
+              <p>
+                <FormattedMessage
+                  id="dashboard.numberOfOffices"
+                  defaultMessage="Across {numberOfOffices} locations"
+                  values={{
+                    numberOfOffices: cities.length
+                  }}
+                />
+              </p>
+              <p>
+                <FormattedMessage
+                  id="dashboard.activeParticipants"
+                  defaultMessage="With {activeParticipants} employees participating in the challenge"
+                  values={{
+                    activeParticipants: activities.size
+                  }}
+                />
+              </p>
+            </div>
+          </Container>
+        </Segment>
+
+        <Segment loading={isLoading} className="primary">
           <Container className="counter-wrapper">
             <Sign className="counter">
               <div className="logo-container">
@@ -150,7 +200,7 @@ class Dashboard extends React.Component {
               <div className="counter-container">
                 <Counter
                   digits={8}
-                  data={convertNumberToArray(TOTAL, 10000000)}
+                  data={convertNumberToArray(total, 10000000)}
                 />
               </div>
             </Sign>
@@ -159,7 +209,7 @@ class Dashboard extends React.Component {
             <Grid.Row>
               <Grid.Column>
                 <div className="content-container">
-                  <Header>
+                  <Header className="container-header">
                     <FormattedMessage id="dashboard.locations" />
                   </Header>
                   <Dropdown
@@ -168,35 +218,50 @@ class Dashboard extends React.Component {
                     fluid
                     value={filter}
                     options={offices}
-                    onChange={this.handleCountryChange}
+                    onChange={this.onCountryChange}
                   />
 
                   <div className="map-container">
                     <Map
                       worldData={region}
                       width={300}
-                      height={200}
+                      height={300}
                       scale={scale}
                       geoCenter={geoCenter}
                       cities={[]}
+                    />
+
+                  </div>
+                </div>
+              </Grid.Column>
+              <Grid.Column>
+                <div className="content-container">
+                  <Header size="medium" className="container-header">
+                    <FormattedMessage id="dashboard.stepsByOffice" />
+                  </Header>
+
+                  <div>
+                    <ListView
+                      list={breakdown.offices}
+                      prefix={'No of steps'}
+                      image
                     />
                   </div>
                 </div>
               </Grid.Column>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium">
-                    <FormattedMessage id="dashboard.stepsByOffice" />
-                  </Header>
-                  <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
-                </div>
-              </Grid.Column>
-              <Grid.Column>
-                <div className="content-container">
-                  <Header size="medium">
+                  <Header size="medium" className="container-header">
                     <FormattedMessage id="dashboard.stepsByLevel" />
                   </Header>
-                  <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+
+                  <div>
+                    <ListView
+                      list={breakdown.levels}
+                      prefix="No of steps"
+                      image
+                    />
+                  </div>
                 </div>
               </Grid.Column>
             </Grid.Row>
@@ -204,20 +269,26 @@ class Dashboard extends React.Component {
             <Grid.Row>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium">
+                  <Header size="medium" className="container-header">
                     <FormattedMessage id="dashboard.leaderboard" />
                   </Header>
-                  <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+
+                  <div>
+                    <ListView
+                      list={leaderboard}
+                      prefix={'No of steps'}
+                    />
+                  </div>
                 </div>
               </Grid.Column>
               <Grid.Column>
                 <div className="content-container">
                   <Sign>
-                    <Header as="h4">
+                    <Header as="h4" className="container-header">
                       <FormattedMessage id="dashboard.average" />
                     </Header>
                     <div className="stats-container">
-                      <div className="number">{ 0 }</div>
+                      <div className="number"><FormattedNumber value={average} /></div>
                       <div className="label"><FormattedMessage id="dashboard.steps" /></div>
                     </div>
                   </Sign>
@@ -225,7 +296,7 @@ class Dashboard extends React.Component {
               </Grid.Column>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium">Top Net Contributors</Header>
+                  <Header size="medium" className="container-header">Top Net Contributors</Header>
                   <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
                 </div>
               </Grid.Column>
@@ -236,5 +307,22 @@ class Dashboard extends React.Component {
     );
   }
 }
+
+Dashboard.propTypes = {
+  filteredActivities: PropTypes.object,
+  activities: PropTypes.object,
+  getActivities: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  error: PropTypes.shape({}),
+  total: PropTypes.number,
+  average: PropTypes.number,
+  breakdown: PropTypes.object,
+  leaderboard: PropTypes.array,
+  filterActivities: PropTypes.func.isRequired,
+};
+
+Dashboard.defaultProps = {
+  filteredActivities: {},
+};
 
 export default Dashboard;

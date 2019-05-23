@@ -11,16 +11,31 @@
     }
   }
 
+  .challenge-description {
+    font-size: 1.5rem;
+    position: relative;
+
+    .total-steps {
+      font-size: 4rem;
+      color: #d9d9d9;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 0.125rem;
+    }
+  }
+
   .map-container {
     padding-top: 2rem;
   }
 
   .content-container {
-    height: 330px;
+    height: 370px;
     padding: 2rem;
     border-bottom: 1px solid #d9d9d9;
 
-    .header {
+    .container-header {
       text-align: center;
     }
   }

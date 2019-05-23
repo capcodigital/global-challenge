@@ -31,12 +31,13 @@ export default function configureStore(initialState = {}, history) {
   /* eslint-enable */
 
   const reducers = { homepage };
+  const sagas = { };
   const store = createStore(createReducer(reducers), fromJS(initialState), composeEnhancers(...enhancers));
 
   // Extensions
   store.runSaga = sagaMiddleware.run;
   store.injectedReducers = reducers; // Reducer registry
-  store.injectedSagas = {}; // Saga registry
+  store.injectedSagas = sagas; // Saga registry
 
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */

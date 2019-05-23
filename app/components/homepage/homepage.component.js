@@ -4,7 +4,6 @@ import React from 'react';
 import {
   Grid, Segment, Header, Image, Container, List, Button, Divider
 } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import RegistrationForm from '../register';
 import Banner from './images/banner.png';
@@ -18,12 +17,6 @@ class HomePage extends React.Component {
     this.state = {
       error: ''
     };
-  }
-
-
-  componentDidMount() {
-    const { sampleDispatch } = this.props;
-    sampleDispatch('Sample redux data');
   }
 
   render() {
@@ -86,9 +79,5 @@ class HomePage extends React.Component {
     );
   }
 }
-
-HomePage.propTypes = {
-  sampleDispatch: PropTypes.func,
-};
 
 export default HomePage;
