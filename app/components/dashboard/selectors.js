@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { levelMap } from './constants';
 
 const getState = (state) => state;
 
@@ -57,7 +58,7 @@ const leaderboardSelector = createSelector(
     if (activities) {
       const leaderboard = sort(activities.toJS(), 'totalSteps');
 
-      return leaderboard.slice(0, 7).map((leader) => ({
+      return leaderboard.slice(0, 8).map((leader) => ({
         steps: leader.totalSteps,
         distance: leader.totalDistance,
         name: leader.name
@@ -77,7 +78,7 @@ const breakdownSelector = createSelector(
       activities.forEach((element) => {
         const steps = element.get('totalSteps');
         const distance = element.get('totalDistance');
-        const level = element.get('level') || 'Other';
+        const level = levelMap[element.get('level')] || 'Other';
         const location = element.get('location') || 'Other';
 
         // update the stats for offices

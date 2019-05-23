@@ -225,7 +225,7 @@ class Dashboard extends React.Component {
                     <Map
                       worldData={region}
                       width={300}
-                      height={200}
+                      height={300}
                       scale={scale}
                       geoCenter={geoCenter}
                       cities={[]}
@@ -244,6 +244,7 @@ class Dashboard extends React.Component {
                     <ListView
                       list={breakdown.offices}
                       prefix={'No of steps'}
+                      image
                     />
                   </div>
                 </div>
@@ -257,7 +258,7 @@ class Dashboard extends React.Component {
                   <div>
                     <ListView
                       list={breakdown.levels}
-                      prefix={'No of steps'}
+                      prefix="No of steps"
                       image
                     />
                   </div>
