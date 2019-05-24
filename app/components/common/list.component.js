@@ -7,7 +7,7 @@ import { FormattedNumber } from 'react-intl';
 import './style.scss';
 
 const ListView = ({
-  list, prefix, image
+  list, prefix, image, dataKey
 }) => (
   <div>
     <List animated divided>
@@ -20,7 +20,7 @@ const ListView = ({
             <List.Header>{item.name}</List.Header>
             <List.Description>
               {`${prefix} `}
-              <b><FormattedNumber value={item.steps} /></b>
+              <b><FormattedNumber value={dataKey ? item[dataKey] : item.steps} /></b>
             </List.Description>
           </List.Content>
         </List.Item>
@@ -31,6 +31,7 @@ const ListView = ({
 
 ListView.propTypes = {
   list: PropTypes.array.isRequired,
+  dataKey: PropTypes.string,
   image: PropTypes.bool,
   prefix: PropTypes.string
 };

@@ -88,9 +88,17 @@ const breakdownSelector = createSelector(
       });
     }
 
+    const temp = Object.keys(offices).map((i) => {
+      const office = offices[i];
+      const { steps } = office;
+      office.average = steps / office.employee;
+      return office;
+    });
+
     return {
-      offices: sort(Object.keys(offices).map((i) => offices[i]), 'steps'),
-      levels: sort(Object.keys(levels).map((i) => levels[i]), 'steps')
+      offices: sort(temp, 'steps'),
+      levels: sort(Object.keys(levels).map((i) => levels[i]), 'steps'),
+      averages: sort(temp, 'average')
     };
   }
 );

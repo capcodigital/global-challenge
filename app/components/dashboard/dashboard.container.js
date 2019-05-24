@@ -40,7 +40,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getActivities: () => dispatch(fetchEmployeeActivities()),
-    filterActivities: () => dispatch(filterActivities())
+    filterActivities: (query, type) => dispatch(filterActivities({ query, type }))
   };
 }
 const withSaga = injectSaga({ key: 'dashboard', saga });
