@@ -6,8 +6,8 @@ export const FETCH_ACTIVITIES_REQUEST = 'FETCH_ACTIVITIES_REQUEST';
 export const FETCH_ACTIVITIES_SUCCESS = 'FETCH_ACTIVIES_SUCCESS';
 export const FETCH_ACTIVITIES_ERROR = 'FETCH_ACTIVITIES_ERROR';
 
-export const FILTER_ACTIVITIES = 'FILTER_ACTIVITIES';
-export const FILTER_CHANGED = 'FILTER_CHANGED';
+export const FILTER_ACTIVITIES_REQUEST = 'FILTER_ACTIVITIES_REQUEST';
+export const FILTER_ACTIVITIES_SUCCESS = 'FILTER_ACTIVITIES_SUCCESS';
 
 // used by standard redux
 export const fetchActivities = () => (dispatch) => {
@@ -24,6 +24,8 @@ export const activitiesRecieved = (activities) => ({ type: FETCH_ACTIVITIES_SUCC
 
 export const activitiesFailed = (error) => ({ type: FETCH_ACTIVITIES_ERROR, error });
 
-export const filterActivities = (filteredActivies) => ({ type: FILTER_ACTIVITIES, payload: filteredActivies });
+export const filterActivities = (activities) => ({ type: FILTER_ACTIVITIES_REQUEST, payload: activities });
+
+export const filteredActivitiesRecieved = (activities) => ({ type: FILTER_ACTIVITIES_SUCCESS, payload: activities });
 
 export const fetchEmployeeActivities = () => ({ type: FETCH_ACTIVITIES_REQUEST });

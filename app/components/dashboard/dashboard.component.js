@@ -68,7 +68,9 @@ class Dashboard extends React.Component {
       width, height, worldData, region
     } = this.state;
 
-    return width !== nextState.width || height !== nextState.height || worldData !== nextState.worldData || region !== nextState.region;
+    const { filteredActivities, isLoading } = this.props;
+
+    return width !== nextState.width || height !== nextState.height || worldData !== nextState.worldData || region !== nextState.region || filteredActivities !== nextProps.filteredActivities || isLoading !== nextProps.isLoading;
   }
 
   componentDidUpdate() {
@@ -133,7 +135,7 @@ class Dashboard extends React.Component {
 
     this.setState({ filter: value }, () => {
       this.getRegion();
-      filterActivities(value);
+      filterActivities(value, 'region');
     });
   }
 
@@ -161,7 +163,7 @@ class Dashboard extends React.Component {
                 statistics={statistics}
                 cities={cities}
                 width={width}
-                scale={150}
+                scale={width < 400 ? 70 : 150}
                 geoCenter={[0, 10]}
                 height={height}
               />
@@ -225,7 +227,7 @@ class Dashboard extends React.Component {
                     <Map
                       worldData={region}
                       width={300}
-                      height={300}
+                      height={240}
                       scale={scale}
                       geoCenter={geoCenter}
                       cities={[]}
@@ -249,6 +251,26 @@ class Dashboard extends React.Component {
                   </div>
                 </div>
               </Grid.Column>
+
+              <Grid.Column>
+                <div className="content-container">
+                  <Header size="medium" className="container-header">
+                    <FormattedMessage id="dashboard.averageStepsByOffice" />
+                  </Header>
+
+                  <div>
+                    <ListView
+                      list={breakdown.averages}
+                      prefix="Average no of steps"
+                      dataKey="average"
+                      image
+                    />
+                  </div>
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+
+            <Grid.Row>
               <Grid.Column>
                 <div className="content-container">
                   <Header size="medium" className="container-header">
@@ -264,23 +286,8 @@ class Dashboard extends React.Component {
                   </div>
                 </div>
               </Grid.Column>
-            </Grid.Row>
 
-            <Grid.Row>
-              <Grid.Column>
-                <div className="content-container">
-                  <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.leaderboard" />
-                  </Header>
 
-                  <div>
-                    <ListView
-                      list={leaderboard}
-                      prefix={'No of steps'}
-                    />
-                  </div>
-                </div>
-              </Grid.Column>
               <Grid.Column>
                 <div className="content-container">
                   <Sign>
@@ -296,8 +303,16 @@ class Dashboard extends React.Component {
               </Grid.Column>
               <Grid.Column>
                 <div className="content-container">
-                  <Header size="medium" className="container-header">Top Net Contributors</Header>
-                  <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+                  <Header size="medium" className="container-header">
+                    <FormattedMessage id="dashboard.leaderboard" />
+                  </Header>
+
+                  <div>
+                    <ListView
+                      list={leaderboard}
+                      prefix={'No of steps'}
+                    />
+                  </div>
                 </div>
               </Grid.Column>
             </Grid.Row>
@@ -319,10 +334,6 @@ Dashboard.propTypes = {
   breakdown: PropTypes.object,
   leaderboard: PropTypes.array,
   filterActivities: PropTypes.func.isRequired,
-};
-
-Dashboard.defaultProps = {
-  filteredActivities: {},
 };
 
 export default Dashboard;

@@ -8,7 +8,7 @@ const svgWidth = 350;
 
 // Note: getting width and height from a variable rather than the elements attribute e.g. svg.attr("width")
 const margin = {
-  top: 20, right: 20, bottom: 30, left: 40
+  top: 20, right: 20, bottom: 30, left: 0
 };
 
 const DURATION = 1000;
