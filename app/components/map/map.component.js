@@ -52,7 +52,7 @@ class Map extends React.PureComponent {
 
   render() {
     const {
-      worldData, cities, width, height, statistics
+      worldData, cities, width, height, statistics, distance
     } = this.props;
 
     return (
@@ -79,7 +79,7 @@ class Map extends React.PureComponent {
                 cx={this.projection()(city.coordinates)[0]}
                 cy={this.projection()(city.coordinates)[1]}
                 r={statistics[city.name] ? SCALE(statistics[city.name].steps) : SCALE(0)}
-                fill="#e91e63"
+                fill={city.distance >= distance ? '#0058bb' : '#c00d0d'}
                 opacity={0.7}
               />
             ))
@@ -88,13 +88,13 @@ class Map extends React.PureComponent {
 
         <g className="routes">
           {
-            cities.map((office, i) => (
+            cities.map((city, i) => (
               <path
                 key={`route-${i + 0}`}
-                d={this.getRoute(office, i)}
+                d={this.getRoute(city, i)}
                 className="route-path"
                 fill="none"
-                stroke="#4682b4"
+                stroke={city.distance >= distance ? '#0058bb' : '#c00d0d'}
               />
             ))
           }
@@ -111,7 +111,8 @@ Map.propTypes = {
   geoCenter: PropTypes.array.isRequired,
   scale: PropTypes.number,
   height: PropTypes.number,
-  width: PropTypes.number
+  width: PropTypes.number,
+  distance: PropTypes.number
 };
 
 export default Map;

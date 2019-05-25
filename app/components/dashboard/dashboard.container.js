@@ -11,7 +11,8 @@ import {
   breakdownSelector,
   totalSelector,
   averageSelector,
-  leaderboardSelector
+  leaderboardSelector,
+  totalDistanceSelector
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -24,6 +25,7 @@ function mapStateToProps(state) {
   const breakdown = breakdownSelector(state);
   const total = totalSelector(state);
   const average = averageSelector(state);
+  const distance = totalDistanceSelector(state);
   const leaderboard = leaderboardSelector(state);
 
   return {
@@ -32,6 +34,7 @@ function mapStateToProps(state) {
     leaderboard,
     isLoading,
     breakdown,
+    distance,
     total,
     average
   };

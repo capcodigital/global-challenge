@@ -150,7 +150,7 @@ class Dashboard extends React.Component {
     } = this.state;
 
     const {
-      isLoading, activities, total, average, breakdown, leaderboard
+      isLoading, activities, total, average, breakdown, leaderboard, distance
     } = this.props;
 
     return (
@@ -162,6 +162,7 @@ class Dashboard extends React.Component {
                 worldData={worldData}
                 statistics={statistics}
                 cities={cities}
+                distance={distance}
                 width={width}
                 scale={width < 400 ? 70 : 150}
                 geoCenter={[0, 10]}
@@ -330,6 +331,7 @@ Dashboard.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.shape({}),
   total: PropTypes.number,
+  distance: PropTypes.number,
   average: PropTypes.number,
   breakdown: PropTypes.object,
   leaderboard: PropTypes.array,

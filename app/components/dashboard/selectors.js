@@ -29,6 +29,17 @@ const totalSelector = createSelector(
   }
 );
 
+const totalDistanceSelector = createSelector(
+  [filteredActivitiesSelector],
+  (activities) => {
+    if (activities) {
+      const steps = activities.toJS();
+      return steps.reduce((sum, n) => sum + n.totalDistance, 0);
+    }
+    return 0;
+  }
+);
+
 const averageSelector = createSelector(
   [totalSelector, filteredActivitiesSelector],
   (total, employees) => (!total || total === 0 ? 0 : Math.floor(total / employees.count()))
@@ -110,5 +121,6 @@ export {
   loadingStateSelector,
   breakdownSelector,
   totalSelector,
-  averageSelector
+  averageSelector,
+  totalDistanceSelector
 };
