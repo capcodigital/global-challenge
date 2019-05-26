@@ -34,6 +34,16 @@
     padding-top: 2rem;
   }
 
+  .search-container {
+    margin-bottom: 1rem;
+
+    .search {
+      .input { 
+        width: 100%;
+      }
+    }
+  }
+
   .content-container {
     height: 370px;
     padding: 2rem;

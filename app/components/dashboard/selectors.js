@@ -69,10 +69,12 @@ const leaderboardSelector = createSelector(
     if (activities) {
       const leaderboard = sort(activities.toJS(), 'totalSteps');
 
-      return leaderboard.slice(0, 8).map((leader) => ({
+      return leaderboard.slice(0, 6).map((leader) => ({
         steps: leader.totalSteps,
         distance: leader.totalDistance,
-        name: leader.name
+        name: leader.name,
+        title: leader.name,
+        description: `No. of steps ${leader.totalSteps}`
       }));
     }
 
