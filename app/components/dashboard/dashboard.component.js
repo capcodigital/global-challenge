@@ -1,9 +1,15 @@
 import React from 'react';
 import { feature } from 'topojson-client';
-import { keyBy } from 'lodash';
+import { keyBy, debounce } from 'lodash';
 import PropTypes from 'prop-types';
 import {
-  Segment, Grid, Container, Image, Header, Dropdown
+  Segment,
+  Grid,
+  Container,
+  Image,
+  Header,
+  Dropdown,
+  Search
 } from 'semantic-ui-react';
 import { FormattedMessage, FormattedNumber } from 'react-intl';
 import { Counter, ListView } from 'components/common';
@@ -29,7 +35,8 @@ class Dashboard extends React.Component {
       geoCenter: [0, 10],
       filter: 'Global',
       cities: allCities,
-      statistics: {}
+      statistics: {},
+      searchString: ''
     };
   }
 
@@ -130,6 +137,22 @@ class Dashboard extends React.Component {
     });
   }
 
+  handleResultSelect = (e, { result }) => {
+    const { filterActivities } = this.props;
+
+    this.setState({ searchString: result.title }, () => {
+      filterActivities(result.title);
+    });
+  }
+
+  handleSearchChange = (e, { value }) => {
+    const { filterActivities } = this.props;
+
+    this.setState({ searchString: value }, () => {
+      filterActivities(value);
+    });
+  }
+
   onCountryChange = (e, { value }) => {
     const { filterActivities } = this.props;
 
@@ -146,11 +169,11 @@ class Dashboard extends React.Component {
 
   render() {
     const {
-      cities, worldData, width, height, filter, region, geoCenter, scale, statistics
+      cities, worldData, width, height, filter, region, geoCenter, scale, statistics, searchString
     } = this.state;
 
     const {
-      isLoading, activities, total, average, breakdown, leaderboard
+      isLoading, activities, total, average, breakdown, leaderboard, distance
     } = this.props;
 
     return (
@@ -162,6 +185,7 @@ class Dashboard extends React.Component {
                 worldData={worldData}
                 statistics={statistics}
                 cities={cities}
+                distance={distance}
                 width={width}
                 scale={width < 400 ? 70 : 150}
                 geoCenter={[0, 10]}
@@ -307,10 +331,22 @@ class Dashboard extends React.Component {
                     <FormattedMessage id="dashboard.leaderboard" />
                   </Header>
 
+                  <div className="search-container">
+                    <Search
+                      fluid
+                      loading={isLoading}
+                      onResultSelect={this.handleResultSelect}
+                      onSearchChange={debounce(this.handleSearchChange, 500, {
+                        leading: true,
+                      })}
+                      results={leaderboard}
+                      value={searchString}
+                    />
+                  </div>
                   <div>
                     <ListView
                       list={leaderboard}
-                      prefix={'No of steps'}
+                      prefix={'No. of steps'}
                     />
                   </div>
                 </div>
@@ -330,6 +366,7 @@ Dashboard.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.shape({}),
   total: PropTypes.number,
+  distance: PropTypes.number,
   average: PropTypes.number,
   breakdown: PropTypes.object,
   leaderboard: PropTypes.array,

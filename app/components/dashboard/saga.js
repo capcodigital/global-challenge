@@ -27,7 +27,7 @@ const filterData = (data, payload, searchString) => data.filter((activity) => {
     return location && location.includes(searchString);
   }
 
-  return activity.get('name').includes(searchString);
+  return activity.get('name').toLowerCase().includes(searchString);
 }).toJS();
 
 export function* fetchActivitiesSaga() {

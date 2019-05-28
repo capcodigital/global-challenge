@@ -29,6 +29,17 @@ const totalSelector = createSelector(
   }
 );
 
+const totalDistanceSelector = createSelector(
+  [filteredActivitiesSelector],
+  (activities) => {
+    if (activities) {
+      const steps = activities.toJS();
+      return steps.reduce((sum, n) => sum + n.totalDistance, 0);
+    }
+    return 0;
+  }
+);
+
 const averageSelector = createSelector(
   [totalSelector, filteredActivitiesSelector],
   (total, employees) => (!total || total === 0 ? 0 : Math.floor(total / employees.count()))
@@ -58,10 +69,12 @@ const leaderboardSelector = createSelector(
     if (activities) {
       const leaderboard = sort(activities.toJS(), 'totalSteps');
 
-      return leaderboard.slice(0, 8).map((leader) => ({
+      return leaderboard.slice(0, 6).map((leader) => ({
         steps: leader.totalSteps,
         distance: leader.totalDistance,
-        name: leader.name
+        name: leader.name,
+        title: leader.name,
+        description: `No. of steps ${leader.totalSteps}`
       }));
     }
 
@@ -110,5 +123,6 @@ export {
   loadingStateSelector,
   breakdownSelector,
   totalSelector,
-  averageSelector
+  averageSelector,
+  totalDistanceSelector
 };
