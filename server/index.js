@@ -13,6 +13,8 @@ const argv = require('./util/argv');
 const port = require('./util//port');
 const setup = require('./middlewares/frontendMiddleware');
 
+var models = require("./config/models");
+
 const app = express();
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';

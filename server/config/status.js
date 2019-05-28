@@ -1,45 +1,44 @@
-/* eslint-disable global-require */
 /**
  * events for boot
- * */
-import { queue } from 'async';
+ **/
+var async = require("async");
 
-let ready = false;
-const readyState = new (require('events').EventEmitter)();
+var ready = false;
+var readyState = new (require("events").EventEmitter);
 
-const dependencies = queue((waiter, callback) => {
+var dependencies = async.queue(function(waiter, callback) {
   waiter(callback);
 });
 
 // when all deps are done
-dependencies.drain = () => {
+dependencies.drain = function() {
   ready = true;
-  readyState.emit('ready');
-};
+  readyState.emit("ready");
+}
 
-export const onReady = (cb) => {
-  if (ready) {
-    cb();
+exports.onReady = function(cb) {
+  if(ready) {
+    cb()
   } else {
-    readyState.once('ready', cb);
+    readyState.once("ready", cb);
   }
-};
+}
 
-export const dependency = () => {
-  let queueCallback;
-  let done = false;
-  dependencies.push((asyncQCallback) => {
-    if (done) {
+exports.dependency = function() {
+  var queueCallback;
+  var done = false;
+  dependencies.push(function waiter(asyncQCallback) {
+    if(done) {
       asyncQCallback();
     } else {
       queueCallback = asyncQCallback;
     }
   });
 
-  return (err) => {
-    if (queueCallback) {
-      queueCallback(err);
+  return function(err) {
+    if(queueCallback) {
+      queueCallback(err)
     }
     done = true;
-  };
-};
+  }
+}

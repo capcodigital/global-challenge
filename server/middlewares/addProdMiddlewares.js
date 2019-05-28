@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const compression = require('compression');
 
+var users = require('../controllers/users.controller');
+var fitbit = require('../controllers/fitbit.controller');
+
 module.exports = function addProdMiddlewares(app, options) {
   const publicPath = options.publicPath || '/';
   const outputPath = options.outputPath || path.resolve(process.cwd(), 'build');
