@@ -1,56 +1,51 @@
-/* eslint-disable global-require */
-import { connect, connection } from 'mongoose';
-import { readdirSync, statSync } from 'fs';
-import { db as __db } from './config';
+var config = require('./config');
+var mongoose = require("mongoose");
 
-import { dependency } from './status';
-
+var bootStatus = require("./status");
+var fs = require("fs");
 // Bootstrap db connection
-export const db = connect(__db.toString(), { useMongoClient: true }, dependency());
+var db = exports.db = mongoose.connect(config.db.toString(), bootStatus.dependency());
 
-
-connection.on('connected', () => {
-  console.log('Database Connection Connected');
+mongoose.connection.on("connected", function(ref){
+    console.log("Database Connection Connected");
 });
 
-connection.on('open', () => {
-  console.log('Database Connection Open');
+mongoose.connection.on("open", function(ref){
+    console.log("Database Connection Open");
 });
 
-connection.on('disconnected', () => {
-  console.log('Database Connection Disconnected');
-  console.log('End Process');
-  process.exit();
+mongoose.connection.on("disconnected", function(ref){
+    console.log("Database Connection Disconnected");
+    console.log("End Process");
+    process.exit();
 });
 
-connection.on('error', (err) => {
-  console.log('Database Connection Failure');
-  console.log(err);
-  console.log('End Process');
-  process.exit();
+mongoose.connection.on("error", function(err){
+    console.log("Database Connection Failure");
+    console.log(err);
+    console.log("End Process");
+    process.exit();
 });
 
-connection.on('close', () => {
-  console.log('Database Connection Closed');
-  console.log('End Process');
-  process.exit();
+mongoose.connection.on("close", function(err){
+    console.log("Database Connection Closed");
+    console.log("End Process");
+    process.exit();
 });
 
 // Bootstrap models
-const modelsPath = `${__dirname}/../app/models`;
-const walk = (path) => {
-  readdirSync(path).forEach((file) => {
-    const newPath = `${path}/${file}`;
-    const stat = statSync(newPath);
-    if (stat.isFile()) {
-      if (/(.*)\.(js$|coffee$)/.test(file)) {
-        // eslint-disable-next-line import/no-dynamic-require
-        require(newPath);
-      }
-    } else if (stat.isDirectory()) {
-      walk(newPath);
-    }
-  });
+var models_path = __dirname + '/../models';
+var walk = function(path) {
+    fs.readdirSync(path).forEach(function(file) {
+        var newPath = path + '/' + file;
+        var stat = fs.statSync(newPath);
+        if (stat.isFile()) {
+            if (/(.*)\.(js$|coffee$)/.test(file)) {
+                require(newPath);
+            }
+        } else if (stat.isDirectory()) {
+            walk(newPath);
+        }
+    });
 };
-
-walk(modelsPath);
+walk(models_path);

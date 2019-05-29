@@ -1,58 +1,74 @@
 /**
  * Module dependencies.
  */
-import { getAllUsers, getUser, getUserPhoto } from '../services/cit.service';
+var mongoose = require('mongoose'),
+    Audit = mongoose.model('Audit'),
+    citService = require('../services/cit'),
+    _ = require('underscore');
+
+/**
+ * Save a new record in the Audit Log
+ */
+function saveNewAudit(auditRecord) {
+    auditRecord.visualization = 'Project';
+    auditRecord.save(function(err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+}
 
 /**
  * List of Users
  */
-export const all = (req, res) => {
-  getAllUsers((err, result) => {
-    if (err) {
-      console.log(err);
-      res.render('error', {
-        status: 500
-      });
-    } else {
-      res.jsonp(result.content);
-    }
-  });
-};
+exports.all = function(req, res) {
+    citService.getAllUsers(function(err, result) {
+        if (err) {
+            console.log(err);
+             res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(result.content);
+        }
+    });
+}
 
 /**
  * Get one user
  */
-export const me = (req, res) => {
-  const { capcoId } = req.params.capcoId;
+ exports.me = function(req, res) {
+    var capcoId = req.params.capcoId;
 
-  getUser(capcoId, (err, result) => {
-    if (err) {
-      console.log(err);
+    citService.getUser(capcoId, function(err, result) {
+        if (err) {
+            console.log(err);
 
-      res.render('error', {
-        status: 500
-      });
-    } else {
-      res.jsonp(result);
-    }
-  });
-};
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(result);
+        }
+    });
+}
 
-export const getPhoto = (req, res) => {
-  // This needs to be numeric user id not Capco 4 letter id
-  const { capcoId } = req.params.capcoId;
+exports.getPhoto = function(req, res) {
+    // This needs to be numeric user id not Capco 4 letter id
+    var capcoId = req.params.capcoId;
 
-  getUserPhoto(capcoId, (err, result) => {
-    if (err) {
-      console.log(err);
+    citService.getUserPhoto(capcoId, function(err, result) {
+        if (err) {
+            console.log(err);
 
-      res.render('error', {
-        status: 500
-      });
-    } else {
-      res.setHeader('Content-Type', result.type);
-      res.setHeader('Content-Length', result.length);
-      res.end(result.photo);
-    }
-  });
-};
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.setHeader('Content-Type', result.type);
+            res.setHeader('Content-Length', result.length);
+            res.end(result.photo);
+        }
+    });
+}
+

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const SERVER_URL = 'https://localhost:8080/';
+export const SERVER_URL = 'https://localhost/';
 
 export const FETCH_ACTIVITIES_REQUEST = 'FETCH_ACTIVITIES_REQUEST';
 export const FETCH_ACTIVITIES_SUCCESS = 'FETCH_ACTIVIES_SUCCESS';

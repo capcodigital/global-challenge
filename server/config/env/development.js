@@ -1,4 +1,6 @@
-export const db = process.env.MONGODB_URI || 'mongodb://localhost/step-challenge';
-export const app = {
-  name: 'Step Challenge'
-};
+module.exports = {
+    db: process.env.MONGODB_URI || "mongodb://localhost/step-challenge",
+    app: {
+        name: "Step Challenge"
+    },
+}
