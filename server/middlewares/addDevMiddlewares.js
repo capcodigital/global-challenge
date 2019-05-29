@@ -26,30 +26,17 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   // artifacts, we use it instead
   const fs = middleware.fileSystem;
 
-  app.get('/users/userStats', (req, res) => {
-    res.sendFile(path.resolve(outputPath, 'index.html'));
-  });
+  app.get('/users/userStats', users.stats);
 
-  app.get('/users/activities', (req, res) => {
-    console.log("activities");
-    users.activities(req, res);
-  });
+  app.get('/users/activities', users.activities);
 
-  app.get('/users/citUpdate', (req, res) => {
-    res.sendFile(path.resolve(outputPath, 'index.html'));
-  });
+  app.get('/users/citUpdate', users.citUpdate);
 
-  app.get('/users/addManual', (req, res) => {
-    res.sendFile(path.resolve(outputPath, 'index.html'));
-  });
+  app.get('/users/addManual', users.addManual);
 
-  app.get('/fitbit/auth', (req, res) => {
-    res.sendFile(path.resolve(outputPath, 'index.html'));
-  });
+  app.get('/fitbit/auth', fitbit.authorize);
 
-  app.get('/fitbit/update', (req, res) => {
-    res.sendFile(path.resolve(outputPath, 'index.html'));
-  });
+  app.get('/fitbit/update', fitbit.update);
 
   app.get('*', (req, res) => {
     fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
