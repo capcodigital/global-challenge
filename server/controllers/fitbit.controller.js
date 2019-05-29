@@ -162,6 +162,8 @@ function updateUser(user) {
         var newReq2 = buildRequest(options, function(err, result) {
             if (err) {
                 console.log(err);
+            } else if (result.errors && result.errors.length > 0) {
+                console.log(result.errors[0].message);
             } else {
                 console.log("New Token details: " + JSON.stringify(result));
                 var date = new Date();
@@ -178,9 +180,11 @@ function updateUser(user) {
                 user.expires_in = expiration;
             }
 
-            newReq2.end();
             getStats();
         });
+
+        newReq2.end();
+
     } else {
         getStats();
     }
@@ -216,10 +220,12 @@ function updateUser(user) {
 
                 var activityCount = user.activities.length;
                 for (var i = 0; i < activityCount; i++) {
-                    user.totalSteps = user.totalSteps + user.activities[i].summary.steps;
-                    user.totalDistance = user.totalDistance + user.activities[i].summary.distances[0].distance;
-                    user.totalDuration = user.totalDuration + user.activities[i].summary.fairlyActiveMinutes + user.activities[i].summary.lightlyActiveMinutes + user.activities[i].summary.veryActiveMinutes;
-                    user.totalCalories = user.totalCalories + user.activities[i].summary.activityCalories;
+                    if (user.activities[i] && user.activities[i].summary) {
+                        user.totalSteps = user.totalSteps + user.activities[i].summary.steps;
+                        user.totalDistance = user.totalDistance + user.activities[i].summary.distances[0].distance;
+                        user.totalDuration = user.totalDuration + user.activities[i].summary.fairlyActiveMinutes + user.activities[i].summary.lightlyActiveMinutes + user.activities[i].summary.veryActiveMinutes;
+                        user.totalCalories = user.totalCalories + user.activities[i].summary.activityCalories;
+                    }
                 }
 
                 user.save(function(err, newUser) {
