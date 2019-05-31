@@ -12,7 +12,7 @@ exports.stats = function(req, res, next) {
     User.find({}).sort('name').exec(function(err, users) {
         if (err) {
           console.log(err);
-            res.render('error', { errormsg: "Server error please try again later" });
+            res.json({error: "Server error please try again later" });
         } else {
 
           var capco = 0;
@@ -39,7 +39,7 @@ exports.activities = function(req, res, next) {
     User.find({}).exec(function(err, users) {
         if (err) {
           console.log(err);
-            res.render('error', { errormsg: "Server error please try again later" });
+            res.json({error: "Server error please try again later" });
         } else {
           res.jsonp(users);
         }
@@ -49,7 +49,7 @@ exports.activities = function(req, res, next) {
 exports.citUpdate = function(req, res) {
     User.find().exec(function(err, users) {
         if (err) {
-            res.render('error', { errormsg: "Server error please try again later" });
+            res.json({error: "Server error please try again later" });
         } else {
             var userCount = users.length;
             for (var i = 0; i < userCount; i++) {
@@ -87,7 +87,7 @@ function updateUser(user) {
 exports.addManual = function(req, res) {
 
     if (!req.query.authcode || req.query.authcode !== "Wellbeing1") {
-        res.render('error', { errormsg: "Manual event not added - Invalid Authorization Code" });
+        res.json({error: "Manual event not added - Invalid Authorization Code" });
     } else {
 
         var user = new User();
@@ -109,13 +109,13 @@ exports.addManual = function(req, res) {
             if (err) {
                 console.log(err);
                 if (err.code == 11000) {
-                    res.render('error', { errormsg: "Manual event not added - Event Name has already been registered" });
+                    res.json({error: "Manual event not added - Event Name has already been registered" });
                 } else {
-                    res.render('error', { errormsg: "Manual event not added - Server error please try again later" });
+                    res.json({error: "Manual event not added - Server error please try again later" });
                 }
             } else {
                 console.log("Added " + newUser.totalSteps + " for " + newUser.username);
-                res.render('success', {});
+                res.json({success: {}});
             }
         })
     }
