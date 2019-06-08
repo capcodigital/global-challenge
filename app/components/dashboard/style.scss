@@ -16,17 +16,14 @@
   }
 
   .challenge-description {
-    font-size: 1.5rem;
+    font-size: 1.125rem;
     position: relative;
+    margin: 2rem 0;
 
-    .total-steps {
-      font-size: 4rem;
-      color: #d9d9d9;
-      margin-bottom: 1rem;
-    }
-
-    p {
-      margin-bottom: 0.125rem;
+    .highlight {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #000000;
     }
   }
 
