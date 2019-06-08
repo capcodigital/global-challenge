@@ -206,16 +206,22 @@ class Dashboard extends React.Component {
         </Segment>
 
         <Segment loading={isLoading} className="primary">
-          <Container className="counter-wrapper">
-            <Sign className="counter">
-              <div className="logo-container">
-                <Image src={Logo} size="small" />
+          <Container className="sign-wrapper">
+            <Sign className="counter-wrapper">
+              <div className="counter">
+                <div className="logo-container">
+                  <Image src={Logo} size="small" />
+                </div>
+                <div className="counter-container">
+                  <Counter
+                    digits={8}
+                    data={convertNumberToArray(total, 10000000)}
+                  />
+                </div>
               </div>
-              <div className="counter-container">
-                <Counter
-                  digits={8}
-                  data={convertNumberToArray(total, 10000000)}
-                />
+              
+              <div className="tagline">
+                <FormattedMessage id="dashboard.counterTagline" />
               </div>
             </Sign>
           </Container>

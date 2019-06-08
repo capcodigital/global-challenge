@@ -3,7 +3,7 @@
   position: relative;
   margin: 0 auto;
 
-  &.counter {
+  &.counter-wrapper {
     max-width: 680px;
   }
 
@@ -13,8 +13,7 @@
     text-align: center;
 
     .header {
-      font-size: 1rem !important;
-      text-transform: uppercase !important;
+      font-size: 1.28571429em !important;
     }
   }
 
@@ -27,8 +26,7 @@
       margin-top: 1.5rem;
 
       .label {
-        font-size: 1rem !important;
-        text-transform: uppercase !important;
+        font-size: 1.5rem !important;
         margin-top: 1.5rem;
       }
   
