@@ -120,19 +120,9 @@ export const offices = [
     value: 'London'
   },
   {
-    key: 'Johannesburg',
-    text: 'Johannesburg',
-    value: 'Johannesburg'
-  },
-  {
     key: 'Paris',
     text: 'Paris',
     value: 'Paris'
-  },
-  {
-    key: 'Stockholm',
-    text: 'Stockholm',
-    value: 'Stockholm'
   },
   {
     key: 'Vienna',
@@ -153,6 +143,11 @@ export const offices = [
     key: 'Bangalore',
     text: 'Bangalore',
     value: 'Bangalore'
+  },
+  {
+    key: 'Bangkok',
+    text: 'Bangkok',
+    value: 'Bangkok'
   },
   {
     key: 'Hong Kong',
@@ -234,31 +229,31 @@ export const allCities = [
     name: 'Dusseldorf', country: 'Germany', region: 'Europe', coordinates: [6.7833, 51.2333], distance: 23895.6
   },
   {
-    name: 'Stockholm', country: 'Sweden', region: 'Europe', coordinates: [18.0686, 59.3293], distance: 25374.3
+    name: 'Warsaw', country: 'Poland', region: 'Europe', coordinates: [21.0122, 52.2297], distance: 24997.7
   },
   {
-    name: 'Warsaw', country: 'Poland', region: 'Europe', coordinates: [21.0122, 52.2297], distance: 26052.6
+    name: 'Vienna', country: 'Austria', region: 'Europe', coordinates: [16.3738, 48.2082], distance: 25677
   },
   {
-    name: 'Vienna', country: 'Austria', region: 'Europe', coordinates: [16.3738, 48.2082], distance: 26132.7
+    name: 'Bratislava', country: 'Slovakia', region: 'Europe', coordinates: [17.1097, 48.1439], distance: 25757
   },
   {
-    name: 'Bratislava', country: 'Slovakia', region: 'Europe', coordinates: [17.1097, 48.1439], distance: 32166.7
+    name: 'Pune', country: 'India', region: 'Asia', coordinates: [73.8567, 18.5204], distance: 31791
   },
   {
-    name: 'Pune', country: 'India', region: 'Asia', coordinates: [73.8567, 18.5204], distance: 33007.9
+    name: 'Bangalore', country: 'India', region: 'Asia', coordinates: [77.5667, 12.9667], distance: 32632
   },
   {
-    name: 'Bangalore', country: 'India', region: 'Asia', coordinates: [77.5667, 12.9667], distance: 39553.9
+    name: 'Bangkok', country: 'Thailand', region: 'Asia', coordinates: [100.5018, 13.7563], distance: 37848.2
   },
   {
-    name: 'Kuala Lumpur', country: 'Malaysia', region: 'Asia', coordinates: [101.6869, 3.1390], distance: 39904
+    name: 'Kuala Lumpur', country: 'Malaysia', region: 'Asia', coordinates: [101.6869, 3.1390], distance: 39319.6
   },
   {
-    name: 'Singapore', country: 'Singapore', region: 'Asia', coordinates: [103.8000, 1.3000], distance: 42489
+    name: 'Singapore', country: 'Singapore', region: 'Asia', coordinates: [103.8000, 1.3000], distance: 39669.7
   },
   {
-    name: 'Hong Kong', country: 'Hong Kong', region: 'Asia', coordinates: [114.1589, 22.2783], distance: 42489
+    name: 'Hong Kong', country: 'Hong Kong', region: 'Asia', coordinates: [114.1589, 22.2783], distance: 42254.7
   }
 ];
 
@@ -812,6 +807,9 @@ export const officeMap = {
   Bangalore: {
     name: 'Bangalore', country: 'India', region: 'Asia', subRegion: '', coordinates: [77.5667, 12.9667]
   },
+  Bangkok: {
+    name: 'Bangkok', country: 'Thailand', region: 'Asia', subRegion: '', coordinates: [100.5018, 13.7563]
+  },
   'Hong Kong': {
     name: 'Hong Kong', country: 'Hong Kong', region: 'Asia', subRegion: '', coordinates: [114.1589, 22.2783]
   },
@@ -848,9 +846,6 @@ export const officeMap = {
   },
   Paris: {
     name: 'Paris', country: 'France', region: 'Europe', subRegion: 'Continental Europe', coordinates: [2.3508, 48.8567]
-  },
-  Stockholm: {
-    name: 'Stockholm', country: 'Sweden', region: 'Europe', subRegion: 'Continental Europe', coordinates: [18.0686, 59.3293]
   },
   Vienna: {
     name: 'Vienna', country: 'Austria', region: 'Europe', subRegion: 'Continental Europe', coordinates: [16.3738, 48.2082]
