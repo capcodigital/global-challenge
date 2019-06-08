@@ -14,7 +14,6 @@
   "dashboard.stepsByLevel": "Steps by Level",
   "dashboard.stepsByOffice": "Total Steps by Office",
   "dashboard.averageStepsByOffice": "Average Steps by Office",
-  "dashboard.fiftyMillionSteps": "50 Million Steps",
-  "dashboard.numberOfOffices": "Across {numberOfOffices} locations",
-  "dashboard.activeParticipants": "With {activeParticipants} employees participating in the challenge"
+  "dashboard.activeParticipants": "With {activeParticipants} employees participating in the challenge",
+  "dashboard.mapDescription": "Track our collective progress as we take <span class='highlight'>50 million steps</span> for charity; from Sao Paulo to Hong Kong via all <span class='highlight'>{numberOfOffices} Offices.</span> Help us all reach the finish and get stepping!"
 }

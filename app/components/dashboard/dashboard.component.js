@@ -11,7 +11,7 @@ import {
   Dropdown,
   Search
 } from 'semantic-ui-react';
-import { FormattedMessage, FormattedNumber } from 'react-intl';
+import { FormattedMessage, FormattedNumber, FormattedHTMLMessage } from 'react-intl';
 import { Counter, ListView } from 'components/common';
 import Map from 'components/map/map.component';
 import Sign from 'components/sign/sign.component';
@@ -173,7 +173,7 @@ class Dashboard extends React.Component {
     } = this.state;
 
     const {
-      isLoading, activities, total, average, breakdown, leaderboard, distance
+      isLoading, total, average, breakdown, leaderboard, distance
     } = this.props;
 
     return (
@@ -194,25 +194,13 @@ class Dashboard extends React.Component {
             </div>
 
             <div className="challenge-description">
-              <p className="total-steps"><FormattedMessage id="dashboard.fiftyMillionSteps" /></p>
-              <p>
-                <FormattedMessage
-                  id="dashboard.numberOfOffices"
-                  defaultMessage="Across {numberOfOffices} locations"
-                  values={{
-                    numberOfOffices: cities.length
-                  }}
-                />
-              </p>
-              <p>
-                <FormattedMessage
-                  id="dashboard.activeParticipants"
-                  defaultMessage="With {activeParticipants} employees participating in the challenge"
-                  values={{
-                    activeParticipants: activities.size
-                  }}
-                />
-              </p>
+              <FormattedHTMLMessage
+                id="dashboard.mapDescription"
+                defaultMessage="Track our collective progress as we take <span class='highlight'>50 million steps</span> for charity; from Sao Paulo to Hong Kong via all <span class='highlight'>{numberOfOffices} Offices.</span> Help us all reach the finish and get stepping!"
+                values={{
+                  numberOfOffices: cities.length + 1
+                }}
+              />
             </div>
           </Container>
         </Segment>
@@ -363,7 +351,6 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   filteredActivities: PropTypes.object,
-  activities: PropTypes.object,
   getActivities: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.shape({}),
