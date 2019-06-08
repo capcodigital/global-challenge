@@ -56,50 +56,52 @@ class Map extends React.PureComponent {
     } = this.props;
 
     return (
-      <svg width={width} height={height || 450}>
-        <g className="countries">
-          {
-            worldData.map((d, i) => (
-              <path
-                key={`path-${i + 0}`}
-                d={geoPath().projection(this.projection())(d)}
-                className="country"
-                fill={`rgba(38,50,36,${1 / worldData.length * (i + 1)})`}
-                stroke="#fff"
-                strokeWidth={0.5}
-              />
-            ))
-          }
-        </g>
-        <g className="markers">
-          {
-            cities.map((city, i) => (
-              <circle
-                key={`marker-${i + 0}`}
-                cx={this.projection()(city.coordinates)[0]}
-                cy={this.projection()(city.coordinates)[1]}
-                r={statistics[city.name] ? SCALE(statistics[city.name].steps) : SCALE(0)}
-                fill={city.distance >= distance ? '#0058bb' : '#c00d0d'}
-                opacity={0.7}
-              />
-            ))
-          }
-        </g>
+      <div className="map">
+        <svg width={width} height={height || 450}>
+          <g className="countries">
+            {
+              worldData.map((d, i) => (
+                <path
+                  key={`path-${i + 0}`}
+                  d={geoPath().projection(this.projection())(d)}
+                  className="country"
+                  fill={`rgba(38,50,36,${1 / worldData.length * (i + 1)})`}
+                  stroke="#fff"
+                  strokeWidth={0.5}
+                />
+              ))
+            }
+          </g>
+          <g className="markers">
+            {
+              cities.map((city, i) => (
+                <circle
+                  key={`marker-${i + 0}`}
+                  cx={this.projection()(city.coordinates)[0]}
+                  cy={this.projection()(city.coordinates)[1]}
+                  r={statistics[city.name] ? SCALE(statistics[city.name].steps) : SCALE(0)}
+                  fill={city.distance >= distance ? '#0058bb' : '#c00d0d'}
+                  opacity={0.7}
+                />
+              ))
+            }
+          </g>
 
-        <g className="routes">
-          {
-            cities.map((city, i) => (
-              <path
-                key={`route-${i + 0}`}
-                d={this.getRoute(city, i)}
-                className="route-path"
-                fill="none"
-                stroke={city.distance >= distance ? '#0058bb' : '#c00d0d'}
-              />
-            ))
-          }
-        </g>
-      </svg>
+          <g className="routes">
+            {
+              cities.map((city, i) => (
+                <path
+                  key={`route-${i + 0}`}
+                  d={this.getRoute(city, i)}
+                  className="route-path"
+                  fill="none"
+                  stroke={city.distance >= distance ? '#0058bb' : '#c00d0d'}
+                />
+              ))
+            }
+          </g>
+        </svg>
+      </div>
     );
   }
 }
