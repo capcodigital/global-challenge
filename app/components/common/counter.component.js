@@ -33,7 +33,7 @@ class Counter extends React.PureComponent {
       d3.select(this.groupRefs[i])
         .transition()
         .duration(DURATION)
-        .attr('transform', `translate(${i * 34}, ${d * -60})`);
+        .attr('transform', `translate(${i * 44}, ${d * -60})`);
     });
   }
 
@@ -45,16 +45,16 @@ class Counter extends React.PureComponent {
     const { digits, data } = this.props;
 
     return (
-      <svg width={svgWidth} height={svgHeight}>
+      <svg height={svgHeight}>
         <g transform={`translate(${margin.left}, ${0})`}>
           {data.map((d, i) => (
             <rect
               key={`digit-${i + 0}`}
               className="bar"
-              x={i * 34}
+              x={i * 44}
               y={0}
               fill={'#fff'}
-              width={30}
+              width={40}
               height={600}
             />
           ))}
@@ -64,7 +64,7 @@ class Counter extends React.PureComponent {
               <g
                 key={`roll-${digit}`}
                 ref={this.saveRef}
-                transform={`translate(${digit * 34}, 0)`}
+                transform={`translate(${digit * 44}, 0)`}
                 className={`counter-roll roll-${digit}`}
               >
                 {
