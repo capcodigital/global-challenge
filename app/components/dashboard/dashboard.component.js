@@ -13,8 +13,9 @@ import {
 } from 'semantic-ui-react';
 import { FormattedMessage, FormattedNumber, FormattedHTMLMessage } from 'react-intl';
 import { Counter, ListView } from 'components/common';
-import Map from 'components/map/map.component';
-import Sign from 'components/sign/sign.component';
+import Map from 'components/map';
+import Sign from 'components/sign';
+import Legend from 'components/legend';
 import convertNumberToArray from '../../utils/covertNumberToArray';
 
 import {
@@ -22,6 +23,8 @@ import {
 } from './constants';
 import Logo from './images/capco.png';
 import './style.scss';
+
+const legends = [{ label: 'Planned route', fill: 'rgb(0, 88, 187)' }, { label: 'Progress so far', fill: 'rgb(192, 13, 13)' }];
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -191,6 +194,8 @@ class Dashboard extends React.Component {
                 geoCenter={[0, 10]}
                 height={height}
               />
+
+              <Legend legends={legends} />
             </div>
 
             <div className="challenge-description">
