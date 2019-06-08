@@ -260,21 +260,6 @@ class Dashboard extends React.Component {
                   </div>
                 </div>
               </Grid.Column>
-              <Grid.Column>
-                <div className="content-container">
-                  <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.stepsByOffice" />
-                  </Header>
-
-                  <div>
-                    <ListView
-                      list={breakdown.offices}
-                      prefix={'No of steps'}
-                      image
-                    />
-                  </div>
-                </div>
-              </Grid.Column>
 
               <Grid.Column>
                 <div className="content-container">
@@ -292,9 +277,52 @@ class Dashboard extends React.Component {
                   </div>
                 </div>
               </Grid.Column>
+
+              <Grid.Column>
+                <div className="content-container">
+                  <Header size="medium" className="container-header">
+                    <FormattedMessage id="dashboard.leaderboard" />
+                  </Header>
+
+                  <div className="search-container">
+                    <Search
+                      fluid
+                      loading={isLoading}
+                      onResultSelect={this.handleResultSelect}
+                      onSearchChange={debounce(this.handleSearchChange, 500, {
+                        leading: true,
+                      })}
+                      results={leaderboard}
+                      value={searchString}
+                    />
+                  </div>
+                  <div>
+                    <ListView
+                      list={leaderboard}
+                      prefix={'No. of steps'}
+                    />
+                  </div>
+                </div>
+              </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
+              <Grid.Column>
+                <div className="content-container">
+                  <Header size="medium" className="container-header">
+                    <FormattedMessage id="dashboard.stepsByOffice" />
+                  </Header>
+
+                  <div>
+                    <ListView
+                      list={breakdown.offices}
+                      prefix={'No of steps'}
+                      image
+                    />
+                  </div>
+                </div>
+              </Grid.Column>
+
               <Grid.Column>
                 <div className="content-container">
                   <Header size="medium" className="container-header">
@@ -323,32 +351,6 @@ class Dashboard extends React.Component {
                       <div className="label"><FormattedMessage id="dashboard.steps" /></div>
                     </div>
                   </Sign>
-                </div>
-              </Grid.Column>
-              <Grid.Column>
-                <div className="content-container">
-                  <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.leaderboard" />
-                  </Header>
-
-                  <div className="search-container">
-                    <Search
-                      fluid
-                      loading={isLoading}
-                      onResultSelect={this.handleResultSelect}
-                      onSearchChange={debounce(this.handleSearchChange, 500, {
-                        leading: true,
-                      })}
-                      results={leaderboard}
-                      value={searchString}
-                    />
-                  </div>
-                  <div>
-                    <ListView
-                      list={leaderboard}
-                      prefix={'No. of steps'}
-                    />
-                  </div>
                 </div>
               </Grid.Column>
             </Grid.Row>
