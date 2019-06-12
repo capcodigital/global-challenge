@@ -11,10 +11,11 @@ import {
   Dropdown,
   Search
 } from 'semantic-ui-react';
-import { FormattedMessage, FormattedNumber } from 'react-intl';
+import { FormattedMessage, FormattedNumber, FormattedHTMLMessage } from 'react-intl';
 import { Counter, ListView } from 'components/common';
-import Map from 'components/map/map.component';
-import Sign from 'components/sign/sign.component';
+import Map from 'components/map';
+import Sign from 'components/sign';
+import Legend from 'components/legend';
 import convertNumberToArray from '../../utils/covertNumberToArray';
 
 import {
@@ -22,6 +23,8 @@ import {
 } from './constants';
 import Logo from './images/capco.png';
 import './style.scss';
+
+const legends = [{ label: 'Planned route', fill: 'rgb(0, 88, 187)' }, { label: 'Progress so far', fill: 'rgb(192, 13, 13)' }];
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -173,7 +176,7 @@ class Dashboard extends React.Component {
     } = this.state;
 
     const {
-      isLoading, activities, total, average, breakdown, leaderboard, distance
+      isLoading, total, average, breakdown, leaderboard, distance
     } = this.props;
 
     return (
@@ -191,43 +194,39 @@ class Dashboard extends React.Component {
                 geoCenter={[0, 10]}
                 height={height}
               />
+
+              <Legend legends={legends} />
             </div>
 
             <div className="challenge-description">
-              <p className="total-steps"><FormattedMessage id="dashboard.fiftyMillionSteps" /></p>
-              <p>
-                <FormattedMessage
-                  id="dashboard.numberOfOffices"
-                  defaultMessage="Across {numberOfOffices} locations"
-                  values={{
-                    numberOfOffices: cities.length
-                  }}
-                />
-              </p>
-              <p>
-                <FormattedMessage
-                  id="dashboard.activeParticipants"
-                  defaultMessage="With {activeParticipants} employees participating in the challenge"
-                  values={{
-                    activeParticipants: activities.size
-                  }}
-                />
-              </p>
+              <FormattedHTMLMessage
+                id="dashboard.mapDescription"
+                defaultMessage="Track our collective progress as we take <span class='highlight'>50 million steps</span> for charity; from Sao Paulo to Hong Kong via all <span class='highlight'>{numberOfOffices} Offices.</span> Help us all reach the finish and get stepping!"
+                values={{
+                  numberOfOffices: cities.length + 1
+                }}
+              />
             </div>
           </Container>
         </Segment>
 
         <Segment loading={isLoading} className="primary">
-          <Container className="counter-wrapper">
-            <Sign className="counter">
-              <div className="logo-container">
-                <Image src={Logo} size="small" />
+          <Container className="sign-wrapper">
+            <Sign className="counter-wrapper">
+              <div className="counter">
+                <div className="logo-container">
+                  <Image src={Logo} size="small" />
+                </div>
+                <div className="counter-container">
+                  <Counter
+                    digits={8}
+                    data={convertNumberToArray(total, 10000000)}
+                  />
+                </div>
               </div>
-              <div className="counter-container">
-                <Counter
-                  digits={8}
-                  data={convertNumberToArray(total, 10000000)}
-                />
+              
+              <div className="tagline">
+                <FormattedMessage id="dashboard.counterTagline" />
               </div>
             </Sign>
           </Container>
@@ -260,21 +259,6 @@ class Dashboard extends React.Component {
                   </div>
                 </div>
               </Grid.Column>
-              <Grid.Column>
-                <div className="content-container">
-                  <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.stepsByOffice" />
-                  </Header>
-
-                  <div>
-                    <ListView
-                      list={breakdown.offices}
-                      prefix={'No of steps'}
-                      image
-                    />
-                  </div>
-                </div>
-              </Grid.Column>
 
               <Grid.Column>
                 <div className="content-container">
@@ -292,9 +276,52 @@ class Dashboard extends React.Component {
                   </div>
                 </div>
               </Grid.Column>
+
+              <Grid.Column>
+                <div className="content-container">
+                  <Header size="medium" className="container-header">
+                    <FormattedMessage id="dashboard.leaderboard" />
+                  </Header>
+
+                  <div className="search-container">
+                    <Search
+                      fluid
+                      loading={isLoading}
+                      onResultSelect={this.handleResultSelect}
+                      onSearchChange={debounce(this.handleSearchChange, 500, {
+                        leading: true,
+                      })}
+                      results={leaderboard}
+                      value={searchString}
+                    />
+                  </div>
+                  <div>
+                    <ListView
+                      list={leaderboard}
+                      prefix={'No. of steps'}
+                    />
+                  </div>
+                </div>
+              </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
+              <Grid.Column>
+                <div className="content-container">
+                  <Header size="medium" className="container-header">
+                    <FormattedMessage id="dashboard.stepsByOffice" />
+                  </Header>
+
+                  <div>
+                    <ListView
+                      list={breakdown.offices}
+                      prefix={'No of steps'}
+                      image
+                    />
+                  </div>
+                </div>
+              </Grid.Column>
+
               <Grid.Column>
                 <div className="content-container">
                   <Header size="medium" className="container-header">
@@ -325,32 +352,6 @@ class Dashboard extends React.Component {
                   </Sign>
                 </div>
               </Grid.Column>
-              <Grid.Column>
-                <div className="content-container">
-                  <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.leaderboard" />
-                  </Header>
-
-                  <div className="search-container">
-                    <Search
-                      fluid
-                      loading={isLoading}
-                      onResultSelect={this.handleResultSelect}
-                      onSearchChange={debounce(this.handleSearchChange, 500, {
-                        leading: true,
-                      })}
-                      results={leaderboard}
-                      value={searchString}
-                    />
-                  </div>
-                  <div>
-                    <ListView
-                      list={leaderboard}
-                      prefix={'No. of steps'}
-                    />
-                  </div>
-                </div>
-              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Segment>
@@ -361,7 +362,6 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   filteredActivities: PropTypes.object,
-  activities: PropTypes.object,
   getActivities: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.shape({}),
