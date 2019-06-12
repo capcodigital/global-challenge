@@ -15,5 +15,17 @@ module.exports = function addProdMiddlewares(app, options) {
   app.use(compression());
   app.use(publicPath, express.static(outputPath));
 
+  app.get('/users/userStats', users.stats);
+
+  app.get('/users/activities', users.activities);
+
+  app.get('/users/citUpdate', users.citUpdate);
+
+  app.get('/users/addManual', users.addManual);
+
+  app.get('/fitbit/auth', fitbit.authorize);
+
+  app.get('/fitbit/update', fitbit.update);
+
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
 };

@@ -25,9 +25,7 @@ exports.all = function(req, res) {
     citService.getAllUsers(function(err, result) {
         if (err) {
             console.log(err);
-             res.render('error', {
-                status: 500
-            });
+            res.json({error: {status: 500}});
         } else {
             res.jsonp(result.content);
         }
@@ -43,10 +41,7 @@ exports.all = function(req, res) {
     citService.getUser(capcoId, function(err, result) {
         if (err) {
             console.log(err);
-
-            res.render('error', {
-                status: 500
-            });
+            res.json({error: {status: 500}});
         } else {
             res.jsonp(result);
         }
@@ -60,10 +55,7 @@ exports.getPhoto = function(req, res) {
     citService.getUserPhoto(capcoId, function(err, result) {
         if (err) {
             console.log(err);
-
-            res.render('error', {
-                status: 500
-            });
+            res.json({error: {status: 500}});
         } else {
             res.setHeader('Content-Type', result.type);
             res.setHeader('Content-Length', result.length);

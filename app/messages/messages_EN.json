@@ -5,6 +5,11 @@
   "homapage.instructions": "Please click the button beow to make a donation to <a href='https://www.roomtoread.org'>Room to Read</a> before registering for the Challenege. We ask that you donate the equivalent of USD($)5, or whatever you can spare or care to donate in your local currency. Through our Corporate Matching Program, the firm will also contribute to the money raised.",
   "homepage.progress": "View our Progress once the challenge starts",
 
+  "homepage.success": "Resgistration Completed Successfully",
+  "homepage.fitbitRegistered": "You are already logged in to Fitbit with a user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Fitbit and try again",
+  "homepage.capcoRegistered": "The Capco ID or Email you entered has already been registered",
+  "homepage.serverError": "Server error please try again later", 
+
   "register.label": "Register with Fitbit",
 
   "dashboard.steps": "Steps",

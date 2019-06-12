@@ -49,8 +49,10 @@ updateEveryInterval(1);
 */
 exports.authorize = function(req, res) {
 
-    if (!req.query.code || req.query.error) {
-        res.render('error', { user: " Could not authenticate with your Fitbit account"});
+    if (req.query.success) {
+        res.end();
+    } else if (!req.query.code || req.query.error) {
+        res.json({error: { user: " Could not authenticate with your Fitbit account"}});
     } else {
         var username = req.query.state;
         if (process.env.NODE_ENV === "production") {
@@ -64,10 +66,12 @@ exports.authorize = function(req, res) {
         var newReq = buildRequest(options, function(err, result) {
             if (err) {
               console.log(err);
+            } else if (result.errors && result.errors.length > 0) {
+                console.log(result.errors[0].message);
             } else {
                 citService.getUser(username.toLowerCase(), function(err, profile) {
                     if (err) {
-                        res.render('error',{'errormsg': "Could not find your Capco ID"});
+                        res.json({error: "Could not find your Capco ID"});
                     } else {
                         var user = new User();
 
@@ -113,7 +117,7 @@ exports.authorize = function(req, res) {
 exports.update = function(req, res) {
     User.find().exec(function(err, users) {
         if (err) {
-            res.render('error', { errormsg: "Server error please try again later"});
+            res.json({error: "Server error please try again later"});
         } else {
             var userCount = users.length;
             for (var i = 0; i < userCount; i++) {
@@ -247,17 +251,17 @@ function save(user, res) {
             console.log(err.message);
             if (err.code == 11000) {
                 if (err.message.indexOf("username_1") > 0) {
-                    res.render('error', { errormsg: "You are already logged in to Fitbit with a user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Fitbit and try again." });
+                    res.redirect('https://capcoglobalchallenge.com?success=fitbitRegistered');
                 } else {
-                    res.render('error', { errormsg: "The Capco ID or Email you entered has already been registered" });
+                    res.redirect('https://capcoglobalchallenge.com?success=capcoRegistered');
                 }
             } else {
-                res.render('error', { errormsg: "Server error please try again later" });
+                res.redirect('https://capcoglobalchallenge.com?success=serverError');
             }
         } else {
-            res.render('success', {});
+            res.redirect('https://capcoglobalchallenge.com?success=true');
         }
-    })
+    });
 }
 
 /**

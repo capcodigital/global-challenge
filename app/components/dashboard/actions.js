@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-export const SERVER_URL = 'https://localhost/';
+export let SERVER_URL = 'https://localhost/';
+if (process.env.NODE_ENV == 'production') {
+	SERVER_URL = 'https://capcoglobalchallenge.com/';
+}
 
 export const FETCH_ACTIVITIES_REQUEST = 'FETCH_ACTIVITIES_REQUEST';
 export const FETCH_ACTIVITIES_SUCCESS = 'FETCH_ACTIVIES_SUCCESS';
