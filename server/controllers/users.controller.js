@@ -99,7 +99,7 @@ exports.addManual = function(req, res) {
         user.location = req.query.location;
         user.level = "Other";
 
-        user.activities = [];
+        user.activities = {};
         user.totalSteps = req.query.steps;
         user.totalDistance = req.query.steps;
         user.totalDuration = req.query.steps;

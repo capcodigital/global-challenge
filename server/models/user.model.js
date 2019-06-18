@@ -23,7 +23,7 @@ var UserSchema = new Schema({
         type: String,
         unique: true
     },
-    activities: Array,
+    activities: {},
     picName: String,
     totalDistance: Number,
     totalCalories: Number,

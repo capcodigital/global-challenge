@@ -11,9 +11,7 @@ var cluster = require('cluster');
 var secret = "1b057c2e46b0dd19ec40cba83f9d8da3";
 var client_id = "228MZ3";
 
-var startDate = new Date(2018,9,17);
-var integerTime = Number(startDate) / 1000;
-
+var challengeDates = ["2019-6-17","2019-6-18","2019-6-19","2019-6-20","2019-6-21"];
 var code = client_id + ':' + secret;
 var authorizationCode = "Basic " + new Buffer(code).toString('base64');
 
@@ -61,8 +59,6 @@ exports.authorize = function(req, res) {
             options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=https://localhost:3000/fitbit/auth";
         }
 
-        console.log("PATH: " + options.path);
-
         var newReq = buildRequest(options, function(err, result) {
             if (err) {
               console.log(err);
@@ -96,6 +92,7 @@ exports.authorize = function(req, res) {
                         user.location = profile.locationName;
                         user.picName = profile.profilePictureName;
 
+                        user.activities = {};
                         user.totalSteps = 0;
                         user.totalCalories = 0;
                         user.totalDistance = 0;
@@ -159,10 +156,9 @@ function updateUser(user) {
     var today = new Date();
     if (user.expires_in < today) {
         console.log("Token Expired:" + user.expires_in);
-        // If token is expired refresh access token and get a new refresh token
         options.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
-        console.log("PATH: " + options.path);
 
+         // If token is expired refresh access token and get a new refresh token
         var newReq2 = buildRequest(options, function(err, result) {
             if (err) {
                 console.log(err);
@@ -206,15 +202,7 @@ function updateUser(user) {
             } else {
 
                 result.date = date;
-                var dbDate = user.activities.map(a => a.date);
-                var lastdate = dbDate[dbDate.length - 1];
-
-                // Check if we are updating the current day or adding a new one
-                if (date == lastdate) {
-                    user.activities[user.activities.length - 1] = result;
-                } else {
-                    user.activities.push(result);
-                }
+                user.activities[date] = result;
 
                 // Update Stats Totals
                 user.totalSteps = 0;
@@ -222,23 +210,23 @@ function updateUser(user) {
                 user.totalDuration = 0;
                 user.totalCalories = 0;
 
-                var activityCount = user.activities.length;
+                var activityCount = challengeDates.length;
                 for (var i = 0; i < activityCount; i++) {
-                    if (user.activities[i] && user.activities[i].summary) {
-                        user.totalSteps = user.totalSteps + user.activities[i].summary.steps;
-                        user.totalDistance = user.totalDistance + user.activities[i].summary.distances[0].distance;
-                        user.totalDuration = user.totalDuration + user.activities[i].summary.fairlyActiveMinutes + user.activities[i].summary.lightlyActiveMinutes + user.activities[i].summary.veryActiveMinutes;
-                        user.totalCalories = user.totalCalories + user.activities[i].summary.activityCalories;
+                    if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].summary) {
+                        user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
+                        user.totalDistance = user.totalDistance + user.activities[challengeDates[i]].summary.distances[0].distance;
+                        user.totalDuration = user.totalDuration + user.activities[challengeDates[i]].summary.fairlyActiveMinutes + user.activities[challengeDates[i]].summary.lightlyActiveMinutes + user.activities[challengeDates[i]].summary.veryActiveMinutes;
+                        user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
                     }
                 }
 
+                user.markModified('activities');
                 user.save(function(err, newUser) {
                     if (err) {
                         console.log(err);
                     }
                 });
             }
-            
         });
 
         newReq.end();
