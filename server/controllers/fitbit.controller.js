@@ -40,7 +40,9 @@ var getOptions = {
 
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
-updateEveryInterval(1);
+if (cluster.isMaster) {
+    updateEveryInterval(1);
+}
 
 /**
 * List of Users
@@ -127,6 +129,25 @@ exports.update = function(req, res) {
     });
 };
 
+/**
+* Update specified user's stats from fitbit
+*/
+exports.updateUser = function(req, res) {
+    User.find({username: req.params.user}).exec(function(err, users) {
+        if (err) {
+            res.json({error: "Server error please try again later"});
+        } else if (!users || users.length == 0) {
+            res.json({error: "User not found"});
+        } else {
+            console.log("Updating User: " + users[0].name);
+            challengeDates.forEach(function(date) {
+                getStats(users[0], date);
+            });
+            res.end();
+        }
+    });
+};
+
 function buildRequest(options, callback) {
     var req = https.request(options, function(res) {
         res.setEncoding('utf8');
@@ -180,57 +201,60 @@ function updateUser(user) {
                 user.expires_in = expiration;
             }
 
-            getStats();
+            getStats(user);
         });
 
         newReq2.end();
 
     } else {
-        getStats();
+        getStats(user);
     }
+}
 
-    return user;
+function getStats(user, date) {
+    if (!date) {
+        var today = new Date();
+        date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    }
+    getOptions.path = "/1/user/" + user.user_id + "/activities/date/" + date + ".json";
+    getOptions.headers.Authorization = "Bearer " + user.access_token;
 
-    function getStats() {
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        getOptions.path = "/1/user/" + user.user_id + "/activities/date/" + date + ".json";
-        getOptions.headers.Authorization = "Bearer " + user.access_token;
+    var statsReq = buildRequest(getOptions, function(err, result) {
+        if (err) {
+            console.log(err);
+        } else {
 
-        var newReq = buildRequest(getOptions, function(err, result) {
-            if (err) {
-                console.log(err);
-            } else {
-
-                result.date = date;
+            result.date = date;
+            if (result.summary) {
                 user.activities[date] = result;
-
-                // Update Stats Totals
-                user.totalSteps = 0;
-                user.totalDistance = 0;
-                user.totalDuration = 0;
-                user.totalCalories = 0;
-
-                var activityCount = challengeDates.length;
-                for (var i = 0; i < activityCount; i++) {
-                    if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].summary) {
-                        user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
-                        user.totalDistance = user.totalDistance + user.activities[challengeDates[i]].summary.distances[0].distance;
-                        user.totalDuration = user.totalDuration + user.activities[challengeDates[i]].summary.fairlyActiveMinutes + user.activities[challengeDates[i]].summary.lightlyActiveMinutes + user.activities[challengeDates[i]].summary.veryActiveMinutes;
-                        user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
-                    }
-                }
-
-                user.markModified('activities');
-                user.save(function(err, newUser) {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
             }
-        });
 
-        newReq.end();
-    }
+            // Update Stats Totals
+            user.totalSteps = 0;
+            user.totalDistance = 0;
+            user.totalDuration = 0;
+            user.totalCalories = 0;
+
+            var activityCount = challengeDates.length;
+            for (var i = 0; i < activityCount; i++) {
+                if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].summary) {
+                    user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
+                    user.totalDistance = user.totalDistance + user.activities[challengeDates[i]].summary.distances[0].distance;
+                    user.totalDuration = user.totalDuration + user.activities[challengeDates[i]].summary.fairlyActiveMinutes + user.activities[challengeDates[i]].summary.lightlyActiveMinutes + user.activities[challengeDates[i]].summary.veryActiveMinutes;
+                    user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
+                }
+            }
+
+            user.markModified('activities');
+            user.save(function(err, newUser) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        }
+    });
+
+    statsReq.end();
 }
 
 function save(user, res) {
@@ -247,6 +271,11 @@ function save(user, res) {
                 res.redirect('https://capcoglobalchallenge.com?success=serverError');
             }
         } else {
+            // If User has joined part way through the competition. Retrieve previous days stats in the background
+            challengeDates.forEach(function(date) {
+                getStats(newUser, date);
+            });
+
             res.redirect('https://capcoglobalchallenge.com?success=true');
         }
     });
