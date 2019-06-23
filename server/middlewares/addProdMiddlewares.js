@@ -27,5 +27,7 @@ module.exports = function addProdMiddlewares(app, options) {
 
   app.get('/fitbit/update', fitbit.update);
 
+  app.get('/fitbit/userUpdate/:user', fitbit.updateUser);
+
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
 };

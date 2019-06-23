@@ -23,7 +23,7 @@ import 'sanitize.css/sanitize.css';
 
 // Load the favicon
 /* eslint-disable import/no-webpack-loader-syntax */
-import '!file-loader?name=[name].[ext]!./images/favicon.ico';
+import '!file-loader?name=[name].[ext]!./images/challenge_favicon.png';
 /* eslint-enable import/no-webpack-loader-syntax */
 
 // Import CSS reset and Global Styles
@@ -73,3 +73,10 @@ if (module.hot) {
 }
 
 render();
+
+// Refresh every hour to pick up the latest updates
+var hourlyRefresh = 60 * 60 * 1000;
+
+setInterval(function(){
+  document.location.reload();
+}, hourlyRefresh);
