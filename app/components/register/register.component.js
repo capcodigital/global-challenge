@@ -5,6 +5,7 @@ import {
 } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
 import Fitbit from './images/fitbitLogo.svg';
+import './style.scss';
 
 const paramters = queryString.parse(window.location.search);
 
@@ -26,7 +27,7 @@ const RegistrationForm = () => (
         }
 
         <Form.Input fluid icon="user" iconPosition="left" placeholder="Capco ID" name="state" id="capco" required />
-        <Button color="teal" fluid size="large">
+        <Button className="fitbit" fluid size="large">
           <Image avatar src={Fitbit} verticalAlign="middle" />
           <FormattedMessage id="register.label" />
         </Button>
