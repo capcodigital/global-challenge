@@ -12,8 +12,9 @@
   }
 
   .progress-button {
-    box-shadow: 0 0 0 1px $text-primary inset !important
-
+    &:hover {
+      text-decoration: none !important;
+    }
   }
 
   .registration {
@@ -26,6 +27,11 @@
   }
 
   a {
-    color: #00AABB;
+    color: #00b3bc;
+
+    &:hover {
+      color: #00b3bc;
+      text-decoration: underline;
+    }
   }
 }

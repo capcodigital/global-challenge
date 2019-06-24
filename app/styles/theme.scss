@@ -37,8 +37,15 @@ body {
           border: none;
           color: $text-secondary;
           background-color: $button-secondary-hover;
+          text-decoration: none;
         }
       }
+
+      &.fitbit {
+        color: $text-secondary;
+        background-color: #00b3bc !important;
+      }
+      
     }
   }
 }

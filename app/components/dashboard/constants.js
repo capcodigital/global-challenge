@@ -115,6 +115,11 @@ export const offices = [
     value: 'Geneva'
   },
   {
+    key: 'Zurich',
+    text: 'Zurich',
+    value: 'Zurich'
+  },
+  {
     key: 'London',
     text: 'London',
     value: 'London'
@@ -168,6 +173,11 @@ export const offices = [
     key: 'Pune',
     text: 'Pune',
     value: 'Pune'
+  },
+  {
+    key: 'South America',
+    text: 'South America',
+    value: 'South America'
   },
   {
     key: 'Sao Paulo',

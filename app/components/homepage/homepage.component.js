@@ -26,7 +26,7 @@ const HomePage = () => (
               </Header>
 
               <List ordered>
-                <List.Item>Make a donation to one of our selected charities, <a href="https://give.roomtoread.org/campaign/capco-active-for-education/c186488" target="_blank">Room to Read</a> using the 'Donate' button on this page</List.Item>
+                <List.Item>Make a donation to our partner charity, <a href="https://give.roomtoread.org/campaign/capco-active-for-education/c186488" target="_blank">Room to Read</a> using the ‘Donate’ button on this page</List.Item>
                 <List.Item>If you don't already have the Fitbit app on your phone, please download and install this on your <a href="https://itunes.apple.com/us/app/fitbit-activity-calorie-tracker/id462638897?" target="_blank">iOS</a> or <a href="https://play.google.com/store/apps/details?id=com.fitbit.FitbitMobile" target="_blank">Android</a> device</List.Item>
                 <List.Item>Follow the prompts in the app to create your personal Fitbit account</List.Item>
                 <List.Item>In the 'Register' section on this page, enter your Capco 4-letter ID</List.Item>
@@ -55,7 +55,7 @@ const HomePage = () => (
               </div>
 
               <div className="progress-button-container">
-                <Button color="black" basic size="massive" as="a" href="/progress">
+                <Button color="black" basic size="massive" as="a" href="/progress" className="progress-button">
                   <FormattedMessage id="homepage.progress" />
                 </Button>
               </div>
