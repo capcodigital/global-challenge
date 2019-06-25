@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Container } from 'semantic-ui-react';
 import Logo from './images/capco.png';
+import GlobalChallenge from './images/global-challenge-full.png';
 import './style.scss';
 
 class Header extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -13,6 +14,7 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
             <Menu.Item>
               <Link to="/">
                 <img src={Logo} width="100px" alt="Logo" />
+                <img src={GlobalChallenge} width="180px" alt="Globa Challenge Logo" className="global-challenge-logo" />
               </Link>
             </Menu.Item>
           </Container>

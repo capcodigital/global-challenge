@@ -1,6 +1,11 @@
 .header {
-    .menu {
-      border-bottom: solid 1px #e6e6eb !important;
+  .menu {
+    border-bottom: solid 1px #e6e6eb !important;
+  }
+
+  img {
+    &:first-of-type {
+      margin-right: 10px;
     }
   }
-  
+}

@@ -10,6 +10,8 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router-dom';
 import Header from 'components/header';
+import Footer from 'components/footer';
+
 import HomePage from 'components/homepage/homepage.container';
 import './style.scss';
 import Dashboard from './dashboard/dashboard.container';
@@ -24,9 +26,11 @@ const App = () => (
     </Helmet>
     <Header />
     <Switch>
-      <Route exact path="/" component={HomePage} />
+      <Route path="/" exact component={HomePage} />
       <Route exact path="/progress" component={Dashboard} />
+      <Route component={HomePage} />
     </Switch>
+    <Footer />
   </div>
 );
 
