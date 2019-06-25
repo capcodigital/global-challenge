@@ -11,7 +11,7 @@ var cluster = require('cluster');
 var secret = "1b057c2e46b0dd19ec40cba83f9d8da3";
 var client_id = "228MZ3";
 
-var challengeDates = ["2019-6-17","2019-6-18","2019-6-19","2019-6-20","2019-6-21"];
+var challengeDates = ["2019-7-15","2019-7-16","2019-7-17","2019-7-18","2019-7-19"];
 var code = client_id + ':' + secret;
 var authorizationCode = "Basic " + new Buffer(code).toString('base64');
 
@@ -41,7 +41,7 @@ var getOptions = {
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
 if (cluster.isMaster) {
-    updateEveryInterval(1);
+    updateEveryInterval(60);
 }
 
 /**
