@@ -95,6 +95,8 @@ exports.authorize = function(req, res) {
 
                         if (profile.locationName === "New York RISC") {
                             user.location = "New York";
+                        } else if (profile.locationName === "Washington DC Metro") {
+                            user.location = "Washington DC";
                         } else {
                             user.location = profile.locationName;
                         }
