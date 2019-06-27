@@ -38,7 +38,7 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
 
   app.get('/fitbit/update', fitbit.update);
 
-  app.get('/fitbit/userUpdate/:user', fitbit.updateUser);
+  app.get('/fitbit/userUpdate/:user', fitbit.updateIndividualUser);
 
   app.get('*', (req, res) => {
     fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
