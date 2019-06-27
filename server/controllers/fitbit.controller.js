@@ -141,7 +141,7 @@ exports.update = function(req, res) {
 /**
 * Update specified user's stats from fitbit
 */
-exports.updateUser = function(req, res) {
+exports.updateIndividualUser = function(req, res) {
     User.find({username: req.params.user}).exec(function(err, users) {
         if (err) {
             res.json({error: "Server error please try again later"});
@@ -152,7 +152,20 @@ exports.updateUser = function(req, res) {
             challengeDates.forEach(function(date) {
                 getStats(users[0], date);
             });
-            res.end();
+            res.json({
+                name: users[0].name,
+                username: users[0].username,
+                location: users[0].location,
+                level: users[0].level,
+                totalSteps: users[0].totalSteps,
+                "2019-7-15": users[0]["2019-7-15"] ? users[0]["2019-7-15"].summary.distances[0].distance : 0,
+                "2019-7-16": users[0]["2019-7-16"] ? users[0]["2019-7-16"].summary.distances[0].distance : 0,
+                "2019-7-17": users[0]["2019-7-17"] ? users[0]["2019-7-17"].summary.distances[0].distance : 0,
+                "2019-7-18": users[0]["2019-7-18"] ? users[0]["2019-7-18"].summary.distances[0].distance : 0,
+                "2019-7-19": users[0]["2019-7-19"] ? users[0]["2019-7-19"].summary.distances[0].distance : 0,
+                "2019-7-20": users[0]["2019-7-20"] ? users[0]["2019-7-20"].summary.distances[0].distance : 0,
+                "2019-7-21": users[0]["2019-7-21"] ? users[0]["2019-7-21"].summary.distances[0].distance : 0
+            });
         }
     });
 };
