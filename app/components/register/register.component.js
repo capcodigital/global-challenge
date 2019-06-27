@@ -26,7 +26,7 @@ const RegistrationForm = () => (
           <div></div>
         }
 
-        <Form.Input fluid icon="user" iconPosition="left" placeholder="Capco ID" name="state" id="capco" required />
+        <Form.Input fluid icon="user" iconPosition="left" maxLength="4" placeholder="Capco ID" name="state" id="capco" required />
         <Button className="fitbit" fluid size="large">
           <Image avatar src={Fitbit} verticalAlign="middle" />
           <FormattedMessage id="register.label" />

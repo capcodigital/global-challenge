@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { levelMap } from './constants';
+import { keyBy } from 'lodash';
+import { levelMap, allCities } from './constants';
 
 const getState = (state) => state;
 
@@ -88,11 +89,17 @@ const breakdownSelector = createSelector(
     const levels = {};
     const offices = {};
     if (activities) {
+      const officeByCity = keyBy(allCities, 'name');
+
       activities.forEach((element) => {
         const steps = element.get('totalSteps');
         const distance = element.get('totalDistance');
         const level = levelMap[element.get('level')] || 'Other';
-        const location = element.get('location') || 'Other';
+        let location = element.get('location') || 'Other';
+
+        if (!officeByCity[location]) {
+          location = 'Other';
+        }
 
         // update the stats for offices
         updateStatics(offices, location, distance, steps);
