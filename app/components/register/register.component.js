@@ -19,14 +19,25 @@ const RegistrationForm = () => (
         <input type="hidden" name="scope" value="activity location" />
 
         {
-          (paramters.success == 'true') ? <FormattedMessage id="homepage.success" /> :
-          (paramters.success == 'fitbitRegistered') ? <FormattedMessage id="homepage.fitbitRegistered" /> :
-          (paramters.success == 'capcoRegistered')  ? <FormattedMessage id="homepage.capcoRegistered" /> :
-          (paramters.success == 'serverError') ? <FormattedMessage id="homepage.serverError" /> :
-          <div></div>
+          (paramters.success == 'true') ? <FormattedMessage id="homepage.success" />
+          : (paramters.success == 'fitbitRegistered') ? <FormattedMessage id="homepage.fitbitRegistered" />
+          : (paramters.success == 'capcoRegistered') ? <FormattedMessage id="homepage.capcoRegistered" />
+          : (paramters.success == 'serverError') ? <FormattedMessage id="homepage.serverError" />
+          : <div></div>
         }
 
-        <Form.Input fluid icon="user" iconPosition="left" maxLength="4" placeholder="Capco ID" name="state" id="capco" required />
+        <Form.Input
+          fluid
+          icon="user"
+          iconPosition="left"
+          maxLength="4"
+          placeholder="Capco ID"
+          name="state"
+          id="capco"
+          pattern="[A-Za-z]{4}"
+          title="Please enter your 4 letter Capco ID"
+          required
+        />
         <Button className="fitbit" fluid size="large">
           <Image avatar src={Fitbit} verticalAlign="middle" />
           <FormattedMessage id="register.label" />
