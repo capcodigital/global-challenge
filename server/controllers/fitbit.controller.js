@@ -11,7 +11,7 @@ var cluster = require('cluster');
 var secret = "1b057c2e46b0dd19ec40cba83f9d8da3";
 var client_id = "228MZ3";
 
-var challengeDates = ["2019-7-15","2019-7-16","2019-7-17","2019-7-18","2019-7-19"];
+var challengeDates = ["2019-7-15","2019-7-16","2019-7-17","2019-7-18","2019-7-19","2019-7-20","2019-7-21"];
 var code = client_id + ':' + secret;
 var authorizationCode = "Basic " + new Buffer(code).toString('base64');
 
@@ -91,8 +91,17 @@ exports.authorize = function(req, res) {
 
                         user.level = profile.title;
                         user.name = profile.displayName;
-                        user.location = profile.locationName;
                         user.picName = profile.profilePictureName;
+
+                        if (profile.locationName === "New York RISC") {
+                            user.location = "New York";
+                        } else if (profile.locationName === "Washington DC Metro") {
+                            user.location = "Washington DC";
+                        } else if (profile.locationName === "Orlando RISC") {
+                            user.location = "Orlando";
+                        } else {
+                            user.location = profile.locationName;
+                        }
 
                         user.activities = {};
                         user.totalSteps = 0;

@@ -21,7 +21,7 @@ module.exports = function addProdMiddlewares(app, options) {
 
   app.get('/users/citUpdate', users.citUpdate);
 
-  app.get('/users/addManual', users.addManual);
+  // app.get('/users/addManual', users.addManual);
 
   app.get('/fitbit/auth', fitbit.authorize);
 
