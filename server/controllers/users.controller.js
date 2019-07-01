@@ -18,16 +18,24 @@ exports.stats = function(req, res, next) {
           var capco = 0;
           var others = 0;
           var count = users.length;
+          var locationList = [];
+          var locationCount = {};
 
           for (var i = 0; i < count; i++) {
-            if (users[i].username.length == 4) {
-              capco++;
+
+            if (!users[i].location) {
+                users[i].location = "Other";
+            }
+
+            if (!locationCount[users[i].location]) {
+                locationList.push();
+                locationCount[users[i].location] = 1;
             } else {
-              others++;
+                locationCount[users[i].location]++;
             }
           }
 
-            res.render('signupStats', { capco: capco, others: others });
+          res.json({ total: count, locationCounts: locationCount });
         }
     });
 };
