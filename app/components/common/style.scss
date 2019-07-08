@@ -1,4 +1,14 @@
 .list {
+  &.scrolling {
+    height: 290px;
+    overflow-x: hidden; 
+    overflow-y: scroll; 
+
+    &::-webkit-scrollbar { 
+      display: none; 
+    } 
+  }
+
   .header {
     text-align: left;
   }
