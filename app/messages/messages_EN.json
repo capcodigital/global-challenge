@@ -5,7 +5,7 @@
   "homapage.instructions": "Please donate by clicking on the button below before registering for the Challenge. We ask that you donate the equivalent of $5 or more, or whatever you can spare in your local currency. Through our Corporate Matching Program, Capco will also contribute to the money raised.",
   "homepage.progress": "View our Progress once the challenge starts",
 
-  "homepage.success": "Resgistration Completed Successfully",
+  "homepage.success": "Registration Completed Successfully",
   "homepage.fitbitRegistered": "You are already logged in to Fitbit with a user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Fitbit and try again",
   "homepage.capcoRegistered": "The Capco ID or Email you entered has already been registered",
   "homepage.serverError": "Server error please try again later", 
