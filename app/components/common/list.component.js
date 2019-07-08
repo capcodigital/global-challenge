@@ -7,10 +7,10 @@ import { FormattedNumber } from 'react-intl';
 import './style.scss';
 
 const ListView = ({
-  list, prefix, image, dataKey
+  list, prefix, image, dataKey, className
 }) => (
   <div>
-    <List animated divided>
+    <List animated divided className={className}>
       {list.map((item) => (
         <List.Item key={item.name}>
           {image
@@ -33,7 +33,8 @@ ListView.propTypes = {
   list: PropTypes.array.isRequired,
   dataKey: PropTypes.string,
   image: PropTypes.bool,
-  prefix: PropTypes.string
+  prefix: PropTypes.string,
+  className: PropTypes.string
 };
 
 export default ListView;

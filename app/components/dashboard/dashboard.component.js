@@ -224,7 +224,7 @@ class Dashboard extends React.Component {
                   />
                 </div>
               </div>
-              
+
               <div className="tagline">
                 <FormattedMessage id="dashboard.counterTagline" />
               </div>
@@ -268,6 +268,7 @@ class Dashboard extends React.Component {
 
                   <div>
                     <ListView
+                      className={'scrolling'}
                       list={breakdown.averages}
                       prefix="Average no of steps"
                       dataKey="average"
@@ -314,6 +315,7 @@ class Dashboard extends React.Component {
 
                   <div>
                     <ListView
+                      className={'scrolling'}
                       list={breakdown.offices}
                       prefix={'No of steps'}
                       image
