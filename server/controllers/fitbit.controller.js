@@ -200,7 +200,7 @@ function buildRequest(options, callback) {
 function updateUser(user) {
     var today = new Date();
     if (user.expires_in < today) {
-        console.log("Token Expired:" + user.expires_in);
+        console.log("Token Expired:" + user.name);
         options.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
          // If token is expired refresh access token and get a new refresh token
@@ -208,9 +208,8 @@ function updateUser(user) {
             if (err) {
                 console.log(err);
             } else if (result.errors && result.errors.length > 0) {
-                console.log(result.errors[0].message);
+                console.log(user.name + " : " + result.errors[0].message);
             } else {
-                console.log("New Token details: " + JSON.stringify(result));
                 var date = new Date();
                 var datemillis = date.getTime();
 
@@ -246,8 +245,9 @@ function getStats(user, date) {
     var statsReq = buildRequest(getOptions, function(err, result) {
         if (err) {
             console.log(err);
+        } else if (result.errors && result.errors.length > 0) {
+            console.log(user.name + " : " + result.errors[0].message);
         } else {
-
             result.date = date;
             if (result.summary) {
                 user.activities[date] = result;
