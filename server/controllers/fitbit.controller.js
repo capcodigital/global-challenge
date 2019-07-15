@@ -67,11 +67,11 @@ exports.authorize = function(req, res) {
             } else if (result.errors && result.errors.length > 0) {
                 console.log(result.errors[0].message);
             } else {
-                citService.getUser(username.toLowerCase(), function(err, profile) {
-                    if (err) {
-                        res.json({error: "Could not find your Capco ID"});
-                    } else {
-                        var user = new User();
+
+                User.find({username: username}).exec(function(err, users) {
+                    if (users && users.length > 0) {
+
+                        var user = users[0];
 
                         var date = new Date();
                         var datemillis = date.getTime();
@@ -82,36 +82,60 @@ exports.authorize = function(req, res) {
                         var expiration = new Date();
                         expiration.setTime(datemillis + expiresTimeMillis);
 
-                        user.username = username;
-                        user.user_id = result.user_id;
-                        user.token_type = result.token_type;
                         user.expires_in = expiration;
                         user.access_token = result.access_token;
                         user.refresh_token = result.refresh_token;
-
-                        user.level = profile.title;
-                        user.name = profile.displayName;
-                        user.picName = profile.profilePictureName;
-
-                        if (profile.locationName === "New York RISC") {
-                            user.location = "New York";
-                        } else if (profile.locationName === "Washington DC Metro") {
-                            user.location = "Washington DC";
-                        } else if (profile.locationName === "Orlando RISC") {
-                            user.location = "Orlando";
-                        } else if (profile.locationName === "Antwerp") {
-                            user.location = "Brussels";
-                        } else {
-                            user.location = profile.locationName;
-                        }
-
-                        user.activities = {};
-                        user.totalSteps = 0;
-                        user.totalCalories = 0;
-                        user.totalDistance = 0;
-                        user.totalDuration = 0;
-
                         save(user, res);
+
+                    } else {
+
+                        citService.getUser(username.toLowerCase(), function(err, profile) {
+                            if (err) {
+                                res.json({error: "Could not find your Capco ID"});
+                            } else {
+                                var user = new User();
+
+                                var date = new Date();
+                                var datemillis = date.getTime();
+
+                                var expiresTime = new Date(result.expires_in*1000);
+                                var expiresTimeMillis = expiresTime.getTime();
+
+                                var expiration = new Date();
+                                expiration.setTime(datemillis + expiresTimeMillis);
+
+                                user.username = username;
+                                user.user_id = result.user_id;
+                                user.token_type = result.token_type;
+                                user.expires_in = expiration;
+                                user.access_token = result.access_token;
+                                user.refresh_token = result.refresh_token;
+
+                                user.level = profile.title;
+                                user.name = profile.displayName;
+                                user.picName = profile.profilePictureName;
+
+                                if (profile.locationName === "New York RISC") {
+                                    user.location = "New York";
+                                } else if (profile.locationName === "Washington DC Metro") {
+                                    user.location = "Washington DC";
+                                } else if (profile.locationName === "Orlando RISC") {
+                                    user.location = "Orlando";
+                                } else if (profile.locationName === "Antwerp") {
+                                    user.location = "Brussels";
+                                } else {
+                                    user.location = profile.locationName;
+                                }
+
+                                user.activities = {};
+                                user.totalSteps = 0;
+                                user.totalCalories = 0;
+                                user.totalDistance = 0;
+                                user.totalDuration = 0;
+
+                                save(user, res);
+                            }
+                        })
                     }
                 })
             }
@@ -199,8 +223,8 @@ function buildRequest(options, callback) {
 
 function updateUser(user) {
     var today = new Date();
-    if (user.expires_in < today) {
-        console.log("Token Expired:" + user.expires_in);
+    if (user.expires_in.getTime() < today.getTime()) {
+        console.log("Token Expired:" + user.name);
         options.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
          // If token is expired refresh access token and get a new refresh token
@@ -208,9 +232,8 @@ function updateUser(user) {
             if (err) {
                 console.log(err);
             } else if (result.errors && result.errors.length > 0) {
-                console.log(result.errors[0].message);
+                console.log(user.name + " : " + result.errors[0].message);
             } else {
-                console.log("New Token details: " + JSON.stringify(result));
                 var date = new Date();
                 var datemillis = date.getTime();
 
@@ -246,8 +269,9 @@ function getStats(user, date) {
     var statsReq = buildRequest(getOptions, function(err, result) {
         if (err) {
             console.log(err);
+        } else if (result.errors && result.errors.length > 0) {
+            console.log(user.name + " : " + result.errors[0].message);
         } else {
-
             result.date = date;
             if (result.summary) {
                 user.activities[date] = result;
@@ -287,9 +311,9 @@ function save(user, res) {
             console.log(err.message);
             if (err.code == 11000) {
                 if (err.message.indexOf("username_1") > 0) {
-                    res.redirect('https://capcoglobalchallenge.com?success=fitbitRegistered');
-                } else {
                     res.redirect('https://capcoglobalchallenge.com?success=capcoRegistered');
+                } else {
+                    res.redirect('https://capcoglobalchallenge.com?success=fitbitRegistered');
                 }
             } else {
                 res.redirect('https://capcoglobalchallenge.com?success=serverError');

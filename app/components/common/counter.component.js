@@ -45,7 +45,7 @@ class Counter extends React.PureComponent {
     const { digits, data } = this.props;
 
     return (
-      <svg height={svgHeight}>
+      <svg height={svgHeight} width={svgWidth}>
         <g transform={`translate(${margin.left}, ${0})`}>
           {data.map((d, i) => (
             <rect
