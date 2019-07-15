@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { keyBy } from 'lodash';
+import { keyBy, cloneDeep } from 'lodash';
 import { levelMap, allCities } from './constants';
 
 const getState = (state) => state;
@@ -115,10 +115,11 @@ const breakdownSelector = createSelector(
       return office;
     });
 
+
     return {
-      offices: sort(temp, 'steps'),
+      offices: sort(cloneDeep(temp), 'employee'),
       levels: sort(Object.keys(levels).map((i) => levels[i]), 'steps'),
-      averages: sort(temp, 'average')
+      averages: sort(cloneDeep(temp), 'average')
     };
   }
 );
