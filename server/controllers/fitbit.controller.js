@@ -123,6 +123,8 @@ exports.authorize = function(req, res) {
                                     user.location = "Orlando";
                                 } else if (profile.locationName === "Antwerp") {
                                     user.location = "Brussels";
+                                } else if (profile.locationName === "Malaysia") {
+                                    user.location = "Kuala Lumpur";
                                 } else {
                                     user.location = profile.locationName;
                                 }
