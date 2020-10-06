@@ -27,21 +27,21 @@ const HomePage = () => (
 
               <List ordered>
                 <List.Item>Make a donation to our partner charity, <a href="https://give.roomtoread.org/campaign/capco-active-for-education/c186488" target="_blank">Room to Read</a> using the ‘Donate’ button on this page</List.Item>
-                <List.Item>If you don't already have the Fitbit app on your phone, please download and install this on your <a href="https://itunes.apple.com/us/app/fitbit-activity-calorie-tracker/id462638897?" target="_blank">iOS</a> or <a href="https://play.google.com/store/apps/details?id=com.fitbit.FitbitMobile" target="_blank">Android</a> device</List.Item>
-                <List.Item>Follow the prompts in the app to create your personal Fitbit account</List.Item>
+                <List.Item>If you don't already have the Fitbit or Strava app on your phone, please download and install this on your <a href="https://itunes.apple.com/us/app/fitbit-activity-calorie-tracker/id462638897?" target="_blank">iOS</a> or <a href="https://play.google.com/store/apps/details?id=com.fitbit.FitbitMobile" target="_blank">Android</a> device</List.Item>
+                <List.Item>Follow the prompts in the chosen app to create your personal account</List.Item>
                 <List.Item>In the 'Register' section on this page, enter your Capco 4-letter ID</List.Item>
                 <List.Item>
-                  Click 'Register with Fitbit' and you'll be taken to a page which will ask you to give permission for Capco to
-                  access your Fitbit activity and location data. Please click 'allow'
+                  Click 'Register with Fitbit/Strava' and you'll be taken to a page which will ask you to give permission for Capco to
+                  access your activity and location data. Please click 'allow'
                 </List.Item>
                 <List.Item>
-                  Simply carry your phone with you or wear and sync your Fitbit device and your steps will be counted and added to our global total
+                  Simply carry your phone with you or if using Fitbit, wear and sync your Fitbit device and your activity will be counted and added to our global total
                 </List.Item>
               </List>
             </Grid.Column>
             <Grid.Column style={{ paddingBottom: '2rem', paddingTop: '2rem' }} className="registration">
               <div className="donate">
-                <FormattedHTMLMessage id="homapage.instructions" />
+                <FormattedHTMLMessage id="homepage.instructions" />
 
                 <Button secondary fluid size="massive" as="a" href="https://give.roomtoread.org/campaign/capco-active-for-education/c186488" target="_blank" className="donate-button">
                   <FormattedMessage id="homepage.donate" />

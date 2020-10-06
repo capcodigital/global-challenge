@@ -3,14 +3,14 @@
  */
 var mongoose = require('mongoose');
 var https = require("https");
-var citService = require('../services/cit');
+var citService = require('../services/cit.service');
 var User = mongoose.model('User');
 var strava = require('strava-v3');
 
 var apiKey = "808302c7e373c0fe3ce7cba05f44f291e59c4b7c";
 var secret = "4c591acd2508859f95b9a40f4522fe82247bcdb9";
 var client_id = 7291;
-var startDate = new Date(2015,08,24);
+var startDate = new Date(2020,10,01);
 var integerTime = Number(startDate) / 1000;
 
 var headers = {

@@ -5,6 +5,7 @@ import {
 } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
 import Fitbit from './images/fitbitLogo.svg';
+import Strava from './images/ConnectWithStrava.png';
 import './style.scss';
 
 const paramters = queryString.parse(window.location.search);
@@ -40,6 +41,40 @@ const RegistrationForm = () => (
         />
         <Button className="fitbit" fluid size="large">
           <Image avatar src={Fitbit} verticalAlign="middle" />
+          <FormattedMessage id="register.label" />
+        </Button>
+      </Segment>
+    </Form>
+  
+    <Form size="large" action="https://www.strava.com/oauth/authorize?">
+      <Segment stacked>
+        <input type="hidden" name="response_type" value="code" />
+        <input type="hidden" name="client_id" value="7291" />
+        <input type="hidden" name="redirect_uri" value="https://capcoglobalchallenge.com/stravaAuth" />
+        <input type="hidden" name="scope" value="activity location" />
+
+        {
+          (paramters.success == 'true') ? <FormattedMessage id="homepage.success" />
+          : (paramters.success == 'stravaRegistered') ? <FormattedMessage id="homepage.stravaRegistered" />
+          : (paramters.success == 'capcoRegistered') ? <FormattedMessage id="homepage.capcoRegistered" />
+          : (paramters.success == 'serverError') ? <FormattedMessage id="homepage.serverError" />
+          : <div></div>
+        }
+
+        <Form.Input
+          fluid
+          icon="user"
+          iconPosition="left"
+          maxLength="4"
+          placeholder="Capco ID"
+          name="state"
+          id="capco"
+          pattern="[A-Za-z]{4}"
+          title="Please enter your 4 letter Capco ID"
+          required
+        />
+        <Button className="strava" fluid size="large">
+          <Image avatar src={Strava} verticalAlign="middle" />
           <FormattedMessage id="register.label" />
         </Button>
       </Segment>
