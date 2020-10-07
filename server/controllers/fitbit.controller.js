@@ -44,6 +44,11 @@ if (cluster.isMaster) {
     updateEveryInterval(60);
 }
 
+var callbackUrl = "capcoglobalchallenge.com"
+if (process.env.NODE_ENV != "production") {
+    callbackUrl = "localhost";
+}
+
 /**
 * List of Users
 */
@@ -55,11 +60,7 @@ exports.authorize = function(req, res) {
         res.json({error: { user: " Could not authenticate with your Fitbit account"}});
     } else {
         var username = req.query.state;
-        if (process.env.NODE_ENV === "production") {
-            options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=https://capcoglobalchallenge.com/fitbit/auth";
-        } else {
-            options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=https://localhost:3000/fitbit/auth";
-        }
+        options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=https://" + callbackUrl + "/fitbit/auth";
 
         var newReq = buildRequest(options, function(err, result) {
             if (err) {
@@ -313,12 +314,12 @@ function save(user, res) {
             console.log(err.message);
             if (err.code == 11000) {
                 if (err.message.indexOf("username_1") > 0) {
-                    res.redirect('https://capcoglobalchallenge.com?success=capcoRegistered');
+                    res.redirect('https://' + callbackUrl + '?success=capcoRegistered');
                 } else {
-                    res.redirect('https://capcoglobalchallenge.com?success=fitbitRegistered');
+                    res.redirect('https://' + callbackUrl + '?success=fitbitRegistered');
                 }
             } else {
-                res.redirect('https://capcoglobalchallenge.com?success=serverError');
+                res.redirect('https://' + callbackUrl + '?success=serverError');
             }
         } else {
             // If User has joined part way through the competition. Retrieve previous days stats in the background
@@ -326,7 +327,7 @@ function save(user, res) {
                 getStats(newUser, date);
             });
 
-            res.redirect('https://capcoglobalchallenge.com?success=true');
+            res.redirect('https://' + callbackUrl + '?success=true');
         }
     });
 }

@@ -25,6 +25,11 @@ var authOptions = {
     agent: false
 };
 
+var callbackUrl = "capcoglobalchallenge.com"
+if (process.env.NODE_ENV != "production") {
+    callbackUrl = "localhost";
+}
+
 /**
  * List of Users
  */
