@@ -106,6 +106,7 @@ exports.authorize = function(req, res) {
                                 expiration.setTime(datemillis + expiresTimeMillis);
 
                                 user.username = username;
+                                user.app = "FitBit";
                                 user.user_id = result.user_id;
                                 user.token_type = result.token_type;
                                 user.expires_in = expiration;
@@ -315,6 +316,8 @@ function save(user, res) {
             if (err.code == 11000) {
                 if (err.message.indexOf("username_1") > 0) {
                     res.redirect('https://' + callbackUrl + '?success=capcoRegistered');
+                } else if (user.app == "Strava") {
+                    res.redirect('https://' + callbackUrl + '?success=stravaRegistered');
                 } else {
                     res.redirect('https://' + callbackUrl + '?success=fitbitRegistered');
                 }

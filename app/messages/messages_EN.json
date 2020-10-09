@@ -11,7 +11,8 @@
   "homepage.capcoRegistered": "The Capco ID or Email you entered has already been registered",
   "homepage.serverError": "Server error please try again later", 
 
-  "register.label": "Register with Fitbit",
+  "register.fitbit": "Register with Fitbit",
+  "register.strava": "Register with Strava",
 
   "dashboard.steps": "Steps",
   "dashboard.distance": "Distance",

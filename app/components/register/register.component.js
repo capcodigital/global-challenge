@@ -42,7 +42,7 @@ const RegistrationForm = () => (
         />
         <Button className="fitbit" fluid size="large">
           <Image avatar src={Fitbit} verticalAlign="middle" />
-          <FormattedMessage id="register.label" />
+          <FormattedMessage id="register.fitbit" />
         </Button>
       </Segment>
     </Form>
@@ -51,8 +51,8 @@ const RegistrationForm = () => (
       <Segment stacked>
         <input type="hidden" name="response_type" value="code" />
         <input type="hidden" name="client_id" value="7291" />
-        {/*<input type="hidden" name="redirect_uri" value="https://capcoglobalchallenge.com/stravaAuth" />*/}
-        <input type="hidden" name="redirect_uri" value="https://localhost/stravaAuth" />
+        {/*<input type="hidden" name="redirect_uri" value="https://capcoglobalchallenge.com/auth" />*/}
+        <input type="hidden" name="redirect_uri" value="https://localhost/strava/auth" />
         <input type="hidden" name="scope" value="activity:read_all" />
 
         {
@@ -77,7 +77,7 @@ const RegistrationForm = () => (
         />
         <Button className="strava" fluid size="large">
           <Image avatar src={Strava} verticalAlign="middle" />
-          <FormattedMessage id="register.label" />
+          <FormattedMessage id="register.strava" />
         </Button>
       </Segment>
     </Form>

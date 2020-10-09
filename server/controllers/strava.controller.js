@@ -49,7 +49,7 @@ exports.authorize = function(req, res) {
                 console.log(err);
             } else {
 
-                if (username.length == 4) {
+                // if (username.length == 4) {
                     citService.getUser(username.toLowerCase(), function(err, profile) {
                         if (err) {
                             res.render('error', { errormsg: "Could not find your Capco ID" });
@@ -57,61 +57,86 @@ exports.authorize = function(req, res) {
                             var user = new User();
 
                             user.username = username;
+                            user.app = "Strava";
                             user.access_token = result.access_token;
+                            user.refresh_token = result.refresh_token;
                             user.athlete_id = result.athlete.id;
 
                             user.name = profile.displayName;
                             user.location = profile.location;
                             user.level = profile.title;
-                            user.picName = profile.picName;
+                            user.picName = profile.profilePictureName;
+
+                            if (profile.locationName === "New York RISC") {
+                                user.location = "New York";
+                            } else if (profile.locationName === "Washington DC Metro") {
+                                user.location = "Washington DC";
+                            } else if (profile.locationName === "Orlando RISC") {
+                                user.location = "Orlando";
+                            } else if (profile.locationName === "Antwerp") {
+                                user.location = "Brussels";
+                            } else if (profile.locationName === "Malaysia") {
+                                user.location = "Kuala Lumpur";
+                            } else {
+                                user.location = profile.locationName;
+                            }
+
+                            user.activities = {};
+                            user.totalSteps = 0;
+                            user.totalCalories = 0;
+                            user.totalDistance = 0;
+                            user.totalDuration = 0;
+
 
                             user.save(function(err, newUser) {
                                 if (err) {
                                     console.log(err);
                                     if (err.code == 11000) {
                                         if (err.message.indexOf("athlete_id") > 0) {
-                                            res.render('error', { errormsg: "You are already logged in to Strava with a user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Strava and try again." });
+                                            res.redirect('https://' + callbackUrl + '?success=stravaRegistered');
+                                        } else if (user.app == "FitBit") {
+                                            res.redirect('https://' + callbackUrl + '?success=fitBitRegistered');
                                         } else {
-                                            res.render('error', { errormsg: "The Capco ID you entered has already been registered" });
+                                            res.redirect('https://' + callbackUrl + '?success=capcoRegistered');
                                         }
                                     } else {
-                                        res.render('error', { errormsg: "Server error please try again later" });
+                                        res.redirect('https://' + callbackUrl + '?success=serverError');
                                     }
                                 } else {
-                                    res.render('success', {});
+                                    res.redirect('https://' + callbackUrl + '?success=true');
                                 }
                             });
                         }
                     });
-                } else {
-                    var user = new User();
+                // } else {
+                //     var user = new User();
 
-                    user.username = username;
-                    user.access_token = result.access_token;
-                    user.athlete_id = result.athlete.id;
+                //     user.username = username;
+                //     user.access_token = result.access_token;
+                //     user.athlete_id = result.athlete.id;
 
-                    user.name = username.substring(0,username.indexOf("@"));
-                    user.location = "Other";
-                    user.level = "Other";
-                    user.picName = "";
+                //     user.name = username.substring(0,username.indexOf("@"));
+                //     user.location = "Other";
+                //     user.level = "Other";
+                //     user.picName = "";
 
-                    user.save(function(err, newUser) {
-                        if (err) {
-                            console.log(err);
-                            if (err.code == 11000) {
-                                if (err.message.indexOf("athlete_id") > 0) {
-                                    res.render('error', { errormsg: "You are already logged in to Strava with a user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Strava and try again." });
-                                } else {
-                                    res.render('error', { errormsg: "The email address you entered has already been registered" });
-                                }
-                            } else {
-                                res.render('error', { errormsg: "Server error please try again later" });
-                            }
-                        } else {
-                            res.render('success', {});
-                        }
-                    });
-                }
+                //     user.save(function(err, newUser) {
+                //         if (err) {
+                //             console.log(err);
+                //             if (err.code == 11000) {
+                //                 if (err.message.indexOf("athlete_id") > 0) {
+                //                     res.render('error', { errormsg: "You are already logged in to Strava with a user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Strava and try again." });
+                //                 } else {
+                //                     res.render('error', { errormsg: "The email address you entered has already been registered" });
+                //                 }
+                //             } else {
+                //                 res.render('error', { errormsg: "Server error please try again later" });
+                //             }
+                //         } else {
+                //             res.render('success', {});
+                //         }
+                //     });
+                // }
                 
             }
         });

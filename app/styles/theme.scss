@@ -45,6 +45,11 @@ body {
         color: $text-secondary;
         background-color: #00b3bc !important;
       }
+
+      &.strava {
+        color: $text-secondary;
+        background-color: #fc4c02 !important;
+      }
       
     }
   }
