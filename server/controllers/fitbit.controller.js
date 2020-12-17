@@ -65,6 +65,7 @@ exports.authorize = function(req, res) {
         var newReq = buildRequest(options, function(err, result) {
             if (err) {
               console.log(err);
+              res.redirect('https://' + callbackUrl + '?success=fitBitError');
             } else if (result.errors && result.errors.length > 0) {
                 console.log(result.errors[0].message);
             } else {
@@ -314,9 +315,7 @@ function save(user, res) {
         if (err) {
             console.log(err.message);
             if (err.code == 11000) {
-                if (err.message.indexOf("username_1") > 0) {
-                    res.redirect('https://' + callbackUrl + '?success=capcoRegistered');
-                } else if (user.app == "Strava") {
+                if (user.app == "Strava") {
                     res.redirect('https://' + callbackUrl + '?success=stravaRegistered');
                 } else {
                     res.redirect('https://' + callbackUrl + '?success=fitbitRegistered');
@@ -330,7 +329,7 @@ function save(user, res) {
                 getStats(newUser, date);
             });
 
-            res.redirect('https://' + callbackUrl + '?success=true');
+            res.redirect('https://' + callbackUrl + '?success=fitBitSuccess');
         }
     });
 }

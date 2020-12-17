@@ -201,7 +201,7 @@ class Dashboard extends React.Component {
             <div className="challenge-description">
               <FormattedHTMLMessage
                 id="dashboard.mapDescription"
-                defaultMessage="Track our collective progress as we take <span class='highlight'>50 million steps</span> for charity; from Sao Paulo to Hong Kong via all <span class='highlight'>{numberOfOffices} Offices.</span> Help us all reach the finish and get stepping!"
+                defaultMessage="Track our collective progress as we take walk, run, swim and cycle for charity; from Sao Paulo to Hong Kong via all <span class='highlight'>{numberOfOffices} Capco Offices.</span> Help us all reach the finish and get moving!"
                 values={{
                   numberOfOffices: cities.length + 1
                 }}
@@ -270,7 +270,7 @@ class Dashboard extends React.Component {
                     <ListView
                       className={'scrolling'}
                       list={breakdown.averages}
-                      prefix="Average no of steps"
+                      suffix=" km"
                       dataKey="average"
                       image
                     />
@@ -299,7 +299,7 @@ class Dashboard extends React.Component {
                   <div>
                     <ListView
                       list={leaderboard}
-                      prefix={'No. of steps'}
+                      suffix={' km'}
                     />
                   </div>
                 </div>
@@ -310,14 +310,14 @@ class Dashboard extends React.Component {
               <Grid.Column>
                 <div className="content-container">
                   <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.stepsByOffice" />
+                    <FormattedMessage id="dashboard.distanceByOffice" />
                   </Header>
 
                   <div>
                     <ListView
                       className={'scrolling'}
                       list={breakdown.offices}
-                      prefix={'No of steps'}
+                      suffix={' km'}
                       image
                     />
                   </div>
@@ -327,13 +327,13 @@ class Dashboard extends React.Component {
               <Grid.Column>
                 <div className="content-container">
                   <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.stepsByLevel" />
+                    <FormattedMessage id="dashboard.distanceByLevel" />
                   </Header>
 
                   <div>
                     <ListView
                       list={breakdown.levels}
-                      prefix="No of steps"
+                      suffix=" km"
                       image
                     />
                   </div>
@@ -349,7 +349,7 @@ class Dashboard extends React.Component {
                     </Header>
                     <div className="stats-container">
                       <div className="number"><FormattedNumber value={average} /></div>
-                      <div className="label"><FormattedMessage id="dashboard.steps" /></div>
+                      <div className="label"><FormattedMessage id="dashboard.measure" /></div>
                     </div>
                   </Sign>
                 </div>

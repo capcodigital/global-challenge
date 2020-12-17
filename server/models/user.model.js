@@ -13,6 +13,7 @@ var UserSchema = new Schema({
         type: String,
         unique: true
     },
+    app: String,
     location: String,
     level: String,
     access_token: String,

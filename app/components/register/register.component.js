@@ -21,9 +21,10 @@ const RegistrationForm = () => (
         <input type="hidden" name="scope" value="activity location" />
 
         {
-          (paramters.success == 'true') ? <FormattedMessage id="homepage.success" />
+          (paramters.success == 'fitBitSuccess') ? <FormattedMessage id="homepage.success" />
           : (paramters.success == 'fitbitRegistered') ? <FormattedMessage id="homepage.fitbitRegistered" />
           : (paramters.success == 'capcoRegistered') ? <FormattedMessage id="homepage.capcoRegistered" />
+          : (paramters.success == 'fitBitError') ? <FormattedMessage id="homepage.fitBitError" />
           : (paramters.success == 'serverError') ? <FormattedMessage id="homepage.serverError" />
           : <div></div>
         }
@@ -56,9 +57,10 @@ const RegistrationForm = () => (
         <input type="hidden" name="scope" value="activity:read_all" />
 
         {
-          (paramters.success == 'true') ? <FormattedMessage id="homepage.success" />
+          (paramters.success == 'stravaSuccess') ? <FormattedMessage id="homepage.success" />
           : (paramters.success == 'stravaRegistered') ? <FormattedMessage id="homepage.stravaRegistered" />
           : (paramters.success == 'capcoRegistered') ? <FormattedMessage id="homepage.capcoRegistered" />
+          : (paramters.success == 'stravaError') ? <FormattedMessage id="homepage.stravaError" />
           : (paramters.success == 'serverError') ? <FormattedMessage id="homepage.serverError" />
           : <div></div>
         }
