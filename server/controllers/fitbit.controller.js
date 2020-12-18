@@ -11,7 +11,7 @@ var cluster = require('cluster');
 var secret = "1b057c2e46b0dd19ec40cba83f9d8da3";
 var client_id = "228MZ3";
 
-var challengeDates = ["2019-7-15","2019-7-16","2019-7-17","2019-7-18","2019-7-19","2019-7-20","2019-7-21"];
+var challengeDates = ["2020-12-15","2020-12-16","2020-12-17","2020-12-18","2020-12-19","2020-12-20","2020-12-21"];
 var code = client_id + ':' + secret;
 var authorizationCode = "Basic " + new Buffer(code).toString('base64');
 
@@ -160,7 +160,7 @@ exports.update = function(req, res) {
         } else {
             var userCount = users.length;
             for (var i = 0; i < userCount; i++) {
-                if (users[i].access_token) {
+                if (users[i].app == "FitBit" ** users[i].access_token) {
                     updateUser(users[i]);
                 }
             }

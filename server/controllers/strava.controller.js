@@ -10,7 +10,8 @@ var strava = require('strava-v3');
 var apiKey = "808302c7e373c0fe3ce7cba05f44f291e59c4b7c";
 var secret = "4c591acd2508859f95b9a40f4522fe82247bcdb9";
 var client_id = 7291;
-var startDate = new Date(2020,10,01);
+// Month is an index
+var startDate = new Date(2020,11,15);
 var integerTime = Number(startDate) / 1000;
 
 var headers = {
@@ -122,7 +123,7 @@ exports.update = function(req, res) {
         } else {
             var userCount = users.length;
             for (var i = 0; i < userCount; i++) {
-                if (users[i].access_token) {
+                if (users[i].app == "Strava" && users[i].access_token) {
                     updateUser(users[i]);
                 }
             }
