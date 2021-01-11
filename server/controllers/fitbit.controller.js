@@ -228,7 +228,7 @@ function buildRequest(options, callback) {
 
 function updateUser(user) {
     var today = new Date();
-    if (user.expires_in.getTime() < today.getTime()) {
+    if (user.expires_in && user.expires_in.getTime() < today.getTime()) {
         console.log("Token Expired:" + user.name);
         options.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
