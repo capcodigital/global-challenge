@@ -10,9 +10,12 @@ var strava = require('strava-v3');
 var apiKey = "808302c7e373c0fe3ce7cba05f44f291e59c4b7c";
 var secret = "4c591acd2508859f95b9a40f4522fe82247bcdb9";
 var client_id = 7291;
+
 // Month is an index
 var startDate = new Date(2020,11,15);
 var integerTime = Number(startDate) / 1000;
+
+var challengeDates = ["2020-12-15","2020-12-16","2020-12-17","2020-12-18","2020-12-19","2020-12-20","2020-12-21"];
 
 var headers = {
     "api-token" : apiKey
@@ -40,7 +43,6 @@ exports.authorize = function(req, res) {
         res.render('error', { user: "Could not authenticate with your Strava account" });
     } else {
         var username = req.query.state;
-        console.log(username);
         var userOptions = authOptions;
         userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "&code=" + req.query.code;
 
@@ -60,7 +62,19 @@ exports.authorize = function(req, res) {
                         user.app = "Strava";
                         user.access_token = result.access_token;
                         user.refresh_token = result.refresh_token;
-                        user.athlete_id = result.athlete.id;
+
+                        var date = new Date();
+                        var datemillis = date.getTime();
+
+                        var expiresTime = new Date(result.expires_in*1000);
+                        var expiresTimeMillis = expiresTime.getTime();
+
+                        var expiration = new Date();
+                        expiration.setTime(datemillis + expiresTimeMillis);
+
+                        user.expires_in = expiration;
+                        user.expires_at = result.expires_at;
+                        user.user_id = result.athlete.id;
 
                         user.name = profile.displayName;
                         user.location = profile.location;
@@ -158,18 +172,7 @@ function buildRequest(options, callback) {
     return req;
 };
 
-function getUserStats(user) {
-    strava.athletes.stats({ 'id':user.athlete_id, 'access_token':user.access_token },function(err, payload) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            console.log(payload);
-        }
-    });
-};
-
-function updateUser(user) {
+function getStats(user) {
     strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime }, function(err, result) {
         if (err) {
             console.log("Error");
@@ -178,6 +181,27 @@ function updateUser(user) {
 
             user.activities = result;
 
+            // Update Stats Totals
+            user.totalSteps = 0;
+            user.totalDistance = 0;
+            user.totalDuration = 0;
+            user.totalCalories = 0;
+
+            var activityCount = user.activities.length;
+
+            console.log(user.activities.length);
+
+            for (var i = 0; i < activityCount; i++) {
+                console.log(user.activities[i].start_date.substring(0,10));
+                if (challengeDates.includes(user.activities[i].start_date.substring(0,10))) {
+                    // user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
+                    user.totalDistance = user.totalDistance + user.activities[i].distance;
+                    user.totalDuration = user.totalDuration + user.activities[i].moving_time;
+                    // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
+                }
+            }
+
+            user.markModified('activities');
             user.save(function(err, newUser) {
                 if (err) {
                     console.log(err);
@@ -185,4 +209,43 @@ function updateUser(user) {
             });
         }
     });
+};
+
+function updateUser(user) {
+
+    var today = new Date();
+    if (user.expires_in && user.expires_in.getTime() < today.getTime()) {
+        console.log("Token Expired:" + user.name);
+        var userOptions = authOptions;
+        userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
+
+         // If token is expired refresh access token and get a new refresh token
+        var newReq2 = buildRequest(userOptions, function(err, result) {
+            if (err) {
+                console.log(err);
+            } else if (result.errors && result.errors.length > 0) {
+                console.log(user.name + " : " + result.errors[0].message);
+            } else {
+                var date = new Date();
+                var datemillis = date.getTime();
+
+                var expiresTime = new Date(result.expires_in*1000);
+                var expiresTimeMillis = expiresTime.getTime();
+
+                var expiration = new Date();
+                expiration.setTime(datemillis + expiresTimeMillis);
+
+                user.access_token = result.access_token;
+                user.refresh_token = result.refresh_token;
+                user.expires_in = expiration;
+            }
+
+            getStats(user);
+        });
+
+        newReq2.end();
+
+    } else {
+        getStats(user);
+    }
 };

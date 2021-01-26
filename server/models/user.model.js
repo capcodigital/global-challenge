@@ -20,6 +20,7 @@ var UserSchema = new Schema({
     token_type: String,
     refresh_token: String,
     expires_in: Date,
+    expires_at: Number,
     user_id: {
         type: String,
         unique: true
