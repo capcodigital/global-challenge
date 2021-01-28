@@ -19,7 +19,7 @@ const ListView = ({
           <List.Content>
             <List.Header>{item.name}</List.Header>
             <List.Description>
-              <b><FormattedNumber value={dataKey ? item[dataKey] : item.steps} /></b>
+              <b><FormattedNumber value={dataKey ? item[dataKey] : item.distance} /></b>
               {`${suffix} `}
             </List.Description>
           </List.Content>

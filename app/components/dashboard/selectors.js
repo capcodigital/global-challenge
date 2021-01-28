@@ -35,6 +35,7 @@ const totalDistanceSelector = createSelector(
   (activities) => {
     if (activities) {
       const distance = activities.toJS();
+      // Display totals in metres rather than km
       return distance.reduce((sum, n) => sum + n.totalDistance, 0);
     }
     return 0;
@@ -75,7 +76,7 @@ const leaderboardSelector = createSelector(
         distance: leader.totalDistance,
         name: leader.name,
         title: leader.name,
-        description: `No. of KM ${leader.totalDistance}`
+        description: `No. of km ${leader.totalDistance}`
       }));
     }
 
@@ -110,15 +111,15 @@ const breakdownSelector = createSelector(
 
     const temp = Object.keys(offices).map((i) => {
       const office = offices[i];
-      const { steps } = office;
-      office.average = steps / office.employee;
+      const { distance } = office;
+      office.average = distance / office.employee;
       return office;
     });
 
 
     return {
       offices: sort(cloneDeep(temp), 'employee'),
-      levels: sort(Object.keys(levels).map((i) => levels[i]), 'KM'),
+      levels: sort(Object.keys(levels).map((i) => levels[i]), 'km'),
       averages: sort(cloneDeep(temp), 'average')
     };
   }

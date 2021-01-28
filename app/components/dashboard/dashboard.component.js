@@ -220,7 +220,7 @@ class Dashboard extends React.Component {
                 <div className="counter-container">
                   <Counter
                     digits={8}
-                    data={convertNumberToArray(total, 10000000)}
+                    data={convertNumberToArray(distance, 10000000)}
                   />
                 </div>
               </div>
@@ -263,7 +263,7 @@ class Dashboard extends React.Component {
               <Grid.Column>
                 <div className="content-container">
                   <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.averageStepsByOffice" />
+                    <FormattedMessage id="dashboard.averageDistanceByOffice" />
                   </Header>
 
                   <div>

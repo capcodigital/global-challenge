@@ -48,7 +48,7 @@ exports.authorize = function(req, res) {
 
         var newReq = buildRequest(userOptions, function(err, result){
             if (err) {
-                console.log(err);
+                console.log("Request Error: " + err);
                 res.redirect('https://' + callbackUrl + '?success=stravaError');
             } else {
             
@@ -188,14 +188,11 @@ function getStats(user) {
             user.totalCalories = 0;
 
             var activityCount = user.activities.length;
-
-            console.log(user.activities.length);
-
             for (var i = 0; i < activityCount; i++) {
-                console.log(user.activities[i].start_date.substring(0,10));
                 if (challengeDates.includes(user.activities[i].start_date.substring(0,10))) {
                     // user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
-                    user.totalDistance = user.totalDistance + user.activities[i].distance;
+                    // Strava stores distance in metres
+                    user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
                     user.totalDuration = user.totalDuration + user.activities[i].moving_time;
                     // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
                 }
@@ -217,15 +214,19 @@ function updateUser(user) {
     if (user.expires_in && user.expires_in.getTime() < today.getTime()) {
         console.log("Token Expired:" + user.name);
         var userOptions = authOptions;
-        userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
+        userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "&grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
          // If token is expired refresh access token and get a new refresh token
         var newReq2 = buildRequest(userOptions, function(err, result) {
             if (err) {
-                console.log(err);
+                console.log(user.name + " : " + err.message);
             } else if (result.errors && result.errors.length > 0) {
-                console.log(user.name + " : " + result.errors[0].message);
+                console.log(user.name + " : " + JSON.stringify(result.errors[0]));
             } else {
+
+                user.access_token = result.access_token;
+                user.refresh_token = result.refresh_token;
+
                 var date = new Date();
                 var datemillis = date.getTime();
 
@@ -235,12 +236,11 @@ function updateUser(user) {
                 var expiration = new Date();
                 expiration.setTime(datemillis + expiresTimeMillis);
 
-                user.access_token = result.access_token;
-                user.refresh_token = result.refresh_token;
                 user.expires_in = expiration;
-            }
+                user.expires_at = result.expires_at;
 
-            getStats(user);
+                getStats(user);
+            }
         });
 
         newReq2.end();

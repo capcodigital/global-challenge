@@ -24,7 +24,7 @@
   "dashboard.leaderboard": "Leaderboard",
   "dashboard.distanceByLevel": "Distance by Level",
   "dashboard.distanceByOffice": "Total Distance by Office",
-  "dashboard.averageStepsByOffice": "Average Distance by Office",
+  "dashboard.averageDistanceByOffice": "Average Distance by Office",
   "dashboard.counterTagline": "Total Distance so far",
   "dashboard.activeParticipants": "With {activeParticipants} employees participating in the challenge",
   "dashboard.mapDescription": "Track our collective progress as we take walk, run, swim and cycle for charity; from Sao Paulo to Hong Kong via all  <span class='highlight'>{numberOfOffices} Offices.</span> Help us all reach the finish and get moving!"

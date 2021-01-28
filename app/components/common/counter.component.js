@@ -13,7 +13,8 @@ const margin = {
 
 const DURATION = 1000;
 
-const numbers = d3.range(10);
+var numbers = d3.range(10);
+numbers[10] = ".";
 
 /**
  * Component is described here
@@ -33,7 +34,7 @@ class Counter extends React.PureComponent {
       d3.select(this.groupRefs[i])
         .transition()
         .duration(DURATION)
-        .attr('transform', `translate(${i * 44}, ${d * -60})`);
+        .attr('transform', `translate(${i * 44}, ${(isNaN(d) ? 10 : d) * -60})`);
     });
   }
 
@@ -72,7 +73,7 @@ class Counter extends React.PureComponent {
                     <text
                       key={`number-${i}`}
                       x={5}
-                      y={45 + i * 60}
+                      y={45 + (isNaN(i) ? 10 : i) * 60}
                     >
                       {i}
                     </text>

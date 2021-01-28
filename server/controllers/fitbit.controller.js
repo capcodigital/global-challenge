@@ -235,7 +235,7 @@ function updateUser(user) {
          // If token is expired refresh access token and get a new refresh token
         var newReq2 = buildRequest(options, function(err, result) {
             if (err) {
-                console.log(err);
+                console.log(user.name + " : " + err.message);
             } else if (result.errors && result.errors.length > 0) {
                 console.log(user.name + " : " + result.errors[0].message);
             } else {
@@ -251,9 +251,9 @@ function updateUser(user) {
                 user.access_token = result.access_token;
                 user.refresh_token = result.refresh_token;
                 user.expires_in = expiration;
-            }
 
-            getStats(user);
+                getStats(user);
+            }
         });
 
         newReq2.end();
@@ -282,7 +282,7 @@ function getStats(user, date) {
                 user.activities[date] = result;
             }
 
-            // Update Stats Totals
+            // Update Stats Totals - FitBit stores distance in KM
             user.totalSteps = 0;
             user.totalDistance = 0;
             user.totalDuration = 0;
