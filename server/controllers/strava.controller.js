@@ -193,6 +193,7 @@ function getStats(user) {
                     // user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
                     // Strava stores distance in metres
                     user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
+                    // Only moving time vs FitBit's Active, Very Active etc
                     user.totalDuration = user.totalDuration + user.activities[i].moving_time;
                     // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
                 }
