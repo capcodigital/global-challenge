@@ -6,10 +6,11 @@ var https = require("https");
 var citService = require('../services/cit.service');
 var User = mongoose.model('User');
 var strava = require('strava-v3');
+var fs = require('fs');
 
-var apiKey = "808302c7e373c0fe3ce7cba05f44f291e59c4b7c";
-var secret = "4c591acd2508859f95b9a40f4522fe82247bcdb9";
-var client_id = 7291;
+var apiKey = fs.readFileSync('./config/keys/strava_key.txt', 'utf8');
+var secret = fs.readFileSync('./config/keys/strava_secret.txt', 'utf8');
+var client_id = fs.readFileSync('./config/keys/strava_client.txt', 'utf8');
 
 // Month is an index
 var startDate = new Date(2020,11,15);

@@ -1,7 +1,9 @@
+var fs = require('fs');
+
 // Set the client credentials and the OAuth2 server
 var credentials = {
-  clientID: '228MZ3>',
-  clientSecret: '1b057c2e46b0dd19ec40cba83f9d8da3',
+  clientID: fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8'),
+  clientSecret: fs.readFileSync('./config/keys/fitbit_secret.txt', 'utf8'),
   site: 'https://api.fitbit.com'
 };
 
