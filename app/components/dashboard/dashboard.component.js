@@ -18,7 +18,6 @@ import {
 } from "react-intl";
 import { Counter, ListView } from "components/common";
 import Map from "components/map";
-import Sign from "components/sign";
 import Legend from "components/legend";
 import convertNumberToArray from "../../utils/covertNumberToArray";
 
@@ -216,16 +215,16 @@ class Dashboard extends React.Component {
         <Segment loading={isLoading} className="secondary">
           <Container>
             <Container className="sign-wrapper">
-              <Sign className="counter-wrapper">
-                <div className="counter">
-                  <div className="counter-container">
-                    <Counter
-                      digits={8}
-                      data={convertNumberToArray(total, 10000000)}
-                    />
+              <div className={`sign-container counter-wrapper`}>
+                <div className="sign-content-container">
+                  <div className="counter">
+                      <Counter
+                        digits={8}
+                        data={convertNumberToArray(total, 10000000)}
+                      />
                   </div>
                 </div>
-              </Sign>
+              </div>
             </Container>
             <div ref={this.saveRef}>
               <Map
@@ -289,57 +288,59 @@ class Dashboard extends React.Component {
                 >
                   <Grid.Row>
                     <Grid.Column width={8}>
-                        <Header
-                          size="medium"
-                          className="container-header"
-                          style={{ textAlign: "center" }}
-                        >
-                          <FormattedMessage id="dashboard.averageStepsByOffice" />
-                        </Header>
+                      <Header
+                        size="medium"
+                        className="container-header"
+                        style={{ textAlign: "center" }}
+                      >
+                        Run
+                      </Header>
 
-                        <div>
-                          <ListView
-                            className={"scrolling"}
-                            list={breakdown.averages}
-                            prefix="Average no of steps"
-                            dataKey="average"
-                            image
-                          />
-                        </div>
-                    
+                      <div>
+                        <ListView
+                          height={290}
+                          className={"scrolling"}
+                          list={breakdown.averages}
+                          prefix="Average no of steps"
+                          dataKey="average"
+                          image
+                        />
+                      </div>
                     </Grid.Column>
-                    <Grid.Column width={8}>
-                        <Header
-                          size="medium"
-                          className="container-header"
-                          style={{ textAlign: "center" }}
-                        >
-                          <FormattedMessage id="dashboard.averageStepsByOffice" />
-                        </Header>
-
-                        <div>
-                          <ListView
-                            className={"scrolling"}
-                            list={breakdown.averages}
-                            prefix="Average no of steps"
-                            dataKey="average"
-                            image
-                          />
-                        </div>        
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row stretched >
                     <Grid.Column width={8}>
                       <Header
                         size="medium"
                         className="container-header"
                         style={{ textAlign: "center" }}
                       >
-                        <FormattedMessage id="dashboard.averageStepsByOffice" />
+                        Bike
                       </Header>
 
                       <div>
                         <ListView
+                          height={290}
+                          className={"scrolling"}
+                          list={breakdown.averages}
+                          prefix="Average no of steps"
+                          dataKey="average"
+                          image
+                        />
+                      </div>
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Column width={8}>
+                      <Header
+                        size="medium"
+                        className="container-header"
+                        style={{ textAlign: "center" }}
+                      >
+                        Walk
+                      </Header>
+
+                      <div>
+                        <ListView
+                          height={290}
                           className={"scrolling"}
                           list={breakdown.averages}
                           prefix="Average no of steps"
@@ -360,6 +361,7 @@ class Dashboard extends React.Component {
 
                         <div>
                           <ListView
+                            height={145}
                             className={"scrolling"}
                             list={breakdown.averages}
                             prefix="Average no of steps"
@@ -379,6 +381,7 @@ class Dashboard extends React.Component {
 
                         <div>
                           <ListView
+                            height={145}
                             className={"scrolling"}
                             list={breakdown.averages}
                             prefix="Average no of steps"
