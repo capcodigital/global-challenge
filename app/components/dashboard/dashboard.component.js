@@ -215,6 +215,18 @@ class Dashboard extends React.Component {
       <div className="dashboard">
         <Segment loading={isLoading} className="secondary">
           <Container>
+            <Container className="sign-wrapper">
+              <Sign className="counter-wrapper">
+                <div className="counter">
+                  <div className="counter-container">
+                    <Counter
+                      digits={8}
+                      data={convertNumberToArray(total, 10000000)}
+                    />
+                  </div>
+                </div>
+              </Sign>
+            </Container>
             <div ref={this.saveRef}>
               <Map
                 worldData={worldData}
@@ -226,45 +238,15 @@ class Dashboard extends React.Component {
                 geoCenter={[0, 10]}
                 height={height}
               />
-
               <Legend legends={legends} />
-            </div>
-
-            <div className="challenge-description">
-              <FormattedHTMLMessage
-                id="dashboard.mapDescription"
-                defaultMessage="Track our collective progress as we take <span class='highlight'>50 million steps</span> for charity; from Sao Paulo to Hong Kong via all <span class='highlight'>{numberOfOffices} Offices.</span> Help us all reach the finish and get stepping!"
-                values={{
-                  numberOfOffices: cities.length + 1,
-                }}
-              />
             </div>
           </Container>
         </Segment>
 
         <Segment loading={isLoading} className="primary">
-          <Container className="sign-wrapper">
-            <Sign className="counter-wrapper">
-              <div className="counter">
-                <div className="logo-container">
-                  <Image src={Logo} size="small" />
-                </div>
-                <div className="counter-container">
-                  <Counter
-                    digits={8}
-                    data={convertNumberToArray(total, 10000000)}
-                  />
-                </div>
-              </div>
-
-              <div className="tagline">
-                <FormattedMessage id="dashboard.counterTagline" />
-              </div>
-            </Sign>
-          </Container>
-          <Grid container stackable columns={3} divided verticalAlign="middle">
+          <Grid container stackable columns={2} divided verticalAlign="middle">
             <Grid.Row>
-              <Grid.Column>
+              <Grid.Column width={8}>
                 <div className="content-container">
                   <Header className="container-header">
                     <FormattedMessage id="dashboard.locations" />
@@ -291,25 +273,126 @@ class Dashboard extends React.Component {
                 </div>
               </Grid.Column>
 
-              <Grid.Column>
-                <div className="content-container">
-                  <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.averageStepsByOffice" />
-                  </Header>
+              <Grid.Column width={8}>
+                <Header
+                  className="container-header"
+                  style={{ textAlign: "center" }}
+                >
+                  Sports Total
+                </Header>
+                <Grid
+                  container
+                  stackable
+                  columns={2}
+                  divided
+                  verticalAlign="middle"
+                >
+                  <Grid.Row>
+                    <Grid.Column width={8}>
+                        <Header
+                          size="medium"
+                          className="container-header"
+                          style={{ textAlign: "center" }}
+                        >
+                          <FormattedMessage id="dashboard.averageStepsByOffice" />
+                        </Header>
 
-                  <div>
-                    <ListView
-                      className={"scrolling"}
-                      list={breakdown.averages}
-                      prefix="Average no of steps"
-                      dataKey="average"
-                      image
-                    />
-                  </div>
-                </div>
+                        <div>
+                          <ListView
+                            className={"scrolling"}
+                            list={breakdown.averages}
+                            prefix="Average no of steps"
+                            dataKey="average"
+                            image
+                          />
+                        </div>
+                    
+                    </Grid.Column>
+                    <Grid.Column width={8}>
+                        <Header
+                          size="medium"
+                          className="container-header"
+                          style={{ textAlign: "center" }}
+                        >
+                          <FormattedMessage id="dashboard.averageStepsByOffice" />
+                        </Header>
+
+                        <div>
+                          <ListView
+                            className={"scrolling"}
+                            list={breakdown.averages}
+                            prefix="Average no of steps"
+                            dataKey="average"
+                            image
+                          />
+                        </div>        
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row stretched >
+                    <Grid.Column width={8}>
+                      <Header
+                        size="medium"
+                        className="container-header"
+                        style={{ textAlign: "center" }}
+                      >
+                        <FormattedMessage id="dashboard.averageStepsByOffice" />
+                      </Header>
+
+                      <div>
+                        <ListView
+                          className={"scrolling"}
+                          list={breakdown.averages}
+                          prefix="Average no of steps"
+                          dataKey="average"
+                          image
+                        />
+                      </div>
+                    </Grid.Column>
+                    <Grid.Column width={8}>
+                      <Grid.Row>
+                        <Header
+                          size="medium"
+                          className="container-header"
+                          style={{ textAlign: "center" }}
+                        >
+                          Swim
+                        </Header>
+
+                        <div>
+                          <ListView
+                            className={"scrolling"}
+                            list={breakdown.averages}
+                            prefix="Average no of steps"
+                            dataKey="average"
+                            image
+                          />
+                        </div>
+                      </Grid.Row>
+                      <Grid.Row>
+                        <Header
+                          size="medium"
+                          className="container-header"
+                          style={{ textAlign: "center" }}
+                        >
+                          Row
+                        </Header>
+
+                        <div>
+                          <ListView
+                            className={"scrolling"}
+                            list={breakdown.averages}
+                            prefix="Average no of steps"
+                            dataKey="average"
+                            image
+                          />
+                        </div>
+                      </Grid.Row>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
               </Grid.Column>
 
-              <Grid.Column>
+              {/* <Grid.Column width={4}>
                 <div className="content-container">
                   <Header size="medium" className="container-header">
                     <FormattedMessage id="dashboard.leaderboard" />
@@ -331,10 +414,10 @@ class Dashboard extends React.Component {
                     <ListView list={leaderboard} prefix={"No. of steps"} />
                   </div>
                 </div>
-              </Grid.Column>
-            </Grid.Row>
+              </Grid.Column> */}
+              {/* </Grid.Row> */}
 
-            <Grid.Row>
+              {/* <Grid.Row>
               <Grid.Column>
                 <div className="content-container">
                   <Header size="medium" className="container-header">
@@ -350,9 +433,9 @@ class Dashboard extends React.Component {
                     />
                   </div>
                 </div>
-              </Grid.Column>
+              </Grid.Column> */}
 
-              <Grid.Column>
+              {/* <Grid.Column>
                 <div className="content-container">
                   <Header size="medium" className="container-header">
                     <FormattedMessage id="dashboard.stepsByLevel" />
@@ -366,9 +449,9 @@ class Dashboard extends React.Component {
                     />
                   </div>
                 </div>
-              </Grid.Column>
+              </Grid.Column> */}
 
-              <Grid.Column>
+              {/* <Grid.Column>
                 <div className="content-container">
                   <Sign>
                     <Header as="h4" className="container-header">
@@ -384,7 +467,7 @@ class Dashboard extends React.Component {
                     </div>
                   </Sign>
                 </div>
-              </Grid.Column>
+              </Grid.Column> */}
             </Grid.Row>
           </Grid>
         </Segment>

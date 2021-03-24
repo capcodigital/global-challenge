@@ -6,15 +6,15 @@ import Handle from './images/handle.png';
 
 const Sign = ({ children, className }) => (
   <div className={`sign-container ${className}`}>
-    <div className="sign">
-      <div className="handle-container">
+    {/* <div className="sign"> */}
+      {/* <div className="handle-container">
         <Image className="handle" src={Handle} />
         <Image className="handle left" src={Handle} />
-      </div>
+      </div> */}
       <div className="sign-content-container">
         {children}
       </div>
-    </div>
+    {/* </div> */}
   </div>
 );
 

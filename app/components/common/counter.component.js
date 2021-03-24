@@ -53,7 +53,7 @@ class Counter extends React.PureComponent {
               className="bar"
               x={i * 44}
               y={0}
-              fill={'#fff'}
+              fill={'lightgrey'}
               width={40}
               height={600}
             />
@@ -73,6 +73,7 @@ class Counter extends React.PureComponent {
                       key={`number-${i}`}
                       x={5}
                       y={45 + i * 60}
+                      fill={'#c00d0d'}
                     >
                       {i}
                     </text>
