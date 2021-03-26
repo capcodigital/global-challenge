@@ -11,18 +11,12 @@ import {
   Dropdown,
   Search,
 } from "semantic-ui-react";
-import {
-  FormattedMessage,
-  FormattedNumber,
-  FormattedHTMLMessage,
-} from "react-intl";
-import { Counter, ListView } from "components/common";
+import { FormattedMessage } from "react-intl";
+import { Counter, ListView, ResizableListView } from "components/common";
 import Map from "components/map";
 import Legend from "components/legend";
 import convertNumberToArray from "../../utils/covertNumberToArray";
-
 import { offices, allCities, geometries, officeMap } from "./constants";
-import Logo from "./images/capco.png";
 import "./style.scss";
 
 const legends = [
@@ -218,10 +212,10 @@ class Dashboard extends React.Component {
               <div className={`sign-container counter-wrapper`}>
                 <div className="sign-content-container">
                   <div className="counter">
-                      <Counter
-                        digits={8}
-                        data={convertNumberToArray(total, 10000000)}
-                      />
+                    <Counter
+                      digits={8}
+                      data={convertNumberToArray(total, 10000000)}
+                    />
                   </div>
                 </div>
               </div>
@@ -245,40 +239,40 @@ class Dashboard extends React.Component {
         <Segment loading={isLoading} className="primary">
           <Grid container stackable columns={2} divided verticalAlign="middle">
             <Grid.Row>
-              <Grid.Column width={8}>
-                <div className="content-container">
-                  <Header className="container-header">
-                    <FormattedMessage id="dashboard.locations" />
-                  </Header>
-                  <Dropdown
-                    placeholder="Select an office"
-                    selection
-                    fluid
-                    value={filter}
-                    options={offices}
-                    onChange={this.onCountryChange}
-                  />
-
-                  <div className="map-container">
-                    <Map
-                      worldData={region}
-                      width={300}
-                      height={240}
-                      scale={scale}
-                      geoCenter={geoCenter}
-                      cities={[]}
+              <Grid.Column>           
+                <Grid.Row>
+                  <div className="content-container-leaderboard">
+                    <Header size="medium" className="container-header">
+                      Team Leaderboard
+                    </Header>              
+                      <ResizableListView height={400} className={"scrolling"} />               
+                  </div>
+                </Grid.Row>
+                <Grid.Row>
+                  <div className="content-container-search">
+                    <Header size="medium" className="container-header">
+                      Team/User Search
+                    </Header>              
+                    <div className="search-container">
+                    <Search
+                      fluid
+                      loading={isLoading}
+                      onResultSelect={this.handleResultSelect}
+                      onSearchChange={debounce(this.handleSearchChange, 500, {
+                        leading: true,
+                      })}
+                      results={leaderboard}
+                      value={searchString}
                     />
                   </div>
-                </div>
+                  <div>
+                    <ResizableListView height={160} className={"scrolling"}  />
+                  </div>             
+                  </div>
+                </Grid.Row>
               </Grid.Column>
-
-              <Grid.Column width={8}>
-                <Header
-                  className="container-header"
-                  style={{ textAlign: "center" }}
-                >
-                  Sports Total
-                </Header>
+              <Grid.Column> 
+                <Header className="container-header" style={{ textAlign: "center", paddingTop: '1rem' }}>Sports Total</Header>
                 <Grid
                   container
                   stackable
@@ -288,111 +282,70 @@ class Dashboard extends React.Component {
                 >
                   <Grid.Row>
                     <Grid.Column width={8}>
-                      <Header
-                        size="medium"
-                        className="container-header"
-                        style={{ textAlign: "center" }}
-                      >
-                        Run
-                      </Header>
-
-                      <div>
-                        <ListView
-                          height={290}
-                          className={"scrolling"}
-                          list={breakdown.averages}
-                          prefix="Average no of steps"
-                          dataKey="average"
-                          image
-                        />
-                      </div>
+                      <Grid.Row>
+                        <div className="content-container-dashboard">
+                          <Header size="medium" className="container-header">
+                            Run
+                          </Header>
+                          <ResizableListView
+                            height={290}
+                            className={"scrolling"}
+                          />
+                        </div>
+                      </Grid.Row>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                      <Header
-                        size="medium"
-                        className="container-header"
-                        style={{ textAlign: "center" }}
-                      >
-                        Bike
-                      </Header>
-
-                      <div>
-                        <ListView
-                          height={290}
-                          className={"scrolling"}
-                          list={breakdown.averages}
-                          prefix="Average no of steps"
-                          dataKey="average"
-                          image
-                        />
-                      </div>
+                      <Grid.Row>
+                      <div className="content-container-dashboard">
+                          <Header size="medium" className="container-header">
+                            Bike
+                          </Header>
+                          <ResizableListView
+                            height={290}
+                            className={"scrolling"}
+                          />
+                        </div>
+                      </Grid.Row>
                     </Grid.Column>
                   </Grid.Row>
                   <Grid.Row>
                     <Grid.Column width={8}>
-                      <Header
-                        size="medium"
-                        className="container-header"
-                        style={{ textAlign: "center" }}
-                      >
-                        Walk
-                      </Header>
-
-                      <div>
-                        <ListView
-                          height={290}
-                          className={"scrolling"}
-                          list={breakdown.averages}
-                          prefix="Average no of steps"
-                          dataKey="average"
-                          image
-                        />
-                      </div>
+                      <Grid.Row>
+                      <div className="content-container-dashboard">
+                          <Header size="medium" className="container-header">
+                            Walk
+                          </Header>
+                          <ResizableListView
+                            height={290}
+                            className={"scrolling"}
+                          />
+                        </div>
+                      </Grid.Row>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                      <Grid.Row>
-                        <Header
-                          size="medium"
-                          className="container-header"
-                          style={{ textAlign: "center" }}
-                        >
-                          Swim
-                        </Header>
-
-                        <div>
-                          <ListView
-                            height={145}
+                    <div className="content-container-dashboard">
+                        <Grid.Row>
+                          <Header size="medium" className="container-header">
+                            Swim
+                          </Header>
+                          <ResizableListView
+                            height={140}
                             className={"scrolling"}
-                            list={breakdown.averages}
-                            prefix="Average no of steps"
-                            dataKey="average"
-                            image
                           />
-                        </div>
-                      </Grid.Row>
-                      <Grid.Row>
-                        <Header
-                          size="medium"
-                          className="container-header"
-                          style={{ textAlign: "center" }}
-                        >
-                          Row
-                        </Header>
-
-                        <div>
-                          <ListView
-                            height={145}
+                        </Grid.Row>
+                        <Grid.Row>
+                          <Header size="medium" className="container-header">
+                            Row
+                          </Header>
+                          <ResizableListView
+                            height={140}
                             className={"scrolling"}
-                            list={breakdown.averages}
-                            prefix="Average no of steps"
-                            dataKey="average"
-                            image
                           />
-                        </div>
-                      </Grid.Row>
+                        </Grid.Row>
+                      </div>
                     </Grid.Column>
                   </Grid.Row>
-                </Grid>
+                </Grid> 
               </Grid.Column>
 
               {/* <Grid.Column width={4}>

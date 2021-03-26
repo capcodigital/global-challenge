@@ -6,9 +6,9 @@ import { List, Image } from "semantic-ui-react";
 import { FormattedNumber } from "react-intl";
 import "./style.scss";
 
-const ListView = ({ list, prefix, image, dataKey, className, height }) => (
+const ListView = ({ list, prefix, image, dataKey, className }) => (
   <div>
-    <List animated divided className={className} style={{ height: height }}>
+    <List animated divided className={className}>
       {list.map((item) => (
         <List.Item key={item.name}>
           {image ? (
@@ -30,12 +30,24 @@ const ListView = ({ list, prefix, image, dataKey, className, height }) => (
     </List>
   </div>
 );
+export const ResizableListView = ({ className, height }) => (
+    <List
+      animated
+      divided
+      className={className}
+      style={{ height: height }}
+    />
+);
 
 ListView.propTypes = {
   list: PropTypes.array.isRequired,
   dataKey: PropTypes.string,
   image: PropTypes.bool,
   prefix: PropTypes.string,
+  className: PropTypes.string
+};
+
+ResizableListView.propTypes = {
   className: PropTypes.string,
   height: PropTypes.number,
 };

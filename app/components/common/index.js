@@ -1,4 +1,4 @@
-import Counter from './counter.component';
-import ListView from './list.component';
+import Counter from "./counter.component";
+import ListView, { ResizableListView } from "./list.component";
 
-export { Counter, ListView };
+export { Counter, ListView, ResizableListView };
