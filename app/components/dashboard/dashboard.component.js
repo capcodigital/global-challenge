@@ -239,40 +239,45 @@ class Dashboard extends React.Component {
         <Segment loading={isLoading} className="primary">
           <Grid container stackable columns={2} divided verticalAlign="middle">
             <Grid.Row>
-              <Grid.Column>           
+              <Grid.Column>
                 <Grid.Row>
                   <div className="content-container-leaderboard">
                     <Header size="medium" className="container-header">
                       Team Leaderboard
-                    </Header>              
-                      <ResizableListView height={400} className={"scrolling"} />               
+                    </Header>
+                    <ResizableListView height={400} className={"scrolling"} />
                   </div>
                 </Grid.Row>
                 <Grid.Row>
                   <div className="content-container-search">
                     <Header size="medium" className="container-header">
                       Team/User Search
-                    </Header>              
+                    </Header>
                     <div className="search-container">
-                    <Search
-                      fluid
-                      loading={isLoading}
-                      onResultSelect={this.handleResultSelect}
-                      onSearchChange={debounce(this.handleSearchChange, 500, {
-                        leading: true,
-                      })}
-                      results={leaderboard}
-                      value={searchString}
-                    />
-                  </div>
-                  <div>
-                    <ResizableListView height={160} className={"scrolling"}  />
-                  </div>             
+                      <Search
+                        fluid
+                        loading={isLoading}
+                        onResultSelect={this.handleResultSelect}
+                        onSearchChange={debounce(this.handleSearchChange, 500, {
+                          leading: true,
+                        })}
+                        results={leaderboard}
+                        value={searchString}
+                      />
+                    </div>
+                    <div>
+                      <ResizableListView height={160} className={"scrolling"} />
+                    </div>
                   </div>
                 </Grid.Row>
               </Grid.Column>
-              <Grid.Column> 
-                <Header className="container-header" style={{ textAlign: "center", paddingTop: '1rem' }}>Sports Total</Header>
+              <Grid.Column>
+                <Header
+                  className="container-header"
+                  style={{ textAlign: "center", paddingTop: "1rem" }}
+                >
+                  Sports Total
+                </Header>
                 <Grid
                   container
                   stackable
@@ -296,7 +301,7 @@ class Dashboard extends React.Component {
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <Grid.Row>
-                      <div className="content-container-dashboard">
+                        <div className="content-container-dashboard">
                           <Header size="medium" className="container-header">
                             Bike
                           </Header>
@@ -311,7 +316,7 @@ class Dashboard extends React.Component {
                   <Grid.Row>
                     <Grid.Column width={8}>
                       <Grid.Row>
-                      <div className="content-container-dashboard">
+                        <div className="content-container-dashboard">
                           <Header size="medium" className="container-header">
                             Walk
                           </Header>
@@ -323,7 +328,7 @@ class Dashboard extends React.Component {
                       </Grid.Row>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                    <div className="content-container-dashboard">
+                      <div className="content-container-dashboard">
                         <Grid.Row>
                           <Header size="medium" className="container-header">
                             Swim
@@ -345,85 +350,8 @@ class Dashboard extends React.Component {
                       </div>
                     </Grid.Column>
                   </Grid.Row>
-                </Grid> 
+                </Grid>
               </Grid.Column>
-
-              {/* <Grid.Column width={4}>
-                <div className="content-container">
-                  <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.leaderboard" />
-                  </Header>
-
-                  <div className="search-container">
-                    <Search
-                      fluid
-                      loading={isLoading}
-                      onResultSelect={this.handleResultSelect}
-                      onSearchChange={debounce(this.handleSearchChange, 500, {
-                        leading: true,
-                      })}
-                      results={leaderboard}
-                      value={searchString}
-                    />
-                  </div>
-                  <div>
-                    <ListView list={leaderboard} prefix={"No. of steps"} />
-                  </div>
-                </div>
-              </Grid.Column> */}
-              {/* </Grid.Row> */}
-
-              {/* <Grid.Row>
-              <Grid.Column>
-                <div className="content-container">
-                  <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.stepsByOffice" />
-                  </Header>
-
-                  <div>
-                    <ListView
-                      className={"scrolling"}
-                      list={breakdown.offices}
-                      prefix={"No of steps"}
-                      image
-                    />
-                  </div>
-                </div>
-              </Grid.Column> */}
-
-              {/* <Grid.Column>
-                <div className="content-container">
-                  <Header size="medium" className="container-header">
-                    <FormattedMessage id="dashboard.stepsByLevel" />
-                  </Header>
-
-                  <div>
-                    <ListView
-                      list={breakdown.levels}
-                      prefix="No of steps"
-                      image
-                    />
-                  </div>
-                </div>
-              </Grid.Column> */}
-
-              {/* <Grid.Column>
-                <div className="content-container">
-                  <Sign>
-                    <Header as="h4" className="container-header">
-                      <FormattedMessage id="dashboard.average" />
-                    </Header>
-                    <div className="stats-container">
-                      <div className="number">
-                        <FormattedNumber value={average} />
-                      </div>
-                      <div className="label">
-                        <FormattedMessage id="dashboard.steps" />
-                      </div>
-                    </div>
-                  </Sign>
-                </div>
-              </Grid.Column> */}
             </Grid.Row>
           </Grid>
         </Segment>
