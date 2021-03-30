@@ -1,7 +1,7 @@
-@import '../../styles/variables.scss';
-@import '../../styles/breakpoints.scss';
+@import "../../styles/variables.scss";
+@import "../../styles/breakpoints.scss";
 
-.dashboard { 
+.dashboard {
   .sign-wrapper {
     width: 100%;
     margin-bottom: 2rem;
@@ -10,7 +10,6 @@
     overflow: hidden;
 
     .sign-content-container {
-
       .counter {
         align-self: auto;
         align-items: center;
@@ -53,7 +52,7 @@
     margin-bottom: 1rem;
 
     .search {
-      .input { 
+      .input {
         width: 100%;
       }
     }
@@ -63,9 +62,32 @@
     height: 370px;
     padding: 2rem;
     border-bottom: 1px solid #d9d9d9;
-
     .container-header {
       text-align: center;
+    }
+  }
+  .content-container-dashboard {
+    height: 370px;
+    border-bottom: 1px solid #d9d9d9;
+    .container-header {
+      text-align: center;
+      padding-top:1rem;
+    }
+  }
+
+  .content-container-leaderboard {
+    height: 500px;
+    border-bottom: 1px solid #d9d9d9;
+    .container-header {
+      text-align: center;
+    }
+  }
+  .content-container-search {
+    height: 300px;
+    border-bottom: 1px solid #d9d9d9;
+    .container-header {
+      text-align: center;
+      padding-top:2rem;
     }
   }
 
@@ -78,4 +100,11 @@
       }
     }
   }
+}
+
+.sign-container {
+  position: relative;
+  margin: 0 auto;
+  padding-top: 2rem;
+  max-width: 680px;
 }
