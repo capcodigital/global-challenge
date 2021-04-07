@@ -15,6 +15,7 @@ import Footer from 'components/footer';
 import HomePage from 'components/homepage/homepage.container';
 import './style.scss';
 import Dashboard from './dashboard/dashboard.container';
+import TeamsPage from './teams/teams.container';
 
 const App = () => (
   <div className="app-wrapper">
@@ -28,6 +29,7 @@ const App = () => (
     <Switch>
       <Route path="/" exact component={HomePage} />
       <Route exact path="/progress" component={Dashboard} />
+      <Route exact path="/teams" component={TeamsPage} />
       <Route component={HomePage} />
     </Switch>
     <Footer />

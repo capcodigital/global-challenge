@@ -9,7 +9,7 @@ import {
 
 const initialState = fromJS({
   activities: [],
-  filteredActivies: [],
+  filteredActivities: [],
   isLoading: false
 });
 

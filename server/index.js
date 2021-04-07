@@ -8,6 +8,7 @@ const https = require('https');
 const numCPUs = require('os').cpus().length;
 const { resolve } = require('path');
 const logger = require('./util//logger');
+const bodyParser = require('body-parser');
 
 const argv = require('./util/argv');
 const port = require('./util//port');
@@ -17,6 +18,9 @@ var models = require("./config/models");
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.json());
+
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var options = {
@@ -25,11 +29,11 @@ var options = {
 }
 
 if (env === 'production') {
-	options.key = fs.readFileSync('/home/ec2-user/config/keys/private-key.pem');
-	options.cert = fs.readFileSync('/home/ec2-user/config/keys/ee0cc8226e7cd1f4.crt');
-	options.ca = [fs.readFileSync('/home/ec2-user/config/keys/gd_bundle-split1.crt'),
-	    fs.readFileSync('/home/ec2-user/config/keys/gd_bundle-split2.crt'),
-	    fs.readFileSync('/home/ec2-user/config/keys/gd_bundle-split3.crt')];
+	options.key = fs.readFileSync('/home/ec2-user/dist/config/keys/private-key.pem');
+	options.cert = fs.readFileSync('/home/ec2-user/dist/config/keys/ee0cc8226e7cd1f4.crt');
+	options.ca = [fs.readFileSync('/home/ec2-user/dist/config/keys/gd_bundle-split1.crt'),
+	    fs.readFileSync('/home/ec2-user/dist/config/keys/gd_bundle-split2.crt'),
+	    fs.readFileSync('/home/ec2-user/dist/config/keys/gd_bundle-split3.crt')];
 } else {
 	options.key = fs.readFileSync('config/keys/myrsakey.pem');
 	options.cert = fs.readFileSync('config/keys/myrsacert.pem');
