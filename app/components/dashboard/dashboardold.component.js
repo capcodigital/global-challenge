@@ -11,12 +11,19 @@ import {
   Dropdown,
   Search,
 } from "semantic-ui-react";
-import { FormattedMessage } from "react-intl";
-import { Counter, ListView, ResizableListView } from "components/common";
+import {
+  FormattedMessage,
+  FormattedNumber,
+  FormattedHTMLMessage,
+} from "react-intl";
+import { Counter, ListView } from "components/common";
 import Map from "components/map";
+import Sign from "components/sign";
 import Legend from "components/legend";
 import convertNumberToArray from "../../utils/covertNumberToArray";
+
 import { offices, allCities, geometries, officeMap } from "./constants";
+import Logo from "./images/capco.png";
 import "./style.scss";
 
 const legends = [
@@ -208,18 +215,6 @@ class Dashboard extends React.Component {
       <div className="dashboard">
         <Segment loading={isLoading} className="secondary">
           <Container>
-            <Container className="sign-wrapper">
-              <div className={`sign-container counter-wrapper`}>
-                <div className="sign-content-container">
-                  <div className="counter">
-                    <Counter
-                      digits={8}
-                      data={convertNumberToArray(total, 10000000)}
-                    />
-                  </div>
-                </div>
-              </div>
-            </Container>
             <div ref={this.saveRef}>
               <Map
                 worldData={worldData}
@@ -231,126 +226,164 @@ class Dashboard extends React.Component {
                 geoCenter={[0, 10]}
                 height={height}
               />
+
               <Legend legends={legends} />
+            </div>
+
+            <div className="challenge-description">
+              <FormattedHTMLMessage
+                id="dashboard.mapDescription"
+                defaultMessage="Track our collective progress as we take <span class='highlight'>50 million steps</span> for charity; from Sao Paulo to Hong Kong via all <span class='highlight'>{numberOfOffices} Offices.</span> Help us all reach the finish and get stepping!"
+                values={{
+                  numberOfOffices: cities.length + 1,
+                }}
+              />
             </div>
           </Container>
         </Segment>
 
         <Segment loading={isLoading} className="primary">
-          <Grid container stackable columns={2} divided verticalAlign="middle">
+          <Container className="sign-wrapper">
+            <Sign className="counter-wrapper">
+              <div className="counter">
+                <div className="logo-container">
+                  <Image src={Logo} size="small" />
+                </div>
+                <div className="counter-container">
+                  <Counter
+                    digits={8}
+                    data={convertNumberToArray(total, 10000000)}
+                  />
+                </div>
+              </div>
+
+              <div className="tagline">
+                <FormattedMessage id="dashboard.counterTagline" />
+              </div>
+            </Sign>
+          </Container>
+          <Grid container stackable columns={3} divided verticalAlign="middle">
             <Grid.Row>
               <Grid.Column>
-                <Grid.Row>
-                  <div className="content-container-leaderboard">
-                    <Header size="medium" className="container-header">
-                      Team Leaderboard
-                    </Header>
-                    <ResizableListView height={400} className={"scrolling"} />
+                <div className="content-container">
+                  <Header className="container-header">
+                    <FormattedMessage id="dashboard.locations" />
+                  </Header>
+                  <Dropdown
+                    placeholder="Select an office"
+                    selection
+                    fluid
+                    value={filter}
+                    options={offices}
+                    onChange={this.onCountryChange}
+                  />
+
+                  <div className="map-container">
+                    <Map
+                      worldData={region}
+                      width={300}
+                      height={240}
+                      scale={scale}
+                      geoCenter={geoCenter}
+                      cities={[]}
+                    />
                   </div>
-                </Grid.Row>
-                <Grid.Row>
-                  <div className="content-container-search">
-                    <Header size="medium" className="container-header">
-                      Team/User Search
-                    </Header>
-                    <div className="search-container">
-                      <Search
-                        fluid
-                        loading={isLoading}
-                        onResultSelect={this.handleResultSelect}
-                        onSearchChange={debounce(this.handleSearchChange, 500, {
-                          leading: true,
-                        })}
-                        results={leaderboard}
-                        value={searchString}
-                      />
-                    </div>
-                    <div>
-                      <ResizableListView height={160} className={"scrolling"} />
-                    </div>
-                  </div>
-                </Grid.Row>
+                </div>
               </Grid.Column>
+
               <Grid.Column>
-                <Header
-                  className="container-header"
-                  style={{ textAlign: "center", paddingTop: "1rem" }}
-                >
-                  Sports Total
-                </Header>
-                <Grid
-                  container
-                  stackable
-                  columns={2}
-                  divided
-                  verticalAlign="middle"
-                >
-                  <Grid.Row>
-                    <Grid.Column width={8}>
-                      <Grid.Row>
-                        <div className="content-container-dashboard">
-                          <Header size="medium" className="container-header">
-                            Run
-                          </Header>
-                          <ResizableListView
-                            height={290}
-                            className={"scrolling"}
-                          />
-                        </div>
-                      </Grid.Row>
-                    </Grid.Column>
-                    <Grid.Column width={8}>
-                      <Grid.Row>
-                        <div className="content-container-dashboard">
-                          <Header size="medium" className="container-header">
-                            Bike
-                          </Header>
-                          <ResizableListView
-                            height={290}
-                            className={"scrolling"}
-                          />
-                        </div>
-                      </Grid.Row>
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Column width={8}>
-                      <Grid.Row>
-                        <div className="content-container-dashboard">
-                          <Header size="medium" className="container-header">
-                            Walk
-                          </Header>
-                          <ResizableListView
-                            height={290}
-                            className={"scrolling"}
-                          />
-                        </div>
-                      </Grid.Row>
-                    </Grid.Column>
-                    <Grid.Column width={8}>
-                      <div className="content-container-dashboard">
-                        <Grid.Row>
-                          <Header size="medium" className="container-header">
-                            Swim
-                          </Header>
-                          <ResizableListView
-                            height={140}
-                            className={"scrolling"}
-                          />
-                        </Grid.Row>
-                        <Grid.Row>
-                          <Header size="medium" className="container-header">
-                            Row
-                          </Header>
-                          <ResizableListView
-                            height={140}
-                            className={"scrolling"}
-                          />
-                        </Grid.Row>
+                <div className="content-container">
+                  <Header size="medium" className="container-header">
+                    <FormattedMessage id="dashboard.averageStepsByOffice" />
+                  </Header>
+
+                  <div>
+                    <ListView
+                      className={"scrolling"}
+                      list={breakdown.averages}
+                      prefix="Average no of steps"
+                      dataKey="average"
+                      image
+                    />
+                  </div>
+                </div>
+              </Grid.Column>
+
+              <Grid.Column>
+                <div className="content-container">
+                  <Header size="medium" className="container-header">
+                    <FormattedMessage id="dashboard.leaderboard" />
+                  </Header>
+
+                  <div className="search-container">
+                    <Search
+                      fluid
+                      loading={isLoading}
+                      onResultSelect={this.handleResultSelect}
+                      onSearchChange={debounce(this.handleSearchChange, 500, {
+                        leading: true,
+                      })}
+                      results={leaderboard}
+                      value={searchString}
+                    />
+                  </div>
+                  <div>
+                    <ListView list={leaderboard} prefix={"No. of steps"} />
+                  </div>
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+
+            <Grid.Row>
+              <Grid.Column>
+                <div className="content-container">
+                  <Header size="medium" className="container-header">
+                    <FormattedMessage id="dashboard.stepsByOffice" />
+                  </Header>
+
+                  <div>
+                    <ListView
+                      className={"scrolling"}
+                      list={breakdown.offices}
+                      prefix={"No of steps"}
+                      image
+                    />
+                  </div>
+                </div>
+              </Grid.Column>
+
+              <Grid.Column>
+                <div className="content-container">
+                  <Header size="medium" className="container-header">
+                    <FormattedMessage id="dashboard.stepsByLevel" />
+                  </Header>
+
+                  <div>
+                    <ListView
+                      list={breakdown.levels}
+                      prefix="No of steps"
+                      image
+                    />
+                  </div>
+                </div>
+              </Grid.Column>
+
+              <Grid.Column>
+                <div className="content-container">
+                  <Sign>
+                    <Header as="h4" className="container-header">
+                      <FormattedMessage id="dashboard.average" />
+                    </Header>
+                    <div className="stats-container">
+                      <div className="number">
+                        <FormattedNumber value={average} />
                       </div>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
+                      <div className="label">
+                        <FormattedMessage id="dashboard.steps" />
+                      </div>
+                    </div>
+                  </Sign>
+                </div>
               </Grid.Column>
             </Grid.Row>
           </Grid>
