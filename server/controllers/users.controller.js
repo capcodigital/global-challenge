@@ -6,7 +6,7 @@ var User = mongoose.model('User');
 var citService = require('../services/cit.service');
 
 /**
- * List of Users
+ * List of Users Stats
  */
 exports.stats = function(req, res, next) {
     User.find({}).sort('name').exec(function(err, users) {
@@ -128,3 +128,19 @@ exports.addManual = function(req, res) {
         })
     }
 };
+
+/**
+ * List of Users
+ */
+exports.list = function(req, res, next) {
+    User.find({}).select('name username').sort('name').exec(function(err, users) {
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(users);
+        }
+    });
+};
+
