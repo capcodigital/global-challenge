@@ -9,8 +9,16 @@ var _ = require('lodash');
 var cluster = require('cluster');
 var fs = require('fs');
 
-var secret = fs.readFileSync('./config/keys/fitbit_secret.txt', 'utf8');
-var client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
+var secret = "";
+var client_id = "";
+
+if (process.env.NODE_ENV == "production") {
+    secret = fs.readFileSync('/home/ec2-user/dist/config/keys/fitbit_secret.txt', 'utf8');
+    client_id = fs.readFileSync('/home/ec2-user/dist/config/keys/fitbit_client.txt', 'utf8');
+} else {
+    secret = fs.readFileSync('./config/keys/fitbit_secret.txt', 'utf8');
+    client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
+}
 
 var challengeDates = ["2020-12-15","2020-12-16","2020-12-17","2020-12-18","2020-12-19","2020-12-20","2020-12-21"];
 var code = client_id + ':' + secret;

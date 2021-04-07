@@ -35,8 +35,8 @@ const totalDistanceSelector = createSelector(
   (activities) => {
     if (activities) {
       const distance = activities.toJS();
-       // Display totals in metres rather than km
-       return distance.reduce((sum, n) => sum + n.totalDistance, 0);
+      // Display totals in metres rather than km
+      return distance.reduce((sum, n) => sum + n.totalDistance, 0);
     }
     return 0;
   }

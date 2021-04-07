@@ -8,9 +8,19 @@ var User = mongoose.model('User');
 var strava = require('strava-v3');
 var fs = require('fs');
 
-var apiKey = fs.readFileSync('./config/keys/strava_key.txt', 'utf8');
-var secret = fs.readFileSync('./config/keys/strava_secret.txt', 'utf8');
-var client_id = fs.readFileSync('./config/keys/strava_client.txt', 'utf8');
+var apiKey = "";
+var secret = "";
+var client_id = "";
+
+if (process.env.NODE_ENV == "production") {
+    apiKey = fs.readFileSync('/home/ec2-user/dist/config/keys/strava_key.txt', 'utf8');
+    secret = fs.readFileSync('/home/ec2-user/dist/config/keys/strava_secret.txt', 'utf8');
+    client_id = fs.readFileSync('/home/ec2-user/dist/config/keys/strava_client.txt', 'utf8');
+} else {
+    apiKey = fs.readFileSync('./config/keys/strava_key.txt', 'utf8');
+    secret = fs.readFileSync('./config/keys/strava_secret.txt', 'utf8');
+    client_id = fs.readFileSync('./config/keys/strava_client.txt', 'utf8');
+}
 
 // Month is an index
 var startDate = new Date(2020,11,15);
