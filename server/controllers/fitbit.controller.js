@@ -7,11 +7,12 @@ var citService = require('../services/cit.service');
 var User = mongoose.model('User');
 var _ = require('lodash');
 var cluster = require('cluster');
+var fs = require('fs');
 
-var secret = "1b057c2e46b0dd19ec40cba83f9d8da3";
-var client_id = "228MZ3";
+var secret = fs.readFileSync('./config/keys/fitbit_secret.txt', 'utf8');
+var client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
 
-var challengeDates = ["2019-7-15","2019-7-16","2019-7-17","2019-7-18","2019-7-19","2019-7-20","2019-7-21"];
+var challengeDates = ["2020-12-15","2020-12-16","2020-12-17","2020-12-18","2020-12-19","2020-12-20","2020-12-21"];
 var code = client_id + ':' + secret;
 var authorizationCode = "Basic " + new Buffer(code).toString('base64');
 
@@ -44,6 +45,11 @@ if (cluster.isMaster) {
     updateEveryInterval(60);
 }
 
+var callbackUrl = "capcoglobalchallenge.com"
+if (process.env.NODE_ENV != "production") {
+    callbackUrl = "localhost";
+}
+
 /**
 * List of Users
 */
@@ -55,15 +61,12 @@ exports.authorize = function(req, res) {
         res.json({error: { user: " Could not authenticate with your Fitbit account"}});
     } else {
         var username = req.query.state;
-        if (process.env.NODE_ENV === "production") {
-            options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=https://capcoglobalchallenge.com/fitbit/auth";
-        } else {
-            options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=https://localhost:3000/fitbit/auth";
-        }
+        options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=https://" + callbackUrl + "/fitbit/auth";
 
         var newReq = buildRequest(options, function(err, result) {
             if (err) {
               console.log(err);
+              res.redirect('https://' + callbackUrl + '?success=fitBitError');
             } else if (result.errors && result.errors.length > 0) {
                 console.log(result.errors[0].message);
             } else {
@@ -105,6 +108,7 @@ exports.authorize = function(req, res) {
                                 expiration.setTime(datemillis + expiresTimeMillis);
 
                                 user.username = username;
+                                user.app = "FitBit";
                                 user.user_id = result.user_id;
                                 user.token_type = result.token_type;
                                 user.expires_in = expiration;
@@ -157,7 +161,7 @@ exports.update = function(req, res) {
         } else {
             var userCount = users.length;
             for (var i = 0; i < userCount; i++) {
-                if (users[i].access_token) {
+                if (users[i].app == "FitBit" ** users[i].access_token) {
                     updateUser(users[i]);
                 }
             }
@@ -225,14 +229,14 @@ function buildRequest(options, callback) {
 
 function updateUser(user) {
     var today = new Date();
-    if (user.expires_in.getTime() < today.getTime()) {
+    if (user.expires_in && user.expires_in.getTime() < today.getTime()) {
         console.log("Token Expired:" + user.name);
         options.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
          // If token is expired refresh access token and get a new refresh token
         var newReq2 = buildRequest(options, function(err, result) {
             if (err) {
-                console.log(err);
+                console.log(user.name + " : " + err.message);
             } else if (result.errors && result.errors.length > 0) {
                 console.log(user.name + " : " + result.errors[0].message);
             } else {
@@ -248,9 +252,9 @@ function updateUser(user) {
                 user.access_token = result.access_token;
                 user.refresh_token = result.refresh_token;
                 user.expires_in = expiration;
-            }
 
-            getStats(user);
+                getStats(user);
+            }
         });
 
         newReq2.end();
@@ -279,7 +283,7 @@ function getStats(user, date) {
                 user.activities[date] = result;
             }
 
-            // Update Stats Totals
+            // Update Stats Totals - FitBit stores distance in KM
             user.totalSteps = 0;
             user.totalDistance = 0;
             user.totalDuration = 0;
@@ -312,13 +316,13 @@ function save(user, res) {
         if (err) {
             console.log(err.message);
             if (err.code == 11000) {
-                if (err.message.indexOf("username_1") > 0) {
-                    res.redirect('https://capcoglobalchallenge.com?success=capcoRegistered');
+                if (user.app == "Strava") {
+                    res.redirect('https://' + callbackUrl + '?success=stravaRegistered');
                 } else {
-                    res.redirect('https://capcoglobalchallenge.com?success=fitbitRegistered');
+                    res.redirect('https://' + callbackUrl + '?success=fitbitRegistered');
                 }
             } else {
-                res.redirect('https://capcoglobalchallenge.com?success=serverError');
+                res.redirect('https://' + callbackUrl + '?success=serverError');
             }
         } else {
             // If User has joined part way through the competition. Retrieve previous days stats in the background
@@ -326,7 +330,7 @@ function save(user, res) {
                 getStats(newUser, date);
             });
 
-            res.redirect('https://capcoglobalchallenge.com?success=true');
+            res.redirect('https://' + callbackUrl + '?success=fitBitSuccess');
         }
     });
 }

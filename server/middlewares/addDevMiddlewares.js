@@ -5,6 +5,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 
 var users = require('../controllers/users.controller');
 var fitbit = require('../controllers/fitbit.controller');
+var strava = require('../controllers/strava.controller');
 
 function createWebpackMiddleware(compiler, publicPath) {
   return webpackDevMiddleware(compiler, {
@@ -39,6 +40,12 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   app.get('/fitbit/update', fitbit.update);
 
   app.get('/fitbit/userUpdate/:user', fitbit.updateIndividualUser);
+
+  app.get('/strava/auth', strava.authorize);
+
+  app.get('/strava/update', strava.update);
+
+  // app.get('/strava/userUpdate/:user', strava.updateIndividualUser);
 
   app.get('*', (req, res) => {
     fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
