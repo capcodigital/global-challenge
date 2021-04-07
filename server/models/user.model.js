@@ -13,12 +13,14 @@ var UserSchema = new Schema({
         type: String,
         unique: true
     },
+    app: String,
     location: String,
     level: String,
     access_token: String,
     token_type: String,
     refresh_token: String,
     expires_in: Date,
+    expires_at: Number,
     user_id: {
         type: String,
         unique: true

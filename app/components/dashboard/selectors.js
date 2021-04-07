@@ -19,7 +19,7 @@ const filteredActivitiesSelector = createSelector(
   (state) => state.get('dashboard').get('filteredActivities')
 );
 
-const totalSelector = createSelector(
+const totalStepSelector = createSelector(
   [filteredActivitiesSelector],
   (activities) => {
     if (activities) {
@@ -34,15 +34,16 @@ const totalDistanceSelector = createSelector(
   [filteredActivitiesSelector],
   (activities) => {
     if (activities) {
-      const steps = activities.toJS();
-      return steps.reduce((sum, n) => sum + n.totalDistance, 0);
+      const distance = activities.toJS();
+       // Display totals in metres rather than km
+       return distance.reduce((sum, n) => sum + n.totalDistance, 0);
     }
     return 0;
   }
 );
 
 const averageSelector = createSelector(
-  [totalSelector, filteredActivitiesSelector],
+  [totalDistanceSelector, filteredActivitiesSelector],
   (total, employees) => (!total || total === 0 ? 0 : Math.floor(total / employees.count()))
 );
 
@@ -68,14 +69,14 @@ const leaderboardSelector = createSelector(
   [filteredActivitiesSelector],
   (activities) => {
     if (activities) {
-      const leaderboard = sort(activities.toJS(), 'totalSteps');
+      const leaderboard = sort(activities.toJS(), 'totalDistance');
 
       return leaderboard.slice(0, 6).map((leader) => ({
         steps: leader.totalSteps,
         distance: leader.totalDistance,
         name: leader.name,
         title: leader.name,
-        description: `No. of steps ${leader.totalSteps}`
+        description: `No. of km ${leader.totalDistance}`
       }));
     }
 
@@ -110,15 +111,15 @@ const breakdownSelector = createSelector(
 
     const temp = Object.keys(offices).map((i) => {
       const office = offices[i];
-      const { steps } = office;
-      office.average = steps / office.employee;
+      const { distance } = office;
+      office.average = distance / office.employee;
       return office;
     });
 
 
     return {
       offices: sort(cloneDeep(temp), 'employee'),
-      levels: sort(Object.keys(levels).map((i) => levels[i]), 'steps'),
+      levels: sort(Object.keys(levels).map((i) => levels[i]), 'km'),
       averages: sort(cloneDeep(temp), 'average')
     };
   }
@@ -130,7 +131,7 @@ export {
   filteredActivitiesSelector,
   loadingStateSelector,
   breakdownSelector,
-  totalSelector,
+  totalStepSelector,
   averageSelector,
   totalDistanceSelector
 };

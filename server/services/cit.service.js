@@ -8,7 +8,7 @@ var headers = {
 const credentials = {
     client: {
         id: 'data-stories',
-        secret: 'ladiescompanypresident'
+        secret: fs.readFileSync('./config/keys/cit.txt', 'utf8')
     },
     auth: {
         tokenHost: 'https://capi.capco.com'

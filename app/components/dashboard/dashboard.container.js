@@ -9,7 +9,7 @@ import {
   loadingStateSelector,
   activitiesSelector,
   breakdownSelector,
-  totalSelector,
+  totalStepSelector,
   averageSelector,
   leaderboardSelector,
   totalDistanceSelector
@@ -23,7 +23,7 @@ function mapStateToProps(state) {
   const isLoading = loadingStateSelector(state);
   const filteredActivities = filteredActivitiesSelector(state);
   const breakdown = breakdownSelector(state);
-  const total = totalSelector(state);
+  const total = totalStepSelector(state);
   const average = averageSelector(state);
   const distance = totalDistanceSelector(state);
   const leaderboard = leaderboardSelector(state);

@@ -2,24 +2,30 @@
   "homepage.donate": "Donate",
   "homepage.title": "How to participate?",
   "homepage.register": "Register",
-  "homapage.instructions": "Please donate by clicking on the button below before registering for the Challenge. We ask that you donate the equivalent of $5 or more, or whatever you can spare in your local currency. Through our Corporate Matching Program, Capco will also contribute to the money raised.",
+  "homepage.instructions": "Please donate by clicking on the button below before registering for the Challenge. We ask that you donate the equivalent of $5 or more, or whatever you can spare in your local currency. Through our Corporate Matching Program, Capco will also contribute to the money raised.",
   "homepage.progress": "View our Progress once the challenge starts",
 
   "homepage.success": "Registration Completed Successfully",
-  "homepage.fitbitRegistered": "You are already logged in to Fitbit with a user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Fitbit and try again",
+  "homepage.fitbitRegistered": "You are already logged in to Fitbit with a Capco user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Fitbit and try again",
+  "homepage.stravaRegistered": "You are already logged in to Strava with a Capco user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Strava and try again",
   "homepage.capcoRegistered": "The Capco ID or Email you entered has already been registered",
   "homepage.serverError": "Server error please try again later", 
+  "homepage.stravaError": "Error contacting Strava, please try again later",
+  "homepage.fitbitError": "Error contacting Fitbit, please try again later",
 
-  "register.label": "Register with Fitbit",
+  "register.fitbit": "Register with Fitbit",
+  "register.strava": "Register with Strava",
 
   "dashboard.steps": "Steps",
+  "dashboard.distance": "Distance",
+  "dashboard.measure": "km",
   "dashboard.average": "Average",
   "dashboard.locations": "Locations",
   "dashboard.leaderboard": "Leaderboard",
-  "dashboard.stepsByLevel": "Steps by Level",
-  "dashboard.stepsByOffice": "Total Steps by Office",
-  "dashboard.averageStepsByOffice": "Average Steps by Office",
-  "dashboard.counterTagline": "Total Steps so far, from selected region",
+  "dashboard.distanceByLevel": "Distance by Level",
+  "dashboard.distanceByOffice": "Total Distance by Office",
+  "dashboard.averageDistanceByOffice": "Average Distance by Office",
+  "dashboard.counterTagline": "Total Distance so far",
   "dashboard.activeParticipants": "With {activeParticipants} employees participating in the challenge",
-  "dashboard.mapDescription": "Track our collective progress as we take <span class='highlight'>50 million steps</span> for charity; from Sao Paulo to Hong Kong via all <span class='highlight'>{numberOfOffices} Offices.</span> Help us all reach the finish and get stepping!"
+  "dashboard.mapDescription": "Track our collective progress as we take walk, run, swim and cycle for charity; from Sao Paulo to Hong Kong via all  <span class='highlight'>{numberOfOffices} Offices.</span> Help us all reach the finish and get moving!"
 }

@@ -4,6 +4,7 @@ const compression = require('compression');
 
 var users = require('../controllers/users.controller');
 var fitbit = require('../controllers/fitbit.controller');
+var strava = require('../controllers/strava.controller');
 
 module.exports = function addProdMiddlewares(app, options) {
   const publicPath = options.publicPath || '/';
@@ -28,6 +29,12 @@ module.exports = function addProdMiddlewares(app, options) {
   app.get('/fitbit/update', fitbit.update);
 
   app.get('/fitbit/userUpdate/:user', fitbit.updateIndividualUser);
+
+  app.get('/strava/auth', strava.authorize);
+
+  app.get('/strava/update', strava.update);
+
+  // app.get('/strava/userUpdate/:user', strava.updateIndividualUser);
 
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
 };
