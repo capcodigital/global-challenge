@@ -12,7 +12,7 @@ import {
   Search,
 } from "semantic-ui-react";
 import { FormattedMessage } from "react-intl";
-import { Counter, ListView, ResizableListView } from "components/common";
+import { Counter, ListView, ResizableListView, TeamLeaderboard } from "components/common";
 import Map from "components/map";
 import Legend from "components/legend";
 import convertNumberToArray from "../../utils/covertNumberToArray";
@@ -245,7 +245,13 @@ class Dashboard extends React.Component {
                     <Header size="medium" className="container-header">
                       <FormattedMessage id="dashboard.teamLeaderboard" />
                     </Header>
-                    <ResizableListView height={400} className={"scrolling"} />
+                    <TeamLeaderboard
+                      height={400}
+                      className={'scrolling'}
+                      list={breakdown.offices}
+                      prefix={'No of steps'}
+                      image
+                    />
                   </div>
                 </Grid.Row>
                 <Grid.Row>
