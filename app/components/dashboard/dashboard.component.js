@@ -243,7 +243,7 @@ class Dashboard extends React.Component {
                 <Grid.Row>
                   <div className="content-container-leaderboard">
                     <Header size="medium" className="container-header">
-                      Team Leaderboard
+                      <FormattedMessage id="dashboard.teamLeaderboard" />
                     </Header>
                     <ResizableListView height={400} className={"scrolling"} />
                   </div>

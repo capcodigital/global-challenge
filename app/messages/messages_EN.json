@@ -22,6 +22,7 @@
   "dashboard.average": "Average",
   "dashboard.locations": "Locations",
   "dashboard.leaderboard": "Leaderboard",
+  "dashboard.teamLeaderboard": "Team Leaderboard",
   "dashboard.distanceByLevel": "Distance by Level",
   "dashboard.distanceByOffice": "Total Distance by Office",
   "dashboard.averageDistanceByOffice": "Average Distance by Office",
