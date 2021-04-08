@@ -9,14 +9,14 @@ import './style.scss';
 const TeamLeaderboard = ({
   list, prefix, image, dataKey, className, height
 }) => (
-  <div style={{ height: height }}>
+  <div>
     <List celled horizontal>
-      <List.Item className="position">Pos</List.Item>
+      <List.Item className="position">Position</List.Item>
       <List.Item className="team">Team Name</List.Item>
       <List.Item className="distance">Distance</List.Item>
       <List.Item className="finish-date">Finish Date</List.Item>
     </List>
-    <List animated divided className={className}>
+    <List style={{ height: height }} animated divided className={className}>
       {list.map((item, index) => (
         <List.Item key={item.name}>
           <List.Content>
