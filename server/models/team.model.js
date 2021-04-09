@@ -13,17 +13,20 @@ var TeamSchema = new Schema({
         unique: true
     },
     captain: {
-        type: String,
-        unique: true
+        type: String
     },
     activities: {
+        Walk: Number,
+        Run: Number,
+        Swim: Number, 
+        Cycling: Number,
+        Rowing: Number
     },
     members: [],
-    picName: String,
+    teamAvatar: String,
     totalDistance: Number,
-    totalCalories: Number,
     totalDuration: Number,
-    totalSteps: Number,
+    
 }, {strict: false});
 
 TeamSchema.statics = {

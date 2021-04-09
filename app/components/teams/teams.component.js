@@ -17,7 +17,8 @@ class TeamsPage extends React.Component {
       membersList: [],
       teamsList: [],
       selectedMembers: [],
-      selectedTeam: ''
+      selectedTeam: '',
+      createJoinResult: ''
     };
 
     this.handleCreateSubmit = this.handleCreateSubmit.bind(this);
@@ -83,10 +84,22 @@ class TeamsPage extends React.Component {
     })
     .then((response) => response.json())
     .then((json) => {
-      console.log("Team Created");
+      if (json.message) {
+        this.setState({ 
+          createJoinResult: json.message
+        });
+      } else {
+        this.setState({ 
+          createJoinResult: 'createTeamSuccess',
+          selectedMembers: []
+        });
+      }
     })
     .catch((error) => {
-      console.error(error);
+      console.log(error.message);
+      this.setState({ 
+        createJoinResult: 'createTeamFailed'
+      });
     });
   }
 
@@ -108,10 +121,22 @@ class TeamsPage extends React.Component {
     })
     .then((response) => response.json())
     .then((json) => {
-      console.log("Joined Team");
+      if (json.message) {
+        this.setState({ 
+          createJoinResult: json.message
+        });
+      } else {
+        this.setState({ 
+          createJoinResult: 'joinTeamSuccess',
+          selectedTeam: ''
+        });
+      }
     })
     .catch((error) => {
-      console.error(error);
+      console.log(error.message);
+      this.setState({ 
+        createJoinResult: 'joinTeamFailed'
+      });
     });
   }
 
@@ -172,6 +197,14 @@ class TeamsPage extends React.Component {
                           className="dropdown"
                           onChange={this.memberListChange}
                         />
+
+                        {
+                          (this.state.createJoinResult == 'createTeamSuccess') ? <FormattedMessage id="teams.createSuccess" />
+                          : (this.state.createJoinResult == 'createTeamFailed') ? <FormattedMessage id="teams.createFailed" />
+                          : (this.state.createJoinResult == 'createTeamFailedUserNotFound') ? <FormattedMessage id="teams.userNotFound" />
+                          : <div></div>
+                        }
+
                         <Button className="fitbit" fluid size="large" type="submit">
                           <FormattedMessage id="Create Team" />
                         </Button>
@@ -212,6 +245,15 @@ class TeamsPage extends React.Component {
                           className="dropdown"
                           onChange={this.joinTeamChange}
                         />
+
+                        {
+                          (this.state.createJoinResult == 'joinTeamSuccess') ? <FormattedMessage id="teams.joinSuccess" />
+                          : (this.state.createJoinResult == 'joinTeamFailed') ? <FormattedMessage id="teams.joinFailed" />
+                          : (this.state.createJoinResult == 'joinTeamFailedAlreadyAMember') ? <FormattedMessage id="teams.joinAlready" />
+                          : (this.state.createJoinResult == 'joinTeamFailedUserNotFound') ? <FormattedMessage id="teams.userNotFound" />
+                          : <div></div>
+                        }
+
                         <Button className="fitbit" fluid size="large">
                           <FormattedMessage id="Join Team" />
                         </Button>
