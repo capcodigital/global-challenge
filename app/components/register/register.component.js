@@ -8,7 +8,7 @@ import Fitbit from './images/fitbitLogo.svg';
 import Strava from './images/ConnectWithStrava.png';
 import './style.scss';
 
-const paramters = queryString.parse(window.location.search);
+const parameters = queryString.parse(window.location.search);
 
 const RegistrationForm = () => (
   <div className="login-form">
@@ -21,11 +21,11 @@ const RegistrationForm = () => (
         <input type="hidden" name="scope" value="activity location" />
 
         {
-          (paramters.success == 'fitBitSuccess') ? <FormattedMessage id="homepage.success" />
-          : (paramters.success == 'fitbitRegistered') ? <FormattedMessage id="homepage.fitbitRegistered" />
-          : (paramters.success == 'capcoRegistered') ? <FormattedMessage id="homepage.capcoRegistered" />
-          : (paramters.success == 'fitBitError') ? <FormattedMessage id="homepage.fitBitError" />
-          : (paramters.success == 'serverError') ? <FormattedMessage id="homepage.serverError" />
+          (parameters.success == 'fitBitSuccess') ? <FormattedMessage id="homepage.success" />
+          : (parameters.success == 'fitbitRegistered') ? <FormattedMessage id="homepage.fitbitRegistered" />
+          : (parameters.success == 'capcoRegistered') ? <FormattedMessage id="homepage.capcoRegistered" />
+          : (parameters.success == 'fitBitError') ? <FormattedMessage id="homepage.fitBitError" />
+          : (parameters.success == 'serverError') ? <FormattedMessage id="homepage.serverError" />
           : <div></div>
         }
 
@@ -57,11 +57,11 @@ const RegistrationForm = () => (
         <input type="hidden" name="scope" value="activity:read_all" />
 
         {
-          (paramters.success == 'stravaSuccess') ? <FormattedMessage id="homepage.success" />
-          : (paramters.success == 'stravaRegistered') ? <FormattedMessage id="homepage.stravaRegistered" />
-          : (paramters.success == 'capcoRegistered') ? <FormattedMessage id="homepage.capcoRegistered" />
-          : (paramters.success == 'stravaError') ? <FormattedMessage id="homepage.stravaError" />
-          : (paramters.success == 'serverError') ? <FormattedMessage id="homepage.serverError" />
+          (parameters.success == 'stravaSuccess') ? <FormattedMessage id="homepage.success" />
+          : (parameters.success == 'stravaRegistered') ? <FormattedMessage id="homepage.stravaRegistered" />
+          : (parameters.success == 'capcoRegistered') ? <FormattedMessage id="homepage.capcoRegistered" />
+          : (parameters.success == 'stravaError') ? <FormattedMessage id="homepage.stravaError" />
+          : (parameters.success == 'serverError') ? <FormattedMessage id="homepage.serverError" />
           : <div></div>
         }
 
