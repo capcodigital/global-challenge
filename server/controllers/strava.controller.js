@@ -45,6 +45,12 @@ if (process.env.NODE_ENV != "production") {
     callbackUrl = "localhost";
 }
 
+// The master node should update the stats in the database at set intervals and then
+// the child nodes will automatically pick up the changes
+if (cluster.isMaster) {
+    updateEveryInterval(60);
+}
+
 /**
  * List of Users
  */
@@ -261,3 +267,28 @@ function updateUser(user) {
         getStats(user);
     }
 };
+
+/**
+ * Refresh user strava data every minutes
+ */
+function updateEveryInterval(minutes) {
+
+    console.log("Begin stats refresh every " + minutes + " minutes");
+    var millis = minutes * 60 * 1000;
+
+    setInterval(function(){
+        User.find().exec(function(err, users) {
+            if (err) {
+                console.log("Data update error please try again later");
+            } else {
+                var userCount = users.length;
+                for (var i = 0; i < userCount; i++) {
+                    if (users[i].access_token) {
+                        updateUser(users[i]);
+                    }
+                }
+                console.log("All User updates complete");
+          }
+      });
+    }, millis);
+}
