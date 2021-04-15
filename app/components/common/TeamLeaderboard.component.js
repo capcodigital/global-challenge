@@ -16,7 +16,7 @@ const TeamLeaderboard = ({
       <List.Item className="distance">Distance</List.Item>
       <List.Item className="finish-date">Finish Date</List.Item>
     </List>
-    <List style={{ height: height }} animated divided className={className}>
+    <List style={{ height: height }} divided className={className}>
       {list.map((item, index) => (
         <List.Item key={item.name}>
           <List.Content>
@@ -28,7 +28,7 @@ const TeamLeaderboard = ({
               <List.Item className="distance">
                 <FormattedNumber value={item.distance} maximumFractionDigits={0} /> km
               </List.Item>
-              <List.Item className="finish-date">???</List.Item>
+              <List.Item className="finish-date">----</List.Item>
             </List>
           </List.Content>
         </List.Item>
