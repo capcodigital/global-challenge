@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose');
+var cluster = require('cluster');
 var Team = mongoose.model('Team');
 var User = mongoose.model('User');
 
@@ -35,6 +36,9 @@ exports.list = function(req, res, next) {
  * All Team data
  */
 exports.all = function(req, res, next) {
+
+    // Get all the users first so we can swap in their real names.
+
     Team.find({}).exec(function(err, teams) {
         if (err) {
             res.render('error', {

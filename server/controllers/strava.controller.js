@@ -6,6 +6,7 @@ var https = require("https");
 var citService = require('../services/cit.service');
 var User = mongoose.model('User');
 var strava = require('strava-v3');
+var cluster = require('cluster');
 var fs = require('fs');
 
 var apiKey = "";
