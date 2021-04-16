@@ -31,6 +31,11 @@ var UserSchema = new Schema({
     totalCalories: Number,
     totalDuration: Number,
     totalSteps: Number,
+    totalWalk: Number,
+    totalRun: Number,
+    totalSwim: Number,
+    totalCycling: Number,
+    totalRowing: Number,
 }, {strict: false});
 
 UserSchema.statics = {

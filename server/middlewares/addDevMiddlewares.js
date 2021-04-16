@@ -37,6 +37,7 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   // app.get('/users/addManual', users.addManual);
 
   app.get('/teams/list', teams.list);
+  app.get('/teams', teams.all);
   app.post('/teams', teams.create);
   app.put('/teams', teams.update);
 
