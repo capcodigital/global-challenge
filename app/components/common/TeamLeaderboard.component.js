@@ -7,7 +7,7 @@ import { FormattedNumber } from 'react-intl';
 import './style.scss';
 
 const TeamLeaderboard = ({
-  list, prefix, image, dataKey, className, height
+  data, prefix, image, dataKey, className, height
 }) => (
   <div>
     <List celled horizontal>
@@ -17,7 +17,7 @@ const TeamLeaderboard = ({
       <List.Item className="finish-date">Finish Date</List.Item>
     </List>
     <List style={{ height: height }} divided className={className}>
-      {list.map((item, index) => (
+      {data.map((item, index) => (
         <List.Item key={item.name}>
           <List.Content>
             <List celled horizontal>

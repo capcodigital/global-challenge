@@ -12,7 +12,7 @@ import {
   Search,
 } from "semantic-ui-react";
 import { FormattedMessage } from "react-intl";
-import { Counter, ListView, ResizableListView, TeamLeaderboard } from "components/common";
+import { Counter, ListView, ResizableListView, TeamLeaderboard, TeamLeaderboardTable } from "components/common";
 import Map from "components/map";
 import Legend from "components/legend";
 import convertNumberToArray from "../../utils/covertNumberToArray";
@@ -204,6 +204,8 @@ class Dashboard extends React.Component {
       distance,
     } = this.props;
 
+    console.log(breakdown.offices)
+
     return (
       <div className="dashboard">
         <Segment loading={isLoading} className="secondary">
@@ -245,9 +247,10 @@ class Dashboard extends React.Component {
                     <Header size="medium" className="container-header">
                       <FormattedMessage id="dashboard.teamLeaderboard" />
                     </Header>
-                    <TeamLeaderboard
-                      height={400}
+                    <TeamLeaderboardTable
+                      height={450}
                       className={'scrolling'}
+                      data={breakdown.offices}
                       list={breakdown.offices}
                       prefix={'No of steps'}
                       image
