@@ -5,10 +5,18 @@ var headers = {
     'Authorization' : ''
 };
 
+var secret = "";
+
+if (process.env.NODE_ENV == "production") {
+    secret = fs.readFileSync('/home/ec2-user/dist/config/keys/cit.txt', 'utf8');
+} else {
+    secret = fs.readFileSync('./config/keys/cit.txt', 'utf8');
+}
+
 const credentials = {
     client: {
         id: 'data-stories',
-        secret: fs.readFileSync('./config/keys/cit.txt', 'utf8')
+        secret: secret
     },
     auth: {
         tokenHost: 'https://capi.capco.com'

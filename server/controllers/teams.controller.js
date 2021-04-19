@@ -1,0 +1,174 @@
+/**
+ * Module dependencies.
+ */
+var mongoose = require('mongoose');
+var cluster = require('cluster');
+var Team = mongoose.model('Team');
+var User = mongoose.model('User');
+
+var callbackUrl = "capcoglobalchallenge.com"
+if (process.env.NODE_ENV != "production") {
+    callbackUrl = "localhost";
+}
+
+// The master node should update the stats in the database at set intervals and then
+// the child nodes will automatically pick up the changes
+if (cluster.isMaster) {
+    updateEveryInterval(60);
+}
+
+/**
+ * List of Team names
+ */
+exports.list = function(req, res, next) {
+    Team.find({}).select('name').sort('name').exec(function(err, teams) {
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(teams);
+        }
+    });
+};
+
+/**
+ * All Team data
+ */
+exports.all = function(req, res, next) {
+
+    // Get all the users first so we can swap in their real names.
+
+    Team.find({}).exec(function(err, teams) {
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(teams);
+        }
+    });
+};
+
+/**
+ * Create a team
+ */
+exports.create = function(req, res) {
+
+    User.findOne({
+        username: req.body.captain
+    }).exec(function(err, user) {
+        if (err) res.send(400, { message: 'createTeamFailed'});
+        if (!user) res.send(400, { message: 'createTeamFailedUserNotFound'});
+
+        var team = new Team(req.body);
+        if (!team.members.includes(team.captain)) {
+            team.members.push(team.captain);
+        }
+
+        team.save(function(err) {
+            if (err) {
+                console.log("Error creating team: " + team.name);
+                res.send(400, { message: 'createTeamFailed'});
+            } else {
+                res.jsonp(team);
+            }
+        });
+    });
+};
+
+/**
+ * Update a team
+ */
+exports.update = function(req, res) {
+
+    User.findOne({
+        username: req.body.member
+    }).exec(function(err, user) {
+        if (err) res.send(400, { message: 'joinTeamFailed'});
+        if (!user) res.send(400, { message: 'joinTeamFailedUserNotFound'});
+    
+        Team.findOne({
+            name: req.body.team
+        }).exec(function(err, team) {
+            if (err) res.send(400, { message: 'joinTeamFailed'});
+            if (!team) res.send(400, { message: 'joinTeamFailed'});
+            if (team == null) res.send(400, { message: 'joinTeamFailed'});
+
+            if (team.members.includes(req.body.member)) {
+                res.send(400, { message: 'joinTeamFailedAlreadyAMember'});
+            }
+
+            team.members.push(req.body.member);
+            team.markModified('members');
+                
+            team.save(function(err) {
+                if (err) {
+                    console.log("Error joining team: " + team.name);
+                    res.send(400, { message: 'joinTeamFailed'});
+                } else {
+                    res.jsonp(team);
+                }
+            });
+        });
+    });
+};
+
+/**
+ * Refresh Team data every x minutes
+ */
+function updateEveryInterval(minutes) {
+
+    console.log("Begin Team stats refresh every " + minutes + " minutes");
+    var millis = minutes * 60 * 1000;
+
+    setInterval(function(){
+
+        User.find().exec(function(err, users) {
+            if (err) {
+                console.log("Data update error please try again later");
+            } else {
+
+                let userMap = [];
+                users.forEach(function(user) {
+                    userMap[user.username] = user;
+                });
+
+                Team.find().exec(function(err, teams) {
+
+                    teams.forEach(function(team) {
+
+                        team.activities.Walk = 0;
+                        team.activities.Run = 0;
+                        team.activities.Swim = 0;
+                        team.activities.Cycling = 0;
+                        team.activities.Rowing = 0;
+                        team.totalDistance = 0;
+
+                        team.members.forEach(function(member) {
+                            team.activities.Walk += userMap[member].totalWalk;
+                            team.activities.Run += userMap[member].totalRun;
+                            team.activities.Swim += userMap[member].totalSwim;
+                            team.activities.Cycling += userMap[member].totalCycling;
+                            team.activities.Rowing += userMap[member].totalRowing;
+
+                            team.totalDistance += userMap[member].totalDistance;
+                        });
+
+                        team.markModified('activities');
+                        team.markModified('totalDistance');
+
+                        team.save(function(err) {
+                            if (err) {
+                                console.log("Error updating team stats: " + team.name);
+                            }
+                        });
+                    });
+
+                    console.log("All Team updates complete");
+                });
+          }
+      });
+    }, millis);
+}
+

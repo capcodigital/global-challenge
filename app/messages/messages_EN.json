@@ -4,6 +4,7 @@
   "homepage.register": "Register",
   "homepage.instructions": "Please donate by clicking on the button below before registering for the Challenge. We ask that you donate the equivalent of $5 or more, or whatever you can spare in your local currency. Through our Corporate Matching Program, Capco will also contribute to the money raised.",
   "homepage.progress": "View our Progress once the challenge starts",
+  "homepage.teams": "Register a new team or join an exitsing one  ",
 
   "homepage.success": "Registration Completed Successfully",
   "homepage.fitbitRegistered": "You are already logged in to Fitbit with a Capco user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Fitbit and try again",
@@ -12,6 +13,19 @@
   "homepage.serverError": "Server error please try again later", 
   "homepage.stravaError": "Error contacting Strava, please try again later",
   "homepage.fitbitError": "Error contacting Fitbit, please try again later",
+
+  "teams.title": "Create or join a team",
+  "teams.create": "Create a new Team",
+  "teams.join": "Select Team to Join",
+  "teams.members": "Add team members who have already signed up to the challenge",
+  "teams.unique": "The Team name you have entered is already in use, please type a different name",
+
+  "teams.createSuccess": "Created Team Successfully",
+  "teams.createFailed": "Team could not be created, please try again later",
+  "teams.joinSuccess": "Joined Team Successfully",
+  "teams.joinFailed": "Unable to join team, please try again later",
+  "teams.joinAlready": "You are already a member of this team",
+  "teams.userNotFound": "The Capco ID you entered could not be found. Please register first or if you have already registered, try again later ",
 
   "register.fitbit": "Register with Fitbit",
   "register.strava": "Register with Strava",

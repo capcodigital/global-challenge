@@ -7,6 +7,7 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import homepage from 'components/homepage/reducer';
+import teamspage from 'components/teams/reducer';
 import createReducer from './reducers';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -30,7 +31,7 @@ export default function configureStore(initialState = {}, history) {
     : compose;
   /* eslint-enable */
 
-  const reducers = { homepage };
+  const reducers = { homepage, teamspage };
   const sagas = { };
   const store = createStore(createReducer(reducers), fromJS(initialState), composeEnhancers(...enhancers));
 

@@ -1,9 +1,20 @@
 var fs = require('fs');
 
+var secret = "";
+var client_id = "";
+
+if (process.env.NODE_ENV == "production") {
+    secret = fs.readFileSync('/home/ec2-user/dist/config/keys/fitbit_secret.txt', 'utf8');
+    client_id = fs.readFileSync('/home/ec2-user/dist/config/keys/fitbit_client.txt', 'utf8');
+} else {
+    secret = fs.readFileSync('./config/keys/fitbit_secret.txt', 'utf8');
+    client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
+}
+
 // Set the client credentials and the OAuth2 server
 var credentials = {
-  clientID: fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8'),
-  clientSecret: fs.readFileSync('./config/keys/fitbit_secret.txt', 'utf8'),
+  clientID: client_id,
+  clientSecret: secret,
   site: 'https://api.fitbit.com'
 };
 
