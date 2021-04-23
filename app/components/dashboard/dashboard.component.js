@@ -38,11 +38,12 @@ class Dashboard extends React.Component {
       cities: allCities,
       statistics: {},
       searchString: "",
+      teamsList: []
     };
   }
 
   componentDidMount() {
-    const { getActivities } = this.props;
+    const { getActivities, getTeamsList } = this.props;
 
     fetch(
       "https://raw.githubusercontent.com/zimrick/react-svg-maps-tutorial/master/public/world-110m.json"
@@ -61,14 +62,27 @@ class Dashboard extends React.Component {
     this.getRegion();
 
     getActivities();
+    console.log(getTeamsList())
     window.addEventListener("resize", this.measure);
   }
 
   componentWillReceiveProps(nextProps) {
     const { breakdown } = nextProps;
+    const { teams } = nextProps;
+
     if (breakdown.offices && breakdown.offices.length) {
       const statistics = keyBy(breakdown.offices, "name");
       this.setState({ statistics });
+    }
+
+    if (teams && teams.length > 0) {
+      const teamsList = _.map(teams, (team, index) => ({
+        key: team.name,
+        text: team.name,
+        value: team.name,
+      }));
+
+      this.setState({ teamsList });
     }
   }
 
@@ -193,6 +207,7 @@ class Dashboard extends React.Component {
       scale,
       statistics,
       searchString,
+      teamsList,
     } = this.state;
 
     const {
@@ -202,9 +217,12 @@ class Dashboard extends React.Component {
       breakdown,
       leaderboard,
       distance,
+      teams
     } = this.props;
 
     console.log(breakdown.offices)
+    console.log(teamsList)
+    console.log(teams)
 
     return (
       <div className="dashboard">

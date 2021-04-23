@@ -19,6 +19,22 @@ const filteredActivitiesSelector = createSelector(
   (state) => state.get('dashboard').get('filteredActivities')
 );
 
+// Team selectors
+const teamsListSelector = createSelector(
+  getState,
+  (state) => state.get('dashboard').get('teamsList')
+);
+
+const teamsSelector = createSelector(
+  [teamsListSelector],
+  (teamsList) => {
+    if (teamsList) {
+      return teamsList.toJS();
+    }
+    return [];
+  }
+);
+
 const totalStepSelector = createSelector(
   [filteredActivitiesSelector],
   (activities) => {
@@ -127,6 +143,8 @@ const breakdownSelector = createSelector(
 
 export {
   activitiesSelector,
+  teamsListSelector,
+  teamsSelector,
   leaderboardSelector,
   filteredActivitiesSelector,
   loadingStateSelector,
