@@ -221,7 +221,6 @@ class Dashboard extends React.Component {
     } = this.props;
 
     console.log(breakdown.offices)
-    console.log(teamsList)
     console.log(teams)
 
     return (
@@ -268,6 +267,7 @@ class Dashboard extends React.Component {
                     <TeamLeaderboardTable
                       height={450}
                       className={'scrolling'}
+                      teams={teams}
                       data={breakdown.offices}
                       list={breakdown.offices}
                       prefix={'No of steps'}

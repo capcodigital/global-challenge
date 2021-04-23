@@ -7,7 +7,7 @@ import { FormattedNumber } from 'react-intl';
 import './style.scss';
 
 const TeamLeaderboardTable = ({
-  data, prefix, image, dataKey, className, height
+  data, prefix, image, dataKey, className, height, teams
 }) => (
   <div>
     <List style={{ height: height }} className={className}>
@@ -21,15 +21,16 @@ const TeamLeaderboardTable = ({
           </Table.Row>
         </Table.Header>
         <Table.Body divided>
-          {data.map((item, index) => (
+          {teams.map((item, index) => (
             <Table.Row key={item.name}>
               <Table.Cell className="position">{index + 1}.</Table.Cell>
-              <Table.Cell className="team">{image ? 
-                <Image avatar src={require(`images/${item.name}.png`)} />
-                : ''} {item.name}
+              <Table.Cell className="team">
+                {/* {image ? <Image avatar src={require(`images/${item.name}.png`)} />
+                : ''}  */}
+                {item.name}
               </Table.Cell>
               <Table.Cell className="distance">
-                <FormattedNumber value={item.distance} maximumFractionDigits={0}/> km
+                <FormattedNumber value={item.totalDistance} maximumFractionDigits={0}/> km
               </Table.Cell>
               <Table.Cell className="finish-date">----</Table.Cell>
             </Table.Row>
@@ -42,6 +43,7 @@ const TeamLeaderboardTable = ({
 
 TeamLeaderboardTable.propTypes = {
   data: PropTypes.array.isRequired,
+  teams: PropTypes.array.isRequired,
   dataKey: PropTypes.string,
   image: PropTypes.bool,
   prefix: PropTypes.string,
