@@ -29,13 +29,13 @@ export const fetchActivities = () => (dispatch) => {
 // used by standard redux
 export const fetchTeams = () => (dispatch) => {
   axios
-    .get(`${SERVER_URL}teams/list`)
+    .get(`${SERVER_URL}teams`)
     .then(({ data }) => dispatch({ type: FETCH_TEAMS_SUCCESS, payload: data }));
 };
 
 // used by redux-saga
 export const fetchActivitiesApi = () => axios.get(`${SERVER_URL}users/activities`).then(({ data }) => data);
-export const fetchTeamsApi = () => axios.get(`${SERVER_URL}teams/list`).then(({ data }) => data);
+export const fetchTeamsApi = () => axios.get(`${SERVER_URL}teams`).then(({ data }) => data);
 
 // action creators
 export const activitiesRecieved = (activities) => ({ type: FETCH_ACTIVITIES_SUCCESS, payload: activities });
