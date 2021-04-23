@@ -146,6 +146,11 @@ exports.authorize = function(req, res) {
                                 user.totalCalories = 0;
                                 user.totalDistance = 0;
                                 user.totalDuration = 0;
+                                user.totalWalk = 0;
+                                user.totalRun = 0;
+                                user.totalSwim = 0;
+                                user.totalCycling = 0;
+                                user.totalRowing = 0;
 
                                 save(user, res);
                             }
@@ -296,14 +301,30 @@ function getStats(user, date) {
             user.totalDistance = 0;
             user.totalDuration = 0;
             user.totalCalories = 0;
+            user.totalWalk = 0;
+            user.totalRun = 0;
+            user.totalSwim = 0;
+            user.totalCycling = 0;
+            user.totalRowing = 0;
 
             var activityCount = challengeDates.length;
             for (var i = 0; i < activityCount; i++) {
                 if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].summary) {
+
+                    const walkTime = user.activities[challengeDates[i]].summary.fairlyActiveMinutes + user.activities[challengeDates[i]].summary.lightlyActiveMinutes;
+                    const runTime = user.activities[challengeDates[i]].summary.veryActiveMinutes;
+                    const totalTime = walkTime + runTime;
+
                     user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
                     user.totalDistance = user.totalDistance + user.activities[challengeDates[i]].summary.distances[0].distance;
-                    user.totalDuration = user.totalDuration + user.activities[challengeDates[i]].summary.fairlyActiveMinutes + user.activities[challengeDates[i]].summary.lightlyActiveMinutes + user.activities[challengeDates[i]].summary.veryActiveMinutes;
+                    user.totalDuration = user.totalDuration + totalTime;
                     user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
+
+                    const walkPercentage = walkTime/totalTime;
+                    const runPercentage = runTime/totalTime;
+
+                    user.totalWalk = user.totalWalk + (user.activities[challengeDates[i]].summary.distances[0].distance * walkPercentage);
+                    user.totalRun = user.totalDistance + (user.activities[challengeDates[i]].summary.distances[0].distance * runPercentage);
                 }
             }
 

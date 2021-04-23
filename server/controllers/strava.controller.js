@@ -118,6 +118,11 @@ exports.authorize = function(req, res) {
                         user.totalCalories = 0;
                         user.totalDistance = 0;
                         user.totalDuration = 0;
+                        user.totalWalk = 0;
+                        user.totalRun = 0;
+                        user.totalSwim = 0;
+                        user.totalCycling = 0;
+                        user.totalRowing = 0;
 
 
                         user.save(function(err, newUser) {
@@ -204,6 +209,11 @@ function getStats(user) {
             user.totalDistance = 0;
             user.totalDuration = 0;
             user.totalCalories = 0;
+            user.totalWalk = 0;
+            user.totalRun = 0;
+            user.totalSwim = 0;
+            user.totalCycling = 0;
+            user.totalRowing = 0;
 
             var activityCount = user.activities.length;
             for (var i = 0; i < activityCount; i++) {
@@ -214,6 +224,19 @@ function getStats(user) {
                     // Only moving time vs FitBit's Active, Very Active etc
                     user.totalDuration = user.totalDuration + user.activities[i].moving_time;
                     // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
+
+                    switch (user.activities[i].type) {
+                        case 'Run':
+                            user.totalRun = user.totalRun + (user.activities[i].distance/1000);
+                        case 'Swim':
+                            user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
+                        case 'Ride':
+                            user.totalCycling = user.totalCycling + (user.activities[i].distance/1000);
+                        case 'Rowing':
+                            user.totalRowing = user.totalRowing + (user.activities[i].distance/1000);
+                        default:
+                            user.totalWalk = user.totalWalk + (user.activities[i].distance/1000);
+                    }
                 }
             }
 
