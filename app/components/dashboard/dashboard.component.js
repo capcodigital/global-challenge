@@ -37,8 +37,7 @@ class Dashboard extends React.Component {
       filter: "Global",
       cities: allCities,
       statistics: {},
-      searchString: "",
-      teamsList: []
+      searchString: ""
     };
   }
 
@@ -73,16 +72,6 @@ class Dashboard extends React.Component {
     if (breakdown.offices && breakdown.offices.length) {
       const statistics = keyBy(breakdown.offices, "name");
       this.setState({ statistics });
-    }
-
-    if (teams && teams.length > 0) {
-      const teamsList = _.map(teams, (team, index) => ({
-        key: team.name,
-        text: team.name,
-        value: team.name,
-      }));
-
-      this.setState({ teamsList });
     }
   }
 
@@ -207,7 +196,6 @@ class Dashboard extends React.Component {
       scale,
       statistics,
       searchString,
-      teamsList,
     } = this.state;
 
     const {
@@ -287,10 +275,6 @@ class Dashboard extends React.Component {
                       height={450}
                       className={'scrolling'}
                       teams={teams}
-                      data={breakdown.offices}
-                      list={breakdown.offices}
-                      prefix={'No of steps'}
-                      image
                     />
                   </div>
                 </Grid.Row>

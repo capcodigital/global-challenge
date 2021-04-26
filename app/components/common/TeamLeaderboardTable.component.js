@@ -2,12 +2,12 @@
 /* eslint-disable global-require */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Table, List} from 'semantic-ui-react';
+import { Table, List} from 'semantic-ui-react';
 import { FormattedNumber } from 'react-intl';
 import './style.scss';
 
 const TeamLeaderboardTable = ({
-  data, prefix, image, dataKey, className, height, teams
+  className, height, teams
 }) => (
   <div>
     <List style={{ height: height }} className={className}>
@@ -25,8 +25,6 @@ const TeamLeaderboardTable = ({
             <Table.Row key={item.name}>
               <Table.Cell className="position">{index + 1}.</Table.Cell>
               <Table.Cell className="team">
-                {/* {image ? <Image avatar src={require(`images/${item.name}.png`)} />
-                : ''}  */}
                 {item.name}
               </Table.Cell>
               <Table.Cell className="distance">
@@ -44,7 +42,6 @@ const TeamLeaderboardTable = ({
 );
 
 TeamLeaderboardTable.propTypes = {
-  data: PropTypes.array.isRequired,
   teams: PropTypes.array.isRequired,
   dataKey: PropTypes.string,
   image: PropTypes.bool,

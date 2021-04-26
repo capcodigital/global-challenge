@@ -29,7 +29,10 @@ const teamsSelector = createSelector(
   [teamsListSelector],
   (teamsList) => {
     if (teamsList) {
-      return teamsList.toJS();
+      var sortedTeamsList = teamsList.toJS().sort(function(a, b) {
+        return b.totalDistance - a.totalDistance;
+      });
+      return sortedTeamsList;
     }
     return [];
   }
