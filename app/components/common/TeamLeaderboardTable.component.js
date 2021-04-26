@@ -22,7 +22,9 @@ const TeamLeaderboardTable = ({
         </Table.Header>
         <Table.Body>
           {teams.map((item, index) => (
-            <Table.Row key={item.name}>
+            <Table.Row key={item.name} 
+              className={`${item.completionDate != undefined ? "finished-team-highlight" : ""}`}
+              >
               <Table.Cell className="position">{index + 1}.</Table.Cell>
               <Table.Cell className="team">
                 {item.name}
@@ -31,7 +33,7 @@ const TeamLeaderboardTable = ({
                 <FormattedNumber value={item.totalDistance} maximumFractionDigits={0}/> km
               </Table.Cell>
               <Table.Cell className="finish-date">
-                {item.completionDate ? item.completionDate: 'Still to finish'} 
+                {item.completionDate != undefined ? item.completionDate: 'Still to finish'} 
                 </Table.Cell>
             </Table.Row>
           ))}
