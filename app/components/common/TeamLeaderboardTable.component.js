@@ -14,13 +14,13 @@ const TeamLeaderboardTable = ({
       <Table celled collapsing basic='very'>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Position</Table.HeaderCell>
+            <Table.HeaderCell>#</Table.HeaderCell>
             <Table.HeaderCell>Team Name</Table.HeaderCell>
             <Table.HeaderCell>Distance</Table.HeaderCell>
             <Table.HeaderCell>Finish Date</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-        <Table.Body divided>
+        <Table.Body>
           {teams.map((item, index) => (
             <Table.Row key={item.name}>
               <Table.Cell className="position">{index + 1}.</Table.Cell>
@@ -32,7 +32,9 @@ const TeamLeaderboardTable = ({
               <Table.Cell className="distance">
                 <FormattedNumber value={item.totalDistance} maximumFractionDigits={0}/> km
               </Table.Cell>
-              <Table.Cell className="finish-date">----</Table.Cell>
+              <Table.Cell className="finish-date">
+                {item.completionDate ? item.completionDate: 'Still to finish'} 
+                </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

@@ -62,7 +62,7 @@ class Dashboard extends React.Component {
     this.getRegion();
 
     getActivities();
-    console.log(getTeamsList())
+    getTeamsList();
     window.addEventListener("resize", this.measure);
   }
 
@@ -219,9 +219,6 @@ class Dashboard extends React.Component {
       distance,
       teams
     } = this.props;
-
-    console.log(breakdown.offices)
-    console.log(teams)
 
     return (
       <div className="dashboard">
