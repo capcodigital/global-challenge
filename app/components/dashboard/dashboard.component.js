@@ -260,6 +260,28 @@ class Dashboard extends React.Component {
             <Grid.Row>
               <Grid.Column>
                 <Grid.Row>
+                  <div className="content-container-search">
+                    <Header size="medium" className="container-header">
+                      Team/User Search
+                    </Header>
+                    <div className="search-container">
+                      <Search
+                        input={{ icon: 'search', iconPosition: 'left' }}
+                        fluid
+                        loading={isLoading}
+                        onResultSelect={this.handleResultSelect}
+                        onSearchChange={debounce(this.handleSearchChange, 500, {
+                          leading: true,
+                        })}
+                        results={leaderboard}
+                        value={searchString}
+                        placeholder={"Search Team Name"}
+                      />
+                    </div>
+                    <div>
+                      <ResizableListView height={160} className={"scrolling"} />
+                    </div>
+                  </div>
                   <div className="content-container-leaderboard">
                     <Header size="medium" className="container-header">
                       <FormattedMessage id="dashboard.teamLeaderboard" />
@@ -273,28 +295,6 @@ class Dashboard extends React.Component {
                       prefix={'No of steps'}
                       image
                     />
-                  </div>
-                </Grid.Row>
-                <Grid.Row>
-                  <div className="content-container-search">
-                    <Header size="medium" className="container-header">
-                      Team/User Search
-                    </Header>
-                    <div className="search-container">
-                      <Search
-                        fluid
-                        loading={isLoading}
-                        onResultSelect={this.handleResultSelect}
-                        onSearchChange={debounce(this.handleSearchChange, 500, {
-                          leading: true,
-                        })}
-                        results={leaderboard}
-                        value={searchString}
-                      />
-                    </div>
-                    <div>
-                      <ResizableListView height={160} className={"scrolling"} />
-                    </div>
                   </div>
                 </Grid.Row>
               </Grid.Column>
