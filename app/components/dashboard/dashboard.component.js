@@ -17,6 +17,7 @@ import Map from "components/map";
 import Legend from "components/legend";
 import convertNumberToArray from "../../utils/covertNumberToArray";
 import { offices, allCities, geometries, officeMap } from "./constants";
+import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
 import "./style.scss";
 
 const legends = [
@@ -42,6 +43,24 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
+
+    // fetch('https://localhost/teams', {
+    //   method: 'GET',
+    //   mode: 'cors',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    // })
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   console.log(data)
+    // })
+    // .catch((error) => {
+    //   console.log(error.message);
+      
+    // });
+
     const { getActivities } = this.props;
 
     fetch(
@@ -237,7 +256,7 @@ class Dashboard extends React.Component {
         </Segment>
 
         <Segment loading={isLoading} className="primary">
-          <Grid container stackable columns={2} divided verticalAlign="middle">
+          <Grid container stackable columns={2} verticalAlign="middle">
             <Grid.Row>
               <Grid.Column>
                 <Grid.Row>
@@ -245,6 +264,7 @@ class Dashboard extends React.Component {
                     <Header size="medium" className="container-header">
                       Team Leaderboard
                     </Header>
+                    
                     <ResizableListView height={400} className={"scrolling"} />
                   </div>
                 </Grid.Row>
@@ -272,24 +292,16 @@ class Dashboard extends React.Component {
                 </Grid.Row>
               </Grid.Column>
               <Grid.Column>
-                <Header
-                  className="container-header"
-                  style={{ textAlign: "center", paddingTop: "1rem" }}
-                >
+                <Header size="medium" className="container-header">
                   Sports Total
                 </Header>
-                <Grid
-                  container
-                  stackable
-                  columns={2}
-                  divided
-                  verticalAlign="middle"
-                >
+                <Grid container stackable columns={2} verticalAlign="middle">
                   <Grid.Row>
                     <Grid.Column width={8}>
                       <Grid.Row>
                         <div className="content-container-dashboard">
                           <Header size="medium" className="container-header">
+                            <img src={runIcon} alt="React Logo" />
                             Run
                           </Header>
                           <ResizableListView
@@ -303,6 +315,7 @@ class Dashboard extends React.Component {
                       <Grid.Row>
                         <div className="content-container-dashboard">
                           <Header size="medium" className="container-header">
+                            <img src={cycleIcon} alt="React Logo" />
                             Bike
                           </Header>
                           <ResizableListView
@@ -318,6 +331,7 @@ class Dashboard extends React.Component {
                       <Grid.Row>
                         <div className="content-container-dashboard">
                           <Header size="medium" className="container-header">
+                            <img src={walkIcon} alt="React Logo" />
                             Walk
                           </Header>
                           <ResizableListView
@@ -331,6 +345,7 @@ class Dashboard extends React.Component {
                       <div className="content-container-dashboard">
                         <Grid.Row>
                           <Header size="medium" className="container-header">
+                            <img src={swimIcon} alt="React Logo" />
                             Swim
                           </Header>
                           <ResizableListView
@@ -340,6 +355,7 @@ class Dashboard extends React.Component {
                         </Grid.Row>
                         <Grid.Row>
                           <Header size="medium" className="container-header">
+                            <img src={rowIcon} alt="React Logo" />
                             Row
                           </Header>
                           <ResizableListView

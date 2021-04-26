@@ -2,6 +2,7 @@
 @import "../../styles/breakpoints.scss";
 
 .dashboard {
+  margin:0px;
   .sign-wrapper {
     width: 100%;
     margin-bottom: 2rem;
@@ -61,17 +62,28 @@
   .content-container {
     height: 370px;
     padding: 2rem;
-    border-bottom: 1px solid #d9d9d9;
     .container-header {
       text-align: center;
     }
   }
+
+  .ui.header {
+    padding-top:1rem;
+    font-weight:400;
+  }
+
+  .ui.celled.table {
+    padding-left: 16px;
+  }
+  .ui.celled.table tr td {
+    border:none;
+  }
+
   .content-container-dashboard {
     height: 370px;
-    border-bottom: 1px solid #d9d9d9;
+    width:260px;
     .container-header {
-      text-align: center;
-      padding-top:1rem;
+      color: #11A9B2;
     }
   }
 
