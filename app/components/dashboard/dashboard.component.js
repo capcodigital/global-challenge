@@ -1,73 +1,39 @@
 import React from "react";
-import { feature } from "topojson-client";
 import { keyBy, debounce } from "lodash";
 import PropTypes from "prop-types";
-import {
-  Segment,
-  Grid,
-  Container,
-  Image,
-  Header,
-  Dropdown,
-  Search,
-} from "semantic-ui-react";
+import { Segment, Grid, Container, Header, Search } from "semantic-ui-react";
 import { FormattedMessage } from "react-intl";
-import { Counter, ListView, ResizableListView, TeamLeaderboardTable } from "components/common";
-import Map from "components/map";
-import Legend from "components/legend";
+import {
+  Counter,
+  ResizableListView,
+  TeamLeaderboardTable,
+  MapUK,
+} from "components/common";
 import convertNumberToArray from "../../utils/covertNumberToArray";
-import { offices, allCities, geometries, officeMap } from "./constants";
 import "./style.scss";
-
-const legends = [
-  { label: "Planned route", fill: "rgb(0, 88, 187)" },
-  { label: "Progress so far", fill: "rgb(192, 13, 13)" },
-];
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      worldData: [],
       height: 450,
       width: 850,
-      scale: 50,
-      region: [],
-      geoCenter: [0, 10],
-      filter: "Global",
-      cities: allCities,
       statistics: {},
-      searchString: ""
+      searchString: "",
     };
   }
 
   componentDidMount() {
-    const { getActivities, getTeamsList } = this.props;
-
-    fetch(
-      "https://raw.githubusercontent.com/zimrick/react-svg-maps-tutorial/master/public/world-110m.json"
-    ).then((response) => {
-      if (response.status !== 200) {
-        return;
-      }
-      response.json().then((worldData) => {
-        this.setState({
-          worldData: feature(worldData, worldData.objects.countries).features,
-        });
-      });
-    });
+    const { getTeamsList } = this.props;
 
     this.measure();
-    this.getRegion();
 
-    getActivities();
     getTeamsList();
     window.addEventListener("resize", this.measure);
   }
 
   componentWillReceiveProps(nextProps) {
     const { breakdown } = nextProps;
-    const { teams } = nextProps;
 
     if (breakdown.offices && breakdown.offices.length) {
       const statistics = keyBy(breakdown.offices, "name");
@@ -76,16 +42,13 @@ class Dashboard extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { width, height, worldData, region } = this.state;
+    const { width, height } = this.state;
 
-    const { filteredActivities, isLoading } = this.props;
+    const { isLoading } = this.props;
 
     return (
       width !== nextState.width ||
       height !== nextState.height ||
-      worldData !== nextState.worldData ||
-      region !== nextState.region ||
-      filteredActivities !== nextProps.filteredActivities ||
       isLoading !== nextProps.isLoading
     );
   }
@@ -93,54 +56,6 @@ class Dashboard extends React.Component {
   componentDidUpdate() {
     this.measure();
   }
-
-  getRegion = () => {
-    let geoScale = 50;
-    let geoCenter = [0, 10];
-    const { filter } = this.state;
-    const office = officeMap[filter];
-    const region =
-      filter === "Global"
-        ? geometries.features
-        : geometries.features.filter(
-            (e) =>
-              e.properties.region === filter ||
-              (office && e.properties.name === office.country)
-          );
-
-    if (region.length) {
-      const { scale } = region[0];
-
-      if (office) {
-        geoScale = scale;
-        geoCenter = office.coordinates;
-      } else {
-        switch (filter) {
-          case "North America":
-            geoCenter = [-100.5466, 46.073];
-            geoScale *= 3;
-            break;
-          case "Europe":
-            geoCenter = [9.1405, 48.6908];
-            geoScale *= 5;
-            break;
-          case "Asia":
-            geoCenter = [89.2966, 29.8405];
-            geoScale *= 3;
-            break;
-          default:
-            geoCenter = [0, 10];
-            geoScale = 50;
-        }
-      }
-    }
-
-    this.setState({
-      scale: geoScale,
-      geoCenter,
-      region,
-    });
-  };
 
   saveRef = (ref) => {
     this.containerNode = ref;
@@ -170,48 +85,14 @@ class Dashboard extends React.Component {
     });
   };
 
-  onCountryChange = (e, { value }) => {
-    const { filterActivities } = this.props;
-
-    this.setState({ filter: value }, () => {
-      this.getRegion();
-      filterActivities(value, "region");
-    });
-  };
-
-  refreshActivies() {
-    const { getActivities } = this.props;
-    getActivities();
-  }
-
   render() {
-    const {
-      cities,
-      worldData,
-      width,
-      height,
-      filter,
-      region,
-      geoCenter,
-      scale,
-      statistics,
-      searchString,
-    } = this.state;
+    const { searchString } = this.state;
 
-    const {
-      isLoading,
-      total,
-      average,
-      breakdown,
-      leaderboard,
-      distance,
-      teams
-    } = this.props;
+    const { isLoading, total, leaderboard, teams } = this.props;
 
     return (
       <div className="dashboard">
         <Segment loading={isLoading} className="secondary">
-          <Container>
             <Container className="sign-wrapper">
               <div className={`sign-container counter-wrapper`}>
                 <div className="sign-content-container">
@@ -225,19 +106,8 @@ class Dashboard extends React.Component {
               </div>
             </Container>
             <div ref={this.saveRef}>
-              <Map
-                worldData={worldData}
-                statistics={statistics}
-                cities={cities}
-                distance={distance}
-                width={width}
-                scale={width < 400 ? 70 : 150}
-                geoCenter={[0, 10]}
-                height={height}
-              />
-              <Legend legends={legends} />
-            </div>
-          </Container>
+              <MapUK teams={teams}/>
+            </div> 
         </Segment>
 
         <Segment loading={isLoading} className="primary">
@@ -251,7 +121,7 @@ class Dashboard extends React.Component {
                     </Header>
                     <div className="search-container">
                       <Search
-                        input={{ icon: 'search', iconPosition: 'left' }}
+                        input={{ icon: "search", iconPosition: "left" }}
                         fluid
                         loading={isLoading}
                         onResultSelect={this.handleResultSelect}
@@ -273,7 +143,7 @@ class Dashboard extends React.Component {
                     </Header>
                     <TeamLeaderboardTable
                       height={450}
-                      className={'scrolling'}
+                      className={"scrolling"}
                       teams={teams}
                     />
                   </div>
