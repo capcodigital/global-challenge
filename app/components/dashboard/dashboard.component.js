@@ -294,22 +294,24 @@ class Dashboard extends React.Component {
                   <Grid.Row>
                     <Grid.Column width={8}>
                       <div className="content-container-dashboard">
-                        <Header size="medium" className="container-header">
-                          <img src={walkIcon} alt="Walk Logo" />
-                          Walk
-                        </Header>
-                        <TeamSportsLeaderboardTable
-                          height={250}
-                          teams={teams.map((team) => ({
-                            name: team.name,
-                            distance: team.activities["Walk"],
-                          }))}
-                        />
+                        <Grid.Row>
+                          <Header size="medium" className="container-header">
+                            <img src={walkIcon} alt="Walk Logo" />
+                            Walk
+                          </Header>
+                          <TeamSportsLeaderboardTable
+                            height={250}
+                            teams={teams.map((team) => ({
+                              name: team.name,
+                              distance: team.activities["Walk"],
+                            }))}
+                          />
+                        </Grid.Row>
                       </div>
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <div className="content-container-dashboard">
-                        <Grid.Row>
+                        <Grid.Row style={{paddingBottom: 20}}>
                           <Header size="medium" className="container-header">
                             <img src={swimIcon} alt="Swim Logo" />
                             Swim

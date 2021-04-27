@@ -2,7 +2,7 @@
 /* eslint-disable global-require */
 import React from "react";
 import PropTypes from "prop-types";
-import { List, Image, Header, Table } from "semantic-ui-react";
+import { List, Image } from "semantic-ui-react";
 import { FormattedNumber } from "react-intl";
 import "./style.scss";
 
