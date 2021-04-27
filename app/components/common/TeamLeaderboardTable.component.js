@@ -45,9 +45,7 @@ const TeamLeaderboardTable = ({
 
 TeamLeaderboardTable.propTypes = {
   teams: PropTypes.array.isRequired,
-  dataKey: PropTypes.string,
-  image: PropTypes.bool,
-  prefix: PropTypes.string,
+  height: PropTypes.string,
   className: PropTypes.string
 };
 
