@@ -6,13 +6,10 @@ import {
   Segment,
   Grid,
   Container,
-  Image,
   Header,
-  Dropdown,
   Search,
 } from "semantic-ui-react";
-import { FormattedMessage } from "react-intl";
-import { Counter, ListView, ResizableListView } from "components/common";
+import { Counter, TeamSportsLeaderboardTable } from "components/common";
 import Map from "components/map";
 import Legend from "components/legend";
 import convertNumberToArray from "../../utils/covertNumberToArray";
@@ -43,24 +40,6 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-
-    // fetch('https://localhost/teams', {
-    //   method: 'GET',
-    //   mode: 'cors',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    // })
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   console.log(data)
-    // })
-    // .catch((error) => {
-    //   console.log(error.message);
-      
-    // });
-
     const { getActivities } = this.props;
 
     fetch(
@@ -265,7 +244,7 @@ class Dashboard extends React.Component {
                       Team Leaderboard
                     </Header>
                     
-                    <ResizableListView height={400} className={"scrolling"} />
+                    <TeamSportsLeaderboardTable height={400} className={"scrolling"} />
                   </div>
                 </Grid.Row>
                 <Grid.Row>
@@ -286,7 +265,7 @@ class Dashboard extends React.Component {
                       />
                     </div>
                     <div>
-                      <ResizableListView height={160} className={"scrolling"} />
+                      <TeamSportsLeaderboardTable height={160} className={"scrolling"} />
                     </div>
                   </div>
                 </Grid.Row>
@@ -304,7 +283,7 @@ class Dashboard extends React.Component {
                             <img src={runIcon} alt="React Logo" />
                             Run
                           </Header>
-                          <ResizableListView
+                          <TeamSportsLeaderboardTable
                             height={290}
                             className={"scrolling"}
                           />
@@ -318,7 +297,7 @@ class Dashboard extends React.Component {
                             <img src={cycleIcon} alt="React Logo" />
                             Bike
                           </Header>
-                          <ResizableListView
+                          <TeamSportsLeaderboardTable
                             height={290}
                             className={"scrolling"}
                           />
@@ -334,8 +313,8 @@ class Dashboard extends React.Component {
                             <img src={walkIcon} alt="React Logo" />
                             Walk
                           </Header>
-                          <ResizableListView
-                            height={290}
+                          <TeamSportsLeaderboardTable
+                            height={250}
                             className={"scrolling"}
                           />
                         </div>
@@ -348,8 +327,8 @@ class Dashboard extends React.Component {
                             <img src={swimIcon} alt="React Logo" />
                             Swim
                           </Header>
-                          <ResizableListView
-                            height={140}
+                          <TeamSportsLeaderboardTable
+                            height={90}
                             className={"scrolling"}
                           />
                         </Grid.Row>
@@ -358,8 +337,8 @@ class Dashboard extends React.Component {
                             <img src={rowIcon} alt="React Logo" />
                             Row
                           </Header>
-                          <ResizableListView
-                            height={140}
+                          <TeamSportsLeaderboardTable
+                            height={90}
                             className={"scrolling"}
                           />
                         </Grid.Row>

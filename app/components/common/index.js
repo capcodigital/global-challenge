@@ -1,4 +1,4 @@
 import Counter from "./counter.component";
-import ListView, { ResizableListView } from "./list.component";
+import TeamSportsLeaderboardTable from "./TeamSportsLeaderboardTable";
 
-export { Counter, ListView, ResizableListView };
+export { Counter, TeamSportsLeaderboardTable };

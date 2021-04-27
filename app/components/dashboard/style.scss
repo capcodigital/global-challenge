@@ -2,7 +2,7 @@
 @import "../../styles/breakpoints.scss";
 
 .dashboard {
-  margin:0px;
+  margin: 0px;
   .sign-wrapper {
     width: 100%;
     margin-bottom: 2rem;
@@ -68,22 +68,24 @@
   }
 
   .ui.header {
-    padding-top:1rem;
-    font-weight:400;
+    padding-top: 1rem;
+    font-weight: 400;
   }
 
   .ui.celled.table {
     padding-left: 16px;
   }
   .ui.celled.table tr td {
-    border:none;
+    border: none;
+    padding-left:0;
+    padding-top:0;
   }
-
+ 
   .content-container-dashboard {
     height: 370px;
-    width:260px;
+    width: 290px;
     .container-header {
-      color: #11A9B2;
+      color: #11a9b2;
     }
   }
 
@@ -99,7 +101,7 @@
     border-bottom: 1px solid #d9d9d9;
     .container-header {
       text-align: center;
-      padding-top:2rem;
+      padding-top: 2rem;
     }
   }
 
@@ -119,4 +121,7 @@
   margin: 0 auto;
   padding-top: 2rem;
   max-width: 680px;
+}
+.avatar {
+  margin-left: 5px;
 }
