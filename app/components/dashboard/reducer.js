@@ -4,16 +4,22 @@ import {
   FETCH_ACTIVITIES_SUCCESS,
   FETCH_ACTIVITIES_ERROR,
   FILTER_ACTIVITIES_SUCCESS,
-  FILTER_ACTIVITIES_REQUEST
+  FILTER_ACTIVITIES_REQUEST,
+  FETCH_TEAMS_REQUEST,
+  FETCH_TEAMS_SUCCESS,
+  FETCH_TEAMS_ERROR
 } from './actions';
 
 const initialState = fromJS({
   activities: [],
+  teamsList: [],
   filteredActivities: [],
   isLoading: false
 });
 
 export const getActivies = (state) => state.get('dashboard').get('activities');
+
+export const getTeams = (state) => state.get('dashboard').get('teamsList');
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -37,6 +43,16 @@ export default (state = initialState, action) => {
       return state.merge({
         isLoading: true
       });
+    case FETCH_TEAMS_REQUEST:
+      return state.merge({ isLoading: true, error: null });
+    case FETCH_TEAMS_SUCCESS:
+      return state.merge({
+        teamsList: action.payload,
+        isLoading: false,
+        error: null
+      });
+    case FETCH_TEAMS_ERROR:
+      return state.merge({ isLoading: false, error: action.payload });
     default:
       return state;
   }

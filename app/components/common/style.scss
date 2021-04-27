@@ -12,4 +12,29 @@
   .header {
     text-align: left;
   }
+
+  .position {
+    width: 30px;
+    text-align: center;
+  }
+
+  .team {
+    width: 260px;
+    text-align: center;
+  }
+
+  .distance {
+    width: 150px;
+    text-align: center;
+  }
+
+  .finish-date {
+    width: 100px;
+    text-align: center;
+  }
+
+  .finished-team-highlight{
+    color: #c00d0d;
+    font-weight: bold;
+  }
 }

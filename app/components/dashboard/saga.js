@@ -12,9 +12,13 @@ import {
   fetchActivitiesApi,
   filteredActivitiesRecieved,
   FETCH_ACTIVITIES_REQUEST,
-  FILTER_ACTIVITIES_REQUEST
+  FILTER_ACTIVITIES_REQUEST,
+  teamsRecieved,
+  teamsFailed,
+  fetchTeamsApi,
+  FETCH_TEAMS_REQUEST
 } from './actions';
-import { getActivies } from './reducer';
+import { getActivies, getTeams } from './reducer';
 
 
 const officeByRegion = keyBy(allCities, 'region');
@@ -41,6 +45,15 @@ export function* fetchActivitiesSaga() {
   }
 }
 
+export function* fetchTeamsSaga() {
+  try {
+    const teamsList = yield call(fetchTeamsApi);
+    yield put(teamsRecieved(teamsList));
+  } catch (error) {
+    yield put(teamsFailed(error));
+  }
+}
+
 export function* filterActivitiesSaga({ payload }) {
   yield call(delay, 200);
 
@@ -59,4 +72,5 @@ export function* filterActivitiesSaga({ payload }) {
 export default function* rootSaga() {
   yield takeEvery(FETCH_ACTIVITIES_REQUEST, fetchActivitiesSaga);
   yield takeLatest(FILTER_ACTIVITIES_REQUEST, filterActivitiesSaga);
+  yield takeEvery(FETCH_TEAMS_REQUEST, fetchTeamsSaga);
 }

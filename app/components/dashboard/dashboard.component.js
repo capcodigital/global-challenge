@@ -12,7 +12,7 @@ import {
   Search,
 } from "semantic-ui-react";
 import { FormattedMessage } from "react-intl";
-import { Counter, ListView, ResizableListView } from "components/common";
+import { Counter, ListView, ResizableListView, TeamLeaderboardTable } from "components/common";
 import Map from "components/map";
 import Legend from "components/legend";
 import convertNumberToArray from "../../utils/covertNumberToArray";
@@ -37,12 +37,12 @@ class Dashboard extends React.Component {
       filter: "Global",
       cities: allCities,
       statistics: {},
-      searchString: "",
+      searchString: ""
     };
   }
 
   componentDidMount() {
-    const { getActivities } = this.props;
+    const { getActivities, getTeamsList } = this.props;
 
     fetch(
       "https://raw.githubusercontent.com/zimrick/react-svg-maps-tutorial/master/public/world-110m.json"
@@ -61,11 +61,14 @@ class Dashboard extends React.Component {
     this.getRegion();
 
     getActivities();
+    getTeamsList();
     window.addEventListener("resize", this.measure);
   }
 
   componentWillReceiveProps(nextProps) {
     const { breakdown } = nextProps;
+    const { teams } = nextProps;
+
     if (breakdown.offices && breakdown.offices.length) {
       const statistics = keyBy(breakdown.offices, "name");
       this.setState({ statistics });
@@ -202,6 +205,7 @@ class Dashboard extends React.Component {
       breakdown,
       leaderboard,
       distance,
+      teams
     } = this.props;
 
     return (
@@ -241,20 +245,13 @@ class Dashboard extends React.Component {
             <Grid.Row>
               <Grid.Column>
                 <Grid.Row>
-                  <div className="content-container-leaderboard">
-                    <Header size="medium" className="container-header">
-                      Team Leaderboard
-                    </Header>
-                    <ResizableListView height={400} className={"scrolling"} />
-                  </div>
-                </Grid.Row>
-                <Grid.Row>
                   <div className="content-container-search">
                     <Header size="medium" className="container-header">
                       Team/User Search
                     </Header>
                     <div className="search-container">
                       <Search
+                        input={{ icon: 'search', iconPosition: 'left' }}
                         fluid
                         loading={isLoading}
                         onResultSelect={this.handleResultSelect}
@@ -263,11 +260,22 @@ class Dashboard extends React.Component {
                         })}
                         results={leaderboard}
                         value={searchString}
+                        placeholder={"Search Team Name"}
                       />
                     </div>
                     <div>
                       <ResizableListView height={160} className={"scrolling"} />
                     </div>
+                  </div>
+                  <div className="content-container-leaderboard">
+                    <Header size="medium" className="container-header">
+                      <FormattedMessage id="dashboard.teamLeaderboard" />
+                    </Header>
+                    <TeamLeaderboardTable
+                      height={450}
+                      className={'scrolling'}
+                      teams={teams}
+                    />
                   </div>
                 </Grid.Row>
               </Grid.Column>
