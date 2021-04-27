@@ -1,5 +1,3 @@
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable global-require */
 import React from "react";
 import PropTypes from "prop-types";
 import { Table } from "semantic-ui-react";
@@ -9,14 +7,14 @@ import "./style.scss";
 const svgBarWidth = 100;
 
 const TeamSportsLeaderboardTable = ({ teams, height }) => {
-  let data = teams.sort((a, b) => b.distance - a.distance);
+  let sortedTeams = teams.sort((a, b) => b.distance - a.distance);
   let maxDistance = Math.max(...teams.map((team) => team.distance));
 
   return (
     <div className={"leaderboard sports"} style={{ height: height }}>
       <Table basic="very" collapsing>
         <Table.Body>
-          {data.map((team, idx) => (
+          {sortedTeams.map((team, idx) => (
             <Table.Row key={team.name}>
               <Table.Cell>{idx + 1}. </Table.Cell>
               <Table.Cell>

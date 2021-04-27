@@ -194,16 +194,8 @@ class Dashboard extends React.Component {
       searchString,
     } = this.state;
 
-    const {
-      isLoading,
-      total,
-      average,
-      breakdown,
-      leaderboard,
-      distance,
-      teams,
-    } = this.props;
-    console.log(teams);
+    const { isLoading, total, leaderboard, distance, teams } = this.props;
+
     return (
       <div className="dashboard">
         <Segment loading={isLoading} className="secondary">
@@ -311,7 +303,7 @@ class Dashboard extends React.Component {
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <div className="content-container-dashboard">
-                        <Grid.Row style={{paddingBottom: 20}}>
+                        <Grid.Row style={{ paddingBottom: 20 }}>
                           <Header size="medium" className="container-header">
                             <img src={swimIcon} alt="Swim Logo" />
                             Swim
