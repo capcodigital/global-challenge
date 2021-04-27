@@ -206,7 +206,7 @@ class Dashboard extends React.Component {
       distance,
       teams,
     } = this.props;
-console.log(teams)
+    console.log(teams);
     return (
       <div className="dashboard">
         <Segment loading={isLoading} className="secondary">
@@ -244,9 +244,9 @@ console.log(teams)
             <Grid.Row>
               <Grid.Column>
                 <Grid.Row>
-                  <div className="content-container-search">
-                    <Header size="medium" className="container-header">
-                      Team/User Search
+                  <div>
+                    <Header size="medium">
+                      Team Leaderboard
                     </Header>
                     <div className="search-container">
                       <Search
@@ -262,27 +262,19 @@ console.log(teams)
                         placeholder={"Search Team Name"}
                       />
                     </div>
-                  </div>
-                  <div className="content-container-leaderboard">
-                    <Header size="medium" className="container-header">
-                      <FormattedMessage id="dashboard.teamLeaderboard" />
-                    </Header>
-                    <TeamLeaderboardTable
-                      height={450}
-                      className={"scrolling"}
-                      teams={teams}
-                    />
+                  
+                  
+                    <TeamLeaderboardTable height={580} teams={teams} />
                   </div>
                 </Grid.Row>
               </Grid.Column>
               <Grid.Column>
-                <Header size="medium" className="container-header">
+                <Header size="medium" >
                   Sports Total
                 </Header>
                 <Grid container stackable columns={2} verticalAlign="middle">
                   <Grid.Row>
                     <Grid.Column width={8}>
-                      <Grid.Row>
                         <div className="content-container-dashboard">
                           <Header size="medium" className="container-header">
                             <img src={runIcon} alt="React Logo" />
@@ -290,17 +282,14 @@ console.log(teams)
                           </Header>
                           <TeamSportsLeaderboardTable
                             height={290}
-                            className={"scrolling"}
                             teams={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["Run"],
                             }))}
                           />
                         </div>
-                      </Grid.Row>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                      <Grid.Row>
                         <div className="content-container-dashboard">
                           <Header size="medium" className="container-header">
                             <img src={cycleIcon} alt="React Logo" />
@@ -308,19 +297,17 @@ console.log(teams)
                           </Header>
                           <TeamSportsLeaderboardTable
                             height={290}
-                            className={"scrolling"}
                             teams={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["Cycling"],
                             }))}
                           />
                         </div>
-                      </Grid.Row>
                     </Grid.Column>
                   </Grid.Row>
                   <Grid.Row>
                     <Grid.Column width={8}>
-                      <Grid.Row>
+
                         <div className="content-container-dashboard">
                           <Header size="medium" className="container-header">
                             <img src={walkIcon} alt="React Logo" />
@@ -328,14 +315,12 @@ console.log(teams)
                           </Header>
                           <TeamSportsLeaderboardTable
                             height={250}
-                            className={"scrolling"}
                             teams={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["Walk"],
                             }))}
                           />
                         </div>
-                      </Grid.Row>
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <div className="content-container-dashboard">
@@ -346,7 +331,6 @@ console.log(teams)
                           </Header>
                           <TeamSportsLeaderboardTable
                             height={90}
-                            className={"scrolling"}
                             teams={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["Swim"],
@@ -360,7 +344,6 @@ console.log(teams)
                           </Header>
                           <TeamSportsLeaderboardTable
                             height={90}
-                            className={"scrolling"}
                             teams={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["Rowing"],

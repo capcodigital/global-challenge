@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { List, Table } from "semantic-ui-react";
 import "./style.scss";
 
-const svgBarWidth = 120;
+const svgBarWidth = 100;
 const getInitials = (name) => {
   let temp = name
     .replace(/\bthe\b|\band\b/gi, "")
@@ -18,13 +18,13 @@ const getInitials = (name) => {
       temp[0].charAt(0) + temp[temp.length - 1].charAt(0)
     }`.toUpperCase();
 };
-const TeamSportsLeaderboardTable = ({ teams, className, height }) => {
+const TeamSportsLeaderboardTable = ({ teams, height }) => {
   let data = teams.sort((a, b) => b.distance - a.distance);
   let maxDistance = Math.max(...teams.map((team) => team.distance));
 
   return (
-    <List animated divided className={className} style={{ height: height }}>
-      <Table basic="very" celled collapsing>
+    <List animated divided className={"leaderboard sports"} style={{ height: height }}>
+      <Table basic="very" collapsing>
         <Table.Body>
           {data.map((team, idx) => (
             <Table.Row key={team.name}>
@@ -66,7 +66,6 @@ const TeamSportsLeaderboardTable = ({ teams, className, height }) => {
 TeamSportsLeaderboardTable.propTypes = {
   teams: PropTypes.array.isRequired,
   height: PropTypes.number,
-  className: PropTypes.string,
 };
 
 export default TeamSportsLeaderboardTable;
