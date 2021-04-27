@@ -88,26 +88,32 @@ class Dashboard extends React.Component {
   render() {
     const { searchString } = this.state;
 
-    const { isLoading, total, leaderboard, teams } = this.props;
+    const { isLoading, leaderboard, teams } = this.props;
 
+    let total = teams
+      .map((team) => team.totalDistance)
+      .reduce((a, b) => a + b, 0);
     return (
       <div className="dashboard">
         <Segment loading={isLoading} className="secondary">
-            <Container className="sign-wrapper">
-              <div className={`sign-container counter-wrapper`}>
-                <div className="sign-content-container">
-                  <div className="counter">
-                    <Counter
-                      digits={8}
-                      data={convertNumberToArray(total, 10000000)}
-                    />
-                  </div>
-                </div>
-              </div>
-            </Container>
-            <div ref={this.saveRef}>
-              <MapUK teams={teams}/>
-            </div> 
+          <div className="counter-uk">
+            <div className="wrapper">
+              <span className="text">Overal Distance: </span>
+              <span className="total">{total}km</span>
+
+              {/* <Counter
+                    digits={8}
+                    data={convertNumberToArray(
+                      total,
+                      10000000
+                    )}
+                  /> */}
+            </div>
+          </div>
+
+          <div ref={this.saveRef}>
+            <MapUK teams={teams} />
+          </div>
         </Segment>
 
         <Segment loading={isLoading} className="primary">

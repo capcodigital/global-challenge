@@ -30,6 +30,42 @@
       }
     }
   }
+  .counter-uk {
+    margin: 1.5rem;
+    font-size: 24px;
+    vertical-align: middle;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+   
+    .wrapper{
+      width:0;
+      overflow: hidden;
+      white-space: nowrap;
+      letter-spacing: 0.1em;
+      animation-name: typing;
+      animation-duration: 3s; 
+      animation-timing-function: steps(60, end); 
+      animation-fill-mode: forwards;
+      
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+    }
+
+    .text {
+      color: #1a1a1a;
+    }
+    .total {
+      color: #11a9b2;
+    }
+  }
 
   .challenge-description {
     font-size: 1.125rem;
@@ -71,7 +107,7 @@
     border-bottom: 1px solid #d9d9d9;
     .container-header {
       text-align: center;
-      padding-top:1rem;
+      padding-top: 1rem;
     }
   }
 
@@ -86,7 +122,7 @@
     height: 140px;
     .container-header {
       text-align: center;
-      padding-top:2rem;
+      padding-top: 2rem;
     }
   }
 
