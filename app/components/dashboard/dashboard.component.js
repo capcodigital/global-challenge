@@ -3,11 +3,8 @@ import { feature } from "topojson-client";
 import { keyBy, debounce } from "lodash";
 import PropTypes from "prop-types";
 import { Segment, Grid, Container, Header, Search } from "semantic-ui-react";
-import { FormattedMessage } from "react-intl";
 import {
   Counter,
-  ListView,
-  ResizableListView,
   TeamLeaderboardTable,
   TeamSportsLeaderboardTable,
 } from "components/common";
@@ -238,95 +235,83 @@ class Dashboard extends React.Component {
             </div>
           </Container>
         </Segment>
-
         <Segment loading={isLoading} className="primary">
           <Grid container stackable columns={2} verticalAlign="middle">
             <Grid.Row>
               <Grid.Column>
-                <Grid.Row>
-                  <div>
-                    <Header size="medium">
-                      Team Leaderboard
-                    </Header>
-                    <div className="search-container">
-                      <Search
-                        input={{ icon: "search", iconPosition: "left" }}
-                        fluid
-                        loading={isLoading}
-                        onResultSelect={this.handleResultSelect}
-                        onSearchChange={debounce(this.handleSearchChange, 500, {
-                          leading: true,
-                        })}
-                        results={leaderboard}
-                        value={searchString}
-                        placeholder={"Search Team Name"}
-                      />
-                    </div>
-                  
-                  
-                    <TeamLeaderboardTable height={580} teams={teams} />
-                  </div>
-                </Grid.Row>
+                <Header size="medium">Team Leaderboard</Header>
+                <div className="search-container">
+                  <Search
+                    input={{ icon: "search", iconPosition: "left" }}
+                    fluid
+                    loading={isLoading}
+                    onResultSelect={this.handleResultSelect}
+                    onSearchChange={debounce(this.handleSearchChange, 500, {
+                      leading: true,
+                    })}
+                    results={leaderboard}
+                    value={searchString}
+                    placeholder={"Search Team Name"}
+                  />
+                </div>
+                <TeamLeaderboardTable height={580} teams={teams} />
               </Grid.Column>
               <Grid.Column>
-                <Header size="medium" >
-                  Sports Total
-                </Header>
+                <Header size="medium">Sports Total</Header>
                 <Grid container stackable columns={2} verticalAlign="middle">
                   <Grid.Row>
                     <Grid.Column width={8}>
-                        <div className="content-container-dashboard">
-                          <Header size="medium" className="container-header">
-                            <img src={runIcon} alt="React Logo" />
-                            Run
-                          </Header>
-                          <TeamSportsLeaderboardTable
-                            height={290}
-                            teams={teams.map((team) => ({
-                              name: team.name,
-                              distance: team.activities["Run"],
-                            }))}
-                          />
-                        </div>
+                      <div className="content-container-dashboard">
+                        <Header size="medium" className="container-header">
+                          <img src={runIcon} alt="Run Logo" />
+                          Run
+                        </Header>
+                        <TeamSportsLeaderboardTable
+                          height={290}
+                          teams={teams.map((team) => ({
+                            name: team.name,
+                            distance: team.activities["Run"],
+                          }))}
+                        />
+                      </div>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                        <div className="content-container-dashboard">
-                          <Header size="medium" className="container-header">
-                            <img src={cycleIcon} alt="React Logo" />
-                            Bike
-                          </Header>
-                          <TeamSportsLeaderboardTable
-                            height={290}
-                            teams={teams.map((team) => ({
-                              name: team.name,
-                              distance: team.activities["Cycling"],
-                            }))}
-                          />
-                        </div>
+                      <div className="content-container-dashboard">
+                        <Header size="medium" className="container-header">
+                          <img src={cycleIcon} alt="Walk Logo" />
+                          Bike
+                        </Header>
+                        <TeamSportsLeaderboardTable
+                          height={290}
+                          teams={teams.map((team) => ({
+                            name: team.name,
+                            distance: team.activities["Cycling"],
+                          }))}
+                        />
+                      </div>
                     </Grid.Column>
                   </Grid.Row>
                   <Grid.Row>
                     <Grid.Column width={8}>
-
-                        <div className="content-container-dashboard">
-                          <Header size="medium" className="container-header">
-                            <img src={walkIcon} alt="React Logo" />
-                            Walk
-                          </Header>
-                          <TeamSportsLeaderboardTable
-                            height={250}
-                            teams={teams.map((team) => ({
-                              name: team.name,
-                              distance: team.activities["Walk"],
-                            }))}
-                          />
-                        </div>
+                      <div className="content-container-dashboard">
+                        <Header size="medium" className="container-header">
+                          <img src={walkIcon} alt="Walk Logo" />
+                          Walk
+                        </Header>
+                        <TeamSportsLeaderboardTable
+                          height={250}
+                          teams={teams.map((team) => ({
+                            name: team.name,
+                            distance: team.activities["Walk"],
+                          }))}
+                        />
+                      </div>
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <div className="content-container-dashboard">
                         <Grid.Row>
                           <Header size="medium" className="container-header">
-                            <img src={swimIcon} alt="React Logo" />
+                            <img src={swimIcon} alt="Swim Logo" />
                             Swim
                           </Header>
                           <TeamSportsLeaderboardTable
@@ -339,7 +324,7 @@ class Dashboard extends React.Component {
                         </Grid.Row>
                         <Grid.Row>
                           <Header size="medium" className="container-header">
-                            <img src={rowIcon} alt="React Logo" />
+                            <img src={rowIcon} alt="Row Logo" />
                             Row
                           </Header>
                           <TeamSportsLeaderboardTable

@@ -3,8 +3,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Table, List } from "semantic-ui-react";
-import { FormattedNumber } from "react-intl";
+import Avatar from "./Avatar.component";
 import "./style.scss";
+
 const getInitials = (name) => {
   let temp = name
     .replace(/\bthe\b|\band\b/gi, "")
@@ -20,11 +21,11 @@ const getInitials = (name) => {
 const TeamLeaderboardTable = ({ height, teams }) => (
   <div>
     <List style={{ height: height }} className={"leaderboard"}>
-      <Table collapsing basic="very" className='main'>
+      <Table collapsing basic="very" className="main">
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>#</Table.HeaderCell>
-            <Table.HeaderCell> </Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>Team Name</Table.HeaderCell>
             <Table.HeaderCell>Distance</Table.HeaderCell>
             <Table.HeaderCell>Finish Date</Table.HeaderCell>
@@ -32,33 +33,20 @@ const TeamLeaderboardTable = ({ height, teams }) => (
         </Table.Header>
         <Table.Body>
           {teams.map((team, index) => (
-            <Table.Row key={team.name} >
-              <Table.Cell className='main position'>
-                {index + 1}.
-                
+            <Table.Row key={team.name}>
+              <Table.Cell className="main position">{index + 1}.</Table.Cell>
+              <Table.Cell className="main">
+                <Avatar teamName={team.name} color={"rgb(250,69,27)"} size={40}/>
               </Table.Cell>
-              <Table.Cell className='main'>
-                <svg className="avatar" width={40} height={40}>
-                  <circle fill={"rgb(250,69,27)"} cx="20" cy="20" r="20" />
-                  <text
-                    textAnchor="middle"
-                    x="20"
-                    y="25"
-                    fill="white"
-                    fontSize="15"
-                    fontFamily="Helvetica"
-                  >
-                    {getInitials(team.name)}
-                  </text>
-                </svg>
-              </Table.Cell >
-              <Table.Cell className="team-name main">{team.name}</Table.Cell>
-              <Table.Cell  className='main'>
+              <Table.Cell className="main team-name ">{team.name}</Table.Cell>
+              <Table.Cell className="main distance">
                 {team.totalDistance}
                 km
               </Table.Cell>
               <Table.Cell
-                className={`main ${team.completionDate ? "finish" : "pending"} date`}
+                className={`main ${
+                  team.completionDate ? "finish" : "pending"
+                } date`}
               >
                 {team.completionDate ? team.completionDate : "Still to finish"}
               </Table.Cell>

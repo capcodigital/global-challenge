@@ -21,6 +21,10 @@
     }
   }
 
+  ::-webkit-scrollbar-track {
+    display: none;
+  }
+
   .ui.very.basic.table {
     width: 100%;
     padding-left: 16px;
@@ -53,17 +57,18 @@
       }
     }
   }
-
   .avatar {
     margin-left: 5px;
   }
   .team-name {
     color: rgb(250, 69, 27);
   }
-  .finish-date {
-    color: #717171;
+  .distance,
+  .finish.date {
+    color: #1a1a1a;
   }
-  .pending-date {
+  .pending.date {
     color: #717171;
   }
 }
+

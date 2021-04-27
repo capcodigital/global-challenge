@@ -3,6 +3,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { List, Table } from "semantic-ui-react";
+import Avatar from "./Avatar.component";
 import "./style.scss";
 
 const svgBarWidth = 100;
@@ -23,30 +24,23 @@ const TeamSportsLeaderboardTable = ({ teams, height }) => {
   let maxDistance = Math.max(...teams.map((team) => team.distance));
 
   return (
-    <List animated divided className={"leaderboard sports"} style={{ height: height }}>
+    <List
+      animated
+      divided
+      className={"leaderboard sports"}
+      style={{ height: height }}
+    >
       <Table basic="very" collapsing>
         <Table.Body>
           {data.map((team, idx) => (
             <Table.Row key={team.name}>
               <Table.Cell>
                 {idx + 1}.
-                <svg className="avatar" width={30} height={30}>
-                  <circle fill={"rgb(167, 167, 167)"} cx="15" cy="15" r="15" />
-                  <text
-                    textAnchor="middle"
-                    x="15"
-                    y="20"
-                    fill="white"
-                    fontSize="15"
-                    fontFamily="Helvetica"
-                  >
-                    {getInitials(team.name)}
-                  </text>
-                </svg>
+                <Avatar teamName={team.name} color={"rgb(167, 167, 167)"} size={30} />
               </Table.Cell>
-              <Table.Cell>{team.distance}km</Table.Cell>
+              <Table.Cell className="distance">{team.distance}km</Table.Cell>
               <Table.Cell>
-                <svg width={svgBarWidth+10} height="16">
+                <svg width={svgBarWidth + 10} height="16">
                   <rect
                     width={(svgBarWidth * team.distance) / maxDistance + 10} // 10px minimum width
                     height="16"
