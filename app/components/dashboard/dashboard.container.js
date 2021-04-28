@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Dashboard from './dashboard.component';
-import { filterActivities, fetchEmployeeActivities } from './actions';
+import { filterActivities, fetchEmployeeActivities, fetchTeamsList } from './actions';
 import {
   filteredActivitiesSelector,
   loadingStateSelector,
@@ -12,7 +12,9 @@ import {
   totalStepSelector,
   averageSelector,
   leaderboardSelector,
-  totalDistanceSelector
+  totalDistanceSelector,
+  teamsListSelector,
+  teamsSelector
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -27,6 +29,8 @@ function mapStateToProps(state) {
   const average = averageSelector(state);
   const distance = totalDistanceSelector(state);
   const leaderboard = leaderboardSelector(state);
+  const teamsList = teamsListSelector(state);
+  const teams = teamsSelector(state);
 
   return {
     activities,
@@ -36,14 +40,19 @@ function mapStateToProps(state) {
     breakdown,
     distance,
     total,
-    average
+    average,
+    teamsSelector,
+    teamsListSelector,
+    teamsList,
+    teams
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getActivities: () => dispatch(fetchEmployeeActivities()),
-    filterActivities: (query, type) => dispatch(filterActivities({ query, type }))
+    filterActivities: (query, type) => dispatch(filterActivities({ query, type })),
+    getTeamsList: () => dispatch(fetchTeamsList())
   };
 }
 const withSaga = injectSaga({ key: 'dashboard', saga });
