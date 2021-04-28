@@ -6,11 +6,12 @@ import "./style.scss";
 
 const svgBarWidth = 100;
 const popupStyle = {
-  marginBottom:'-1rem',
-  borderRadius: '8px',
+  marginBottom: "-1rem",
+  borderRadius: "8px",
   opacity: 0.9,
   padding: "1em",
 };
+
 const TeamSportsLeaderboardTable = ({ teams, height }) => {
   let sortedTeams = teams.sort((a, b) => b.distance - a.distance);
   let maxDistance = Math.max(...teams.map((team) => team.distance));
@@ -21,11 +22,12 @@ const TeamSportsLeaderboardTable = ({ teams, height }) => {
         <Table.Body>
           {sortedTeams.map((team, idx) => (
             <Popup
+              key={team.name}
               content={team.name}
               position="top center"
               style={popupStyle}
               trigger={
-                <Table.Row key={team.name}>
+                <Table.Row>
                   <Table.Cell>{idx + 1}. </Table.Cell>
                   <Table.Cell>
                     <Avatar teamName={team.name} color={"#a7a7a7"} size={30} />
@@ -38,7 +40,7 @@ const TeamSportsLeaderboardTable = ({ teams, height }) => {
                       <rect
                         width={(svgBarWidth * team.distance) / maxDistance + 10} // 10px minimum width
                         height="16"
-                        fill={"lightgrey"}
+                        fill={"#e6e6eb"}
                         rx={8}
                       />
                     </svg>

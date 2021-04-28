@@ -23,7 +23,7 @@ const TeamLeaderboardTable = ({ height, teams }) => (
             <Table.Cell className="main">
               <Avatar teamName={team.name} color={"#fa451b"} size={40} />
             </Table.Cell>
-            <Table.Cell className="main team-name ">{team.name}</Table.Cell>
+            <Table.Cell className="main team-name">{team.name}</Table.Cell>
             <Table.Cell className="main distance">
               {team.totalDistance}
               km
