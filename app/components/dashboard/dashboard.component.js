@@ -1,15 +1,14 @@
 import React from "react";
 import { keyBy, debounce } from "lodash";
 import PropTypes from "prop-types";
-import { Segment, Grid, Container, Header, Search } from "semantic-ui-react";
+import { Segment, Grid, Header, Search } from "semantic-ui-react";
 import { FormattedMessage } from "react-intl";
 import {
-  Counter,
   ResizableListView,
   TeamLeaderboardTable,
   MapUK,
 } from "components/common";
-import convertNumberToArray from "../../utils/covertNumberToArray";
+import { LoadScript } from "@react-google-maps/api";
 import "./style.scss";
 
 class Dashboard extends React.Component {
@@ -25,11 +24,7 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     const { getTeamsList } = this.props;
-
-    this.measure();
-
     getTeamsList();
-    window.addEventListener("resize", this.measure);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,33 +36,10 @@ class Dashboard extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const { width, height } = this.state;
-
+  shouldComponentUpdate(nextProps) {
     const { isLoading } = this.props;
-
-    return (
-      width !== nextState.width ||
-      height !== nextState.height ||
-      isLoading !== nextProps.isLoading
-    );
+    return isLoading !== nextProps.isLoading;
   }
-
-  componentDidUpdate() {
-    this.measure();
-  }
-
-  saveRef = (ref) => {
-    this.containerNode = ref;
-  };
-
-  measure = () => {
-    const { clientWidth } = this.containerNode;
-
-    this.setState({
-      width: clientWidth,
-    });
-  };
 
   handleResultSelect = (e, { result }) => {
     const { filterActivities } = this.props;
@@ -87,12 +59,12 @@ class Dashboard extends React.Component {
 
   render() {
     const { searchString } = this.state;
-
     const { isLoading, leaderboard, teams } = this.props;
 
     let total = teams
       .map((team) => team.totalDistance)
       .reduce((a, b) => a + b, 0);
+
     return (
       <div className="dashboard">
         <Segment loading={isLoading} className="secondary">
@@ -100,20 +72,15 @@ class Dashboard extends React.Component {
             <div className="wrapper">
               <span className="text">Overal Distance: </span>
               <span className="total">{total}km</span>
-
-              {/* <Counter
-                    digits={8}
-                    data={convertNumberToArray(
-                      total,
-                      10000000
-                    )}
-                  /> */}
             </div>
           </div>
-
-          <div ref={this.saveRef}>
+          <LoadScript
+            // googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+            googleMapsApiKey={'AIzaSyDj6Xw-eqeq8cHxo4LB6Sn3wqLqiM7E_k8'}
+            libraries={['geometry']}
+          >
             <MapUK teams={teams} />
-          </div>
+          </LoadScript>
         </Segment>
 
         <Segment loading={isLoading} className="primary">

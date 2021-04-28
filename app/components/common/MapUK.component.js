@@ -22,33 +22,24 @@ const options = {
   disableDefaultUI: true,
   zoomControl: true,
 };
-const London = new window.google.maps.LatLng(51.509865, -0.118092);
-const Edinburgh = new window.google.maps.LatLng(55.953251, -3.188267);
-
-// const teams = [
-//   { name: "Chocolate Berry Lollipop", distance: 150 },
-//   { name: "Happy", distance: 500 },
-//   { name: "Sunshine Rainbow", distance: 400 },
-//   { name: "Sunshine", distance: 300 },
-//   { name: " Rainbow", distance: 200 },
-// ];
 
 const getInitials = (name) => {
   if (name.split(" ").length === 1) return name.charAt(0).toUpperCase();
   else
-    return `${
-      name.split(" ")[0].charAt(0) + name.split(" ")[1].charAt(0)
-    }`.toUpperCase();
+  return `${
+    name.split(" ")[0].charAt(0) + name.split(" ")[1].charAt(0)
+  }`.toUpperCase();
 };
 
 const MapUK = ({ teams }) => {
-  const mapRef = useRef();
+  const London = new window.google.maps.LatLng(51.509865, -0.118092);
+  const Edinburgh = new window.google.maps.LatLng(55.953251, -3.188267);
+
   const [selected, setSelected] = useState(null);
   const [markers, setMarkers] = useState([]);
-
   const [directions, setDirections] = useState([]);
   const [setError] = useState(null);
- 
+
   useEffect(() => {
     const google = window.google;
 
@@ -67,9 +58,9 @@ const MapUK = ({ teams }) => {
             for (let path of result.routes[0].overview_path) {
               let temp = new google.maps.LatLng(path.lat(), path.lng());
               let distanceInMeters =
-              google.maps.geometry.spherical.computeDistanceBetween(
-                temp,
-                London
+                google.maps.geometry.spherical.computeDistanceBetween(
+                  temp,
+                  London
                 ) / 1000.0;
               if (team.totalDistance <= distanceInMeters) {
                 tempMarkers.push({ ...team, lat: path.lat(), lng: path.lng() });
@@ -85,17 +76,12 @@ const MapUK = ({ teams }) => {
     );
   }, [teams]);
 
-  const onMapLoad = useCallback((map) => {
-    mapRef.current = map;
-  }, []);
-
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
       zoom={6}
       center={center}
       options={options}
-      onLoad={onMapLoad}
     >
       {directions && (
         <DirectionsRenderer
@@ -154,7 +140,9 @@ const MapUK = ({ teams }) => {
     </GoogleMap>
   );
 };
+
 MapUK.propTypes = {
   teams: PropTypes.array.isRequired,
 };
+
 export default MapUK;
