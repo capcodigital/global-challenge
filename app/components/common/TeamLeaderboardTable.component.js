@@ -17,26 +17,30 @@ const TeamLeaderboardTable = ({ height, teams }) => (
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {teams.map((team, index) => (
-          <Table.Row key={team.name}>
-            <Table.Cell className="main position">{index + 1}.</Table.Cell>
-            <Table.Cell className="main">
-              <Avatar teamName={team.name} color={"#fa451b"} size={40} />
-            </Table.Cell>
-            <Table.Cell className="main team-name">{team.name}</Table.Cell>
-            <Table.Cell className="main distance">
-              {team.totalDistance}
-              km
-            </Table.Cell>
-            <Table.Cell
-              className={`main ${
-                team.completionDate ? "finish" : "pending"
-              } date`}
-            >
-              {team.completionDate ? team.completionDate : "Still to finish"}
-            </Table.Cell>
-          </Table.Row>
-        ))}
+        {teams.map((team, index) => {
+          // let dateCompletion = team.completionDate ? "finish" : "pending";
+          let dateCompletion =  "finish" 
+          return (
+            <Table.Row key={team.name}>
+              <Table.Cell className={`main position ${dateCompletion}`}>
+                {index + 1}.
+              </Table.Cell>
+              <Table.Cell className={`main avatar ${dateCompletion}`}>
+                <Avatar teamName={team.name} color={"#fa451b"} size={40} />
+              </Table.Cell>
+              <Table.Cell className={`main team-name ${dateCompletion}`}>
+                {team.name}
+              </Table.Cell>
+              <Table.Cell className={`main distance ${dateCompletion}`}>
+                {team.totalDistance}
+                km
+              </Table.Cell>
+              <Table.Cell className={`main date ${dateCompletion}`}>
+                {team.completionDate ? team.completionDate : "Still to finish"}
+              </Table.Cell>
+            </Table.Row>
+          );
+        })}
       </Table.Body>
     </Table>
   </div>

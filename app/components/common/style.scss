@@ -13,9 +13,14 @@
 .leaderboard {
   width: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
 
   &.sports {
+    overflow-y: scroll;
+
+    .avatar {
+      margin-left: 5px;
+    }
+
     &::-webkit-scrollbar {
       display: none;
     }
@@ -24,14 +29,77 @@
   ::-webkit-scrollbar-track {
     display: none;
   }
-
+  .ui.table thead tr:first-child > th {
+    position: sticky !important;
+    top: 0;
+  }
   .ui.very.basic.table {
     width: 100%;
     padding-left: 16px;
+   
     &.main {
+      text-align: center;
       padding-left: 0px;
-      padding-right: 10px;
       border-spacing: 0px 5px;
+
+      thead > tr {
+        padding-right: 5px;
+        :first-child {
+          width: 50px;
+        }
+        :nth-child(2) {
+          width: 60px;
+        }
+        :nth-child(3) {
+          text-align:left;
+          width: 210px;
+        }
+        :nth-child(4) {
+          width: 80px;
+        }
+        :nth-child(5) {
+          width: 120px;
+        }
+      }
+      tbody {
+        display: block;
+        height: 526px;
+        overflow: auto;
+      }
+      thead,
+      tbody tr {
+        border: none;
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        padding-right: 5px;
+      }
+
+      tr td {
+        padding: 10px 0 10px 0;
+        background: #f4f4f4;
+        &.finish{
+          background:#dbfaec;
+        }
+        &.position {
+          border-radius: 8px 0 0 8px;
+          width: 50px;
+        }
+        &.avatar {
+          width: 60px;
+        }
+        &.team-name {
+          text-align:left;
+          width: 210px;
+        }
+        &.distance {
+          width: 80px;
+        }
+        &.date {
+          border-radius: 0 8px 8px 0;
+          width: 120px;
+        }
+      }
     }
   }
   .ui.table th {
@@ -44,24 +112,9 @@
     border: none;
     padding-left: 0;
     padding-bottom: 0rem;
-    &.main {
-      padding: 10px 0 10px 0;
-      background: #f4f4f4;
-      &.position {
-        border-radius: 8px 0 0 8px;
-        text-align: center;
-      }
-      &.date {
-        border-radius: 0 8px 8px 0;
-        text-align: center;
-      }
-    }
-  }
-  .avatar {
-    margin-left: 5px;
   }
   .team-name {
-    color: rgb(250, 69, 27);
+    color: #fa451b;
   }
   .distance,
   .finish.date {
@@ -71,4 +124,3 @@
     color: #717171;
   }
 }
-
