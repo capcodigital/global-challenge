@@ -18,7 +18,7 @@ import {
   fetchTeamsApi,
   FETCH_TEAMS_REQUEST
 } from './actions';
-import { getActivies, getTeams } from './reducer';
+import { getActivies } from './reducer';
 
 
 const officeByRegion = keyBy(allCities, 'region');

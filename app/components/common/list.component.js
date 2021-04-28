@@ -30,26 +30,13 @@ const ListView = ({ list, prefix, image, dataKey, className }) => (
     </List>
   </div>
 );
-export const ResizableListView = ({ className, height }) => (
-    <List
-      animated
-      divided
-      className={className}
-      style={{ height: height }}
-    />
-);
 
 ListView.propTypes = {
   list: PropTypes.array.isRequired,
   dataKey: PropTypes.string,
   image: PropTypes.bool,
   prefix: PropTypes.string,
-  className: PropTypes.string
-};
-
-ResizableListView.propTypes = {
   className: PropTypes.string,
-  height: PropTypes.number,
 };
 
 export default ListView;

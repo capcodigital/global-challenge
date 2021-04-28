@@ -1,52 +1,53 @@
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable global-require */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Table, List} from 'semantic-ui-react';
-import { FormattedNumber } from 'react-intl';
-import './style.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import { Table } from "semantic-ui-react";
+import Avatar from "./Avatar.component";
+import "./style.scss";
 
-const TeamLeaderboardTable = ({
-  className, height, teams
-}) => (
-  <div>
-    <List style={{ height: height }} className={className}>
-      <Table celled collapsing basic='very'>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>#</Table.HeaderCell>
-            <Table.HeaderCell>Team Name</Table.HeaderCell>
-            <Table.HeaderCell>Distance</Table.HeaderCell>
-            <Table.HeaderCell>Finish Date</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {teams.map((item, index) => (
-            <Table.Row key={item.name} 
-              className={`${item.completionDate != undefined ? "finished-team-highlight" : ""}`}
-              >
-              <Table.Cell className="position">{index + 1}.</Table.Cell>
-              <Table.Cell className="team">
-                {item.name}
+const TeamLeaderboardTable = ({ height, teams }) => (
+  <div style={{ height: height }} className={"leaderboard"}>
+    <Table collapsing basic="very" className="main">
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>#</Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
+          <Table.HeaderCell>Team Name</Table.HeaderCell>
+          <Table.HeaderCell>Distance</Table.HeaderCell>
+          <Table.HeaderCell>Finish Date</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {teams.map((team, index) => {
+          let dateCompletion = team.completionDate ? "finish" : "pending";
+          return (
+            <Table.Row key={team.name}>
+              <Table.Cell className={`main position ${dateCompletion}`}>
+                {index + 1}.
               </Table.Cell>
-              <Table.Cell className="distance">
-                <FormattedNumber value={item.totalDistance} maximumFractionDigits={0}/> km
+              <Table.Cell className={`main avatar ${dateCompletion}`}>
+                <Avatar teamName={team.name} color={"#fa451b"} size={40} />
               </Table.Cell>
-              <Table.Cell className="finish-date">
-                {item.completionDate != undefined ? item.completionDate: 'Still to finish'} 
-                </Table.Cell>
+              <Table.Cell className={`main team-name ${dateCompletion}`}>
+                {team.name}
+              </Table.Cell>
+              <Table.Cell className={`main distance ${dateCompletion}`}>
+                {team.totalDistance}
+                km
+              </Table.Cell>
+              <Table.Cell className={`main date ${dateCompletion}`}>
+                {team.completionDate ? team.completionDate : "Still to finish"}
+              </Table.Cell>
             </Table.Row>
-          ))}
-        </Table.Body>
-      </Table>
-    </List>
+          );
+        })}
+      </Table.Body>
+    </Table>
   </div>
 );
 
 TeamLeaderboardTable.propTypes = {
+  height: PropTypes.number,
   teams: PropTypes.array.isRequired,
-  height: PropTypes.string,
-  className: PropTypes.string
 };
 
 export default TeamLeaderboardTable;
