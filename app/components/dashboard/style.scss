@@ -2,6 +2,7 @@
 @import "../../styles/breakpoints.scss";
 
 .dashboard {
+  margin: 0px;
   .sign-wrapper {
     width: 100%;
     margin-bottom: 2rem;
@@ -49,7 +50,8 @@
   }
 
   .search-container {
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
 
     .search {
       .input {
@@ -61,32 +63,23 @@
   .content-container {
     height: 370px;
     padding: 2rem;
-    border-bottom: 1px solid #d9d9d9;
     .container-header {
       text-align: center;
-    }
-  }
-  .content-container-dashboard {
-    height: 370px;
-    border-bottom: 1px solid #d9d9d9;
-    .container-header {
-      text-align: center;
-      padding-top:1rem;
     }
   }
 
-  .content-container-leaderboard {
-    height: 675px;
-    border-bottom: 1px solid #d9d9d9;
+  .content-container-dashboard {
+    width: 290px;
     .container-header {
-      text-align: left;
+      color: #11a9b2;
     }
   }
+  
   .content-container-search {
     height: 140px;
     .container-header {
       text-align: center;
-      padding-top:2rem;
+      padding-top: 2rem;
     }
   }
 

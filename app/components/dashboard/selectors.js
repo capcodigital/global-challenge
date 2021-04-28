@@ -1,41 +1,30 @@
-import { createSelector } from 'reselect';
-import { keyBy, cloneDeep } from 'lodash';
-import { levelMap, allCities } from './constants';
+import { createSelector } from "reselect";
+import { keyBy, cloneDeep } from "lodash";
+import { levelMap, allCities } from "./constants";
 
 const getState = (state) => state;
 
-const activitiesSelector = createSelector(
-  getState,
-  (state) => state.get('dashboard').get('activities')
+const activitiesSelector = createSelector(getState, (state) =>
+  state.get("dashboard").get("activities")
 );
 
-const loadingStateSelector = createSelector(
-  getState,
-  (state) => state.get('dashboard').get('isLoading')
+const loadingStateSelector = createSelector(getState, (state) =>
+  state.get("dashboard").get("isLoading")
 );
 
-const filteredActivitiesSelector = createSelector(
-  getState,
-  (state) => state.get('dashboard').get('filteredActivities')
+const filteredActivitiesSelector = createSelector(getState, (state) =>
+  state.get("dashboard").get("filteredActivities")
 );
 
 // Team selectors
-const teamsListSelector = createSelector(
-  getState,
-  (state) => state.get('dashboard').get('teamsList')
+const teamsListSelector = createSelector(getState, (state) =>
+  state.get("dashboard").get("teamsList")
 );
 
-const teamsSelector = createSelector(
-  [teamsListSelector],
-  (teamsList) => {
-    if (teamsList) {
-      var sortedTeamsList = teamsList.toJS().sort(function(a, b) {
-        return b.totalDistance - a.totalDistance;
-      });
-      return sortedTeamsList;
-    }
-    return [];
-  }
+const teamsSelector = createSelector([teamsListSelector], (teamsList) =>
+  teamsList
+    ? teamsList.toJS().sort((a, b) => b.totalDistance - a.totalDistance)
+    : []
 );
 
 const totalStepSelector = createSelector(
@@ -63,10 +52,12 @@ const totalDistanceSelector = createSelector(
 
 const averageSelector = createSelector(
   [totalDistanceSelector, filteredActivitiesSelector],
-  (total, employees) => (!total || total === 0 ? 0 : Math.floor(total / employees.count()))
+  (total, employees) =>
+    !total || total === 0 ? 0 : Math.floor(total / employees.count())
 );
 
-const sort = (array, property) => array.sort((a, b) => parseFloat(b[property]) - parseFloat(a[property]));
+const sort = (array, property) =>
+  array.sort((a, b) => parseFloat(b[property]) - parseFloat(a[property]));
 
 // utility function for udating the stats for both level and location.
 const updateStatics = (obj, key, distance, steps) => {
@@ -88,14 +79,14 @@ const leaderboardSelector = createSelector(
   [filteredActivitiesSelector],
   (activities) => {
     if (activities) {
-      const leaderboard = sort(activities.toJS(), 'totalDistance');
+      const leaderboard = sort(activities.toJS(), "totalDistance");
 
       return leaderboard.slice(0, 6).map((leader) => ({
         steps: leader.totalSteps,
         distance: leader.totalDistance,
         name: leader.name,
         title: leader.name,
-        description: `No. of km ${leader.totalDistance}`
+        description: `No. of km ${leader.totalDistance}`,
       }));
     }
 
@@ -109,16 +100,16 @@ const breakdownSelector = createSelector(
     const levels = {};
     const offices = {};
     if (activities) {
-      const officeByCity = keyBy(allCities, 'name');
+      const officeByCity = keyBy(allCities, "name");
 
       activities.forEach((element) => {
-        const steps = element.get('totalSteps');
-        const distance = element.get('totalDistance');
-        const level = levelMap[element.get('level')] || 'Other';
-        let location = element.get('location') || 'Other';
+        const steps = element.get("totalSteps");
+        const distance = element.get("totalDistance");
+        const level = levelMap[element.get("level")] || "Other";
+        let location = element.get("location") || "Other";
 
         if (!officeByCity[location]) {
-          location = 'Other';
+          location = "Other";
         }
 
         // update the stats for offices
@@ -135,11 +126,13 @@ const breakdownSelector = createSelector(
       return office;
     });
 
-
     return {
-      offices: sort(cloneDeep(temp), 'employee'),
-      levels: sort(Object.keys(levels).map((i) => levels[i]), 'km'),
-      averages: sort(cloneDeep(temp), 'average')
+      offices: sort(cloneDeep(temp), "employee"),
+      levels: sort(
+        Object.keys(levels).map((i) => levels[i]),
+        "km"
+      ),
+      averages: sort(cloneDeep(temp), "average"),
     };
   }
 );
@@ -154,5 +147,5 @@ export {
   breakdownSelector,
   totalStepSelector,
   averageSelector,
-  totalDistanceSelector
+  totalDistanceSelector,
 };
