@@ -353,6 +353,7 @@ Dashboard.propTypes = {
   breakdown: PropTypes.object,
   leaderboard: PropTypes.array,
   filterActivities: PropTypes.func.isRequired,
+  filterTeams: PropTypes.func.isRequired,
 };
 
 export default Dashboard;

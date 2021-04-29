@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Dashboard from './dashboard.component';
-import { filterActivities, fetchEmployeeActivities, fetchTeamsList } from './actions';
+import { filterActivities, filterTeams, fetchEmployeeActivities, fetchTeamsList } from './actions';
 import {
   filteredActivitiesSelector,
+  filteredTeamsSelector,
   loadingStateSelector,
   activitiesSelector,
   breakdownSelector,
@@ -24,6 +25,7 @@ function mapStateToProps(state) {
   const activities = activitiesSelector(state);
   const isLoading = loadingStateSelector(state);
   const filteredActivities = filteredActivitiesSelector(state);
+  const filteredTeams = filteredTeamsSelector(state);
   const breakdown = breakdownSelector(state);
   const total = totalStepSelector(state);
   const average = averageSelector(state);
@@ -35,6 +37,7 @@ function mapStateToProps(state) {
   return {
     activities,
     filteredActivities,
+    filteredTeams,
     leaderboard,
     isLoading,
     breakdown,
@@ -52,6 +55,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getActivities: () => dispatch(fetchEmployeeActivities()),
     filterActivities: (query, type) => dispatch(filterActivities({ query, type })),
+    filterTeams: (query, type) => dispatch(filterTeams({ query, type })),
     getTeamsList: () => dispatch(fetchTeamsList())
   };
 }

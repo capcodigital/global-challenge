@@ -25,7 +25,7 @@ const filteredTeamsSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("filteredTeams")
 );
 
-const teamsSelector = createSelector([teamsListSelector], (teamsList) =>
+const teamsSelector = createSelector([filteredTeamsSelector], (teamsList) =>
   teamsList
     ? teamsList.toJS().sort((a, b) => b.totalDistance - a.totalDistance)
     : []
@@ -147,6 +147,7 @@ export {
   teamsSelector,
   leaderboardSelector,
   filteredActivitiesSelector,
+  filteredTeamsSelector,
   loadingStateSelector,
   breakdownSelector,
   totalStepSelector,
