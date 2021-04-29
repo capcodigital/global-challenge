@@ -51,15 +51,15 @@ const MapUK = ({ teams }) => {
           teams.map((team) => {
             let distanceSum = 0;
             for (let path of result.routes[0].overview_path) {
-              let temp = new google.maps.LatLng(path.lat(), path.lng());
-              let nextTemp =
+              let nextPath =
                 result.routes[0].overview_path[
                   result.routes[0].overview_path.indexOf(path) + 1
                 ];
+            
               let distanceInMeters =
                 google.maps.geometry.spherical.computeDistanceBetween(
-                  temp,
-                  nextTemp
+                  path,
+                  nextPath
                 ) / 1000.0;
               distanceSum += distanceInMeters;
               if (team.totalDistance <= distanceSum) {
