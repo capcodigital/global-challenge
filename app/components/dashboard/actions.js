@@ -19,6 +19,9 @@ export const FETCH_TEAMS_REQUEST = 'FETCH_TEAMS_REQUEST';
 export const FETCH_TEAMS_SUCCESS = 'FETCH_TEAMS_SUCCESS';
 export const FETCH_TEAMS_ERROR = 'FETCH_TEAMS_ERROR';
 
+export const FILTER_TEAMS_REQUEST = 'FILTER_TEAMS_REQUEST';
+export const FILTER_TEAMS_SUCCESS = 'FILTER_TEAMS_SUCCESS';
+
 // used by redux-saga
 export const fetchActivitiesApi = () => axios.get(`${SERVER_URL}users/activities`).then(({ data }) => data);
 export const fetchTeamsApi = () => axios.get(`${SERVER_URL}teams`).then(({ data }) => data);
@@ -27,12 +30,17 @@ export const fetchTeamsApi = () => axios.get(`${SERVER_URL}teams`).then(({ data 
 export const activitiesRecieved = (activities) => ({ type: FETCH_ACTIVITIES_SUCCESS, payload: activities });
 export const teamsRecieved = (teamsList) => ({ type: FETCH_TEAMS_SUCCESS, payload: teamsList });
 
+// Failed fetches
 export const activitiesFailed = (error) => ({ type: FETCH_ACTIVITIES_ERROR, error });
 export const teamsFailed = (error) => ({ type: FETCH_TEAMS_ERROR, error });
 
+// filter activities
 export const filterActivities = (activities) => ({ type: FILTER_ACTIVITIES_REQUEST, payload: activities });
-
 export const filteredActivitiesRecieved = (activities) => ({ type: FILTER_ACTIVITIES_SUCCESS, payload: activities });
+
+// filter teams
+export const filterTeams = (teams) => ({ type: FILTER_TEAMS_REQUEST, payload: teams });
+export const filteredTeamsRecieved = (teams) => ({ type: FILTER_TEAMS_SUCCESS, payload: teams });
 
 export const fetchEmployeeActivities = () => ({ type: FETCH_ACTIVITIES_REQUEST });
 export const fetchTeamsList = () => ({ type: FETCH_TEAMS_REQUEST });

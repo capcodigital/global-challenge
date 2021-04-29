@@ -21,6 +21,10 @@ const teamsListSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("teamsList")
 );
 
+const filteredTeamsSelector = createSelector(getState, (state) =>
+  state.get("dashboard").get("filteredTeams")
+);
+
 const teamsSelector = createSelector([teamsListSelector], (teamsList) =>
   teamsList
     ? teamsList.toJS().sort((a, b) => b.totalDistance - a.totalDistance)

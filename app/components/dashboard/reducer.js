@@ -7,13 +7,16 @@ import {
   FILTER_ACTIVITIES_REQUEST,
   FETCH_TEAMS_REQUEST,
   FETCH_TEAMS_SUCCESS,
-  FETCH_TEAMS_ERROR
+  FETCH_TEAMS_ERROR,
+  FILTER_TEAMS_SUCCESS,
+  FILTER_TEAMS_REQUEST,
 } from './actions';
 
 const initialState = fromJS({
   activities: [],
   teamsList: [],
   filteredActivities: [],
+  filteredTeams: [],
   isLoading: false
 });
 
@@ -48,11 +51,21 @@ export default (state = initialState, action) => {
     case FETCH_TEAMS_SUCCESS:
       return state.merge({
         teamsList: action.payload,
+        filteredTeams: action.payload,
         isLoading: false,
         error: null
       });
     case FETCH_TEAMS_ERROR:
       return state.merge({ isLoading: false, error: action.payload });
+    case FILTER_TEAMS_SUCCESS:
+      return state.merge({
+        filteredTeams: action.payload,
+        isLoading: false
+      });
+    case FILTER_TEAMS_REQUEST:
+      return state.merge({
+        isLoading: true
+      });
     default:
       return state;
   }
