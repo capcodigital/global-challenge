@@ -26,6 +26,7 @@ var TeamSchema = new Schema({
     teamAvatar: String,
     totalDistance: Number,
     totalDuration: Number,
+    completionDate: Date,
     
 }, {strict: false});
 

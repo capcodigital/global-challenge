@@ -29,7 +29,7 @@ const App = () => (
     <Switch>
       <Route path="/" exact component={HomePage} />
       <Route exact path="/progress" component={Dashboard} />
-      <Route exact path="/teams" component={TeamsPage} />
+      <Route exact path="/teams/register" component={TeamsPage} />
       <Route component={HomePage} />
     </Switch>
     <Footer />
