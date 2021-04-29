@@ -18,8 +18,7 @@ const TeamLeaderboardTable = ({ height, teams }) => (
       </Table.Header>
       <Table.Body>
         {teams.map((team, index) => {
-          // let dateCompletion = team.completionDate ? "finish" : "pending";
-          let dateCompletion =  "finish" 
+          let dateCompletion = team.completionDate ? "finish" : "pending";
           return (
             <Table.Row key={team.name}>
               <Table.Cell className={`main position ${dateCompletion}`}>
