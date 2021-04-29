@@ -49,17 +49,23 @@ const MapUK = ({ teams }) => {
           setDirections(result);
           let tempMarkers = [];
           teams.map((team) => {
+            let distanceSum = 0;
             for (let path of result.routes[0].overview_path) {
               let temp = new google.maps.LatLng(path.lat(), path.lng());
+              let nextTemp =
+                result.routes[0].overview_path[
+                  result.routes[0].overview_path.indexOf(path) + 1
+                ];
               let distanceInMeters =
                 google.maps.geometry.spherical.computeDistanceBetween(
                   temp,
-                  London
+                  nextTemp
                 ) / 1000.0;
-              if (team.totalDistance <= distanceInMeters) {
+              distanceSum += distanceInMeters;
+              if (team.totalDistance <= distanceSum) {
                 tempMarkers.push({ ...team, lat: path.lat(), lng: path.lng() });
                 break;
-              } 
+              }
             }
           });
           setMarkers(tempMarkers);
@@ -69,7 +75,6 @@ const MapUK = ({ teams }) => {
       }
     );
   }, [teams]);
-
 
   return (
     <GoogleMap
