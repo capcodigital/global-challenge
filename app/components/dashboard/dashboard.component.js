@@ -196,11 +196,6 @@ class Dashboard extends React.Component {
 
     const { isLoading, total, leaderboard, distance, teams } = this.props;
 
-    // const { filterTeams } = this.props;
-    // console.log(filterTeams)
-    console.log(leaderboard)
-    console.log(teams)
-
     return (
       <div className="dashboard">
         <Segment loading={isLoading} className="secondary">
@@ -246,7 +241,7 @@ class Dashboard extends React.Component {
                     onSearchChange={debounce(this.handleSearchChange, 500, {
                       leading: true,
                     })}
-                    results={teams}
+                    results={leaderboard}
                     value={searchString}
                     placeholder={"Search Team Name"}
                   />

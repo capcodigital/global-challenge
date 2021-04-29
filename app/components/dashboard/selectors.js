@@ -80,20 +80,16 @@ const updateStatics = (obj, key, distance, steps) => {
 };
 
 const leaderboardSelector = createSelector(
-  [filteredActivitiesSelector],
-  (activities) => {
-    if (activities) {
-      const leaderboard = sort(activities.toJS(), "totalDistance");
-
-      return leaderboard.slice(0, 6).map((leader) => ({
-        steps: leader.totalSteps,
-        distance: leader.totalDistance,
-        name: leader.name,
-        title: leader.name,
-        description: `No. of km ${leader.totalDistance}`,
+  [filteredTeamsSelector],
+  (teams) => {
+    if (teams) {
+      return teams.toJS().map((team) => ({
+        distance: team.totalDistance,
+        name: team.name,
+        title: team.name,
+        description: `No. of km ${team.totalDistance}`,
       }));
     }
-
     return [];
   }
 );
