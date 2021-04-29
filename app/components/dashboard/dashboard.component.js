@@ -1,18 +1,13 @@
 import React from "react";
 import { keyBy, debounce } from "lodash";
 import PropTypes from "prop-types";
-import { Segment, Grid, Container, Header, Search } from "semantic-ui-react";
+import { Segment, Grid, Header, Search } from "semantic-ui-react";
 import {
   MapUK,
   TeamLeaderboardTable,
   TeamSportsLeaderboardTable,
 } from "components/common";
-import {
-  LoadScript
-} from "@react-google-maps/api";
-
-import convertNumberToArray from "../../utils/covertNumberToArray";
-import { offices, allCities, geometries, officeMap } from "./constants";
+import { LoadScript } from "@react-google-maps/api";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
 import "./style.scss";
 
@@ -20,8 +15,6 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      height: 450,
-      width: 850,
       statistics: {},
       searchString: "",
     };
@@ -81,7 +74,7 @@ class Dashboard extends React.Component {
           </div>
           <LoadScript
             googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-            libraries={['geometry']}
+            libraries={["geometry"]}
           >
             <MapUK teams={teams} />
           </LoadScript>
@@ -202,13 +195,8 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  filteredActivities: PropTypes.object,
-  getActivities: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.shape({}),
-  total: PropTypes.number,
-  distance: PropTypes.number,
-  average: PropTypes.number,
   breakdown: PropTypes.object,
   leaderboard: PropTypes.array,
   filterActivities: PropTypes.func.isRequired,
