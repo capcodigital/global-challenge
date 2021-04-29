@@ -85,7 +85,7 @@
           width: 120px;
         }
       }
-      
+
       tbody {
         display: block;
         height: 526px;
@@ -128,8 +128,7 @@
       }
     }
   }
-
-  *:focus {
-    outline: none;
-  }
+}
+*:focus {
+  outline: none;
 }

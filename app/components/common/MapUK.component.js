@@ -7,6 +7,7 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import mapStyles from "./mapStyles";
+import { getInitials } from "./Avatar.component";
 
 const containerStyle = {
   width: "100%",
@@ -17,18 +18,11 @@ const center = {
   lat: 54.2511,
   lng: -4.4632,
 };
+
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
-};
-
-const getInitials = (name) => {
-  if (name.split(" ").length === 1) return name.charAt(0).toUpperCase();
-  else
-  return `${
-    name.split(" ")[0].charAt(0) + name.split(" ")[1].charAt(0)
-  }`.toUpperCase();
 };
 
 const MapUK = ({ teams }) => {
@@ -65,7 +59,7 @@ const MapUK = ({ teams }) => {
               if (team.totalDistance <= distanceInMeters) {
                 tempMarkers.push({ ...team, lat: path.lat(), lng: path.lng() });
                 break;
-              }
+              } 
             }
           });
           setMarkers(tempMarkers);
@@ -75,6 +69,7 @@ const MapUK = ({ teams }) => {
       }
     );
   }, [teams]);
+
 
   return (
     <GoogleMap

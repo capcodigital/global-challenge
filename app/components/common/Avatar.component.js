@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./style.scss";
 
-const getInitials = (name) => {
+export const getInitials = (name) => {
   let temp = name
     .replace(/\bthe\b|\band\b/gi, "")
     .split(" ")
