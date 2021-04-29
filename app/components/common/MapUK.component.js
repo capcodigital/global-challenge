@@ -55,7 +55,8 @@ const MapUK = ({ teams }) => {
                 result.routes[0].overview_path[
                   result.routes[0].overview_path.indexOf(path) + 1
                 ];
-            
+              if (!nextPath) break;
+              
               let distanceInMeters =
                 google.maps.geometry.spherical.computeDistanceBetween(
                   path,
