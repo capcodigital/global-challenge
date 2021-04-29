@@ -5,11 +5,9 @@ var headers = {
     'Authorization' : ''
 };
 
-var secret = "";
+var secret = process.env.CIT_SECRET;
 
-if (process.env.NODE_ENV == "production") {
-    secret = fs.readFileSync('/home/ec2-user/dist/config/keys/cit.txt', 'utf8');
-} else {
+if (!secret) {
     secret = fs.readFileSync('./config/keys/cit.txt', 'utf8');
 }
 

@@ -9,15 +9,11 @@ var strava = require('strava-v3');
 var cluster = require('cluster');
 var fs = require('fs');
 
-var apiKey = "";
-var secret = "";
-var client_id = "";
+var apiKey = process.env.STRAVA_API_KEY;
+var secret = process.env.STRAVA_SECRET;
+var client_id = process.env.STRAVA_CLIENT_ID;
 
-if (process.env.NODE_ENV == "production") {
-    apiKey = fs.readFileSync('/home/ec2-user/dist/config/keys/strava_key.txt', 'utf8');
-    secret = fs.readFileSync('/home/ec2-user/dist/config/keys/strava_secret.txt', 'utf8');
-    client_id = fs.readFileSync('/home/ec2-user/dist/config/keys/strava_client.txt', 'utf8');
-} else {
+if (!apiKey || !secret || !client_id) {
     apiKey = fs.readFileSync('./config/keys/strava_key.txt', 'utf8');
     secret = fs.readFileSync('./config/keys/strava_secret.txt', 'utf8');
     client_id = fs.readFileSync('./config/keys/strava_client.txt', 'utf8');

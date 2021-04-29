@@ -19,20 +19,6 @@ export const FETCH_TEAMS_REQUEST = 'FETCH_TEAMS_REQUEST';
 export const FETCH_TEAMS_SUCCESS = 'FETCH_TEAMS_SUCCESS';
 export const FETCH_TEAMS_ERROR = 'FETCH_TEAMS_ERROR';
 
-// used by standard redux
-export const fetchActivities = () => (dispatch) => {
-  axios
-    .get(`${SERVER_URL}users/activities`)
-    .then(({ data }) => dispatch({ type: FETCH_ACTIVITIES_SUCCESS, payload: data }));
-};
-
-// used by standard redux
-export const fetchTeams = () => (dispatch) => {
-  axios
-    .get(`${SERVER_URL}teams`)
-    .then(({ data }) => dispatch({ type: FETCH_TEAMS_SUCCESS, payload: data }));
-};
-
 // used by redux-saga
 export const fetchActivitiesApi = () => axios.get(`${SERVER_URL}users/activities`).then(({ data }) => data);
 export const fetchTeamsApi = () => axios.get(`${SERVER_URL}teams`).then(({ data }) => data);

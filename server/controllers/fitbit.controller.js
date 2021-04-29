@@ -9,13 +9,10 @@ var _ = require('lodash');
 var cluster = require('cluster');
 var fs = require('fs');
 
-var secret = "";
-var client_id = "";
+var secret = process.env.FITBIT_SECRET;
+var client_id = process.env.FITBIT_CLIENT_ID;
 
-if (process.env.NODE_ENV == "production") {
-    secret = fs.readFileSync('/home/ec2-user/dist/config/keys/fitbit_secret.txt', 'utf8');
-    client_id = fs.readFileSync('/home/ec2-user/dist/config/keys/fitbit_client.txt', 'utf8');
-} else {
+if (!secret || !client_id) {
     secret = fs.readFileSync('./config/keys/fitbit_secret.txt', 'utf8');
     client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
 }
