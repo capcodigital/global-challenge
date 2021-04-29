@@ -31,7 +31,7 @@ const MapUK = ({ teams }) => {
 
   const [selected, setSelected] = useState(null);
   const [markers, setMarkers] = useState([]);
-  const [directions, setDirections] = useState([]);
+  const [directions, setDirections] = useState(null);
   const [setError] = useState(null);
 
   useEffect(() => {
