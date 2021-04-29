@@ -151,29 +151,29 @@ class Dashboard extends React.Component {
   };
 
   handleResultSelect = (e, { result }) => {
-    const { filterActivities } = this.props;
+    const { filterTeams } = this.props;
 
-    this.setState({ searchString: result.title }, () => {
-      filterActivities(result.title);
+    this.setState({ searchString: result.name }, () => {
+      filterTeams(result.title);
     });
   };
 
   handleSearchChange = (e, { value }) => {
-    const { filterActivities } = this.props;
+    const { filterTeams } = this.props;
 
     this.setState({ searchString: value }, () => {
-      filterActivities(value);
+      filterTeams(value);
     });
   };
 
-  onCountryChange = (e, { value }) => {
-    const { filterActivities } = this.props;
+  // onCountryChange = (e, { value }) => {
+  //   const { filterActivities } = this.props;
 
-    this.setState({ filter: value }, () => {
-      this.getRegion();
-      filterActivities(value, "region");
-    });
-  };
+  //   this.setState({ filter: value }, () => {
+  //     this.getRegion();
+  //     filterActivities(value, "region");
+  //   });
+  // };
 
   refreshActivies() {
     const { getActivities } = this.props;
@@ -195,6 +195,11 @@ class Dashboard extends React.Component {
     } = this.state;
 
     const { isLoading, total, leaderboard, distance, teams } = this.props;
+
+    // const { filterTeams } = this.props;
+    // console.log(filterTeams)
+    console.log(leaderboard)
+    console.log(teams)
 
     return (
       <div className="dashboard">
@@ -241,7 +246,7 @@ class Dashboard extends React.Component {
                     onSearchChange={debounce(this.handleSearchChange, 500, {
                       leading: true,
                     })}
-                    results={leaderboard}
+                    results={teams}
                     value={searchString}
                     placeholder={"Search Team Name"}
                   />
