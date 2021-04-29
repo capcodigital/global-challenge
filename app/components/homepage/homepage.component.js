@@ -55,7 +55,7 @@ const HomePage = () => (
               </div>
 
               <div className="progress-button-container">
-                <Button color="black" basic size="massive" as="a" href="/teams" className="progress-button">
+                <Button color="black" basic size="massive" as="a" href="/teams/register" className="progress-button">
                   <FormattedMessage id="homepage.teams" />
                 </Button>
               </div>

@@ -37,15 +37,37 @@ exports.list = function(req, res, next) {
  */
 exports.all = function(req, res, next) {
 
-    // Get all the users first so we can swap in their real names.
-
-    Team.find({}).exec(function(err, teams) {
+    // Get all the users first so we can include their real names etc.
+    User.find({}).select('name username location level totalDistance totalWalk totalRun totalSwim totalCycling totalRowing').exec(function(err, users) {
         if (err) {
-            res.render('error', {
-                status: 500
-            });
+            console.log("Data update error please try again later");
         } else {
-            res.jsonp(teams);
+
+            let userMap = [];
+            users.forEach(function(user) {
+                userMap[user.username] = user;
+            });
+
+            Team.find({}).exec(function(err, teams) {
+                if (err) {
+                    res.render('error', {
+                        status: 500
+                    });
+                } else {
+
+                    teams.forEach(function(team) {
+                        let updatedMembers = [];
+
+                        team.members.forEach(function(member) {
+                            updatedMembers.push(userMap[member]);
+                        });
+
+                        team.members = updatedMembers;
+                    });
+
+                    res.jsonp(teams);
+                }
+            });
         }
     });
 };
@@ -100,6 +122,45 @@ exports.update = function(req, res) {
             }
 
             team.members.push(req.body.member);
+            team.markModified('members');
+                
+            team.save(function(err) {
+                if (err) {
+                    console.log("Error joining team: " + team.name);
+                    res.send(400, { message: 'joinTeamFailed'});
+                } else {
+                    res.jsonp(team);
+                }
+            });
+        });
+    });
+};
+
+/**
+ * Remove member from a team
+ */
+exports.remove = function(req, res) {
+
+    User.findOne({
+        username: req.body.member
+    }).exec(function(err, user) {
+        if (err) res.send(400, { message: 'removeFromTeamFailed'});
+        if (!user) res.send(400, { message: 'removeFromTeamFailedUserNotFound'});
+    
+        Team.findOne({
+            name: req.body.team
+        }).exec(function(err, team) {
+            if (err) res.send(400, { message: 'removeFromTeamFailed'});
+            if (!team) res.send(400, { message: 'removeFromTeamFailed'});
+            if (team == null) res.send(400, { message: 'removeFromTeamFailed'});
+
+            const index = team.members.indexOf(req.body.member);
+
+            if (index < 0) {
+                res.send(400, { message: 'removeFromTeamFailedNotAMember'});
+            }
+
+            team.members.splice(index, 1);
             team.markModified('members');
                 
             team.save(function(err) {
