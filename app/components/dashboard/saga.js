@@ -74,7 +74,7 @@ export function* filterActivitiesSaga({ payload }) {
 export function* filterTeamsSaga({ payload }) {
   yield call(delay, 200);
 
-  if (payload && payload.query) {
+  if (payload && payload.query != "") {
     const searchString = payload.query.toLowerCase().trim();
     const teams = yield select(getTeams);
 
@@ -83,6 +83,9 @@ export function* filterTeamsSaga({ payload }) {
 
       yield put(filteredTeamsRecieved(filteredTeams));
     }
+  } else {
+    const teams = yield select(getTeams);
+    yield put(filteredTeamsRecieved(teams));
   }
 }
 
@@ -90,5 +93,5 @@ export default function* rootSaga() {
   yield takeEvery(FETCH_ACTIVITIES_REQUEST, fetchActivitiesSaga);
   yield takeLatest(FILTER_ACTIVITIES_REQUEST, filterActivitiesSaga);
   yield takeEvery(FETCH_TEAMS_REQUEST, fetchTeamsSaga);
-  yield takeLatest(FILTER_TEAMS_REQUEST, filterTeamsSaga);
+  yield takeEvery(FILTER_TEAMS_REQUEST, filterTeamsSaga);
 }
