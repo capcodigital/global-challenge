@@ -4,39 +4,52 @@ import { Table } from "semantic-ui-react";
 import Avatar from "./Avatar.component";
 import "./style.scss";
 
-const TeamLeaderboardTable = ({ height, teams }) => (
+const orange = "#fa451b";
+const blue = "#11A9B2";
+
+const TeamLeaderboardTable = ({ height, data, mainDashboard }) => (
   <div style={{ height: height }} className={"leaderboard"}>
     <Table collapsing basic="very" className="main">
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>#</Table.HeaderCell>
           <Table.HeaderCell></Table.HeaderCell>
-          <Table.HeaderCell>Team Name</Table.HeaderCell>
+          <Table.HeaderCell>
+            {mainDashboard ? "Team Name" : "Member Name"}
+          </Table.HeaderCell>
           <Table.HeaderCell>Distance</Table.HeaderCell>
-          <Table.HeaderCell>Finish Date</Table.HeaderCell>
+          {mainDashboard && <Table.HeaderCell>Finish Date</Table.HeaderCell>}
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {teams.map((team, index) => {
-          let dateCompletion = team.completionDate ? "finish" : "pending";
+        {data.map((item, index) => {
+          let dateCompletion = item.completionDate ? "finish" : "pending";
           return (
-            <Table.Row key={team.name}>
+            <Table.Row key={item.name}>
               <Table.Cell className={`main position ${dateCompletion}`}>
                 {index + 1}.
               </Table.Cell>
               <Table.Cell className={`main avatar ${dateCompletion}`}>
-                <Avatar teamName={team.name} color={"#fa451b"} size={40} />
+                <Avatar
+                  teamName={item.name}
+                  color={mainDashboard ? orange : blue}
+                  size={40}
+                />
               </Table.Cell>
-              <Table.Cell className={`main team-name ${dateCompletion}`}>
-                {team.name}
+              <Table.Cell className={`main team-name ${dateCompletion} ${!mainDashboard && 'team'}`}>
+                {item.name}
               </Table.Cell>
               <Table.Cell className={`main distance ${dateCompletion}`}>
-                {team.totalDistance}
+                {item.totalDistance}
                 km
               </Table.Cell>
-              <Table.Cell className={`main date ${dateCompletion}`}>
-                {team.completionDate ? team.completionDate : "Still to finish"}
-              </Table.Cell>
+              {mainDashboard && (
+                <Table.Cell className={`main date ${dateCompletion}`}>
+                  {item.completionDate
+                    ? item.completionDate
+                    : "Still to finish"}
+                </Table.Cell>
+              )}
             </Table.Row>
           );
         })}
@@ -47,7 +60,8 @@ const TeamLeaderboardTable = ({ height, teams }) => (
 
 TeamLeaderboardTable.propTypes = {
   height: PropTypes.number,
-  teams: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  mainDashboard: PropTypes.bool.isRequired,
 };
 
 export default TeamLeaderboardTable;

@@ -13,7 +13,7 @@
 .leaderboard {
   width: 100%;
   overflow-x: hidden;
-
+  
   &.sports {
     overflow-y: scroll;
 
@@ -50,6 +50,9 @@
 
     .team-name {
       color: #fa451b;
+      &.team{
+        color:#11A9B2;
+      }
     }
 
     .distance,
