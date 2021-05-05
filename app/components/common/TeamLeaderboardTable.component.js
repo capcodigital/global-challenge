@@ -10,12 +10,11 @@ const blue = "#11A9B2";
 
 const TeamLeaderboardTable = ({ height, data, mainDashboard }) => {
   const history = useHistory();
-  
+
   const handleClick = (teamName) => {
     history.push(
       `/progress/team/${teamName.toLowerCase().replace(/\s/g, "-")}`
     );
-    
   };
 
   return (
@@ -32,7 +31,7 @@ const TeamLeaderboardTable = ({ height, data, mainDashboard }) => {
             {mainDashboard && <Table.HeaderCell>Finish Date</Table.HeaderCell>}
           </Table.Row>
         </Table.Header>
-        <Table.Body className={mainDashboard && 'main-table'}>
+        <Table.Body className={mainDashboard ? "main-table" : ""}>
           {data.map((item, index) => {
             let dateCompletion = item.completionDate ? "finish" : "pending";
             return (
@@ -54,13 +53,13 @@ const TeamLeaderboardTable = ({ height, data, mainDashboard }) => {
                   />
                 </Table.Cell>
                 <Table.Cell
-                  className={`main team-name ${
-                    !mainDashboard && "team"
-                  }`}
+                  className={`main team-name ${!mainDashboard && "team"}`}
                 >
                   {item.name}
                 </Table.Cell>
-                <Table.Cell className={`main distance ${!mainDashboard && 'team-view'}`}>
+                <Table.Cell
+                  className={`main distance ${!mainDashboard && "team-view"}`}
+                >
                   {item.totalDistance}
                   km
                 </Table.Cell>

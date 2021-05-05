@@ -55,8 +55,6 @@ export default (state = initialState, action) => {
       });
     case FETCH_TEAMS_ERROR:
       return state.merge({ isLoading: false, error: action.payload });
-    case SELECT_TEAM:
-      return state.merge({ teamName: action.payload });;
     default:
       return state;
   }
