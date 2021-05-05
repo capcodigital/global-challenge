@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS } from "immutable";
 import {
   FETCH_ACTIVITIES_REQUEST,
   FETCH_ACTIVITIES_SUCCESS,
@@ -7,19 +7,21 @@ import {
   FILTER_ACTIVITIES_REQUEST,
   FETCH_TEAMS_REQUEST,
   FETCH_TEAMS_SUCCESS,
-  FETCH_TEAMS_ERROR
-} from './actions';
+  FETCH_TEAMS_ERROR,
+  SELECT_TEAM,
+} from "./actions";
 
 const initialState = fromJS({
   activities: [],
   teamsList: [],
   filteredActivities: [],
-  isLoading: false
+  isLoading: false,
+  teamName: "",
 });
 
-export const getActivies = (state) => state.get('dashboard').get('activities');
+export const getActivies = (state) => state.get("dashboard").get("activities");
 
-export const getTeams = (state) => state.get('dashboard').get('teamsList');
+export const getTeams = (state) => state.get("dashboard").get("teamsList");
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -30,18 +32,18 @@ export default (state = initialState, action) => {
         activities: action.payload,
         filteredActivities: action.payload,
         isLoading: false,
-        error: null
+        error: null,
       });
     case FETCH_ACTIVITIES_ERROR:
       return state.merge({ isLoading: false, error: action.payload });
     case FILTER_ACTIVITIES_SUCCESS:
       return state.merge({
         filteredActivities: action.payload,
-        isLoading: false
+        isLoading: false,
       });
     case FILTER_ACTIVITIES_REQUEST:
       return state.merge({
-        isLoading: true
+        isLoading: true,
       });
     case FETCH_TEAMS_REQUEST:
       return state.merge({ isLoading: true, error: null });
@@ -49,10 +51,12 @@ export default (state = initialState, action) => {
       return state.merge({
         teamsList: action.payload,
         isLoading: false,
-        error: null
+        error: null,
       });
     case FETCH_TEAMS_ERROR:
       return state.merge({ isLoading: false, error: action.payload });
+    case SELECT_TEAM:
+      return state.merge({ teamName: action.payload });;
     default:
       return state;
   }

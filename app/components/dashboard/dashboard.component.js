@@ -10,7 +10,7 @@ import {
 import { LoadScript } from "@react-google-maps/api";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
 import "./style.scss";
-
+const libraries = ["geometry"];
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +23,7 @@ class Dashboard extends React.Component {
   componentDidMount() {
     const { getTeamsList } = this.props;
     getTeamsList();
+    window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -73,8 +74,9 @@ class Dashboard extends React.Component {
             </div>
           </div>
           <LoadScript
-            googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-            libraries={["geometry"]}
+            // googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+            googleMapsApiKey={"AIzaSyDj6Xw-eqeq8cHxo4LB6Sn3wqLqiM7E_k8"}
+            libraries={libraries}
           >
             <MapUK teams={teams} />
           </LoadScript>

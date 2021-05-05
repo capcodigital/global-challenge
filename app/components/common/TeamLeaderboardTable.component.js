@@ -3,60 +3,82 @@ import PropTypes from "prop-types";
 import { Table } from "semantic-ui-react";
 import Avatar from "./Avatar.component";
 import "./style.scss";
+import { useHistory } from "react-router-dom";
 
 const orange = "#fa451b";
 const blue = "#11A9B2";
 
-const TeamLeaderboardTable = ({ height, data, mainDashboard }) => (
-  <div style={{ height: height }} className={"leaderboard"}>
-    <Table collapsing basic="very" className="main">
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>#</Table.HeaderCell>
-          <Table.HeaderCell></Table.HeaderCell>
-          <Table.HeaderCell>
-            {mainDashboard ? "Team Name" : "Member Name"}
-          </Table.HeaderCell>
-          <Table.HeaderCell>Distance</Table.HeaderCell>
-          {mainDashboard && <Table.HeaderCell>Finish Date</Table.HeaderCell>}
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {data.map((item, index) => {
-          let dateCompletion = item.completionDate ? "finish" : "pending";
-          return (
-            <Table.Row key={item.name}>
-              <Table.Cell className={`main position ${dateCompletion}`}>
-                {index + 1}.
-              </Table.Cell>
-              <Table.Cell className={`main avatar ${dateCompletion}`}>
-                <Avatar
-                  teamName={item.name}
-                  color={mainDashboard ? orange : blue}
-                  size={40}
-                />
-              </Table.Cell>
-              <Table.Cell className={`main team-name ${dateCompletion} ${!mainDashboard && 'team'}`}>
-                {item.name}
-              </Table.Cell>
-              <Table.Cell className={`main distance ${dateCompletion}`}>
-                {item.totalDistance}
-                km
-              </Table.Cell>
-              {mainDashboard && (
-                <Table.Cell className={`main date ${dateCompletion}`}>
-                  {item.completionDate
-                    ? item.completionDate
-                    : "Still to finish"}
+const TeamLeaderboardTable = ({ height, data, mainDashboard }) => {
+  const history = useHistory();
+  
+  const handleClick = (teamName) => {
+    history.push(
+      `/progress/team/${teamName.toLowerCase().replace(/\s/g, "-")}`
+    );
+    
+  };
+
+  return (
+    <div style={{ height: height }} className={"leaderboard"}>
+      <Table collapsing basic="very" className="main">
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>#</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
+            <Table.HeaderCell>
+              {mainDashboard ? "Team Name" : "Member Name"}
+            </Table.HeaderCell>
+            <Table.HeaderCell>Distance</Table.HeaderCell>
+            {mainDashboard && <Table.HeaderCell>Finish Date</Table.HeaderCell>}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body className={mainDashboard && 'main-table'}>
+          {data.map((item, index) => {
+            let dateCompletion = item.completionDate ? "finish" : "pending";
+            return (
+              <Table.Row
+                key={item.name}
+                className={dateCompletion}
+                onClick={
+                  mainDashboard ? () => handleClick(item.name) : undefined
+                }
+              >
+                <Table.Cell className={`main position`}>
+                  {index + 1}.
                 </Table.Cell>
-              )}
-            </Table.Row>
-          );
-        })}
-      </Table.Body>
-    </Table>
-  </div>
-);
+                <Table.Cell className={`main avatar`}>
+                  <Avatar
+                    teamName={item.name}
+                    color={mainDashboard ? orange : blue}
+                    size={40}
+                  />
+                </Table.Cell>
+                <Table.Cell
+                  className={`main team-name ${
+                    !mainDashboard && "team"
+                  }`}
+                >
+                  {item.name}
+                </Table.Cell>
+                <Table.Cell className={`main distance ${!mainDashboard && 'team-view'}`}>
+                  {item.totalDistance}
+                  km
+                </Table.Cell>
+                {mainDashboard && (
+                  <Table.Cell className={`main date ${dateCompletion}`}>
+                    {item.completionDate
+                      ? item.completionDate
+                      : "Still to finish"}
+                  </Table.Cell>
+                )}
+              </Table.Row>
+            );
+          })}
+        </Table.Body>
+      </Table>
+    </div>
+  );
+};
 
 TeamLeaderboardTable.propTypes = {
   height: PropTypes.number,

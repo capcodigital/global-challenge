@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Segment, Grid, Header, Search } from "semantic-ui-react";
+import { Segment, Grid, Header, Icon } from "semantic-ui-react";
 import {
   MapUK,
   TeamLeaderboardTable,
@@ -9,21 +9,26 @@ import {
 } from "components/common";
 import { LoadScript } from "@react-google-maps/api";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
-import { Icon } from "semantic-ui-react";
 import "./style.scss";
+const libraries = ["geometry"];
 
 class TeamDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      statistics: {},
-      searchString: "",
+      team: {},
     };
   }
 
   componentDidMount() {
     const { getTeamsList } = this.props;
     getTeamsList();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    this.setState({
+      teamName: window.location.pathname
+        .split("/progress/team/")[1]
+        .replace("-", " "),
+    });
   }
 
   shouldComponentUpdate(nextProps) {
@@ -34,11 +39,16 @@ class TeamDashboard extends React.Component {
   render() {
     const { isLoading, teams } = this.props;
 
+    let team = teams.filter(
+      (team) => team.name.toLowerCase() === this.state.teamName
+    );
+    
+    team[0] && console.log(team[0]);
     let total = teams
       .map((team) => team.totalDistance)
       .reduce((a, b) => a + b, 0);
 
-    return (
+    return team[0] ? (
       <div className="dashboard">
         <Segment loading={isLoading} className="secondary">
           <div className="counter-uk">
@@ -50,7 +60,7 @@ class TeamDashboard extends React.Component {
           <LoadScript
             // googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
             googleMapsApiKey={"AIzaSyDj6Xw-eqeq8cHxo4LB6Sn3wqLqiM7E_k8"}
-            libraries={["geometry"]}
+            libraries={libraries}
           >
             <MapUK teams={teams} />
           </LoadScript>
@@ -60,15 +70,15 @@ class TeamDashboard extends React.Component {
             <Grid.Row>
               <Grid.Column>
                 <Link to="/progress" className="back-link">
-                  <Icon name="angle left"  />
+                  <Icon name="angle left" />
                   Back to leaderboard
                 </Link>
 
-                <Header size="large">Team Leaderboard</Header>
+                <Header size="large">{team[0].name}</Header>
                 <div className="team-distance">Team Distance: {250}km</div>
                 <TeamLeaderboardTable
                   height={580}
-                  data={teams}
+                  data={team[0].members}
                   mainDashboard={false}
                 />
               </Grid.Column>
@@ -162,7 +172,7 @@ class TeamDashboard extends React.Component {
           </Grid>
         </Segment>
       </div>
-    );
+    ) : null;
   }
 }
 

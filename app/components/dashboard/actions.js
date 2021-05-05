@@ -5,6 +5,8 @@ if (process.env.NODE_ENV == 'production') {
 	SERVER_URL = 'https://capcoglobalchallenge.com/';
 }
 
+export const SELECT_TEAM = "SELECT_TEAM";
+
 // Activities actions
 export const FETCH_ACTIVITIES_REQUEST = 'FETCH_ACTIVITIES_REQUEST';
 export const FETCH_ACTIVITIES_SUCCESS = 'FETCH_ACTIVIES_SUCCESS';
@@ -36,3 +38,7 @@ export const filteredActivitiesRecieved = (activities) => ({ type: FILTER_ACTIVI
 
 export const fetchEmployeeActivities = () => ({ type: FETCH_ACTIVITIES_REQUEST });
 export const fetchTeamsList = () => ({ type: FETCH_TEAMS_REQUEST });
+
+export const selectTeam=(teamName)=> ({
+	type: SELECT_TEAM, payload: teamName
+})

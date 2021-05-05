@@ -25,12 +25,12 @@ const App = () => (
     >
       <meta name="description" content="Capco Global Step Challenge" />
     </Helmet>
-    <Header />
     <Router>
+    <Header />
       <Switch>
         <Route path="/" exact component={HomePage} />
         <Route exact path="/progress" component={Dashboard} />
-        <Route exact path="/progress/team" component={TeamsDashboard} />
+        <Route path="/progress/team" component={TeamsDashboard} />
         <Route exact path="/teams/register" component={TeamsPage} />
         <Route component={HomePage} />
       </Switch>
