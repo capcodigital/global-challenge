@@ -1,14 +1,14 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Table } from "semantic-ui-react";
 import Avatar from "./Avatar.component";
 import "./style.scss";
-import { useHistory } from "react-router-dom";
 
 const orange = "#fa451b";
 const blue = "#11A9B2";
 
-const TeamLeaderboardTable = ({ height, data, mainDashboard }) => {
+const TeamLeaderboardTable = ({ height, data, isMainDashboard }) => {
   const history = useHistory();
 
   const handleClick = (teamName) => {
@@ -25,13 +25,13 @@ const TeamLeaderboardTable = ({ height, data, mainDashboard }) => {
             <Table.HeaderCell>#</Table.HeaderCell>
             <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>
-              {mainDashboard ? "Team Name" : "Member Name"}
+              {isMainDashboard ? "Team Name" : "Member Name"}
             </Table.HeaderCell>
             <Table.HeaderCell>Distance</Table.HeaderCell>
-            {mainDashboard && <Table.HeaderCell>Finish Date</Table.HeaderCell>}
+            {isMainDashboard && <Table.HeaderCell>Finish Date</Table.HeaderCell>}
           </Table.Row>
         </Table.Header>
-        <Table.Body className={mainDashboard ? "main-table" : ""}>
+        <Table.Body className={isMainDashboard ? "main-table" : ""}>
           {data.map((item, index) => {
             let dateCompletion = item.completionDate ? "finish" : "pending";
             return (
@@ -39,7 +39,7 @@ const TeamLeaderboardTable = ({ height, data, mainDashboard }) => {
                 key={item.name}
                 className={dateCompletion}
                 onClick={
-                  mainDashboard ? () => handleClick(item.name) : undefined
+                  isMainDashboard ? () => handleClick(item.name) : undefined
                 }
               >
                 <Table.Cell className={`main position`}>
@@ -48,22 +48,22 @@ const TeamLeaderboardTable = ({ height, data, mainDashboard }) => {
                 <Table.Cell className={`main avatar`}>
                   <Avatar
                     teamName={item.name}
-                    color={mainDashboard ? orange : blue}
+                    color={isMainDashboard ? orange : blue}
                     size={40}
                   />
                 </Table.Cell>
                 <Table.Cell
-                  className={`main team-name ${!mainDashboard && "team"}`}
+                  className={`main team-name ${!isMainDashboard && "team"}`}
                 >
                   {item.name}
                 </Table.Cell>
                 <Table.Cell
-                  className={`main distance ${!mainDashboard && "team-view"}`}
+                  className={`main distance ${!isMainDashboard && "team-view"}`}
                 >
                   {item.totalDistance}
                   km
                 </Table.Cell>
-                {mainDashboard && (
+                {isMainDashboard && (
                   <Table.Cell className={`main date ${dateCompletion}`}>
                     {item.completionDate
                       ? item.completionDate
@@ -82,7 +82,7 @@ const TeamLeaderboardTable = ({ height, data, mainDashboard }) => {
 TeamLeaderboardTable.propTypes = {
   height: PropTypes.number,
   data: PropTypes.array.isRequired,
-  mainDashboard: PropTypes.bool.isRequired,
+  isMainDashboard: PropTypes.bool.isRequired,
 };
 
 export default TeamLeaderboardTable;

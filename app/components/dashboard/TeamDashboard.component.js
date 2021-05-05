@@ -10,6 +10,7 @@ import {
 import { LoadScript } from "@react-google-maps/api";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
 import "./style.scss";
+
 const libraries = ["geometry"];
 
 const TeamDashboard = ({ getTeamsList, teams }) => {
@@ -64,7 +65,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
               <TeamLeaderboardTable
                 height={580}
                 data={team.members}
-                mainDashboard={false}
+                isMainDashboard={false}
               />
             </Grid.Column>
             <Grid.Column>

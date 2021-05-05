@@ -10,7 +10,9 @@ import {
 import { LoadScript } from "@react-google-maps/api";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
 import "./style.scss";
+
 const libraries = ["geometry"];
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -102,7 +104,7 @@ class Dashboard extends React.Component {
                 <TeamLeaderboardTable
                   height={580}
                   data={teams}
-                  mainDashboard={true}
+                  isMainDashboard={true}
                 />
               </Grid.Column>
               <Grid.Column>
