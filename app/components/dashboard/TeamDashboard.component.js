@@ -80,9 +80,9 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                       </Header>
                       <TeamSportsLeaderboardTable
                         height={290}
-                        teams={teams.map((team) => ({
-                          name: team.name,
-                          distance: team.activities["Run"],
+                        teams={team.members.map((member) => ({
+                          name: member.name,
+                          distance: member["totalRun"],
                         }))}
                       />
                     </div>
@@ -95,9 +95,9 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                       </Header>
                       <TeamSportsLeaderboardTable
                         height={290}
-                        teams={teams.map((team) => ({
-                          name: team.name,
-                          distance: team.activities["Cycling"],
+                        teams={team.members.map((member) => ({
+                          name: member.name,
+                          distance: member["totalCycling"],
                         }))}
                       />
                     </div>
@@ -113,9 +113,9 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={250}
-                          teams={teams.map((team) => ({
-                            name: team.name,
-                            distance: team.activities["Walk"],
+                          teams={team.members.map((member) => ({
+                            name: member.name,
+                            distance: member["totalWalk"],
                           }))}
                         />
                       </Grid.Row>
@@ -130,9 +130,9 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={90}
-                          teams={teams.map((team) => ({
-                            name: team.name,
-                            distance: team.activities["Swim"],
+                          teams={team.members.map((member) => ({
+                            name: member.name,
+                            distance: member["totalSwim"],
                           }))}
                         />
                       </Grid.Row>
@@ -143,9 +143,9 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={90}
-                          teams={teams.map((team) => ({
-                            name: team.name,
-                            distance: team.activities["Rowing"],
+                          teams={team.members.map((member) => ({
+                            name: member.name,
+                            distance: member["totalRowing"],
                           }))}
                         />
                       </Grid.Row>

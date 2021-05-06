@@ -8,7 +8,6 @@ import {
   FETCH_TEAMS_REQUEST,
   FETCH_TEAMS_SUCCESS,
   FETCH_TEAMS_ERROR,
-  SELECT_TEAM,
 } from "./actions";
 
 const initialState = fromJS({
