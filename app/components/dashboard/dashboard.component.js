@@ -166,20 +166,6 @@ class Dashboard extends React.Component {
     });
   };
 
-  // onCountryChange = (e, { value }) => {
-  //   const { filterActivities } = this.props;
-
-  //   this.setState({ filter: value }, () => {
-  //     this.getRegion();
-  //     filterActivities(value, "region");
-  //   });
-  // };
-
-  refreshActivies() {
-    const { getActivities } = this.props;
-    getActivities();
-  }
-
   render() {
     const {
       cities,
