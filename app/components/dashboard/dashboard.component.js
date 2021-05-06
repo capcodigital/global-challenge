@@ -17,58 +17,61 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      statistics: {},
-      searchString: "",
+      teams: props.teams,
+      value: "",
+      results: [],
+      isLoading: false,
     };
+    this.handleResultSelect = this.handleResultSelect.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
   componentDidMount() {
     const { getTeamsList } = this.props;
     getTeamsList();
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { breakdown } = nextProps;
+    const { teams } = nextProps;
 
-    if (breakdown.offices && breakdown.offices.length) {
-      const statistics = keyBy(breakdown.offices, "name");
-      this.setState({ statistics });
-    }
+    this.setState({ teams: teams });
   }
-
-  shouldComponentUpdate(nextProps) {
-    const { isLoading } = this.props;
-    return isLoading !== nextProps.isLoading;
-  }
-
   handleResultSelect = (e, { result }) => {
-    const { filterActivities } = this.props;
-
-    this.setState({ searchString: result.title }, () => {
-      filterActivities(result.title);
-    });
+    let res = this.state.teams.filter((team) => team.name === result.name);
+    console.log(res);
+    this.setState({ value: result.name, teams: res });
   };
 
   handleSearchChange = (e, { value }) => {
-    const { filterActivities } = this.props;
+    this.setState({ isLoading: true, value, teams: this.props.teams });
 
-    this.setState({ searchString: value }, () => {
-      filterActivities(value);
-    });
+    setTimeout(() => {
+      const filteredResults = this.props.teams.filter((team) =>
+        team.name.toLowerCase().includes(value.toLowerCase())
+      );
+
+      this.setState({
+        isLoading: false,
+        results: filteredResults,
+      });
+    }, 300);
+
+    console.log(this.state.value);
   };
 
   render() {
-    const { searchString } = this.state;
-    const { isLoading, leaderboard, teams } = this.props;
+    const { teams, value, results, isLoading } = this.state;
 
     let total = teams
       .map((team) => team.totalDistance)
       .reduce((a, b) => a + b, 0);
 
+    const resRender = ({ name }) => <span key="name">{name}</span>;
+
     return (
       <div className="dashboard">
-        <Segment loading={isLoading} className="secondary">
+        <Segment className="secondary">
           <div className="counter-uk">
             <div className="wrapper">
               <span className="text">Overal Distance: </span>
@@ -82,23 +85,22 @@ class Dashboard extends React.Component {
             <MapUK teams={teams} />
           </LoadScript>
         </Segment>
-        <Segment loading={isLoading} className="primary">
+        <Segment className="primary">
           <Grid container stackable columns={2} verticalAlign="middle">
             <Grid.Row>
               <Grid.Column>
                 <Header size="large">Team Leaderboard</Header>
                 <div className="search-container">
                   <Search
-                    input={{ icon: "search", iconPosition: "left" }}
+                    input={{ icon: "search", iconPosition: "right" }}
                     fluid
                     loading={isLoading}
                     onResultSelect={this.handleResultSelect}
-                    onSearchChange={debounce(this.handleSearchChange, 500, {
-                      leading: true,
-                    })}
-                    results={leaderboard}
-                    value={searchString}
+                    onSearchChange={this.handleSearchChange}
+                    results={results}
+                    value={value}
                     placeholder={"Search Team Name"}
+                    resultRenderer={resRender}
                   />
                 </div>
                 <TeamLeaderboardTable
