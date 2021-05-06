@@ -12,33 +12,33 @@ const popupStyle = {
   padding: "1em",
 };
 
-const TeamSportsLeaderboardTable = ({ teams, height }) => {
-  let sortedTeams = teams.sort((a, b) => b.distance - a.distance);
-  let maxDistance = Math.max(...teams.map((team) => team.distance));
+const TeamSportsLeaderboardTable = ({ data, height }) => {
+  let sortedData = data.sort((a, b) => b.distance - a.distance);
+  let maxDistance = Math.max(...data.map((item) => item.distance));
 
   return (
     <div className={"leaderboard sports"} style={{ height: height }}>
       <Table basic="very" collapsing>
         <Table.Body>
-          {sortedTeams.map((team, idx) => (
+          {sortedData.map((item, idx) => (
             <Popup
-              key={team.name}
-              content={team.name}
+              key={item.name}
+              content={item.name}
               position="top center"
               style={popupStyle}
               trigger={
                 <Table.Row>
                   <Table.Cell>{idx + 1}. </Table.Cell>
                   <Table.Cell>
-                    <Avatar teamName={team.name} color={"#a7a7a7"} size={30} />
+                    <Avatar name={item.name} color={"#a7a7a7"} size={30} />
                   </Table.Cell>
                   <Table.Cell className="distance">
-                    {team.distance}km
+                    {item.distance}km
                   </Table.Cell>
                   <Table.Cell>
                     <svg width={svgBarWidth + 10} height="16">
                       <rect
-                        width={(svgBarWidth * team.distance) / maxDistance + 10} // 10px minimum width
+                        width={(svgBarWidth * item.distance) / maxDistance + 10} // 10px minimum width
                         height="16"
                         fill={"#e6e6eb"}
                         rx={8}
@@ -56,7 +56,7 @@ const TeamSportsLeaderboardTable = ({ teams, height }) => {
 };
 
 TeamSportsLeaderboardTable.propTypes = {
-  teams: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
   height: PropTypes.number,
 };
 

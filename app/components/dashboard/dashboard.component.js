@@ -119,7 +119,7 @@ class Dashboard extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={290}
-                          teams={teams.map((team) => ({
+                          data={teams.map((team) => ({
                             name: team.name,
                             distance: team.activities["Run"],
                           }))}
@@ -134,7 +134,7 @@ class Dashboard extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={290}
-                          teams={teams.map((team) => ({
+                          data={teams.map((team) => ({
                             name: team.name,
                             distance: team.activities["Cycling"],
                           }))}
@@ -152,7 +152,7 @@ class Dashboard extends React.Component {
                           </Header>
                           <TeamSportsLeaderboardTable
                             height={250}
-                            teams={teams.map((team) => ({
+                            data={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["Walk"],
                             }))}
@@ -169,7 +169,7 @@ class Dashboard extends React.Component {
                           </Header>
                           <TeamSportsLeaderboardTable
                             height={90}
-                            teams={teams.map((team) => ({
+                            data={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["Swim"],
                             }))}
@@ -182,7 +182,7 @@ class Dashboard extends React.Component {
                           </Header>
                           <TeamSportsLeaderboardTable
                             height={90}
-                            teams={teams.map((team) => ({
+                            data={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["Rowing"],
                             }))}

@@ -47,7 +47,7 @@ const TeamLeaderboardTable = ({ height, data, isMainDashboard }) => {
                 </Table.Cell>
                 <Table.Cell className={`main avatar`}>
                   <Avatar
-                    teamName={item.name}
+                    name={item.name}
                     color={isMainDashboard ? orange : blue}
                     size={40}
                   />

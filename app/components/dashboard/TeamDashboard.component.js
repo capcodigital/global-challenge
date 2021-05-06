@@ -80,7 +80,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                       </Header>
                       <TeamSportsLeaderboardTable
                         height={290}
-                        teams={team.members.map((member) => ({
+                        data={team.members.map((member) => ({
                           name: member.name,
                           distance: member["totalRun"],
                         }))}
@@ -95,7 +95,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                       </Header>
                       <TeamSportsLeaderboardTable
                         height={290}
-                        teams={team.members.map((member) => ({
+                        data={team.members.map((member) => ({
                           name: member.name,
                           distance: member["totalCycling"],
                         }))}
@@ -113,7 +113,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={250}
-                          teams={team.members.map((member) => ({
+                          data={team.members.map((member) => ({
                             name: member.name,
                             distance: member["totalWalk"],
                           }))}
@@ -130,7 +130,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={90}
-                          teams={team.members.map((member) => ({
+                          data={team.members.map((member) => ({
                             name: member.name,
                             distance: member["totalSwim"],
                           }))}
@@ -143,7 +143,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={90}
-                          teams={team.members.map((member) => ({
+                          data={team.members.map((member) => ({
                             name: member.name,
                             distance: member["totalRowing"],
                           }))}
