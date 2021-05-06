@@ -27,16 +27,15 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    const { getTeamsList } = this.props;
-    getTeamsList();
     window.scrollTo({ top: 0, behavior: "smooth" });
+    this.props.getTeamsList();
   }
 
   componentWillReceiveProps(nextProps) {
     const { teams } = nextProps;
-
     this.setState({ teams: teams });
   }
+
   handleResultSelect = (e, { result }) => {
     let res = this.state.teams.filter((team) => team.name === result.name);
     console.log(res);
@@ -54,10 +53,9 @@ class Dashboard extends React.Component {
       this.setState({
         isLoading: false,
         results: filteredResults,
+        teams: filteredResults
       });
     }, 300);
-
-    console.log(this.state.value);
   };
 
   render() {
@@ -92,18 +90,18 @@ class Dashboard extends React.Component {
                 <Header size="large">Team Leaderboard</Header>
                 <div className="search-container">
                   <Search
-                    input={{ icon: "search", iconPosition: "right" }}
+                    input={{ icon: "search", iconPosition: "left" }}
                     fluid
                     loading={isLoading}
                     onResultSelect={this.handleResultSelect}
                     onSearchChange={this.handleSearchChange}
-                    results={results}
                     value={value}
                     placeholder={"Search Team Name"}
                     resultRenderer={resRender}
                   />
                 </div>
                 <TeamLeaderboardTable
+                  isLoading={isLoading}
                   height={580}
                   data={teams}
                   isMainDashboard={true}
