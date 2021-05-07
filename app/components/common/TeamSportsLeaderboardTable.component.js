@@ -4,7 +4,10 @@ import { Table, Popup } from "semantic-ui-react";
 import Avatar from "./Avatar.component";
 import "./style.scss";
 
+const grey = "#a7a7a7";
+
 const svgBarWidth = 100;
+
 const popupStyle = {
   marginBottom: "-1rem",
   borderRadius: "8px",
@@ -13,7 +16,11 @@ const popupStyle = {
 };
 
 const TeamSportsLeaderboardTable = ({ data, height }) => {
-  let sortedData = data.sort((a, b) => b.distance - a.distance);
+  let sortedData = data.sort((a, b) => {
+    if (b.position) {
+      return a.position - b.position;
+    } else a.distance - b.distance;
+  });
   let maxDistance = Math.max(...data.map((item) => item.distance));
 
   return (
@@ -28,9 +35,11 @@ const TeamSportsLeaderboardTable = ({ data, height }) => {
               style={popupStyle}
               trigger={
                 <Table.Row>
-                  <Table.Cell>{item.position ? item.position : idx+1}. </Table.Cell>
                   <Table.Cell>
-                    <Avatar name={item.name} color={"#a7a7a7"} size={30} />
+                    {item.position ? item.position : idx + 1}.{" "}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Avatar name={item.name} color={grey} size={30} />
                   </Table.Cell>
                   <Table.Cell className="distance">
                     {item.distance}km

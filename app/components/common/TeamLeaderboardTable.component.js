@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Table } from "semantic-ui-react";
 import Avatar from "./Avatar.component";
-import { times } from "lodash";
 import "./style.scss";
 
 const orange = "#fa451b";
@@ -38,7 +37,7 @@ const TeamLeaderboardTable = ({ height, data, isMainDashboard, isLoading }) => {
           <Table.Body className={isMainDashboard ? "main-table loading" : ""}>
             {_.times(8, () => (
               <Table.Row>
-                <Table.Cell className={`loading`}></Table.Cell>
+                <Table.Cell className={"loading"}></Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
@@ -54,10 +53,10 @@ const TeamLeaderboardTable = ({ height, data, isMainDashboard, isLoading }) => {
                     isMainDashboard ? () => handleClick(item.name) : undefined
                   }
                 >
-                  <Table.Cell className={`main position`}>
+                  <Table.Cell className={"main position"}>
                     {item.position ? item.position : idx + 1}.
                   </Table.Cell>
-                  <Table.Cell className={`main avatar`}>
+                  <Table.Cell className={"main avatar"}>
                     <Avatar
                       name={item.name}
                       color={isMainDashboard ? orange : blue}
@@ -97,6 +96,7 @@ const TeamLeaderboardTable = ({ height, data, isMainDashboard, isLoading }) => {
 TeamLeaderboardTable.propTypes = {
   height: PropTypes.number,
   data: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   isMainDashboard: PropTypes.bool.isRequired,
 };
 

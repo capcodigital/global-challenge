@@ -1,7 +1,6 @@
 import { cloneDeep, keyBy } from "lodash";
 import { createSelector } from "reselect";
 import { allCities, levelMap } from "./constants";
-import { times } from "lodash";
 const getState = (state) => state;
 
 const activitiesSelector = createSelector(getState, (state) =>

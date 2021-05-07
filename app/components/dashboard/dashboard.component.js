@@ -19,7 +19,7 @@ class Dashboard extends React.Component {
     this.state = {
       teams: props.teams,
       value: "",
-      isLoading: false,
+      isSearchLoading: false,
     };
     this.handleResultSelect = this.handleResultSelect.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -36,13 +36,12 @@ class Dashboard extends React.Component {
   }
 
   handleResultSelect = (e, { result }) => {
-    let res = this.state.teams.filter((team) => team.name === result.name);
-    console.log(res);
-    this.setState({ value: result.name, teams: res });
+    const results = this.state.teams.filter((team) => team.name === result.name);
+    this.setState({ value: result.name, teams: results });
   };
 
   handleSearchChange = (e, { value }) => {
-    this.setState({ isLoading: true, value, teams: this.props.teams });
+    this.setState({ isSearchLoading: true, value, teams: this.props.teams });
 
     setTimeout(() => {
       const filteredResults = this.props.teams.filter((team) =>
@@ -50,7 +49,7 @@ class Dashboard extends React.Component {
       );
 
       this.setState({
-        isLoading: false,
+        isSearchLoading: false,
         teams: filteredResults,
       });
     }, 300);
@@ -58,17 +57,18 @@ class Dashboard extends React.Component {
 
 
   render() {
-    const { teams, value, isLoading } = this.state;
-
+    const { teams, value, isSearchLoading } = this.state;
+    const { isLoading, error } = this.props;
+    
+    const resRender = ({ name }) => <span key="name">{name}</span>;
+    
     let total = teams
       .map((team) => team.totalDistance)
       .reduce((a, b) => a + b, 0);
 
-    const resRender = ({ name }) => <span key="name">{name}</span>;
-
     return (
-      <div className="dashboard">
-        <Segment className="secondary">
+      !error && <div className="dashboard">
+        <Segment loading={isLoading} className="secondary">
           <div className="counter-uk">
             <div className="wrapper">
               <span className="text">Overal Distance: </span>
@@ -82,7 +82,7 @@ class Dashboard extends React.Component {
             <MapUK teams={teams} />
           </LoadScript>
         </Segment>
-        <Segment className="primary">
+        <Segment loading={isLoading || isSearchLoading} className="primary">
           <Grid container stackable columns={2} verticalAlign="middle">
             <Grid.Row>
               <Grid.Column>
@@ -91,7 +91,7 @@ class Dashboard extends React.Component {
                   <Search
                     input={{ icon: "search", iconPosition: "left" }}
                     fluid
-                    loading={isLoading}
+                    loading={isSearchLoading}
                     onResultSelect={this.handleResultSelect}
                     onSearchChange={this.handleSearchChange}
                     value={value}
@@ -100,7 +100,7 @@ class Dashboard extends React.Component {
                   />
                 </div>
                 <TeamLeaderboardTable
-                  isLoading={isLoading}
+                  isLoading={isSearchLoading}
                   height={580}
                   data={teams}
                   isMainDashboard={true}
@@ -208,9 +208,6 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.shape({}),
-  breakdown: PropTypes.object,
-  leaderboard: PropTypes.array,
-  filterActivities: PropTypes.func.isRequired,
 };
 
 export default Dashboard;

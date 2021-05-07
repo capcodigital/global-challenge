@@ -26,16 +26,16 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
   }, []);
 
   useEffect(() => {
-    let selectedTeam = teams.filter(
-      (team) => team.name.toLowerCase() === teamName
-    ) .sort((a, b) => b.totalDistance - a.totalDistance);
+    let selectedTeam = teams
+      .filter((team) => team.name.toLowerCase() === teamName)
+      .sort((a, b) => b.totalDistance - a.totalDistance);
     setTeam(selectedTeam[0]);
   });
 
   let total = teams
     .map((team) => team.totalDistance)
     .reduce((a, b) => a + b, 0);
-
+console.log(teams)
   return team ? (
     <div className="dashboard">
       <Segment className="secondary">
@@ -61,10 +61,14 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                 Back to leaderboard
               </Link>
               <Header size="large">{team.name}</Header>
-              <div className="team-distance">Team Distance: {team.totalDistance}km</div>
+              <div className="team-distance">
+                Team Distance: {team.totalDistance}km
+              </div>
               <TeamLeaderboardTable
                 height={580}
-                data={team.members.sort((a,b)=>b.totalDistance-a.totalDistance)}
+                data={team.members.sort(
+                  (a, b) => b.totalDistance - a.totalDistance
+                )}
                 isMainDashboard={false}
               />
             </Grid.Column>
@@ -82,7 +86,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                         height={290}
                         data={team.members.map((member) => ({
                           name: member.name,
-                          distance: member["totalRun"],
+                          distance: member.totalRun,
                         }))}
                       />
                     </div>
@@ -97,7 +101,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                         height={290}
                         data={team.members.map((member) => ({
                           name: member.name,
-                          distance: member["totalCycling"],
+                          distance: member.totalCycling,
                         }))}
                       />
                     </div>
@@ -115,7 +119,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                           height={250}
                           data={team.members.map((member) => ({
                             name: member.name,
-                            distance: member["totalWalk"],
+                            distance: member.totalWalk,
                           }))}
                         />
                       </Grid.Row>
@@ -132,7 +136,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                           height={90}
                           data={team.members.map((member) => ({
                             name: member.name,
-                            distance: member["totalSwim"],
+                            distance: member.totalSwim,
                           }))}
                         />
                       </Grid.Row>
@@ -145,7 +149,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                           height={90}
                           data={team.members.map((member) => ({
                             name: member.name,
-                            distance: member["totalRowing"],
+                            distance: member.totalRowing,
                           }))}
                         />
                       </Grid.Row>
@@ -162,11 +166,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
 };
 
 TeamDashboard.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.shape({}),
-  breakdown: PropTypes.object,
-  leaderboard: PropTypes.array,
-  filterActivities: PropTypes.func.isRequired,
+  teams: PropTypes.array.isRequired,
 };
 
 export default TeamDashboard;
