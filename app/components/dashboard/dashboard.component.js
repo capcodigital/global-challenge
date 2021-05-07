@@ -1,5 +1,4 @@
 import React from "react";
-import { keyBy, debounce } from "lodash";
 import PropTypes from "prop-types";
 import { Segment, Grid, Header, Search } from "semantic-ui-react";
 import {
@@ -21,7 +20,6 @@ class Dashboard extends React.Component {
       value: "",
       isSearchLoading: false,
     };
-    this.handleResultSelect = this.handleResultSelect.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
@@ -34,13 +32,6 @@ class Dashboard extends React.Component {
     const { teams } = nextProps;
     this.setState({ teams: teams });
   }
-
-  handleResultSelect = (e, { result }) => {
-    const results = this.state.teams.filter(
-      (team) => team.name === result.name
-    );
-    this.setState({ value: result.name, teams: results });
-  };
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isSearchLoading: true, value, teams: this.props.teams });
@@ -58,8 +49,6 @@ class Dashboard extends React.Component {
   render() {
     const { teams, value, isSearchLoading } = this.state;
     const { isLoading, error } = this.props;
-
-    const resRender = ({ name }) => <span key="name">{name}</span>;
 
     let total = teams
       .map((team) => team.totalDistance)
@@ -92,11 +81,9 @@ class Dashboard extends React.Component {
                       input={{ icon: "search", iconPosition: "left" }}
                       fluid
                       loading={isSearchLoading}
-                      onResultSelect={this.handleResultSelect}
                       onSearchChange={this.handleSearchChange}
                       value={value}
                       placeholder={"Search Team Name"}
-                      resultRenderer={resRender}
                     />
                   </div>
                   <TeamLeaderboardTable
