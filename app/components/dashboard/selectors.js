@@ -1,7 +1,7 @@
+import { cloneDeep, keyBy } from "lodash";
 import { createSelector } from "reselect";
-import { keyBy, cloneDeep } from "lodash";
-import { levelMap, allCities } from "./constants";
-
+import { allCities, levelMap } from "./constants";
+import { times } from "lodash";
 const getState = (state) => state;
 
 const activitiesSelector = createSelector(getState, (state) =>
@@ -21,11 +21,30 @@ const teamsListSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("teamsList")
 );
 
-const teamsSelector = createSelector([teamsListSelector], (teamsList) =>
-  teamsList
-    ? teamsList.toJS().sort((a, b) => b.totalDistance - a.totalDistance)
-    : []
-);
+const getPositionByActivity = (teamData, activity) =>
+  teamData
+    .sort((a, b) => b.activities[activity] - a.activities[activity])
+    .map((team, idx) => ({
+      ...team,
+      activities: {
+        ...team.activities,
+        [`${activity.toLowerCase()}Position`]: idx + 1,
+      },
+    }));
+
+const teamsSelector = createSelector([teamsListSelector], (teamsList) => {
+  if (teamsList) {
+    let res = teamsList.toJS();
+
+    ["Run", "Swim", "Walk", "Rowing", "Cycling"].map(
+      (activity) => (res = getPositionByActivity(res, activity))
+    );
+
+    return res
+      .sort((a, b) => b.totalDistance - a.totalDistance)
+      .map((team, idx) => ({ ...team, position: idx + 1 }));
+  } else [];
+});
 
 const totalStepSelector = createSelector(
   [filteredActivitiesSelector],

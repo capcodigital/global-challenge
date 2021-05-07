@@ -44,7 +44,7 @@ const TeamLeaderboardTable = ({ height, data, isMainDashboard, isLoading }) => {
           </Table.Body>
         ) : (
           <Table.Body className={isMainDashboard ? "main-table" : ""}>
-            {data.map((item, index) => {
+            {data.map((item, idx) => {
               let dateCompletion = item.completionDate ? "finish" : "pending";
               return (
                 <Table.Row
@@ -55,7 +55,7 @@ const TeamLeaderboardTable = ({ height, data, isMainDashboard, isLoading }) => {
                   }
                 >
                   <Table.Cell className={`main position`}>
-                    {index + 1}.
+                    {item.position ? item.position : idx + 1}.
                   </Table.Cell>
                   <Table.Cell className={`main avatar`}>
                     <Avatar

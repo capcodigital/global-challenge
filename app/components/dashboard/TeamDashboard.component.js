@@ -28,7 +28,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
   useEffect(() => {
     let selectedTeam = teams.filter(
       (team) => team.name.toLowerCase() === teamName
-    );
+    ) .sort((a, b) => b.totalDistance - a.totalDistance);
     setTeam(selectedTeam[0]);
   });
 
@@ -64,7 +64,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
               <div className="team-distance">Team Distance: {team.totalDistance}km</div>
               <TeamLeaderboardTable
                 height={580}
-                data={team.members}
+                data={team.members.sort((a,b)=>b.totalDistance-a.totalDistance)}
                 isMainDashboard={false}
               />
             </Grid.Column>

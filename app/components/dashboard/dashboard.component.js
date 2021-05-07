@@ -19,7 +19,6 @@ class Dashboard extends React.Component {
     this.state = {
       teams: props.teams,
       value: "",
-      results: [],
       isLoading: false,
     };
     this.handleResultSelect = this.handleResultSelect.bind(this);
@@ -52,14 +51,14 @@ class Dashboard extends React.Component {
 
       this.setState({
         isLoading: false,
-        results: filteredResults,
-        teams: filteredResults
+        teams: filteredResults,
       });
     }, 300);
   };
 
+
   render() {
-    const { teams, value, results, isLoading } = this.state;
+    const { teams, value, isLoading } = this.state;
 
     let total = teams
       .map((team) => team.totalDistance)
@@ -122,6 +121,7 @@ class Dashboard extends React.Component {
                           data={teams.map((team) => ({
                             name: team.name,
                             distance: team.activities["Run"],
+                            position: team.activities.runPosition,
                           }))}
                         />
                       </div>
@@ -137,6 +137,7 @@ class Dashboard extends React.Component {
                           data={teams.map((team) => ({
                             name: team.name,
                             distance: team.activities["Cycling"],
+                            position: team.activities.cyclingPosition,
                           }))}
                         />
                       </div>
@@ -155,6 +156,7 @@ class Dashboard extends React.Component {
                             data={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["Walk"],
+                              position: team.activities.walkPosition,
                             }))}
                           />
                         </Grid.Row>
@@ -172,6 +174,7 @@ class Dashboard extends React.Component {
                             data={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["Swim"],
+                              position: team.activities.swimPosition,
                             }))}
                           />
                         </Grid.Row>
@@ -185,6 +188,7 @@ class Dashboard extends React.Component {
                             data={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["Rowing"],
+                              position: team.activities.rowingPosition,
                             }))}
                           />
                         </Grid.Row>

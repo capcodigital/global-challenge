@@ -28,7 +28,7 @@ const TeamSportsLeaderboardTable = ({ data, height }) => {
               style={popupStyle}
               trigger={
                 <Table.Row>
-                  <Table.Cell>{idx + 1}. </Table.Cell>
+                  <Table.Cell>{item.position ? item.position : idx+1}. </Table.Cell>
                   <Table.Cell>
                     <Avatar name={item.name} color={"#a7a7a7"} size={30} />
                   </Table.Cell>
