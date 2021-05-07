@@ -36,7 +36,7 @@ const TeamSportsLeaderboardTable = ({ data, height }) => {
               trigger={
                 <Table.Row>
                   <Table.Cell>
-                    {item.position ? item.position : idx + 1}.{" "}
+                    {item.position ? item.position : idx + 1}.
                   </Table.Cell>
                   <Table.Cell>
                     <Avatar name={item.name} color={grey} size={30} />
