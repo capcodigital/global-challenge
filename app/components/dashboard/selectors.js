@@ -33,13 +33,13 @@ const getPositionByActivity = (teamData, activity) =>
 
 const teamsSelector = createSelector([teamsListSelector], (teamsList) => {
   if (teamsList) {
-    let res = teamsList.toJS();
+    let teamsData = teamsList.toJS();
 
     ["Run", "Swim", "Walk", "Rowing", "Cycling"].map(
-      (activity) => (res = getPositionByActivity(res, activity))
+      (activity) => (teamsData = getPositionByActivity(teamsData, activity))
     );
 
-    return res
+    return teamsData
       .sort((a, b) => b.totalDistance - a.totalDistance)
       .map((team, idx) => ({ ...team, position: idx + 1 }));
   } else [];
