@@ -29,8 +29,6 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
     let selectedTeam = teams
       .filter((team) => team.name.toLowerCase() === teamName)
       .sort((a, b) => b.totalDistance - a.totalDistance);
-      console.log(teamName)
-      console.log(team)
     setTeam(selectedTeam[0]);
   });
 
