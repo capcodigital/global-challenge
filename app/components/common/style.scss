@@ -12,6 +12,7 @@
 
 .leaderboard {
   width: 100%;
+  height:580px;
   overflow-x: hidden;
 
   &.sports {
@@ -48,8 +49,41 @@
       padding-bottom: 0rem;
     }
 
+    tbody.main-table {
+      cursor: pointer;
+      .finish {
+        td {
+          background: #dbfaec;
+        }
+      }
+      :hover {
+        td {
+          background: #d9d9d9;
+        }
+      }
+      &.loading {
+        td {
+          background: linear-gradient(90deg, #d9d9d9, #ffffff);
+          background-size: 200% 200%;
+          animation: Animation 1s ease infinite;
+
+          @keyframes Animation {
+            50% {
+              background-position: 0% 50%;
+            }
+            100% {
+              background-position: 50% 100%;
+            }
+          }
+        }
+      }
+    }
+
     .team-name {
       color: #fa451b;
+      &.team {
+        color: #11a9b2;
+      }
     }
 
     .distance,
@@ -65,7 +99,6 @@
       text-align: center;
       padding-left: 0px;
       border-spacing: 0px 5px;
-
       thead > tr {
         padding-right: 5px;
         :first-child {
@@ -104,8 +137,10 @@
       tr td {
         padding: 10px 0 10px 0;
         background: #f4f4f4;
-        &.finish {
-          background: #dbfaec;
+
+        &.loading {
+          height: 52px;
+          border-radius: 8px;
         }
         &.position {
           border-radius: 8px 0 0 8px;
@@ -120,6 +155,9 @@
         }
         &.distance {
           width: 80px;
+          &.team-view {
+            border-radius: 0 8px 8px 0;
+          }
         }
         &.date {
           border-radius: 0 8px 8px 0;

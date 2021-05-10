@@ -38,17 +38,16 @@
     text-align: center;
     display: flex;
     justify-content: center;
-   
-    .wrapper{
-      width:0;
+
+    .wrapper {
+      width: 0;
       overflow: hidden;
       white-space: nowrap;
       letter-spacing: 0.1em;
       animation-name: typing;
-      animation-duration: 3s; 
-      animation-timing-function: steps(60, end); 
+      animation-duration: 3s;
+      animation-timing-function: steps(60, end);
       animation-fill-mode: forwards;
-      
 
       @keyframes typing {
         from {
@@ -66,6 +65,16 @@
     .total {
       color: #11a9b2;
     }
+  }
+
+  .back-link {
+    font-size: 18px;
+    color: #fa451b;
+  }
+
+  .team-distance {
+    font-weight: bold;
+    padding-bottom: 22px;
   }
 
   .challenge-description {
@@ -86,7 +95,7 @@
   }
 
   .search-container {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     margin-top: 2rem;
 
     .search {
@@ -110,13 +119,16 @@
       color: #11a9b2;
     }
   }
-  
+
   .content-container-search {
     height: 140px;
     .container-header {
       text-align: center;
       padding-top: 2rem;
     }
+  }
+  .ui.search > .results {
+    display: none !important;
   }
 
   @include only-mobile {

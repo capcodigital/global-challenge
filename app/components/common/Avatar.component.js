@@ -15,7 +15,7 @@ export const getInitials = (name) => {
     }`.toUpperCase();
 };
 
-const Avatar = ({ teamName, color, size }) => (
+const Avatar = ({ name, color, size }) => (
   <svg className="avatar" width={size} height={size}>
     <circle fill={color} cx={size / 2} cy={size / 2} r={size / 2} />
     <text
@@ -26,13 +26,13 @@ const Avatar = ({ teamName, color, size }) => (
       fontSize="15"
       fontFamily="Helvetica"
     >
-      {getInitials(teamName)}
+      {getInitials(name)}
     </text>
   </svg>
 );
 
 Avatar.propTypes = {
-  teamName: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   size: PropTypes.number.isRequired,
 };
