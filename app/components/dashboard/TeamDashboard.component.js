@@ -21,7 +21,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
     getTeamsList();
     window.scrollTo({ top: 0, behavior: "smooth" });
     setTeamName(
-      window.location.pathname.split("/progress/team/")[1].replace("-", " ")
+      window.location.pathname.split("/progress/team/")[1].replace(/-/g, " ")
     );
   }, []);
 
@@ -29,6 +29,8 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
     let selectedTeam = teams
       .filter((team) => team.name.toLowerCase() === teamName)
       .sort((a, b) => b.totalDistance - a.totalDistance);
+      console.log(teamName)
+      console.log(team)
     setTeam(selectedTeam[0]);
   });
 
@@ -46,7 +48,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
           </div>
         </div>
         <LoadScript
-          googleMapsApiKey={'AIzaSyDj6Xw-eqeq8cHxo4LB6Sn3wqLqiM7E_k8'}
+          googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
           libraries={libraries}
         >
           <MapUK teams={teams} />

@@ -95,8 +95,12 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
 
 TeamLeaderboardTable.propTypes = {
   data: PropTypes.array.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool,
   isMainDashboard: PropTypes.bool.isRequired,
+};
+
+TeamLeaderboardTable.defaultProps = {
+  isLoading: false,
 };
 
 export default TeamLeaderboardTable;
