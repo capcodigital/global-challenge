@@ -8,7 +8,7 @@ import "./style.scss";
 const orange = "#fa451b";
 const blue = "#11A9B2";
 
-const TeamLeaderboardTable = ({ height, data, isMainDashboard, isLoading }) => {
+const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
   const history = useHistory();
 
   const handleClick = (teamName) => {
@@ -18,7 +18,7 @@ const TeamLeaderboardTable = ({ height, data, isMainDashboard, isLoading }) => {
   };
 
   return (
-    <div style={{ height: height }} className={"leaderboard"}>
+    <div className={"leaderboard"}>
       <Table collapsing basic="very" className="main">
         <Table.Header>
           <Table.Row>
@@ -94,7 +94,6 @@ const TeamLeaderboardTable = ({ height, data, isMainDashboard, isLoading }) => {
 };
 
 TeamLeaderboardTable.propTypes = {
-  height: PropTypes.number,
   data: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
   isMainDashboard: PropTypes.bool.isRequired,
