@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
     this.setState({ isSearchLoading: true, value, teams: this.props.teams });
 
     const filteredResults = this.props.teams.filter((team) =>
-      team.name.toLowerCase().includes(value.toLowerCase())
+      team.name.toLowerCase().includes(value.toLowerCase().trim())
     );
 
     this.setState({
