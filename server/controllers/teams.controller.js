@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var cluster = require('cluster');
 var Team = mongoose.model('Team');
 var User = mongoose.model('User');
+var mailer = require('../services/mail.service');
 
 var callbackUrl = "capcoglobalchallenge.com"
 if (process.env.NODE_ENV != "production") {
@@ -129,6 +130,17 @@ exports.update = function(req, res) {
                     console.log("Error joining team: " + team.name);
                     res.send(400, { message: 'joinTeamFailed'});
                 } else {
+
+                    User.findOne({
+                        username: team.captain
+                    }).exec(function(err, captain) {
+                        let emailText = "Hello " + captain.name + "\n\r" + user.name + " has applied to join your team " + team.name;
+
+                        mailer.sendMail(captain.email, "New Capco Challenge Team Member", emailText, function() {
+                            console.log("email sent to " + captain.email);
+                        });
+                    });
+
                     res.jsonp(team);
                 }
             });

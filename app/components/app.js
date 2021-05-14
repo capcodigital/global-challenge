@@ -20,15 +20,15 @@ import TeamsPage from './teams/teams.container';
 const App = () => (
   <div className="app-wrapper">
     <Helmet
-      titleTemplate="%s - Capco Global Step Challenge"
-      defaultTitle="Capco Global Step Challenge"
+      titleTemplate="%s - Capco Global Challenge"
+      defaultTitle="Capco Global Challenge"
     >
-      <meta name="description" content="Capco Global Step Challenge" />
+      <meta name="description" content="Capco Global Challenge" />
     </Helmet>
     <Header />
     <Switch>
-      <Route path="/" exact component={HomePage} />
-      <Route exact path="/progress" component={Dashboard} />
+      <Route path="/register" exact component={HomePage} />
+      <Route exact path="/" component={Dashboard} />
       <Route exact path="/teams/register" component={TeamsPage} />
       <Route component={HomePage} />
     </Switch>

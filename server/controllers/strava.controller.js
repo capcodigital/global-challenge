@@ -63,7 +63,7 @@ exports.authorize = function(req, res) {
         var newReq = buildRequest(userOptions, function(err, result){
             if (err) {
                 console.log("Request Error: " + err);
-                res.redirect('https://' + callbackUrl + '?success=stravaError');
+                res.redirect('https://' + callbackUrl + '/register?success=stravaError');
             } else {
             
                 citService.getUser(username.toLowerCase(), function(err, profile) {
@@ -91,6 +91,7 @@ exports.authorize = function(req, res) {
                         user.user_id = result.athlete.id;
 
                         user.name = profile.displayName;
+                        user.email = profile.email;
                         user.location = profile.location;
                         user.level = profile.title;
                         user.picName = profile.profilePictureName;
@@ -126,15 +127,15 @@ exports.authorize = function(req, res) {
                                 console.log(err);
                                 if (err.code == 11000) {
                                     if (user.app == "FitBit") {
-                                        res.redirect('https://' + callbackUrl + '?success=fitBitRegistered');
+                                        res.redirect('https://' + callbackUrl + '/register?success=fitBitRegistered');
                                     } else {
-                                        res.redirect('https://' + callbackUrl + '?success=stravaRegistered');
+                                        res.redirect('https://' + callbackUrl + '/register?success=stravaRegistered');
                                     }
                                 } else {
-                                    res.redirect('https://' + callbackUrl + '?success=serverError');
+                                    res.redirect('https://' + callbackUrl + '/register?success=serverError');
                                 }
                             } else {
-                                res.redirect('https://' + callbackUrl + '?success=stravaSuccess');
+                                res.redirect('https://' + callbackUrl + '/register?success=stravaSuccess');
                             }
                         });
                     }

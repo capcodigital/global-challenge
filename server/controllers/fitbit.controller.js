@@ -71,7 +71,7 @@ exports.authorize = function(req, res) {
         var newReq = buildRequest(options, function(err, result) {
             if (err) {
               console.log(err);
-              res.redirect('https://' + callbackUrl + '?success=fitBitError');
+              res.redirect('https://' + callbackUrl + '/register?success=fitBitError');
             } else if (result.errors && result.errors.length > 0) {
                 console.log(result.errors[0].message);
             } else {
@@ -122,6 +122,7 @@ exports.authorize = function(req, res) {
 
                                 user.level = profile.title;
                                 user.name = profile.displayName;
+                                user.email = profile.email;
                                 user.picName = profile.profilePictureName;
 
                                 if (profile.locationName === "New York RISC") {
@@ -343,12 +344,12 @@ function save(user, res) {
             console.log(err.message);
             if (err.code == 11000) {
                 if (user.app == "Strava") {
-                    res.redirect('https://' + callbackUrl + '?success=stravaRegistered');
+                    res.redirect('https://' + callbackUrl + '/register?success=stravaRegistered');
                 } else {
-                    res.redirect('https://' + callbackUrl + '?success=fitbitRegistered');
+                    res.redirect('https://' + callbackUrl + '/register?success=fitbitRegistered');
                 }
             } else {
-                res.redirect('https://' + callbackUrl + '?success=serverError');
+                res.redirect('https://' + callbackUrl + '/register?success=serverError');
             }
         } else {
             // If User has joined part way through the competition. Retrieve previous days stats in the background
@@ -356,7 +357,7 @@ function save(user, res) {
                 getStats(newUser, date);
             });
 
-            res.redirect('https://' + callbackUrl + '?success=fitBitSuccess');
+            res.redirect('https://' + callbackUrl + '/register?success=fitBitSuccess');
         }
     });
 }
