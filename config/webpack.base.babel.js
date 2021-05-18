@@ -74,7 +74,8 @@ module.exports = (options) => ({
     // drop any unreachable code.
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        REACT_APP_GOOGLE_MAPS_API_KEY: JSON.stringify(process.env.REACT_APP_GOOGLE_MAPS_API_KEY)
       }
     })
   ]),
