@@ -50,10 +50,7 @@ if (cluster.isMaster) {
     updateEveryInterval(60);
 }
 
-var callbackUrl = "capcoglobalchallenge.com"
-if (process.env.NODE_ENV != "production") {
-    callbackUrl = "localhost";
-}
+var callbackUrl = process.env.SERVER_URL || 'localhost';
 
 /**
 * List of Users
