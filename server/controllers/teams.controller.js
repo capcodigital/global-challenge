@@ -89,6 +89,9 @@ exports.create = function(req, res) {
             team.members.push(team.captain);
         }
 
+        if (team.members.length < 2) res.send(400, { message: 'createTeamFailedTooFewPeople'});
+        if (team.members.length > 4) res.send(400, { message: 'createTeamFailedTooManyPeople'});
+
         team.save(function(err) {
             if (err) {
                 console.log("Error creating team: " + team.name);
@@ -118,9 +121,8 @@ exports.update = function(req, res) {
             if (!team) res.send(400, { message: 'joinTeamFailed'});
             if (team == null) res.send(400, { message: 'joinTeamFailed'});
 
-            if (team.members.includes(req.body.member)) {
-                res.send(400, { message: 'joinTeamFailedAlreadyAMember'});
-            }
+            if (team.members.includes(req.body.member)) res.send(400, { message: 'joinTeamFailedAlreadyAMember'});
+            if (team.members.length > 4) res.send(400, { message: 'joinTeamFailedTooManyPeople'});
 
             team.members.push(req.body.member);
             team.markModified('members');
@@ -131,15 +133,15 @@ exports.update = function(req, res) {
                     res.send(400, { message: 'joinTeamFailed'});
                 } else {
 
-                    User.findOne({
-                        username: team.captain
-                    }).exec(function(err, captain) {
-                        let emailText = "Hello " + captain.name + "\n\r" + user.name + " has applied to join your team " + team.name;
+                    // User.findOne({
+                    //     username: team.captain
+                    // }).exec(function(err, captain) {
+                    //     let emailText = "Hello " + captain.name + "\n\r" + user.name + " has applied to join your team " + team.name;
 
-                        mailer.sendMail(captain.email, "New Capco Challenge Team Member", emailText, function() {
-                            console.log("email sent to " + captain.email);
-                        });
-                    });
+                    //     mailer.sendMail(captain.email, "New Capco Challenge Team Member", emailText, function() {
+                    //         console.log("email sent to " + captain.email);
+                    //     });
+                    // });
 
                     res.jsonp(team);
                 }

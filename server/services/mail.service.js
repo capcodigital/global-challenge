@@ -1,26 +1,33 @@
 /**
  * Module dependencies.
  */
-var nodemailer = require('nodemailer'),
-    path = require('path');
+var nodemailer = require('nodemailer');
+var path = require('path');
+var fs = require('fs');
 
 var DEFAULT_FROM_ADDRESS = "challenge@capco.com";
 
-var cgcTransport = nodemailer.createTransport({
-    host: 'localhost',
-    post: 25,
-    secure: false,
-    // auth:{
-    //     user:'challenge@capco.co.uk',
-    //     pass:'CGCESTR123'
-    // }
-    tls: {
-      rejectUnauthorized: false
-    },
-});
+var emailUser = process.env.EMAIL_USER;
+var emailPassword = process.env.EMAIL_PASSWORD;
+
+if (!emailUser || !emailPassword) {
+    emailUser = fs.readFileSync('./config/keys/emailUser.txt', 'utf8');
+    emailPassword = fs.readFileSync('./config/keys/emailPassword.txt', 'utf8');
+}
+
+var emailConnectionDetails = {
+    // host: "localhost",
+    // service: "gmail",
+    // port: 587,
+    // secure: false,
+    auth: {
+        user: emailUser,
+        pass: emailPassword
+    }
+};
 
 exports.sendMail = function(to, subject, text, callback) {
-    var transporter = nodemailer.createTransport(cgcTransport);
+    var transporter = nodemailer.createTransport(emailConnectionDetails);
     var from_address = DEFAULT_FROM_ADDRESS;
 
     transporter.sendMail({
@@ -38,7 +45,7 @@ exports.sendMail = function(to, subject, text, callback) {
 };
 
 exports.sendMailFromTemplate = function(to, subject, templateFunction, locals, callback) {
-    var transporter = nodemailer.createTransport(cgcTransport);
+    var transporter = nodemailer.createTransport(emailConnectionDetails);
     var from_address = DEFAULT_FROM_ADDRESS;
 
     transporter.sendMail({
