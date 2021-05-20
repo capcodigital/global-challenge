@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Dashboard from './dashboard.component';
+import TeamDashboard from './TeamDashboard.component';
 import { filterActivities, fetchEmployeeActivities, fetchTeamsList } from './actions';
 import {
   filteredActivitiesSelector,
@@ -67,3 +68,9 @@ export default compose(
   withSaga,
   withConnect,
 )(Dashboard);
+
+export const TeamsDashboard = compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(TeamDashboard);
