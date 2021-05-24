@@ -47,10 +47,10 @@ const waypts = [
   "The Eagle Building, 19 Rose St, Edinburgh EH2 2PR, Scotland",
 ].map((address) => ({ location: address, stopover: true }));
 
-const MapUK = ({ teams }) => {
+const MapUK = ({ teams, selectedTeam }) => {
   const London = new window.google.maps.LatLng(51.509865, -0.118092);
   const Edinburgh = new window.google.maps.LatLng(55.953251, -3.188267);
-
+  console.log(selectedTeam);
   const [selected, setSelected] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [directions, setDirections] = useState(null);
@@ -71,7 +71,6 @@ const MapUK = ({ teams }) => {
       (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
           setDirections(result);
-          console.log(result);
           let tempMarkers = [];
           teams.map((team) => {
             let distanceSum = 0;
@@ -156,10 +155,27 @@ const MapUK = ({ teams }) => {
             setSelected(null);
           }}
         >
-          <div>
-            <span className='position'>#{selected.position}</span>
-            <h3>{selected.name}</h3>
-            <span className='distance'>Total Distance: {selected.totalDistance}km</span>
+          <div className="map-pop-up">
+            <svg width={50} height={50}>
+              <circle fill="rgb(255,69,27)" cx="25" cy="25" r="25" />
+              <text
+                text-anchor="middle"
+                x="25"
+                y="32"
+                fill="white"
+                font-size="22"
+                font-family="Helvetica"
+              >
+                {getInitials(selected.name)}
+              </text>
+            </svg>
+            <div class="map-pop-up-content">
+              <div>
+                <span className="map-team-name">{selected.name}</span>
+                <span className="distance">{selected.totalDistance}km</span>
+              </div>
+              <div className="map-position">#{selected.position}</div>
+            </div>
           </div>
         </InfoWindow>
       ) : null}
@@ -169,6 +185,7 @@ const MapUK = ({ teams }) => {
 
 MapUK.propTypes = {
   teams: PropTypes.array.isRequired,
+  selectedTeam: PropTypes.object,
 };
 
 export default MapUK;
