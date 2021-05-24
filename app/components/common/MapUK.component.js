@@ -23,7 +23,29 @@ const options = {
   styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
+  minZoom: 5.5,
+  maxZoom: 15,
+  restriction: {
+    latLngBounds: {
+      north: 59,
+      south: 49,
+      west: -21,
+      east: 14,
+    },
+    strictBounds: false,
+  },
 };
+
+const waypts = [
+  "77-79 Great Eastern St, London EC2A 3HU, England",
+  "Epping, England",
+  "Caistor, England",
+  "Market Weighton, England",
+  "Middleton Tyas, England",
+  "Alston, England",
+  "Moffat, Scotland",
+  "The Eagle Building, 19 Rose St, Edinburgh EH2 2PR, Scotland",
+].map((address) => ({ location: address, stopover: true }));
 
 const MapUK = ({ teams }) => {
   const London = new window.google.maps.LatLng(51.509865, -0.118092);
@@ -42,11 +64,14 @@ const MapUK = ({ teams }) => {
       {
         origin: London,
         destination: Edinburgh,
+        waypoints: waypts,
+        optimizeWaypoints: true,
         travelMode: google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
           setDirections(result);
+          console.log(result);
           let tempMarkers = [];
           teams.map((team) => {
             let distanceSum = 0;
@@ -56,7 +81,7 @@ const MapUK = ({ teams }) => {
                   result.routes[0].overview_path.indexOf(path) + 1
                 ];
               if (!nextPath) break;
-              
+
               let distanceInMeters =
                 google.maps.geometry.spherical.computeDistanceBetween(
                   path,
@@ -99,15 +124,13 @@ const MapUK = ({ teams }) => {
         position={{ lat: 55.953251, lng: -3.188267 }}
         icon={{
           scaledSize: new window.google.maps.Size(100, 100),
-          url:
-            "https://findicons.com/files/icons/2061/f1/128/checkered_flag.png",
+          url: "https://findicons.com/files/icons/2061/f1/128/checkered_flag.png",
           anchor: new window.google.maps.Point(2, 95),
         }}
       />
 
       {markers.map((marker) => (
         <Marker
-          className="marker"
           key={marker.name}
           position={{ lat: marker.lat, lng: marker.lng }}
           onClick={() => {
@@ -134,7 +157,9 @@ const MapUK = ({ teams }) => {
           }}
         >
           <div>
-            <h2>{selected.name}</h2>
+            <span className='position'>#{selected.position}</span>
+            <h3>{selected.name}</h3>
+            <span className='distance'>Total Distance: {selected.totalDistance}km</span>
           </div>
         </InfoWindow>
       ) : null}
