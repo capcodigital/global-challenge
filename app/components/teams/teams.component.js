@@ -75,7 +75,8 @@ class TeamsPage extends React.Component {
     event.preventDefault();
     const data = new FormData(event.target);
 
-    fetch('https://localhost/teams', {
+    fetch('https://35.227.237.141/teams', {
+    // fetch('https://localhost/teams', {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -113,7 +114,8 @@ class TeamsPage extends React.Component {
     event.preventDefault();
     const data = new FormData(event.target);
 
-    fetch('https://localhost/teams', {
+    fetch('https://35.227.237.141/teams', {
+    // fetch('https://localhost/teams', {
       method: 'PUT',
       mode: 'cors',
       headers: {

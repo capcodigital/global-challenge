@@ -8,6 +8,7 @@ var User = mongoose.model('User');
 var strava = require('strava-v3');
 var cluster = require('cluster');
 var fs = require('fs');
+var config = require("../config/config");
 
 var apiKey = process.env.STRAVA_API_KEY;
 var secret = process.env.STRAVA_SECRET;
@@ -37,7 +38,7 @@ var authOptions = {
     agent: false
 };
 
-var callbackUrl = "capcoglobalchallenge.com"
+var callbackUrl = "35.227.237.141"
 if (process.env.NODE_ENV != "production") {
     callbackUrl = "localhost";
 }
@@ -48,9 +49,6 @@ if (cluster.isMaster) {
     updateEveryInterval(60);
 }
 
-/**
- * List of Users
- */
 exports.authorize = function(req, res) {
 
     if (!req.query.code || req.query.error) {
@@ -114,11 +112,13 @@ exports.authorize = function(req, res) {
                         user.totalSteps = 0;
                         user.totalCalories = 0;
                         user.totalDistance = 0;
+                        user.totalDistanceConverted = 0;
                         user.totalDuration = 0;
                         user.totalWalk = 0;
                         user.totalRun = 0;
                         user.totalSwim = 0;
                         user.totalCycling = 0;
+                        user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
 
 
@@ -204,12 +204,14 @@ function getStats(user) {
             // Update Stats Totals
             user.totalSteps = 0;
             user.totalDistance = 0;
+            user.totalDistanceConverted = 0;
             user.totalDuration = 0;
             user.totalCalories = 0;
             user.totalWalk = 0;
             user.totalRun = 0;
             user.totalSwim = 0;
             user.totalCycling = 0;
+            user.totalCyclingConverted = 0;
             user.totalRowing = 0;
 
             var activityCount = user.activities.length;
@@ -218,6 +220,7 @@ function getStats(user) {
                     // user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
                     // Strava stores distance in metres
                     user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
+                    user.totalDistanceConverted = user.totalDistanceConverted + (user.activities[i].distance/1000);
                     // Only moving time vs FitBit's Active, Very Active etc
                     user.totalDuration = user.totalDuration + user.activities[i].moving_time;
                     // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
@@ -229,6 +232,7 @@ function getStats(user) {
                             user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
                         case 'Ride':
                             user.totalCycling = user.totalCycling + (user.activities[i].distance/1000);
+                            user.totalCyclingConverted = user.totalCyclingConverted + (user.activities[i].distance/1000);
                         case 'Rowing':
                             user.totalRowing = user.totalRowing + (user.activities[i].distance/1000);
                         default:
