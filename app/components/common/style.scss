@@ -12,7 +12,7 @@
 
 .leaderboard {
   width: 100%;
-  height:580px;
+  height: 580px;
   overflow-x: hidden;
 
   &.sports {
@@ -166,7 +166,37 @@
       }
     }
   }
+
 }
 *:focus {
   outline: none;
+}
+
+.clockdiv {
+  color: #fff;
+  display: inline-block;
+  margin: 10px 10px 10px auto;
+  font-weight: 100;
+  text-align: center;
+  font-size: 24px;
+  background: #ff3000cc;
+  box-shadow: 0 0 10px #ff3000cc;
+  border-radius:4px;
+}
+
+.clockdiv > div {
+  padding: 8px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.clockdiv div > span {
+  padding: 4px;
+  border-radius: 3px;
+  display: inline-block;
+  width:40px;
+}
+
+.smalltext {
+  font-size: 10px;
 }

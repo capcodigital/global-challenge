@@ -5,6 +5,7 @@ import {
   MapUK,
   TeamLeaderboardTable,
   TeamSportsLeaderboardTable,
+  Countdown,
 } from "components/common";
 import { LoadScript } from "@react-google-maps/api";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
@@ -58,14 +59,18 @@ class Dashboard extends React.Component {
       !error && (
         <div className="dashboard">
           <Segment loading={isLoading} className="secondary">
-            <div className="counter-uk">
-              <div className="wrapper">
-                <span className="text">Overal Distance: </span>
-                <span className="total">{total}km</span>
+            <div className="heading">
+              <div className="counter-uk">
+                <div className="wrapper">
+                  <span className="text">Overal Distance: </span>
+                  <span className="total">{total}km</span>
+                </div>
               </div>
+              <Countdown />
             </div>
+
             <LoadScript
-              googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+              googleMapsApiKey={'AIzaSyDj6Xw-eqeq8cHxo4LB6Sn3wqLqiM7E_k8'}
               libraries={libraries}
             >
               <MapUK teams={teams} />
