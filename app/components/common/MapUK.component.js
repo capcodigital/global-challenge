@@ -47,18 +47,18 @@ const waypts = [
   "The Eagle Building, 19 Rose St, Edinburgh EH2 2PR, Scotland",
 ].map((address) => ({ location: address, stopover: true }));
 
-const MapUK = ({ teams, selectedTeam }) => {
+const MapUK = ({ teams, team }) => {
   const London = new window.google.maps.LatLng(51.509865, -0.118092);
   const Edinburgh = new window.google.maps.LatLng(55.953251, -3.188267);
-  console.log(selectedTeam);
-  const [selected, setSelected] = useState(null);
+
+  const [selectedInfo, setSelectedInfo] = useState(null);
+  const [selectedTeam, setSelectedTeam] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [directions, setDirections] = useState(null);
   const [setError] = useState(null);
 
   useEffect(() => {
     const google = window.google;
-
     const directionsService = new window.google.maps.DirectionsService();
     directionsService.route(
       {
@@ -94,18 +94,34 @@ const MapUK = ({ teams, selectedTeam }) => {
             }
           });
           setMarkers(tempMarkers);
+
+          setSelectedTeam(
+            team &&
+              tempMarkers.filter((marker) => {
+                console.log(marker.name.toLowerCase());
+                console.log(team.name.toLowerCase());
+                return marker.name.toLowerCase() === team.name.toLowerCase();
+              })[0]
+          );
         } else {
           setError(result);
         }
       }
     );
   }, [teams]);
-
+  console.log(markers);
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      zoom={6}
-      center={center}
+      zoom={selectedTeam ? 8 : 6}
+      center={
+        selectedTeam
+          ? {
+              lat: selectedTeam.lat,
+              lng: selectedTeam.lng,
+            }
+          : center
+      }
       options={options}
     >
       {directions && (
@@ -133,10 +149,10 @@ const MapUK = ({ teams, selectedTeam }) => {
           key={marker.name}
           position={{ lat: marker.lat, lng: marker.lng }}
           onClick={() => {
-            setSelected(marker);
+            setSelectedInfo(marker);
           }}
           onMouseLeave={() => {
-            setSelected(null);
+            setSelectedInfo(null);
           }}
           icon={{
             url: `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><circle fill='rgb(255,69,27)' cx='15' cy='15' r='15'/><text text-anchor='middle' x='15' y='20' fill='white' font-size='15' font-family='Helvetica'>${getInitials(
@@ -147,34 +163,37 @@ const MapUK = ({ teams, selectedTeam }) => {
         />
       ))}
 
-      {selected ? (
+      {selectedInfo ? (
         <InfoWindow
+          style={{ marginTop: 10, padding: 14, borderRadius: 4 }}
           className="info"
-          position={{ lat: selected.lat, lng: selected.lng }}
+          position={{ lat: selectedInfo.lat, lng: selectedInfo.lng }}
           onCloseClick={() => {
-            setSelected(null);
+            setSelectedInfo(null);
           }}
         >
           <div className="map-pop-up">
             <svg width={50} height={50}>
               <circle fill="rgb(255,69,27)" cx="25" cy="25" r="25" />
               <text
-                text-anchor="middle"
+                textAnchor="middle"
                 x="25"
                 y="32"
                 fill="white"
-                font-size="22"
-                font-family="Helvetica"
+                fontSize="22"
+                fontFamily="Helvetica"
               >
-                {getInitials(selected.name)}
+                {getInitials(selectedInfo.name)}
               </text>
             </svg>
-            <div class="map-pop-up-content">
+            <div className="map-pop-up-content">
               <div>
-                <span className="map-team-name">{selected.name}</span>
-                <span className="distance">{selected.totalDistance}km</span>
+                <span className="map-team-name">{selectedInfo.name}</span>
+                <span className="map-distance">
+                  {selectedInfo.totalDistance}km
+                </span>
               </div>
-              <div className="map-position">#{selected.position}</div>
+              <div className="map-position">#{selectedInfo.position}</div>
             </div>
           </div>
         </InfoWindow>
@@ -185,7 +204,7 @@ const MapUK = ({ teams, selectedTeam }) => {
 
 MapUK.propTypes = {
   teams: PropTypes.array.isRequired,
-  selectedTeam: PropTypes.object,
+  team: PropTypes.object,
 };
 
 export default MapUK;

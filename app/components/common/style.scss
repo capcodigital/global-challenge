@@ -174,11 +174,10 @@
 }
 
 .map-pop-up-content {
-  padding:8px;
+  padding: 8px;
   div:first-child {
     display: flex;
-    padding-bottom:8px;
-   
+    padding-bottom: 8px;
   }
   .map-team-name {
     padding-right: 16px;
@@ -186,24 +185,15 @@
     font-weight: 300;
     color: black;
   }
-  .distance {
+  .map-distance {
     font-size: 18px;
     color: grey;
     font-weight: 500;
   }
-  .map-position{
+  .map-position {
     font-size: 18px;
     color: grey;
   }
-}
-.gm-style .gm-style-iw-c {
-  margin-top: 10px;
-  padding:14px;
-  border-radius: 4px;
-
-}
-.gm-style .gm-style-iw-t::after {
-  display: none;
 }
 
 *:focus {

@@ -49,7 +49,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
           googleMapsApiKey={"AIzaSyDj6Xw-eqeq8cHxo4LB6Sn3wqLqiM7E_k8"}
           libraries={libraries}
         >
-          <MapUK teams={teams} selectedTeam={team} />
+         <MapUK teams={teams} team={team} />
         </LoadScript>
       </Segment>
       <Segment className="primary">
