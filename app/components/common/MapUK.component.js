@@ -98,8 +98,6 @@ const MapUK = ({ teams, team }) => {
           setSelectedTeam(
             team &&
               tempMarkers.filter((marker) => {
-                console.log(marker.name.toLowerCase());
-                console.log(team.name.toLowerCase());
                 return marker.name.toLowerCase() === team.name.toLowerCase();
               })[0]
           );
@@ -109,7 +107,7 @@ const MapUK = ({ teams, team }) => {
       }
     );
   }, [teams]);
-  console.log(markers);
+  
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
