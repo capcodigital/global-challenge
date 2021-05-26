@@ -54,6 +54,7 @@
     "lodash": "^4.17.19",
     "minimist": "^1.2.0",
     "mongoose": "^5.7.5",
+    "nodemailer": "^6.6.0",
     "prismjs": "1.23.0",
     "prop-types": "^15.6.2",
     "query-string": "^6.5.0",
