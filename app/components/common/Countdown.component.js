@@ -9,7 +9,7 @@ function getTimeRemaining() {
     total = Date.parse(challengeStartDate) - Date.parse(new Date());
   else if (new Date() > challengeStartDate || new Date() < challengeEndDate)
     total = Date.parse(challengeEndDate) - Date.parse(new Date());
-  else if (new Date() < challengeEndDate) total = Date.parse(new Date(0, 0, 0));
+  else if (new Date() > challengeEndDate) total = Date.parse(new Date(0, 0, 0));
   const seconds = Math.floor((total / 1000) % 60);
   const minutes = Math.floor((total / 1000 / 60) % 60);
   const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
