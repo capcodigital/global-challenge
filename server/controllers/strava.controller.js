@@ -37,10 +37,7 @@ var authOptions = {
     agent: false
 };
 
-var callbackUrl = "capcoglobalchallenge.com"
-if (process.env.NODE_ENV != "production") {
-    callbackUrl = "localhost";
-}
+var callbackUrl = process.env.SERVER_URL || 'localhost';
 
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
