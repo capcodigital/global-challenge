@@ -31,13 +31,16 @@
       }
     }
   }
+
+  .heading {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
   .counter-uk {
     margin: 1.5rem;
     font-size: 24px;
-    vertical-align: middle;
-    text-align: center;
-    display: flex;
-    justify-content: center;
 
     .wrapper {
       width: 0;
