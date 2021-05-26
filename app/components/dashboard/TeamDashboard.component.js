@@ -20,9 +20,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
   useEffect(() => {
     getTeamsList();
     window.scrollTo({ top: 0, behavior: "smooth" });
-    setTeamName(
-      window.location.pathname.split("/progress/team/")[1].replace(/-/g, " ")
-    );
+    setTeamName(window.location.pathname.split("/team/")[1].replace(/-/g, " "));
   }, []);
 
   useEffect(() => {
@@ -56,7 +54,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
         <Grid container stackable columns={2} verticalAlign="middle">
           <Grid.Row>
             <Grid.Column>
-              <Link to="/progress" className="back-link">
+              <Link to="/" className="back-link">
                 <Icon name="angle left" />
                 Back to leaderboard
               </Link>
