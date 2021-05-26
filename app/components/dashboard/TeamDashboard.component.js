@@ -49,7 +49,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
           googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
           libraries={libraries}
         >
-          <MapUK teams={teams} />
+          <MapUK teams={teams} team={team} />
         </LoadScript>
       </Segment>
       <Segment className="primary">
