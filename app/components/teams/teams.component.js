@@ -60,7 +60,13 @@ class TeamsPage extends React.Component {
   }
 
   memberListChange = (event, {value}) => {
-    this.state.selectedMembers = value;
+
+    if (value.length > 4 || value.length < 2) {
+      this.setState({ allowCreate: false });
+    } else {
+      this.state.selectedMembers = value;
+      this.setState({ allowCreate: true });
+    }
   }
 
   joinTeamChange = (event, {value}) => {
@@ -207,7 +213,7 @@ class TeamsPage extends React.Component {
                           : <div></div>
                         }
 
-                        <Button className="fitbit" fluid size="large" type="submit">
+                        <Button className="fitbit" fluid size="large" type="submit" disabled={!this.state.allowCreate}>
                           <FormattedMessage id="Create Team" />
                         </Button>
                       </Segment>
