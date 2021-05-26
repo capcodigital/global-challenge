@@ -41,7 +41,7 @@ const Countdown = () => {
       </div>
       <div>
         <span className="hours">{timeLeft.hours}</span>
-        <div className="smalltext">HOUR</div>
+        <div className="smalltext">HOURS</div>
       </div>
       <div>
         <span className="minutes">{timeLeft.minutes}</span>
