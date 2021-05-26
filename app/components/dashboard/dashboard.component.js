@@ -60,13 +60,13 @@ class Dashboard extends React.Component {
         <div className="dashboard">
           <Segment loading={isLoading} className="secondary">
             <div className="heading">
+              <Countdown />
               <div className="counter-uk">
                 <div className="wrapper">
-                  <span className="text">Overal Distance: </span>
+                  <span className="text">Overall Distance: </span>
                   <span className="total">{total}km</span>
                 </div>
               </div>
-              <Countdown />
             </div>
 
             <LoadScript
