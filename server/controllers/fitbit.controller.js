@@ -50,14 +50,11 @@ if (cluster.isMaster) {
     updateEveryInterval(60);
 }
 
-var callbackUrl = "capcoglobalchallenge.com"
+var callbackUrl = "35.227.237.141"
 if (process.env.NODE_ENV != "production") {
     callbackUrl = "localhost";
 }
 
-/**
-* List of Users
-*/
 exports.authorize = function(req, res) {
 
     if (req.query.success) {
@@ -71,15 +68,16 @@ exports.authorize = function(req, res) {
         var newReq = buildRequest(options, function(err, result) {
             if (err) {
               console.log(err);
-              res.redirect('https://' + callbackUrl + '?success=fitBitError');
+              res.redirect('https://' + callbackUrl + '/register?success=fitBitError');
             } else if (result.errors && result.errors.length > 0) {
                 console.log(result.errors[0].message);
             } else {
 
-                User.find({username: username}).exec(function(err, users) {
-                    if (users && users.length > 0) {
-
-                        var user = users[0];
+                citService.getUser(username.toLowerCase(), function(err, profile) {
+                    if (err) {
+                        res.json({error: "Could not find your Capco ID"});
+                    } else {
+                        var user = new User();
 
                         var date = new Date();
                         var datemillis = date.getTime();
@@ -90,70 +88,47 @@ exports.authorize = function(req, res) {
                         var expiration = new Date();
                         expiration.setTime(datemillis + expiresTimeMillis);
 
+                        user.username = username;
+                        user.app = "FitBit";
+                        user.user_id = result.user_id;
+                        user.token_type = result.token_type;
                         user.expires_in = expiration;
                         user.access_token = result.access_token;
                         user.refresh_token = result.refresh_token;
+
+                        user.level = profile.title;
+                        user.name = profile.displayName;
+                        user.email = profile.email;
+                        user.picName = profile.profilePictureName;
+
+                        if (profile.locationName === "New York RISC") {
+                            user.location = "New York";
+                        } else if (profile.locationName === "Washington DC Metro") {
+                            user.location = "Washington DC";
+                        } else if (profile.locationName === "Orlando RISC") {
+                            user.location = "Orlando";
+                        } else if (profile.locationName === "Antwerp") {
+                            user.location = "Brussels";
+                        } else if (profile.locationName === "Malaysia") {
+                            user.location = "Kuala Lumpur";
+                        } else {
+                            user.location = profile.locationName;
+                        }
+
+                        user.activities = {};
+                        user.totalSteps = 0;
+                        user.totalCalories = 0;
+                        user.totalDistance = 0;
+                        user.totalDuration = 0;
+                        user.totalWalk = 0;
+                        user.totalRun = 0;
+                        user.totalSwim = 0;
+                        user.totalCycling = 0;
+                        user.totalRowing = 0;
+
                         save(user, res);
-
-                    } else {
-
-                        citService.getUser(username.toLowerCase(), function(err, profile) {
-                            if (err) {
-                                res.json({error: "Could not find your Capco ID"});
-                            } else {
-                                var user = new User();
-
-                                var date = new Date();
-                                var datemillis = date.getTime();
-
-                                var expiresTime = new Date(result.expires_in*1000);
-                                var expiresTimeMillis = expiresTime.getTime();
-
-                                var expiration = new Date();
-                                expiration.setTime(datemillis + expiresTimeMillis);
-
-                                user.username = username;
-                                user.app = "FitBit";
-                                user.user_id = result.user_id;
-                                user.token_type = result.token_type;
-                                user.expires_in = expiration;
-                                user.access_token = result.access_token;
-                                user.refresh_token = result.refresh_token;
-
-                                user.level = profile.title;
-                                user.name = profile.displayName;
-                                user.picName = profile.profilePictureName;
-
-                                if (profile.locationName === "New York RISC") {
-                                    user.location = "New York";
-                                } else if (profile.locationName === "Washington DC Metro") {
-                                    user.location = "Washington DC";
-                                } else if (profile.locationName === "Orlando RISC") {
-                                    user.location = "Orlando";
-                                } else if (profile.locationName === "Antwerp") {
-                                    user.location = "Brussels";
-                                } else if (profile.locationName === "Malaysia") {
-                                    user.location = "Kuala Lumpur";
-                                } else {
-                                    user.location = profile.locationName;
-                                }
-
-                                user.activities = {};
-                                user.totalSteps = 0;
-                                user.totalCalories = 0;
-                                user.totalDistance = 0;
-                                user.totalDuration = 0;
-                                user.totalWalk = 0;
-                                user.totalRun = 0;
-                                user.totalSwim = 0;
-                                user.totalCycling = 0;
-                                user.totalRowing = 0;
-
-                                save(user, res);
-                            }
-                        })
                     }
-                })
+                });
             }
         });
 
@@ -343,12 +318,12 @@ function save(user, res) {
             console.log(err.message);
             if (err.code == 11000) {
                 if (user.app == "Strava") {
-                    res.redirect('https://' + callbackUrl + '?success=stravaRegistered');
+                    res.redirect('https://' + callbackUrl + '/register?success=stravaRegistered');
                 } else {
-                    res.redirect('https://' + callbackUrl + '?success=fitbitRegistered');
+                    res.redirect('https://' + callbackUrl + '/register?success=fitbitRegistered');
                 }
             } else {
-                res.redirect('https://' + callbackUrl + '?success=serverError');
+                res.redirect('https://' + callbackUrl + '/register?success=serverError');
             }
         } else {
             // If User has joined part way through the competition. Retrieve previous days stats in the background
@@ -356,7 +331,7 @@ function save(user, res) {
                 getStats(newUser, date);
             });
 
-            res.redirect('https://' + callbackUrl + '?success=fitBitSuccess');
+            res.redirect('https://' + callbackUrl + '/register?success=fitBitSuccess');
         }
     });
 }
