@@ -27,7 +27,8 @@ const getPositionByActivity = (teamData, activity) =>
       ...team,
       activities: {
         ...team.activities,
-        [`${activity.toLowerCase()}Position`]: idx + 1,
+        [`${activity.charAt(0).toLowerCase() + activity.slice(1)}Position`]:
+          idx + 1,
       },
     }));
 
@@ -35,12 +36,12 @@ const teamsSelector = createSelector([teamsListSelector], (teamsList) => {
   if (teamsList) {
     let teamsData = teamsList.toJS();
 
-    ["Run", "Swim", "Walk", "Rowing", "Cycling"].map(
+    ["Run", "Swim", "Walk", "Rowing", "CyclingConverted"].map(
       (activity) => (teamsData = getPositionByActivity(teamsData, activity))
     );
 
     return teamsData
-      .sort((a, b) => b.totalDistance - a.totalDistance)
+      .sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)
       .map((team, idx) => ({ ...team, position: idx + 1 }));
   } else [];
 });

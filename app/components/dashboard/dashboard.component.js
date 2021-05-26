@@ -46,8 +46,18 @@ class Dashboard extends React.Component {
       teams: filteredResults,
     });
   };
-
+  
   render() {
+    let s = { name:"Test Team",
+      captain: "Athlete 1", 
+      activities: {Walk: 500, Run: 200, Swim: 60, Cycling: 90, Rowing: 40},
+       members: ["Athlete 1", "Athlete 2", "Athlete 3", "Athlete 4", "Athlete 5", "Athlete 6"],
+        teamAvatar: "TBC",
+         totalDistance: 705, 
+         totalDistanceConverted: 502, 
+         totalDuration: 0}
+    
+    
     const { teams, value, isSearchLoading } = this.state;
     const { isLoading, error } = this.props;
 
@@ -127,8 +137,8 @@ class Dashboard extends React.Component {
                             height={290}
                             data={teams.map((team) => ({
                               name: team.name,
-                              distance: team.activities["Cycling"],
-                              position: team.activities.cyclingPosition,
+                              distance: team.activities["CyclingConverted"],
+                              position: team.activities.cyclingConvertedPosition,
                             }))}
                           />
                         </div>

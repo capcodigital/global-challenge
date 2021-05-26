@@ -73,7 +73,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
                       !isMainDashboard && "team-view"
                     }`}
                   >
-                    {item.totalDistance}
+                    {isMainDashboard ? item.totalDistanceConverted : item.totalDistance}
                     km
                   </Table.Cell>
                   {isMainDashboard && (
