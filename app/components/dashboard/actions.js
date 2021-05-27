@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export let SERVER_URL = 'https://localhost/';
 if (process.env.NODE_ENV == 'production') {
-	SERVER_URL = 'https://35.227.237.141/';
+	SERVER_URL = 'https://35.201.121.201/';
 }
 
 // Activities actions
