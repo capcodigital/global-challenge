@@ -235,10 +235,12 @@ function updateEveryInterval(minutes) {
                             team.activities.Rowing += userMap[member].totalRowing;
 
                             team.totalDistance += userMap[member].totalDistance;
+                            team.totalDistanceConverted += userMap[member].totalDistanceConverted;
                         });
 
                         team.markModified('activities');
                         team.markModified('totalDistance');
+                        team.markModified('totalDistanceConverted');
 
                         team.save(function(err) {
                             if (err) {
