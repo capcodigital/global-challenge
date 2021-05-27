@@ -10,16 +10,22 @@ const svgBarWidth = 100;
 
 const popupStyle = {
   marginBottom: "-1rem",
-  borderRadius: "8px",
+  borderRadius: "4px",
   opacity: 0.9,
   padding: "1em",
 };
 
-const TeamSportsLeaderboardTable = ({ data, height }) => {
+const TeamSportsLeaderboardTable = ({
+  data,
+  height,
+  showActualDistance = false,
+}) => {
   let sortedData = data.sort((a, b) => {
     if (b.position) {
       return a.position - b.position;
-    } else a.distance - b.distance;
+    } else {
+      return b.distance - a.distance;
+    }
   });
   let maxDistance = Math.max(...data.map((item) => item.distance));
 
@@ -30,7 +36,14 @@ const TeamSportsLeaderboardTable = ({ data, height }) => {
           {sortedData.map((item, idx) => (
             <Popup
               key={item.name}
-              content={item.name}
+              content={
+                <div>
+                  <div>{item.name}</div>
+                  {showActualDistance && (
+                    <div>Actual distance: {item.actualDistance}km</div>
+                  )}
+                </div>
+              }
               position="top center"
               style={popupStyle}
               trigger={
@@ -67,6 +80,7 @@ const TeamSportsLeaderboardTable = ({ data, height }) => {
 TeamSportsLeaderboardTable.propTypes = {
   data: PropTypes.array.isRequired,
   height: PropTypes.number,
+  showActualDistance: PropTypes.bool,
 };
 
 export default TeamSportsLeaderboardTable;

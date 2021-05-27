@@ -8,7 +8,7 @@ var User = mongoose.model('User');
 var mailer = require('../services/mail.service');
 var config = require("../config/config");
 
-var callbackUrl = process.env.SERVER_URL || 'localhost';
+var callbackUrl = process.env.SERVER_URL || '35.201.121.201';
 
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
@@ -37,7 +37,7 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name username location level totalDistance totalWalk totalRun totalSwim totalCycling totalRowing').exec(function(err, users) {
+    User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
@@ -229,10 +229,12 @@ function updateEveryInterval(minutes) {
                             team.activities.Rowing += userMap[member].totalRowing;
 
                             team.totalDistance += userMap[member].totalDistance;
+                            team.totalDistanceConverted += userMap[member].totalDistanceConverted;
                         });
 
                         team.markModified('activities');
                         team.markModified('totalDistance');
+                        team.markModified('totalDistanceConverted');
 
                         team.save(function(err) {
                             if (err) {

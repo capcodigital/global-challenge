@@ -10,7 +10,7 @@ import RegistrationForm from '../register';
 import Banner from './images/banner.png';
 import './style.scss';
 
-const SERVER_URL = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
+const SERVER_URL = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://35.201.121.201/';
 
 class TeamsPage extends React.Component {
   constructor(props) {
