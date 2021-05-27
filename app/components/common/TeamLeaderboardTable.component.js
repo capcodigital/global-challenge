@@ -13,7 +13,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
 
   const handleClick = (teamName) => {
     history.push(
-      `/progress/team/${teamName.toLowerCase().replace(/\s/g, "-")}`
+      `/team/${teamName.toLowerCase().replace(/\s/g, "-")}`
     );
   };
 

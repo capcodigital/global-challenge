@@ -23,25 +23,49 @@ const options = {
   styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
+  minZoom: 5.5,
+  maxZoom: 15,
+  restriction: {
+    latLngBounds: {
+      north: 59,
+      south: 49,
+      west: -21,
+      east: 14,
+    },
+    strictBounds: false,
+  },
 };
 
-const MapUK = ({ teams }) => {
+const waypts = [
+  "77-79 Great Eastern St, London EC2A 3HU, England",
+  "Epping, England",
+  "Caistor, England",
+  "Market Weighton, England",
+  "Middleton Tyas, England",
+  "Alston, England",
+  "Moffat, Scotland",
+  "The Eagle Building, 19 Rose St, Edinburgh EH2 2PR, Scotland",
+].map((address) => ({ location: address, stopover: true }));
+
+const MapUK = ({ teams, team }) => {
   const London = new window.google.maps.LatLng(51.509865, -0.118092);
   const Edinburgh = new window.google.maps.LatLng(55.953251, -3.188267);
 
-  const [selected, setSelected] = useState(null);
+  const [selectedInfo, setSelectedInfo] = useState(null);
+  const [selectedTeam, setSelectedTeam] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [directions, setDirections] = useState(null);
   const [setError] = useState(null);
 
   useEffect(() => {
     const google = window.google;
-
     const directionsService = new window.google.maps.DirectionsService();
     directionsService.route(
       {
         origin: London,
         destination: Edinburgh,
+        waypoints: waypts,
+        optimizeWaypoints: true,
         travelMode: google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
@@ -56,7 +80,7 @@ const MapUK = ({ teams }) => {
                   result.routes[0].overview_path.indexOf(path) + 1
                 ];
               if (!nextPath) break;
-              
+
               let distanceInMeters =
                 google.maps.geometry.spherical.computeDistanceBetween(
                   path,
@@ -70,6 +94,13 @@ const MapUK = ({ teams }) => {
             }
           });
           setMarkers(tempMarkers);
+
+          setSelectedTeam(
+            team &&
+              tempMarkers.filter((marker) => {
+                return marker.name.toLowerCase() === team.name.toLowerCase();
+              })[0]
+          );
         } else {
           setError(result);
         }
@@ -80,8 +111,15 @@ const MapUK = ({ teams }) => {
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      zoom={6}
-      center={center}
+      zoom={selectedTeam ? 8 : 6}
+      center={
+        selectedTeam
+          ? {
+              lat: selectedTeam.lat,
+              lng: selectedTeam.lng,
+            }
+          : center
+      }
       options={options}
     >
       {directions && (
@@ -99,22 +137,20 @@ const MapUK = ({ teams }) => {
         position={{ lat: 55.953251, lng: -3.188267 }}
         icon={{
           scaledSize: new window.google.maps.Size(100, 100),
-          url:
-            "https://findicons.com/files/icons/2061/f1/128/checkered_flag.png",
+          url: "https://findicons.com/files/icons/2061/f1/128/checkered_flag.png",
           anchor: new window.google.maps.Point(2, 95),
         }}
       />
 
       {markers.map((marker) => (
         <Marker
-          className="marker"
           key={marker.name}
           position={{ lat: marker.lat, lng: marker.lng }}
           onClick={() => {
-            setSelected(marker);
+            setSelectedInfo(marker);
           }}
           onMouseLeave={() => {
-            setSelected(null);
+            setSelectedInfo(null);
           }}
           icon={{
             url: `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><circle fill='rgb(255,69,27)' cx='15' cy='15' r='15'/><text text-anchor='middle' x='15' y='20' fill='white' font-size='15' font-family='Helvetica'>${getInitials(
@@ -125,16 +161,38 @@ const MapUK = ({ teams }) => {
         />
       ))}
 
-      {selected ? (
+      {selectedInfo ? (
         <InfoWindow
+          style={{ marginTop: 10, padding: 14, borderRadius: 4 }}
           className="info"
-          position={{ lat: selected.lat, lng: selected.lng }}
+          position={{ lat: selectedInfo.lat, lng: selectedInfo.lng }}
           onCloseClick={() => {
-            setSelected(null);
+            setSelectedInfo(null);
           }}
         >
-          <div>
-            <h2>{selected.name}</h2>
+          <div className="map-pop-up">
+            <svg width={50} height={50}>
+              <circle fill="rgb(255,69,27)" cx="25" cy="25" r="25" />
+              <text
+                textAnchor="middle"
+                x="25"
+                y="32"
+                fill="white"
+                fontSize="22"
+                fontFamily="Helvetica"
+              >
+                {getInitials(selectedInfo.name)}
+              </text>
+            </svg>
+            <div className="map-pop-up-content">
+              <div>
+                <span className="map-team-name">{selectedInfo.name}</span>
+                <span className="map-distance">
+                  {selectedInfo.totalDistance}km
+                </span>
+              </div>
+              <div className="map-position">#{selectedInfo.position}</div>
+            </div>
           </div>
         </InfoWindow>
       ) : null}
@@ -144,6 +202,7 @@ const MapUK = ({ teams }) => {
 
 MapUK.propTypes = {
   teams: PropTypes.array.isRequired,
+  team: PropTypes.object,
 };
 
 export default MapUK;
