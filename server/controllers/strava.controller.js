@@ -220,7 +220,6 @@ function getStats(user) {
                     // user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
                     // Strava stores distance in metres
                     user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
-                    user.totalDistanceConverted = user.totalDistanceConverted + (user.activities[i].distance/1000);
                     // Only moving time vs FitBit's Active, Very Active etc
                     user.totalDuration = user.totalDuration + user.activities[i].moving_time;
                     // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
@@ -232,11 +231,17 @@ function getStats(user) {
                             user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
                         case 'Ride':
                             user.totalCycling = user.totalCycling + (user.activities[i].distance/1000);
-                            user.totalCyclingConverted = user.totalCyclingConverted + (user.activities[i].distance/1000);
+                            user.totalCyclingConverted = user.totalCyclingConverted + ((user.activities[i].distance/1000)/config.cyclingConversion);
                         case 'Rowing':
                             user.totalRowing = user.totalRowing + (user.activities[i].distance/1000);
                         default:
                             user.totalWalk = user.totalWalk + (user.activities[i].distance/1000);
+                    }
+
+                    if (user.activities[i].type === 'Ride') {
+                        user.totalDistanceConverted = user.totalDistanceConverted + ((user.activities[i].distance/1000)/config.cyclingConversion);
+                    } else {
+                        user.totalDistanceConverted = user.totalDistanceConverted + (user.activities[i].distance/1000);
                     }
                 }
             }

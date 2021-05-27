@@ -119,11 +119,13 @@ exports.authorize = function(req, res) {
                         user.totalSteps = 0;
                         user.totalCalories = 0;
                         user.totalDistance = 0;
+                        user.totalDistanceConverted = 0;
                         user.totalDuration = 0;
                         user.totalWalk = 0;
                         user.totalRun = 0;
                         user.totalSwim = 0;
                         user.totalCycling = 0;
+                        user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
 
                         save(user, res);
@@ -271,12 +273,14 @@ function getStats(user, date) {
             // Update Stats Totals - FitBit stores distance in KM
             user.totalSteps = 0;
             user.totalDistance = 0;
+            user.totalDistanceConverted = 0;
             user.totalDuration = 0;
             user.totalCalories = 0;
             user.totalWalk = 0;
             user.totalRun = 0;
             user.totalSwim = 0;
             user.totalCycling = 0;
+            user.totalCyclingConverted = 0;
             user.totalRowing = 0;
 
             var activityCount = challengeDates.length;
@@ -289,6 +293,7 @@ function getStats(user, date) {
 
                     user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
                     user.totalDistance = user.totalDistance + user.activities[challengeDates[i]].summary.distances[0].distance;
+                    user.totalDistanceConverted = user.totalDistanceConverted + user.activities[challengeDates[i]].summary.distances[0].distance;
                     user.totalDuration = user.totalDuration + totalTime;
                     user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
 
