@@ -33,7 +33,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
   let total = teams
     .map((team) => team.totalDistance)
     .reduce((a, b) => a + b, 0);
-  console.log(team && team);
+    
   return team ? (
     <div className="dashboard">
       <Segment className="secondary">
@@ -66,7 +66,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
               </div>
               <TeamLeaderboardTable
                 data={team.members.sort(
-                  (a, b) => b.totalDistance - a.totalDistance
+                  (a, b) => b.totalDistanceConverted - a.totalDistanceConverted
                 )}
                 isMainDashboard={false}
               />
@@ -100,7 +100,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                         height={290}
                         data={team.members.map((member) => ({
                           name: member.name,
-                          distance: member.totalCycling,
+                          distance: member.totalCyclingConverted,
                           actualDistance: member.totalCycling,
                         }))}
                         showActualDistance={true}
