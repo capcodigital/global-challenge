@@ -127,8 +127,9 @@ class Dashboard extends React.Component {
                             height={290}
                             data={teams.map((team) => ({
                               name: team.name,
-                              distance: team.activities["Cycling"],
-                              position: team.activities.cyclingPosition,
+                              distance: team.activities["CyclingConverted"],
+                              position:
+                                team.activities.cyclingConvertedPosition,
                             }))}
                           />
                         </div>

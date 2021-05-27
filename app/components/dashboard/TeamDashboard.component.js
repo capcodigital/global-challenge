@@ -33,14 +33,16 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
   let total = teams
     .map((team) => team.totalDistance)
     .reduce((a, b) => a + b, 0);
-
+    console.log(team)
   return team ? (
     <div className="dashboard">
       <Segment className="secondary">
-        <div className="counter-uk">
-          <div className="wrapper">
-            <span className="text">Overal Distance: </span>
-            <span className="total">{total}km</span>
+        <div className="heading">
+          <div className="counter-uk">
+            <div className="wrapper">
+              <span className="text">Overal Distance: </span>
+              <span className="total">{total}km</span>
+            </div>
           </div>
         </div>
         <LoadScript
@@ -60,11 +62,11 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
               </Link>
               <Header size="large">{team.name}</Header>
               <div className="team-distance">
-                Team Distance: {team.totalDistance}km
+                Team Distance: {team.totalDistanceConverted}km
               </div>
               <TeamLeaderboardTable
                 data={team.members.sort(
-                  (a, b) => b.totalDistance - a.totalDistance
+                  (a, b) => b.totalDistanceConverted - a.totalDistanceConverted
                 )}
                 isMainDashboard={false}
               />
@@ -98,8 +100,10 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                         height={290}
                         data={team.members.map((member) => ({
                           name: member.name,
-                          distance: member.totalCycling,
+                          distance: member.totalCyclingConverted,
+                          actualDistance: member.totalCycling,
                         }))}
+                        showActualDistance={true}
                       />
                     </div>
                   </Grid.Column>
