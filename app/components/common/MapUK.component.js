@@ -107,7 +107,7 @@ const MapUK = ({ teams, team }) => {
       }
     );
   }, [teams]);
-  
+
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
