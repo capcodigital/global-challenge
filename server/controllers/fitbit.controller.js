@@ -50,9 +50,9 @@ if (cluster.isMaster) {
     updateEveryInterval(60);
 }
 
-var callbackUrl = "35.227.237.141"
+var callbackUrl = "35.201.121.201"
 if (process.env.NODE_ENV != "production") {
-    callbackUrl = "localhost";
+    callbackUrl = "35.201.121.201";
 }
 
 exports.authorize = function(req, res) {

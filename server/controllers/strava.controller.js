@@ -38,9 +38,9 @@ var authOptions = {
     agent: false
 };
 
-var callbackUrl = "35.227.237.141"
+var callbackUrl = "35.201.121.201"
 if (process.env.NODE_ENV != "production") {
-    callbackUrl = "localhost";
+    callbackUrl = "35.201.121.201";
 }
 
 // The master node should update the stats in the database at set intervals and then
