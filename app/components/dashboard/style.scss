@@ -39,11 +39,12 @@
   }
 
   .counter-uk {
-    margin: 1.5rem;
+    margin: 22px 0 22px 0;
     font-size: 24px;
-
+  
     .wrapper {
       width: 0;
+      margin:auto;
       overflow: hidden;
       white-space: nowrap;
       letter-spacing: 0.1em;
