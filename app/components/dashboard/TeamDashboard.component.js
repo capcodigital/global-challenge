@@ -33,7 +33,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
   let total = teams
     .map((team) => team.totalDistance)
     .reduce((a, b) => a + b, 0);
-    
+    console.log(team)
   return team ? (
     <div className="dashboard">
       <Segment className="secondary">

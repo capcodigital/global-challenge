@@ -46,7 +46,7 @@ class Dashboard extends React.Component {
       teams: filteredResults,
     });
   };
-  
+
   render() {
     const { teams, value, isSearchLoading } = this.state;
     const { isLoading, error } = this.props;
@@ -54,7 +54,7 @@ class Dashboard extends React.Component {
     let total = teams
       .map((team) => team.totalDistance)
       .reduce((a, b) => a + b, 0);
-      
+
     return (
       !error && (
         <div className="dashboard">
@@ -128,7 +128,8 @@ class Dashboard extends React.Component {
                             data={teams.map((team) => ({
                               name: team.name,
                               distance: team.activities["CyclingConverted"],
-                              position: team.activities.cyclingConvertedPosition,
+                              position:
+                                team.activities.cyclingConvertedPosition,
                             }))}
                           />
                         </div>

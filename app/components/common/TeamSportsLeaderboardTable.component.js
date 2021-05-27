@@ -23,7 +23,9 @@ const TeamSportsLeaderboardTable = ({
   let sortedData = data.sort((a, b) => {
     if (b.position) {
       return a.position - b.position;
-    } else a.distance - b.distance;
+    } else {
+      return b.distance - a.distance;
+    }
   });
   let maxDistance = Math.max(...data.map((item) => item.distance));
 
