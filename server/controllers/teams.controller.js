@@ -43,7 +43,7 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name username location level totalDistance totalWalk totalRun totalSwim totalCycling totalRowing').exec(function(err, users) {
+    User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
