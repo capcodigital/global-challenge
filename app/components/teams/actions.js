@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export let SERVER_URL = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
+export let SERVER_URL = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://35.201.121.201/';
 
 export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
 export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';

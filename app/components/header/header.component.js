@@ -28,7 +28,7 @@ class Header extends React.Component {
                 secondary
                 fluid
                 as="a"
-                href="/teams/register"
+                href="/register"
                 className="donate-button-header"
               >
                 Register
