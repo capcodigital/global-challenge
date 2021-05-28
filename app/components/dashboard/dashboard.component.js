@@ -70,7 +70,7 @@ class Dashboard extends React.Component {
             </div>
 
             <LoadScript
-              googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+              googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
               libraries={libraries}
             >
               <MapUK teams={teams} />
