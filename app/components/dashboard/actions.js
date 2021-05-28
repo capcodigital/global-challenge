@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export let SERVER_URL = 'https://localhost/';
+export let SERVER_URL = 'https://35.201.121.201/';
 if (process.env.NODE_ENV == 'production') {
 	SERVER_URL = 'https://35.201.121.201/';
 }
