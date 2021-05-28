@@ -87,7 +87,7 @@ const MapUK = ({ teams, team }) => {
                   nextPath
                 ) / 1000.0;
               distanceSum += distanceInMeters;
-              if (team.totalDistance <= distanceSum) {
+              if (team.totalDistanceConverted <= distanceSum) {
                 tempMarkers.push({ ...team, lat: path.lat(), lng: path.lng() });
                 break;
               }
@@ -188,7 +188,7 @@ const MapUK = ({ teams, team }) => {
               <div>
                 <span className="map-team-name">{selectedInfo.name}</span>
                 <span className="map-distance">
-                  {selectedInfo.totalDistance}km
+                  {selectedInfo.totalDistanceConverted}km
                 </span>
               </div>
               <div className="map-position">#{selectedInfo.position}</div>
