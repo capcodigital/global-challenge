@@ -1,0 +1,52 @@
+@import '../../styles/variables.scss';
+
+.faq {
+  a {
+    color: #00b3bc;
+
+    &:hover {
+      color: #00b3bc;
+      text-decoration: none;
+    }
+  }
+}
+
+
+.question-list {
+    font-size: 16px;
+}
+
+.question-section {
+    padding-bottom: '2rem';
+    padding-top: '2rem';
+}
+
+.question-letter {
+    color:red;
+    font-size:60px;
+    border-left-style: solid;
+    border-left-width: thick;
+    background-color: #f4f4f4;
+}
+
+.question-text {
+    font-weight: bold;
+    background-color: #f4f4f4;
+    font-size: 20px;
+}
+
+.answer-section {
+    padding-bottom: '2rem';
+    padding-top: '2rem';
+}
+
+.answer-text {
+    font-size: 16px;
+}
+
+.answer-letter {
+    color: lightgray;
+    font-size:60px;
+    border-left-style: solid;
+    border-left-width: thick;
+}
