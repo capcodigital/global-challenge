@@ -46,6 +46,17 @@ class Header extends React.Component {
                 Donate
               </Button>
             </Menu.Item>
+            <Menu.Item>
+              <Button
+                secondary
+                fluid
+                as="a"
+                href="/faq"
+                className="donate-button-header"
+              >
+                FAQ
+              </Button>
+            </Menu.Item>
           </Container>
         </Menu>
       </div>
