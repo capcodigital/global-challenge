@@ -132,7 +132,7 @@ const MapUK = ({ teams, team }) => {
       )}
       <Marker
         className="marker"
-        position={CapcoEdinburghOffice}
+        position={edinburghOffice}
         icon={{
           scaledSize: new window.google.maps.Size(100, 100),
           url: "https://findicons.com/files/icons/2061/f1/128/checkered_flag.png",
