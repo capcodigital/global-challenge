@@ -24,7 +24,7 @@ const options = {
   disableDefaultUI: true,
   zoomControl: true,
   minZoom: 5.5,
-  maxZoom: 15,
+  maxZoom: 16,
   restriction: {
     latLngBounds: {
       north: 59,
@@ -37,20 +37,18 @@ const options = {
 };
 
 const waypts = [
-  "77-79 Great Eastern St, London EC2A 3HU, England",
   "Epping, England",
   "Caistor, England",
   "Market Weighton, England",
   "Middleton Tyas, England",
   "Alston, England",
   "Moffat, Scotland",
-  "The Eagle Building, 19 Rose St, Edinburgh EH2 2PR, Scotland",
 ].map((address) => ({ location: address, stopover: true }));
 
 const MapUK = ({ teams, team }) => {
-  const London = new window.google.maps.LatLng(51.509865, -0.118092);
-  const Edinburgh = new window.google.maps.LatLng(55.953251, -3.188267);
-
+  const londonOffice = { lat: 51.5255401, lng: -0.0827686 };
+  const edinburghOffice = { lat: 55.953222, lng: -3.194448 };
+  
   const [selectedInfo, setSelectedInfo] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [markers, setMarkers] = useState([]);
@@ -62,8 +60,8 @@ const MapUK = ({ teams, team }) => {
     const directionsService = new window.google.maps.DirectionsService();
     directionsService.route(
       {
-        origin: London,
-        destination: Edinburgh,
+        origin: londonOffice,
+        destination: edinburghOffice,
         waypoints: waypts,
         optimizeWaypoints: true,
         travelMode: google.maps.TravelMode.DRIVING,
@@ -134,7 +132,7 @@ const MapUK = ({ teams, team }) => {
       )}
       <Marker
         className="marker"
-        position={{ lat: 55.953251, lng: -3.188267 }}
+        position={CapcoEdinburghOffice}
         icon={{
           scaledSize: new window.google.maps.Size(100, 100),
           url: "https://findicons.com/files/icons/2061/f1/128/checkered_flag.png",
