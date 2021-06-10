@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-export let SERVER_URL = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://35.201.121.201/';
+export let SERVER_URL = 'https://35.201.121.201/';
+if (process.env.NODE_ENV == 'production') {
+	SERVER_URL = 'https://35.201.121.201/';
+}
 
 export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
 export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
