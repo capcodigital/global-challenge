@@ -4,6 +4,7 @@
 var mongoose = require('mongoose');
 var https = require("https");
 var citService = require('../services/cit.service');
+var challenges = require('./challenges.controller');
 var User = mongoose.model('User');
 var strava = require('strava-v3');
 var cluster = require('cluster');
@@ -24,7 +25,7 @@ if (!apiKey || !secret || !client_id) {
 var startDate = new Date(2020,11,15);
 var integerTime = Number(startDate) / 1000;
 
-var challengeDates = ["2020-12-15","2020-12-16","2020-12-17","2020-12-18","2020-12-19","2020-12-20","2020-12-21"];
+challengeDates = challenges.getCurrentChallengeDates();
 
 var headers = {
     "api-token" : apiKey

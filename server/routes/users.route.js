@@ -13,6 +13,7 @@ module.exports = () => {
   router.get('/activities', activities);
   router.get('/citUpdate', citUpdate);
   router.get('/addManual', addManual);
+  router.get('/inactiveUsers' inactiveUsers);
 
   return router;
 };

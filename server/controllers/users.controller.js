@@ -144,3 +144,17 @@ exports.list = function(req, res, next) {
     });
 };
 
+/**
+ * Inactive Users
+ */
+exports.inactiveUsers = function(req, res, next) {
+    User.find({totalDistance: 0}).exec(function(err, users) {
+        if (err) {
+          console.log(err);
+            res.json({error: "Server error please try again later" });
+        } else {
+          res.jsonp(users);
+        }
+    });
+};
+
