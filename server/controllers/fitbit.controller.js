@@ -50,7 +50,7 @@ if (cluster.isMaster) {
     updateEveryInterval(60);
 }
 
-var callbackUrl = process.env.SERVER_URL || '35.201.121.201';
+var callbackUrl = process.env.SERVER_URL || 'localhost';
 
 exports.authorize = function(req, res) {
 

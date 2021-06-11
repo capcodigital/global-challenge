@@ -8,7 +8,7 @@ var User = mongoose.model('User');
 var mailer = require('../services/mail.service');
 var config = require("../config/config");
 
-var callbackUrl = process.env.SERVER_URL || '35.201.121.201';
+var callbackUrl = process.env.SERVER_URL || 'localhost';
 
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
@@ -75,11 +75,14 @@ exports.all = function(req, res, next) {
  * Create a team
  */
 exports.create = function(req, res) {
-
+    console.log('Creating a team...');
     User.findOne({
         username: req.body.captain
     }).exec(function(err, user) {
-        if (err) res.send(400, { message: 'createTeamFailed'});
+        if (err) {
+            console.log(err);
+            res.send(400, { message: 'createTeamFailed'});
+        }
         if (!user) res.send(400, { message: 'createTeamFailedUserNotFound'});
 
         var team = new Team(req.body);
