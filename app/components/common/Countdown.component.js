@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-const challengeStartDate = new Date(2021, 4, 31, 0, 0, 0, 0); // 31st May
-const challengeEndDate = new Date(2021, 6, 1, 0, 0, 0, 0); // 1st July 
+const challengeStartDate = new Date(2021, 5, 21, 0, 0, 0, 0); // 21st June
+const challengeEndDate = new Date(2021, 5, 28, 0, 0, 0, 0); // 28th June
 
 function getTimeRemaining() {
   let total = new Date();
