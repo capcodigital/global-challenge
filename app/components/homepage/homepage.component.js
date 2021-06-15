@@ -6,14 +6,14 @@ import {
 } from 'semantic-ui-react';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import RegistrationForm from '../register';
-import Banner from './images/banner.png';
+import ESTRBanner from './images/ESTR-banner.png'
 import './style.scss';
 
 const HomePage = () => (
   <div className="homepage">
     <Container>
       <div className="banner">
-        <img src={Banner} width="100%" alt="Capco banner" />
+        <img src={ESTRBanner} width="100%" alt="Capco banner" />
       </div>
       <Segment style={{ padding: '0' }} vertical>
         <Grid columns="equal" stackable>
@@ -26,7 +26,7 @@ const HomePage = () => (
               </Header>
 
               <List ordered>
-                <List.Item>Make a donation to our partner charity, <a href="https://give.roomtoread.org/campaign/capco-active-for-education/c186488" target="_blank">Room to Read</a> using the ‘Donate’ button on this page</List.Item>
+                <List.Item>Make a donation to our partner charity, using the ‘Donate’ button on this page</List.Item>
                 <List.Item>If you don't already have the Fitbit or Strava app on your phone, please download and install this on your <a href="https://itunes.apple.com/us/app/fitbit-activity-calorie-tracker/id462638897?" target="_blank">iOS</a> or <a href="https://play.google.com/store/apps/details?id=com.fitbit.FitbitMobile" target="_blank">Android</a> device</List.Item>
                 <List.Item>Follow the prompts in the chosen app to create your personal account</List.Item>
                 <List.Item>In the 'Register' section on this page, enter your Capco 4-letter ID</List.Item>
