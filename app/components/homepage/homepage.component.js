@@ -35,13 +35,13 @@ const HomePage = () => (
                   access your activity and location data. Please click 'allow'
                 </List.Item>
                 <List.Item>
-                  Simply carry your phone with you or if using Fitbit, wear and sync your Fitbit device and your activity will be counted and added to our global total
+                  Either wear and sync your device or enter data manually through the Strava/Fitbit application. You can also setup your iPhone to track your activity – <a href="/faq"> see our FAQ</a>
                 </List.Item>
               </List>
             </Grid.Column>
             <Grid.Column style={{ paddingBottom: '2rem', paddingTop: '2rem' }} className="registration">
               <div className="donate">
-                <FormattedHTMLMessage id="homepage.instructions" />
+                <FormattedHTMLMessage id="homepage.instructionsESTR" />
 
                 <Button secondary fluid size="massive" as="a" href="https://give.roomtoread.org/campaign/capco-active-for-education/c186488" target="_blank" className="donate-button">
                   <FormattedMessage id="homepage.donate" />
