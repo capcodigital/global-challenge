@@ -20,9 +20,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
   useEffect(() => {
     getTeamsList();
     window.scrollTo({ top: 0, behavior: "smooth" });
-    setTeamName(
-      window.location.pathname.split("/progress/team/")[1].replace(/-/g, " ")
-    );
+    setTeamName(window.location.pathname.split("/team/")[1].replace(/-/g, " "));
   }, []);
 
   useEffect(() => {
@@ -35,38 +33,40 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
   let total = teams
     .map((team) => team.totalDistance)
     .reduce((a, b) => a + b, 0);
-
+  
   return team ? (
     <div className="dashboard">
       <Segment className="secondary">
-        <div className="counter-uk">
-          <div className="wrapper">
-            <span className="text">Overal Distance: </span>
-            <span className="total">{total}km</span>
+        <div className="heading">
+          <div className="counter-uk">
+            <div className="wrapper">
+              <span className="text">Overal Distance: </span>
+              <span className="total">{total}km</span>
+            </div>
           </div>
         </div>
         <LoadScript
-          googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+          googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
           libraries={libraries}
         >
-          <MapUK teams={teams} />
+          <MapUK teams={teams} team={team} />
         </LoadScript>
       </Segment>
       <Segment className="primary">
         <Grid container stackable columns={2} verticalAlign="middle">
           <Grid.Row>
             <Grid.Column>
-              <Link to="/progress" className="back-link">
+              <Link to="/" className="back-link">
                 <Icon name="angle left" />
                 Back to leaderboard
               </Link>
               <Header size="large">{team.name}</Header>
               <div className="team-distance">
-                Team Distance: {team.totalDistance}km
+                Team Distance: {team.totalDistanceConverted}km
               </div>
               <TeamLeaderboardTable
                 data={team.members.sort(
-                  (a, b) => b.totalDistance - a.totalDistance
+                  (a, b) => b.totalDistanceConverted - a.totalDistanceConverted
                 )}
                 isMainDashboard={false}
               />
@@ -100,8 +100,10 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
                         height={290}
                         data={team.members.map((member) => ({
                           name: member.name,
-                          distance: member.totalCycling,
+                          distance: member.totalCyclingConverted,
+                          actualDistance: member.totalCycling,
                         }))}
+                        showActualDistance={true}
                       />
                     </div>
                   </Grid.Column>

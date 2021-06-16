@@ -1,11 +1,39 @@
 .header {
   .menu {
     border-bottom: solid 1px #e6e6eb !important;
+    .item:first-child {
+      float: left;
+    }
+    .item:nth-child(2),
+    .item:nth-child(3) {
+      top: 50%;
+      float: right;
+    }
   }
 
   img {
     &:first-of-type {
       margin-right: 10px;
     }
+  }
+  .ui.menu > .container {
+    display: block;
+  }
+}
+
+.button.ui.secondary.donate-button-header {
+  color: #fa451b;
+  border: 1px solid #fa451b;
+  width: 100px;
+  
+  transform: translate(-50%, -50%);
+  &:focus {
+    color: #fa451b;
+    background-color: transparent;
+  }
+  &:hover {
+    color: white;
+    background-color: #fa451b;
+    text-decoration: none;
   }
 }

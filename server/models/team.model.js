@@ -20,11 +20,13 @@ var TeamSchema = new Schema({
         Run: Number,
         Swim: Number, 
         Cycling: Number,
+        CyclingConverted: Number,
         Rowing: Number
     },
     members: [],
     teamAvatar: String,
     totalDistance: Number,
+    totalDistanceConverted: Number,
     totalDuration: Number,
     completionDate: Date,
     

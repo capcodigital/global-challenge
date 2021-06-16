@@ -13,7 +13,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
 
   const handleClick = (teamName) => {
     history.push(
-      `/progress/team/${teamName.toLowerCase().replace(/\s/g, "-")}`
+      `/team/${teamName.toLowerCase().replace(/\s/g, "-")}`
     );
   };
 
@@ -73,7 +73,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
                       !isMainDashboard && "team-view"
                     }`}
                   >
-                    {item.totalDistance}
+                    {item.totalDistanceConverted}
                     km
                   </Table.Cell>
                   {isMainDashboard && (

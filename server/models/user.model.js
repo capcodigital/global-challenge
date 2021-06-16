@@ -13,6 +13,7 @@ var UserSchema = new Schema({
         type: String,
         unique: true
     },
+    email: String,
     app: String,
     location: String,
     level: String,
@@ -28,6 +29,7 @@ var UserSchema = new Schema({
     activities: {},
     picName: String,
     totalDistance: Number,
+    totalDistanceConverted: Number,
     totalCalories: Number,
     totalDuration: Number,
     totalSteps: Number,
@@ -35,6 +37,7 @@ var UserSchema = new Schema({
     totalRun: Number,
     totalSwim: Number,
     totalCycling: Number,
+    totalCyclingConverted: Number,
     totalRowing: Number,
 }, {strict: false});
 
