@@ -21,9 +21,10 @@ import enMessages from './messages/messages_EN.json';
 import 'semantic-ui-css/semantic.min.css';
 import 'sanitize.css/sanitize.css';
 
-// Load the favicon
+// Load the favicon and apple touch icon
 /* eslint-disable import/no-webpack-loader-syntax */
-import '!file-loader?name=[name].[ext]!./images/challenge_favicon.png';
+import '!file-loader?name=[name].[ext]!./images/ESTR_favicon.png';
+import '!file-loader?name=[name].[ext]!./images/apple-touch-icon.png';
 /* eslint-enable import/no-webpack-loader-syntax */
 
 // Import CSS reset and Global Styles

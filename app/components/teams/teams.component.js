@@ -8,6 +8,7 @@ import {
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import RegistrationForm from '../register';
 import Banner from './images/banner.png';
+import ESTRBanner from './images/ESTR-banner.png'
 import './style.scss';
 
 class TeamsPage extends React.Component {
@@ -157,7 +158,7 @@ class TeamsPage extends React.Component {
       <div className="homepage">
         <Container>
           <div className="banner">
-            <img src={Banner} width="100%" alt="Capco banner" />
+            <img src={ESTRBanner} width="100%" alt="Capco banner" />
           </div>
           <Segment style={{ padding: '0' }} vertical>
             <Grid columns="equal" stackable>
