@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Menu, Container, Button } from "semantic-ui-react";
-import Logo from "./images/capco.png";
-import GlobalChallenge from "./images/global-challenge-full.png";
+import ESTRChallenge from "./images/estr-challenge-full.png";
 import "./style.scss";
 
 class Header extends React.Component {
@@ -14,10 +13,9 @@ class Header extends React.Component {
           <Container>
             <Menu.Item>
               <Link to="/">
-                <img src={Logo} width="100px" alt="Logo" />
                 <img
-                  src={GlobalChallenge}
-                  width="180px"
+                  src={ESTRChallenge}
+                  width="450px"
                   alt="Globa Challenge Logo"
                   className="global-challenge-logo"
                 />
