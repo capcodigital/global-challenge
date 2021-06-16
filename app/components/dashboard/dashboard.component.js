@@ -54,7 +54,7 @@ class Dashboard extends React.Component {
     let total = teams
       .map((team) => team.totalDistance)
       .reduce((a, b) => a + b, 0);
-
+    console.log(process.env);
     return (
       !error && (
         <div className="dashboard">

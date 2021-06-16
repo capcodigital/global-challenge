@@ -4,7 +4,7 @@ COPY . /app
 WORKDIR /app
 
 RUN yarn install
-RUN yarn build
+RUN npm run build
 EXPOSE 443
 
-CMD ["yarn", "start"]
+CMD ["npm", "run", "start"]

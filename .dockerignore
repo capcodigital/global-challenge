@@ -2,3 +2,4 @@ kubernetes/
 node_modules/
 package-lock.json
 yarn.lock
+config/keys/*.txt

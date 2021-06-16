@@ -1,9 +1,6 @@
 import axios from 'axios';
 
-export let SERVER_URL = 'https://localhost/';
-if (process.env.NODE_ENV == 'production') {
-	SERVER_URL = 'https://35.201.121.201/';
-}
+export const SERVER_URL = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 
 // Activities actions
 export const FETCH_ACTIVITIES_REQUEST = 'FETCH_ACTIVITIES_REQUEST';

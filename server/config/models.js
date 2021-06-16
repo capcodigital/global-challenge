@@ -17,20 +17,20 @@ mongoose.connection.on("open", function(ref){
 mongoose.connection.on("disconnected", function(ref){
     console.log("Database Connection Disconnected");
     console.log("End Process");
-    process.exit();
+    process.exit(1);
 });
 
 mongoose.connection.on("error", function(err){
     console.log("Database Connection Failure");
     console.log(err);
     console.log("End Process");
-    process.exit();
+    process.exit(1);
 });
 
 mongoose.connection.on("close", function(err){
     console.log("Database Connection Closed");
     console.log("End Process");
-    process.exit();
+    process.exit(1);
 });
 
 // Bootstrap models
