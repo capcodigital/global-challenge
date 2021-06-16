@@ -40,7 +40,7 @@ exports.get = function(req, res, next) {
 /**
  * Get dates for current challenge
  */
-exports.getCurrentChallengeDates = function() {
+exports.getCurrentChallengeDates = function(cb) {
     Challenge.findOne({
         status: 'In Progress'
     }).exec(function(err, challenge) {
@@ -49,16 +49,17 @@ exports.getCurrentChallengeDates = function() {
         } else {
             let dates = [];
             dates.push(challenge.startDate.toISOString().split('T')[0]);
-            let nextDate = new Date().setDate(challenge.startDate.getDate() + 1);
+            let nextDate = new Date();
+            nextDate.setDate(challenge.startDate.getDate() + 1);
 
-            while (nextDate.getDate() !== challenge.endDate.getDate() && nextDate.getMonth() !== challenge.endDate.getMonth()) {
+            while (nextDate.getDate() !== challenge.endDate.getDate()) {
                 dates.push(nextDate.toISOString().split('T')[0]);
-                nextDate.setDate(challenge.startDate.getDate() + 1);
+                nextDate.setDate(nextDate.getDate() + 1);
             }
 
             dates.push(challenge.endDate.toISOString().split('T')[0]);
 
-            return dates;
+            cb(dates);
         }
     });
 };

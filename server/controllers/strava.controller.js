@@ -21,11 +21,10 @@ if (!apiKey || !secret || !client_id) {
     client_id = fs.readFileSync('./config/keys/strava_client.txt', 'utf8');
 }
 
-// Month is an index
-var startDate = new Date(2020,11,15);
-var integerTime = Number(startDate) / 1000;
-
-challengeDates = challenges.getCurrentChallengeDates();
+var challengeDates = []; 
+challenges.getCurrentChallengeDates(function(dates) {
+    challengeDates = dates;
+});
 
 var headers = {
     "api-token" : apiKey
@@ -41,7 +40,7 @@ var authOptions = {
 
 var callbackUrl = "35.201.121.201"
 if (process.env.NODE_ENV != "production") {
-    callbackUrl = "35.201.121.201";
+    callbackUrl = "localhost";
 }
 
 // The master node should update the stats in the database at set intervals and then
@@ -125,7 +124,6 @@ exports.authorize = function(req, res) {
 
                         user.save(function(err, newUser) {
                             if (err) {
-                                console.log(err);
                                 if (err.code == 11000) {
                                     if (user.app == "FitBit") {
                                         res.redirect('https://' + callbackUrl + '/register?success=fitBitRegistered');
@@ -133,6 +131,7 @@ exports.authorize = function(req, res) {
                                         res.redirect('https://' + callbackUrl + '/register?success=stravaRegistered');
                                     }
                                 } else {
+                                    console.log(err);
                                     res.redirect('https://' + callbackUrl + '/register?success=serverError');
                                 }
                             } else {
@@ -194,6 +193,8 @@ function buildRequest(options, callback) {
 };
 
 function getStats(user) {
+    // Month is an index
+    var integerTime = Number(challengeDates[0]) / 1000;
     strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime }, function(err, result) {
         if (err) {
             console.log("Error");

@@ -18,7 +18,10 @@ if (!secret || !client_id) {
     client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
 }
 
-var challengeDates = challenges.getCurrentChallengeDates();
+var challengeDates = [];
+challenges.getCurrentChallengeDates(function(dates) {
+    challengeDates = dates;
+});
 var code = client_id + ':' + secret;
 var authorizationCode = "Basic " + new Buffer(code).toString('base64');
 
@@ -321,7 +324,6 @@ function getStats(user, date) {
 function save(user, res) {
     user.save(function(err, newUser) {
         if (err) {
-            console.log(err.message);
             if (err.code == 11000) {
                 if (user.app == "Strava") {
                     res.redirect('https://' + callbackUrl + '/register?success=stravaRegistered');
@@ -329,6 +331,7 @@ function save(user, res) {
                     res.redirect('https://' + callbackUrl + '/register?success=fitbitRegistered');
                 }
             } else {
+                console.log(err.message);
                 res.redirect('https://' + callbackUrl + '/register?success=serverError');
             }
         } else {
