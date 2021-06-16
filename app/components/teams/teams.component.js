@@ -11,6 +11,8 @@ import Banner from './images/banner.png';
 import ESTRBanner from './images/ESTR-banner.png'
 import './style.scss';
 
+export const SERVER_URL = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
+
 class TeamsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -76,7 +78,7 @@ class TeamsPage extends React.Component {
     event.preventDefault();
     const data = new FormData(event.target);
 
-    fetch('https://35.227.237.141/teams', {
+    fetch(`${SERVER_URL}teams`, {
     // fetch('https://localhost/teams', {
       method: 'POST',
       mode: 'cors',
@@ -115,7 +117,7 @@ class TeamsPage extends React.Component {
     event.preventDefault();
     const data = new FormData(event.target);
 
-    fetch('https://35.227.237.141/teams', {
+    fetch(`${SERVER_URL}teams`, {
     // fetch('https://localhost/teams', {
       method: 'PUT',
       mode: 'cors',

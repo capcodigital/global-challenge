@@ -3,5 +3,5 @@ module.exports = {
     app: {
         name: "Step Challenge"
     },
-    port: process.env.PORT || 443
+    port: process.env.PORT || 80
 }

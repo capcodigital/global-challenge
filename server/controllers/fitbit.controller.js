@@ -50,10 +50,7 @@ if (cluster.isMaster) {
     updateEveryInterval(60);
 }
 
-var callbackUrl = "35.201.121.201"
-if (process.env.NODE_ENV != "production") {
-    callbackUrl = "35.201.121.201";
-}
+const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 
 exports.authorize = function(req, res) {
 

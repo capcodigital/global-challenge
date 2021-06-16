@@ -38,10 +38,7 @@ var authOptions = {
     agent: false
 };
 
-var callbackUrl = "35.201.121.201"
-if (process.env.NODE_ENV != "production") {
-    callbackUrl = "35.201.121.201";
-}
+const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes

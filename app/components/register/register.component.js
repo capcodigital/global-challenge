@@ -9,6 +9,7 @@ import Strava from './images/ConnectWithStrava.png';
 import './style.scss';
 
 const parameters = queryString.parse(window.location.search);
+const SERVER_URL = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 
 const RegistrationForm = () => (
   <div className="login-form">
@@ -16,7 +17,7 @@ const RegistrationForm = () => (
       <Segment stacked>
         <input type="hidden" name="response_type" value="code" />
         <input type="hidden" name="client_id" value="228MZ3" />
-        <input type="hidden" name="redirect_uri" value="https://35.201.121.201/fitbit/auth" />
+        <input type="hidden" name="redirect_uri" value={`${SERVER_URL}fitbit/auth`} />
         {/*}<input type="hidden" name="redirect_uri" value="https://localhost/fitbit/auth" />*/}
         <input type="hidden" name="scope" value="activity location" />
 
@@ -52,7 +53,7 @@ const RegistrationForm = () => (
       <Segment stacked>
         <input type="hidden" name="response_type" value="code" />
         <input type="hidden" name="client_id" value="7291" />
-        <input type="hidden" name="redirect_uri" value="https://35.201.121.201/auth" />
+        <input type="hidden" name="redirect_uri" value={`${SERVER_URL}auth`} />
         {/*<input type="hidden" name="redirect_uri" value="https://localhost/strava/auth" />*/}
         <input type="hidden" name="scope" value="activity:read_all" />
 
