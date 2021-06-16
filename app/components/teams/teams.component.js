@@ -10,6 +10,8 @@ import RegistrationForm from '../register';
 import Banner from './images/banner.png';
 import './style.scss';
 
+const SERVER_URL = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'https://localhost/';
+
 class TeamsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -75,8 +77,7 @@ class TeamsPage extends React.Component {
     event.preventDefault();
     const data = new FormData(event.target);
 
-    fetch('https://35.227.237.141/teams', {
-    // fetch('https://localhost/teams', {
+    fetch(SERVER_URL + 'teams', {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -114,8 +115,7 @@ class TeamsPage extends React.Component {
     event.preventDefault();
     const data = new FormData(event.target);
 
-    fetch('https://35.227.237.141/teams', {
-    // fetch('https://localhost/teams', {
+    fetch(SERVER_URL + 'teams', {
       method: 'PUT',
       mode: 'cors',
       headers: {

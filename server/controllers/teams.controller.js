@@ -78,11 +78,14 @@ exports.all = function(req, res, next) {
  * Create a team
  */
 exports.create = function(req, res) {
-
+    console.log('Creating a team...');
     User.findOne({
         username: req.body.captain
     }).exec(function(err, user) {
-        if (err) res.send(400, { message: 'createTeamFailed'});
+        if (err) {
+            console.log(err);
+            res.send(400, { message: 'createTeamFailed'});
+        }
         if (!user) res.send(400, { message: 'createTeamFailedUserNotFound'});
 
         var team = new Team(req.body);
