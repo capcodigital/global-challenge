@@ -16,8 +16,7 @@ const QAndAPair = (props) => (
       <Grid.Column width={2} className='answer-letter' textAlign='center' style={{ paddingBottom: '2rem', paddingTop: '2rem' }}>
         A.
       </Grid.Column>
-      <Grid.Column width={10} className='answer-text'>
-        {props.answerText}
+      <Grid.Column width={10} className='answer-text' dangerouslySetInnerHTML={{ __html:`${props.answerText}`}}>
       </Grid.Column>
     </Grid>
   </React.Fragment>

@@ -13,8 +13,8 @@ const SetupInstructions = () => (
     <Grid className="step-text" stackable centered style={{ paddingTop: '2rem' }}>
       <Grid.Column textAlign="left" verticalAlign='middle' width={6} style={{ paddingBottom: '3rem', paddingTop: '2rem' }}>
         <List>
-          <List.Item>1. Connect your Fitbit or Strava account to Capco Challenge platform. Open the challenge application: </List.Item>
-          <List.Item>2. Enter your Capco 4-letter ID in the 'Register' section on this page for either Strava or Fitbit</List.Item>
+          <List.Item>1. Connect your Fitbit or Strava account to Capco Challenge platform. Open the challenge website.</List.Item>
+          <List.Item>2. Enter your Capco 4-letter ID in the 'Register' section on this page for either Strava or Fitbit.</List.Item>
         </List>
       </Grid.Column>
       <Grid.Column width={6}>
@@ -37,7 +37,7 @@ const SetupInstructions = () => (
       <Grid.Column textAlign="left" verticalAlign='middle' width={6} style={{ paddingBottom: '3rem', paddingTop: '2rem' }}>
         <List>
           <List.Item>1. Link the Capco Global Step Challenge platform with your Fitbit account, by entering your Fitbit credentials.</List.Item>
-          <List.Item>2. If you haven’t set up a Fitbit account yet select “Sign Up” and follow these steps</List.Item>
+          <List.Item>2. If you haven’t set up a Fitbit account yet select “Sign Up” and follow these steps.</List.Item>
         </List>
       </Grid.Column>
       <Grid.Column width={6}>
@@ -49,7 +49,7 @@ const SetupInstructions = () => (
       <Grid.Column textAlign="left" verticalAlign='middle' width={6} style={{ paddingBottom: '3rem', paddingTop: '2rem' }}>
         <List>
           <List.Item>1. Link the Capco Global Step Challenge platform with your Strava account, by entering your Strava credentials.</List.Item>
-          <List.Item>2. If you haven’t set up a Strava account yet select “Sign Up” and follow these steps</List.Item>
+          <List.Item>2. If you haven’t set up a Strava account yet select “Sign Up” and follow these steps.</List.Item>
         </List>
       </Grid.Column>
       <Grid.Column width={6}>

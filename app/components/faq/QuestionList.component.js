@@ -2,7 +2,6 @@ import React from 'react';
 import { Grid, List, Header, Menu, Icon } from 'semantic-ui-react';
 import './style.scss';
 import { rightArrowIcon } from "./images";
-import QuickLinkMenu from './QuickLinkMenu.component';
 
 const QuestionList = (props) => (
   <React.Fragment>

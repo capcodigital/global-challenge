@@ -30,7 +30,7 @@ const StravaSetupInstructions = () => (
           <List.Item>3. You will receive an email asking you to confirm your account – if you are unable to locate, try your spam folder.</List.Item>
           <List.Item>4. Select confirm email address on the email and log in to Strava</List.Item>
           <List.Item>5. You will now be on the Strava dashboard page – select your gender and your sport – for this select running (don’t worry this is simply a setting and you do not have to run always - this is a multi sport event). There is a range of other data that Strava will request from you at this point however you can select ‘skip’ if you do not want to enter this.</List.Item>
-          <List.Item>6. To <b>ensure your activity is syncing and that your distance is measured in Kilometres</b> select your avatar (image), then select settings from the drop down menu, select display preferences and update Units & Measurements and Default Sport. For additional profile changes and assistance please refer to </List.Item>
+          <List.Item>6. To <b>ensure your activity is syncing and that your distance is measured in Kilometres</b> select your avatar (image), then select settings from the drop down menu, select display preferences and update Units & Measurements and Default Sport. For additional profile changes and assistance please refer to <a href="https://support.strava.com/hc/en-us/articles/216917697-Your-Strava-Profile-Page" target="_blank">Strava's help page</a></List.Item>
           <List.Item>7. To record your activities you can either:
             <List bulleted>
               <List.Item>Use the Dashboard to log activity (from your web browser on your PC)</List.Item>

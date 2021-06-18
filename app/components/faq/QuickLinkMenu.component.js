@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Grid, Menu, Icon } from 'semantic-ui-react';
 import './style.scss';
