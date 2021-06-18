@@ -27,11 +27,14 @@ var ChallengeSchema = new Schema({
         enum: ['Walk', 'Run', 'Ride', 'Swim', 'Rowing'],
         default: 'Walk',
     },
+    minTeamSize: Number,
+    maxTeamSize: Number,
     logo: String,
     locations: {
         type: [String]
     },
-    previousVersionName: String
+    previousVersionName: String,
+    targetDistance: Number
 }, {strict: false});
 
 ChallengeSchema.statics = {

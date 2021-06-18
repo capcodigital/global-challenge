@@ -22,6 +22,7 @@ module.exports = function addProdMiddlewares(app, options) {
   app.get('/users/list', users.list);
   app.get('/users/activities', users.activities);
   app.get('/users/citUpdate', users.citUpdate);
+  app.get('/users/inactiveUsers', users.inactiveUsers);
 
   // app.get('/users/addManual', users.addManual);
 
@@ -29,6 +30,8 @@ module.exports = function addProdMiddlewares(app, options) {
   app.get('/teams', teams.all);
   app.post('/teams', teams.create);
   app.put('/teams', teams.update);
+  app.get('/teams/teamMembers', teams.teamMembers);
+  app.get('/teams/notInATeam', teams.notInATeam);
 
   app.get('/challenges/list', challenges.list);
   app.get('/challenges', challenges.get);

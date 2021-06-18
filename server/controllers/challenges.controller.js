@@ -38,6 +38,33 @@ exports.get = function(req, res, next) {
 };
 
 /**
+ * Get dates for current challenge
+ */
+exports.getCurrentChallengeDates = function(cb) {
+    Challenge.findOne({
+        status: 'In Progress'
+    }).exec(function(err, challenge) {
+        if (err) {
+            return [];
+        } else {
+            let dates = [];
+            dates.push(challenge.startDate.toISOString().split('T')[0]);
+            let nextDate = new Date();
+            nextDate.setDate(challenge.startDate.getDate() + 1);
+
+            while (nextDate.getDate() !== challenge.endDate.getDate()) {
+                dates.push(nextDate.toISOString().split('T')[0]);
+                nextDate.setDate(nextDate.getDate() + 1);
+            }
+
+            dates.push(challenge.endDate.toISOString().split('T')[0]);
+
+            cb(dates);
+        }
+    });
+};
+
+/**
  * Create a challenge
  */
 exports.create = function(req, res) {

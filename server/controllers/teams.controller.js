@@ -78,6 +78,87 @@ exports.all = function(req, res, next) {
 };
 
 /**
+ * All Team data
+ */
+exports.teamMembers = function(req, res, next) {
+
+    // Get all the users first so we can include their real names etc.
+    User.find({}).select('name username location level').exec(function(err, users) {
+        if (err) {
+            console.log("Data update error please try again later");
+        } else {
+
+            let userMap = [];
+            users.forEach(function(user) {
+                userMap[user.username] = user;
+            });
+
+            Team.find({}).exec(function(err, teams) {
+                if (err) {
+                    res.render('error', {
+                        status: 500
+                    });
+                } else {
+
+                    teams.forEach(function(team) {
+                        let updatedMembers = [];
+
+                        team.members.forEach(function(member) {
+                            updatedMembers.push(userMap[member]);
+                        });
+
+                        team.members = updatedMembers;
+                    });
+
+                    res.jsonp(teams);
+                }
+            });
+        }
+    });
+};
+
+/**
+ * All Team data
+ */
+exports.notInATeam = function(req, res, next) {
+
+    // Get all the users first so we can include their real names etc.
+    User.find({}).select('name username location level').exec(function(err, users) {
+        if (err) {
+            console.log("Data update error please try again later");
+        } else {
+
+            Team.find({}).exec(function(err, teams) {
+                if (err) {
+                    res.render('error', {
+                        status: 500
+                    });
+                } else {
+
+                    let usersInTeam = [];
+                    teams.forEach(function(team) {
+                        
+                        usersInTeam[team.captain] = team.captain;
+                        team.members.forEach(function(member) {
+                            usersInTeam[member] = member;
+                        });
+                    });
+
+                    let notInATeam = [];
+                    users.forEach(function(user) {
+                        if (!usersInTeam[user]) {
+                            notInATeam.push(user);
+                        }
+                    });
+
+                    res.jsonp(notInATeam);
+                }
+            });
+        }
+    });
+};
+
+/**
  * Create a team
  */
 exports.create = function(req, res) {

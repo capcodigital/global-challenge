@@ -4,6 +4,7 @@
 var mongoose = require('mongoose');
 var https = require("https");
 var citService = require('../services/cit.service');
+var challenges = require('./challenges.controller');
 var User = mongoose.model('User');
 var _ = require('lodash');
 var cluster = require('cluster');
@@ -17,7 +18,10 @@ if (!secret || !client_id) {
     client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
 }
 
-var challengeDates = ["2020-12-15","2020-12-16","2020-12-17","2020-12-18","2020-12-19","2020-12-20","2020-12-21"];
+var challengeDates = [];
+challenges.getCurrentChallengeDates(function(dates) {
+    challengeDates = dates;
+});
 var code = client_id + ':' + secret;
 var authorizationCode = "Basic " + new Buffer(code).toString('base64');
 
@@ -320,7 +324,6 @@ function getStats(user, date) {
 function save(user, res) {
     user.save(function(err, newUser) {
         if (err) {
-            console.log(err.message);
             if (err.code == 11000) {
                 if (user.app == "Strava") {
                     res.redirect('https://' + callbackUrl + '/register?success=stravaRegistered');
@@ -328,6 +331,7 @@ function save(user, res) {
                     res.redirect('https://' + callbackUrl + '/register?success=fitbitRegistered');
                 }
             } else {
+                console.log(err.message);
                 res.redirect('https://' + callbackUrl + '/register?success=serverError');
             }
         } else {
