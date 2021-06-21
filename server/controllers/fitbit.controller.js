@@ -54,10 +54,7 @@ if (cluster.isMaster) {
     updateEveryInterval(60);
 }
 
-var callbackUrl = "35.201.121.201"
-if (process.env.NODE_ENV != "production") {
-    callbackUrl = "localhost";
-}
+const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 
 exports.authorize = function(req, res) {
 
@@ -67,12 +64,12 @@ exports.authorize = function(req, res) {
         res.json({error: { user: " Could not authenticate with your Fitbit account"}});
     } else {
         var username = req.query.state;
-        options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=https://" + callbackUrl + "/fitbit/auth";
+        options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=" + callbackUrl + "fitbit/auth";
 
         var newReq = buildRequest(options, function(err, result) {
             if (err) {
               console.log(err);
-              res.redirect('https://' + callbackUrl + '/register?success=fitBitError');
+              res.redirect(callbackUrl + 'register?success=fitBitError');
             } else if (result.errors && result.errors.length > 0) {
                 console.log(result.errors[0].message);
             } else {
@@ -326,13 +323,13 @@ function save(user, res) {
         if (err) {
             if (err.code == 11000) {
                 if (user.app == "Strava") {
-                    res.redirect('https://' + callbackUrl + '/register?success=stravaRegistered');
+                    res.redirect(callbackUrl + 'register?success=stravaRegistered');
                 } else {
-                    res.redirect('https://' + callbackUrl + '/register?success=fitbitRegistered');
+                    res.redirect(callbackUrl + 'register?success=fitbitRegistered');
                 }
             } else {
                 console.log(err.message);
-                res.redirect('https://' + callbackUrl + '/register?success=serverError');
+                res.redirect(callbackUrl + 'register?success=serverError');
             }
         } else {
             // If User has joined part way through the competition. Retrieve previous days stats in the background
@@ -340,7 +337,7 @@ function save(user, res) {
                 getStats(newUser, date);
             });
 
-            res.redirect('https://' + callbackUrl + '/register?success=fitBitSuccess');
+            res.redirect(callbackUrl + 'register?success=fitBitSuccess');
         }
     });
 }
