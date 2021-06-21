@@ -273,7 +273,7 @@ class TeamsPage extends React.Component {
                   </div>
 
                   <div className="progress-button-container">
-                    <Button color="black" basic size="massive" as="a" href="/progress" className="progress-button">
+                    <Button color="black" basic size="massive" as="a" href="/" className="progress-button">
                       <FormattedMessage id="homepage.progress" />
                     </Button>
                   </div>

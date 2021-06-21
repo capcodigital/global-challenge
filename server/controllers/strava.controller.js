@@ -4,6 +4,7 @@
 var mongoose = require('mongoose');
 var https = require("https");
 var citService = require('../services/cit.service');
+var challenges = require('./challenges.controller');
 var User = mongoose.model('User');
 var strava = require('strava-v3');
 var cluster = require('cluster');
@@ -20,11 +21,10 @@ if (!apiKey || !secret || !client_id) {
     client_id = fs.readFileSync('./config/keys/strava_client.txt', 'utf8');
 }
 
-// Month is an index
-var startDate = new Date(2020,11,15);
-var integerTime = Number(startDate) / 1000;
-
-var challengeDates = ["2020-12-15","2020-12-16","2020-12-17","2020-12-18","2020-12-19","2020-12-20","2020-12-21"];
+var challengeDates = []; 
+challenges.getCurrentChallengeDates(function(dates) {
+    challengeDates = dates;
+});
 
 var headers = {
     "api-token" : apiKey
@@ -58,7 +58,7 @@ exports.authorize = function(req, res) {
         var newReq = buildRequest(userOptions, function(err, result){
             if (err) {
                 console.log("Request Error: " + err);
-                res.redirect('https://' + callbackUrl + '/register?success=stravaError');
+                res.redirect(callbackUrl + 'register?success=stravaError');
             } else {
             
                 citService.getUser(username.toLowerCase(), function(err, profile) {
@@ -121,18 +121,18 @@ exports.authorize = function(req, res) {
 
                         user.save(function(err, newUser) {
                             if (err) {
-                                console.log(err);
                                 if (err.code == 11000) {
                                     if (user.app == "FitBit") {
-                                        res.redirect('https://' + callbackUrl + '/register?success=fitBitRegistered');
+                                        res.redirect(callbackUrl + 'register?success=fitBitRegistered');
                                     } else {
-                                        res.redirect('https://' + callbackUrl + '/register?success=stravaRegistered');
+                                        res.redirect(callbackUrl + 'register?success=stravaRegistered');
                                     }
                                 } else {
-                                    res.redirect('https://' + callbackUrl + '/register?success=serverError');
+                                    console.log(err);
+                                    res.redirect(callbackUrl + 'register?success=serverError');
                                 }
                             } else {
-                                res.redirect('https://' + callbackUrl + '/register?success=stravaSuccess');
+                                res.redirect(callbackUrl + 'register?success=stravaSuccess');
                             }
                         });
                     }
@@ -190,6 +190,8 @@ function buildRequest(options, callback) {
 };
 
 function getStats(user) {
+    // Month is an index
+    var integerTime = Number(challengeDates[0]) / 1000;
     strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime }, function(err, result) {
         if (err) {
             console.log("Error");

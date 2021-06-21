@@ -4,6 +4,7 @@
 var mongoose = require('mongoose');
 var https = require("https");
 var citService = require('../services/cit.service');
+var challenges = require('./challenges.controller');
 var User = mongoose.model('User');
 var _ = require('lodash');
 var cluster = require('cluster');
@@ -17,7 +18,10 @@ if (!secret || !client_id) {
     client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
 }
 
-var challengeDates = ["2020-12-15","2020-12-16","2020-12-17","2020-12-18","2020-12-19","2020-12-20","2020-12-21"];
+var challengeDates = [];
+challenges.getCurrentChallengeDates(function(dates) {
+    challengeDates = dates;
+});
 var code = client_id + ':' + secret;
 var authorizationCode = "Basic " + new Buffer(code).toString('base64');
 
@@ -60,12 +64,12 @@ exports.authorize = function(req, res) {
         res.json({error: { user: " Could not authenticate with your Fitbit account"}});
     } else {
         var username = req.query.state;
-        options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=https://" + callbackUrl + "/fitbit/auth";
+        options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=" + callbackUrl + "fitbit/auth";
 
         var newReq = buildRequest(options, function(err, result) {
             if (err) {
               console.log(err);
-              res.redirect('https://' + callbackUrl + '/register?success=fitBitError');
+              res.redirect(callbackUrl + 'register?success=fitBitError');
             } else if (result.errors && result.errors.length > 0) {
                 console.log(result.errors[0].message);
             } else {
@@ -317,15 +321,15 @@ function getStats(user, date) {
 function save(user, res) {
     user.save(function(err, newUser) {
         if (err) {
-            console.log(err.message);
             if (err.code == 11000) {
                 if (user.app == "Strava") {
-                    res.redirect('https://' + callbackUrl + '/register?success=stravaRegistered');
+                    res.redirect(callbackUrl + 'register?success=stravaRegistered');
                 } else {
-                    res.redirect('https://' + callbackUrl + '/register?success=fitbitRegistered');
+                    res.redirect(callbackUrl + 'register?success=fitbitRegistered');
                 }
             } else {
-                res.redirect('https://' + callbackUrl + '/register?success=serverError');
+                console.log(err.message);
+                res.redirect(callbackUrl + 'register?success=serverError');
             }
         } else {
             // If User has joined part way through the competition. Retrieve previous days stats in the background
@@ -333,7 +337,7 @@ function save(user, res) {
                 getStats(newUser, date);
             });
 
-            res.redirect('https://' + callbackUrl + '/register?success=fitBitSuccess');
+            res.redirect(callbackUrl + 'register?success=fitBitSuccess');
         }
     });
 }
