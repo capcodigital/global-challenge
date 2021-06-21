@@ -1,0 +1,49 @@
+repos:
+
+- repo: https://github.com/pre-commit/mirrors-eslint
+  rev: v7.29.0
+  hooks:
+    - id: eslint
+      name: eslint linting
+        - eslint-config-airbnb@17.1.0
+        - eslint-config-airbnb-base@13.1.0"
+        - eslint-plugin-import@2.14.0
+        - eslint-plugin-jsx-a11y@6.1.2
+        - eslint-plugin-react@7.11.1
+      args: ['--fix']
+
+- repo: https://github.com/igorshubovych/markdownlint-cli
+  rev: v0.27.1
+  hooks:
+    - id: markdownlint
+      name: markdown linting
+
+- repo: https://github.com/yelp/detect-secrets.git
+  rev: v1.1.0
+  hooks:
+    - id: detect-secrets
+      name: detect secrets
+      args: ['--baseline', '.secrets.baseline']
+
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.0.1
+  hooks:
+    - id: trailing-whitespace
+      name: trailing whitespace
+    - id: end-of-file-fixer
+      name: end of file fixer
+    - id: check-added-large-files
+      name: check added large files
+    - id: check-yaml
+      name: check yaml
+    - id: check-json
+      name: check json
+
+
+#warning " > eslint-config-airbnb@17.1.0" has incorrect peer dependency "eslint@^4.19.1 || ^5.3.0".
+#warning "eslint-config-airbnb > eslint-config-airbnb-base@13.2.0" has incorrect peer dependency "eslint@^4.19.1 || ^5.3.0".
+#warning "eslint-config-airbnb > eslint-config-airbnb-base@13.2.0" has incorrect peer dependency "eslint-plugin-import@^2.17.2".
+#warning " > eslint-config-airbnb-base@13.1.0" has incorrect peer dependency "eslint@^4.19.1 || ^5.3.0".
+#warning " > eslint-plugin-import@2.14.0" has incorrect peer dependency "eslint@2.x - 5.x".
+#warning " > eslint-plugin-jsx-a11y@6.1.2" has incorrect peer dependency "eslint@^3 || ^4 || ^5".
+#warning " > eslint-plugin-react@7.11.1" has incorrect peer dependency "eslint@^3.0.0 || ^4.0.0 || ^5.0.0".

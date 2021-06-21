@@ -76,8 +76,8 @@ if (module.hot) {
 render();
 
 // Refresh every hour to pick up the latest updates
-var hourlyRefresh = 60 * 60 * 1000;
+const hourlyRefresh = 60 * 60 * 1000;
 
-setInterval(function(){
+setInterval(() => {
   document.location.reload();
 }, hourlyRefresh);
