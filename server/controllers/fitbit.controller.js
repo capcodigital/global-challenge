@@ -56,7 +56,7 @@ if (cluster.isMaster) {
 
 var callbackUrl = "35.201.121.201"
 if (process.env.NODE_ENV != "production") {
-    callbackUrl = "35.201.121.201";
+    callbackUrl = "localhost";
 }
 
 exports.authorize = function(req, res) {

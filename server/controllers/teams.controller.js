@@ -8,12 +8,12 @@ var User = mongoose.model('User');
 var mailer = require('../services/mail.service');
 var config = require("../config/config");
 
-const maxMembers = config.maxTeamSize - 1;
-const minMembers = config.maxTeamSize - 1;
+const maxMembers = config.maxTeamSize;
+const minMembers = config.minTeamSize;
 
 var callbackUrl = "35.201.121.201"
 if (process.env.NODE_ENV != "production") {
-    callbackUrl = "35.201.121.201";
+    callbackUrl = "localhost";
 }
 
 // The master node should update the stats in the database at set intervals and then
@@ -166,20 +166,35 @@ exports.create = function(req, res) {
     User.findOne({
         username: req.body.captain
     }).exec(function(err, user) {
-        if (err) res.send(400, { message: 'createTeamFailed'});
-        if (!user) res.send(400, { message: 'createTeamFailedUserNotFound'});
+        if (err) {
+            res.send(400, { message: 'createTeamFailed'});
+            return;
+        }
+        if (!user) { 
+            res.send(400, { message: 'createTeamFailedUserNotFound'});
+            return;
+        }
 
         var team = new Team(req.body);
         if (!team.members.includes(team.captain)) {
             team.members.push(team.captain);
         }
 
-        if (team.members.length < minMembers) res.send(400, { message: 'createTeamFailedTooFewPeople'});
-        if (team.members.length > maxMembers) res.send(400, { message: 'createTeamFailedTooManyPeople'});
+        if (team.members.length < minMembers) {
+            console.log("Min Fail");
+            res.send(400, { message: 'createTeamFailedTooFewPeople'});
+            return;
+        }
+        if (team.members.length > maxMembers) {
+            console.log("Max Fail");
+            res.send(400, { message: 'createTeamFailedTooManyPeople'});
+            return;
+        }
 
         team.save(function(err) {
             if (err) {
                 console.log("Error creating team: " + team.name);
+                console.log(err);
                 res.send(400, { message: 'createTeamFailed'});
             } else {
                 res.jsonp(team);
@@ -202,12 +217,27 @@ exports.update = function(req, res) {
         Team.findOne({
             name: req.body.team
         }).exec(function(err, team) {
-            if (err) res.send(400, { message: 'joinTeamFailed'});
-            if (!team) res.send(400, { message: 'joinTeamFailed'});
-            if (team == null) res.send(400, { message: 'joinTeamFailed'});
+            if (err) { 
+                res.send(400, { message: 'joinTeamFailed'});
+                return;
+            }
+            if (!team) { 
+                res.send(400, { message: 'joinTeamFailed'});
+                return;
+            }
+            if (team == null) { 
+                res.send(400, { message: 'joinTeamFailed'});
+                return
+            }
 
-            if (team.members.includes(req.body.member)) res.send(400, { message: 'joinTeamFailedAlreadyAMember'});
-            if (team.members.length > maxMembers) res.send(400, { message: 'joinTeamFailedTooManyPeople'});
+            if (team.members.includes(req.body.member)) { 
+                res.send(400, { message: 'joinTeamFailedAlreadyAMember'});
+                return;
+            }
+            if (team.members.length > maxMembers) {
+                res.send(400, { message: 'joinTeamFailedTooManyPeople'});
+                return;
+            }
 
             team.members.push(req.body.member);
             team.markModified('members');
