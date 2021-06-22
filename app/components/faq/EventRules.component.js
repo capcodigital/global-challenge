@@ -3,9 +3,9 @@ import { Grid, List, Header } from 'semantic-ui-react';
 import './style.scss';
 
 const EventRules = () => (
-  <React.Fragment>
-    <Grid id="event-rules" stackable centered className='question-section' style={{ paddingTop: '2rem' }}>
-      <Grid.Column width={12} className='bold-box' style={{ paddingBottom: '3rem', paddingTop: '2rem' }}>
+  <>
+    <Grid id="event-rules" className='question-section' stackable centered>
+      <Grid.Column width={12} className='bold-box question-section-inner'>
         <Header as='h1' textAlign='center'>Event Rules</Header>
         <List bulleted>
           <List.Item>Only input data into Strava / Fitbit that you have completed if entering data manually.</List.Item>
@@ -17,7 +17,7 @@ const EventRules = () => (
         </List>
       </Grid.Column>
     </Grid>
-  </React.Fragment>
+  </>
 );
 
 export default EventRules;

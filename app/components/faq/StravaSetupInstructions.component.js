@@ -6,10 +6,10 @@ import StravaB from "./images/StravaB.png";
 import './style.scss';
 
 const StravaSetupInstructions = () => (
-  <React.Fragment>
+  <>
     <Header id="strava-no-device" className="strava-hue" as='h1' textAlign='center'>Strava Setup Guide (No Device/Manual entry)</Header>
-    <Grid className="strava-text" stackable centered style={{ paddingTop: '2rem' }}>
-      <Grid.Column textAlign="left" verticalAlign='middle' width={6} style={{ paddingBottom: '3rem', paddingTop: '2rem' }}>
+    <Grid className="strava-text question-section" stackable centered>
+      <Grid.Column className="question-section-inner" textAlign="left" verticalAlign='middle' width={6}>
         <List>
           <List.Item>Either download Strava on your mobile phone or sign up on your computer.</List.Item>
           <List.Item>Strava is free to use, however there is a premium paid version (Strava Summit)  which encourages you to sign up (you do not need this!). Just SKIP this whenever it appears, the free version is all that is required for the challenge.</List.Item>
@@ -22,8 +22,8 @@ const StravaSetupInstructions = () => (
         <img src={StravaA}></img>
       </Grid.Column>
     </Grid>
-    <Grid stackable centered style={{ paddingBottom: '2rem', paddingTop: '2rem' }}>
-      <Grid.Column textAlign="left" verticalAlign='middle' width={6} style={{ paddingBottom: '3rem', paddingTop: '2rem' }}>
+    <Grid className="grid-column-normal" stackable centered>
+      <Grid.Column className="question-section-inner" textAlign="left" verticalAlign='middle' width={6}>
         <List>
           <List.Item>1. You can sign up with Facebook or Google using your normal login for these services or you can enter you email address and sign up manually.</List.Item>
           <List.Item>2. Complete the form and select ‘Sign Up’.</List.Item>
@@ -45,7 +45,7 @@ const StravaSetupInstructions = () => (
         <img src={StravaB}></img>
       </Grid.Column>
     </Grid>
-  </React.Fragment>
+  </>
 );
 
 export default StravaSetupInstructions;

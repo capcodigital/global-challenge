@@ -4,7 +4,7 @@ import React from 'react';
 import {
     Segment, Header, Container, Icon
 } from 'semantic-ui-react';
-import QAndASection from './QAndAPair.component';
+import QAndAPair from './QAndAPair.component';
 import QuestionList from './QuestionList.component';
 import { questionData } from "./questionData"
 import './style.scss';
@@ -18,7 +18,7 @@ function FaqPage() {
   return(
     <div className="faq">
       <Container>
-        <Segment style={{ padding: '10' }} vertical>
+        <Segment vertical>
           <Header as='h1' textAlign='center' icon>
             <Icon name='question'/>
               FREQUENTLY ASKED QUESTIONS
@@ -34,38 +34,32 @@ function FaqPage() {
           <AboutChallenge/>
           <SetupInstructions/>
           <StravaSetupInstructions/>
-          <React.Fragment>
+          <>
             <Header as='h1' textAlign='center'>General</Header>
             {questionData.general.map((question) => (
-                <QAndASection
+                <QAndAPair
                   key={question.questionId}
-                  questionId={question.questionId}
-                  questionText={question.questionText}
-                  answerText={question.answerText}
+                  question={question}
                 />
               )
             )}
             <Header as='h1' textAlign='center'>Team</Header>
             {questionData.team.map((question) => (
-                <QAndASection
+                <QAndAPair
                   key={question.questionId}
-                  questionId={question.questionId}
-                  questionText={question.questionText}
-                  answerText={question.answerText}
+                  question={question}
                 />
               )
             )}
             <Header as='h1' textAlign='center'>Data</Header>
             {questionData.data.map((question) => (
-                <QAndASection
+                <QAndAPair
                   key={question.questionId}
-                  questionId={question.questionId}
-                  questionText={question.questionText}
-                  answerText={question.answerText}
+                  question={question}
                 />
               )
             )}
-          </React.Fragment>
+          </>
         </Segment>
       </Container>
     </div>
