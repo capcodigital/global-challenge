@@ -76,6 +76,7 @@ exports.authorize = function(req, res) {
 
                 citService.getUser(username.toLowerCase(), function(err, profile) {
                     if (err) {
+                        console.log(err);
                         res.json({error: "Could not find your Capco ID"});
                     } else {
                         var user = new User();

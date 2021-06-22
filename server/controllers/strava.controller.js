@@ -56,14 +56,17 @@ exports.authorize = function(req, res) {
         userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "&code=" + req.query.code;
 
         var newReq = buildRequest(userOptions, function(err, result){
+            console.log(result);
             if (err) {
                 console.log("Request Error: " + err);
                 res.redirect(callbackUrl + 'register?success=stravaError');
             } else {
-            
+
+                console.log(username.toLowerCase());
                 citService.getUser(username.toLowerCase(), function(err, profile) {
                     if (err) {
-                        res.render('error', { errormsg: "Could not find your Capco ID" });
+                        console.log(err);
+                        res.json({ errormsg: "Could not find your Capco ID" });
                     } else {
                         var user = new User();
 
