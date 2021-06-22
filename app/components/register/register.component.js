@@ -53,7 +53,7 @@ const RegistrationForm = () => (
       <Segment stacked>
         <input type="hidden" name="response_type" value="code" />
         <input type="hidden" name="client_id" value="7291" />
-        <input type="hidden" name="redirect_uri" value={`${SERVER_URL}auth`} />
+        <input type="hidden" name="redirect_uri" value={`${SERVER_URL}strava/auth`} />
         {/*<input type="hidden" name="redirect_uri" value="https://localhost/strava/auth" />*/}
         <input type="hidden" name="scope" value="activity:read_all" />
 

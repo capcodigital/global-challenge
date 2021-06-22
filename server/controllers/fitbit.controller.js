@@ -51,7 +51,12 @@ var getOptions = {
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
 if (cluster.isMaster) {
-    updateEveryInterval(60);
+    if (process.env.SERVER_URL) {
+        updateEveryInterval(60);
+    }
+    else {
+        updateEveryInterval(5);
+    }
 }
 
 const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
@@ -143,13 +148,13 @@ exports.authorize = function(req, res) {
 * Loop through all users and update their stats from fitbit
 */
 exports.update = function(req, res) {
-    User.find().exec(function(err, users) {
+    User.find({app: 'FitBit'}).exec(function(err, users) {
         if (err) {
             res.json({error: "Server error please try again later"});
         } else {
             var userCount = users.length;
             for (var i = 0; i < userCount; i++) {
-                if (users[i].app == "FitBit" ** users[i].access_token) {
+                if (users[i].access_token) {
                     updateUser(users[i]);
                 }
             }
@@ -218,7 +223,7 @@ function buildRequest(options, callback) {
 function updateUser(user) {
     var today = new Date();
     if (user.expires_in && user.expires_in.getTime() < today.getTime()) {
-        console.log("Token Expired:" + user.name);
+        console.log("FitBit Token Expired:" + user.name);
         options.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
          // If token is expired refresh access token and get a new refresh token
@@ -268,8 +273,13 @@ function getStats(user, date) {
         } else {
             result.date = date;
             if (result.summary) {
+                if (!user.activities) {
+                    user.activities = {};
+                }
                 user.activities[date] = result;
             }
+
+            console.log("Updating FitBit Stats for: " + user.name);
 
             // Update Stats Totals - FitBit stores distance in KM
             user.totalSteps = 0;
@@ -296,7 +306,7 @@ function getStats(user, date) {
                     user.totalDistance = user.totalDistance + user.activities[challengeDates[i]].summary.distances[0].distance;
                     user.totalDistanceConverted = user.totalDistanceConverted + user.activities[challengeDates[i]].summary.distances[0].distance;
                     user.totalDuration = user.totalDuration + totalTime;
-                    user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
+                    // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
 
                     const walkPercentage = walkTime/totalTime;
                     const runPercentage = runTime/totalTime;
@@ -351,11 +361,13 @@ function updateEveryInterval(minutes) {
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){
-        User.find().exec(function(err, users) {
+        console.log("Updating FitBit user stats");
+        User.find({app: 'FitBit'}).exec(function(err, users) {
             if (err) {
                 console.log("Data update error please try again later");
             } else {
                 var userCount = users.length;
+                console.log("Found " + userCount + " FitBit users");
                 for (var i = 0; i < userCount; i++) {
                     if (users[i].access_token) {
                         updateUser(users[i]);

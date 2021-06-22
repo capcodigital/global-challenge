@@ -48,16 +48,34 @@ exports.getCurrentChallengeDates = function(cb) {
             return [];
         } else {
             let dates = [];
-            dates.push(challenge.startDate.toISOString().split('T')[0]);
+            let dateAsString = challenge.startDate.toISOString().split('T')[0];
+            dates.push(dateAsString);
+
+            if (dateAsString.charAt(5) === '0' || dateAsString.charAt(8) === '0') {
+                dateAsString = dateAsString.replace(/\-0/g, '-');
+                dates.push(dateAsString);
+            }
+
             let nextDate = new Date();
             nextDate.setDate(challenge.startDate.getDate() + 1);
 
             while (nextDate.getDate() !== challenge.endDate.getDate()) {
-                dates.push(nextDate.toISOString().split('T')[0]);
+                dateAsString = nextDate.toISOString().split('T')[0];
+                dates.push(dateAsString);
+                if (dateAsString.charAt(5) === '0' || dateAsString.charAt(8) === '0') {
+                    dateAsString = dateAsString.replace(/\-0/g, '-');
+                    dates.push(dateAsString);
+                }
                 nextDate.setDate(nextDate.getDate() + 1);
             }
 
-            dates.push(challenge.endDate.toISOString().split('T')[0]);
+            dateAsString = challenge.endDate.toISOString().split('T')[0];
+            dates.push(dateAsString);
+
+            if (dateAsString.charAt(5) === '0' || dateAsString.charAt(8) === '0') {
+                dateAsString = dateAsString.replace(/\-0/g, '-');
+                dates.push(dateAsString);
+            }
 
             cb(dates);
         }

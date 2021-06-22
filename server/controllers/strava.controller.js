@@ -43,7 +43,12 @@ const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
 if (cluster.isMaster) {
-    updateEveryInterval(60);
+    if (process.env.SERVER_URL) {
+        updateEveryInterval(60);
+    }
+    else {
+        updateEveryInterval(5);
+    }
 }
 
 exports.authorize = function(req, res) {
@@ -148,13 +153,13 @@ exports.authorize = function(req, res) {
  * Loop through all users and update their stats from Strava
  */
 exports.update = function(req, res) {
-    User.find().exec(function(err, users) {
+    User.find({app: 'Strava'}).exec(function(err, users) {
         if (err) {
             res.render('error', { errormsg: "Server error please try again later" });
         } else {
             var userCount = users.length;
             for (var i = 0; i < userCount; i++) {
-                if (users[i].app == "Strava" && users[i].access_token) {
+                if (users[i].access_token) {
                     updateUser(users[i]);
                 }
             }
@@ -197,7 +202,7 @@ function getStats(user) {
             console.log("Error");
             console.log(err);
         } else {
-
+            console.log("Updating Strava Stats for: " + user.name);
             user.activities = result;
 
             // Update Stats Totals
@@ -226,15 +231,20 @@ function getStats(user) {
                     switch (user.activities[i].type) {
                         case 'Run':
                             user.totalRun = user.totalRun + (user.activities[i].distance/1000);
+                            break;
                         case 'Swim':
                             user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
+                            break;
                         case 'Ride':
                             user.totalCycling = user.totalCycling + (user.activities[i].distance/1000);
                             user.totalCyclingConverted = user.totalCyclingConverted + ((user.activities[i].distance/1000)/config.cyclingConversion);
+                            break;
                         case 'Rowing':
                             user.totalRowing = user.totalRowing + (user.activities[i].distance/1000);
+                            break;
                         default:
                             user.totalWalk = user.totalWalk + (user.activities[i].distance/1000);
+                            break;
                     }
 
                     if (user.activities[i].type === 'Ride') {
@@ -259,7 +269,7 @@ function updateUser(user) {
 
     var today = new Date();
     if (user.expires_in && user.expires_in.getTime() < today.getTime()) {
-        console.log("Token Expired:" + user.name);
+        console.log("Strava Token Expired:" + user.name);
         var userOptions = authOptions;
         userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "&grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
@@ -306,11 +316,13 @@ function updateEveryInterval(minutes) {
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){
-        User.find().exec(function(err, users) {
+        console.log("Updating Strava user stats");
+        User.find({app: 'Strava'}).exec(function(err, users) {
             if (err) {
                 console.log("Data update error please try again later");
             } else {
                 var userCount = users.length;
+                console.log("Found " + userCount + " Strava users");
                 for (var i = 0; i < userCount; i++) {
                     if (users[i].access_token) {
                         updateUser(users[i]);
