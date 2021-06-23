@@ -16,7 +16,12 @@ const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
 if (cluster.isMaster) {
-    updateEveryInterval(60);
+    if (process.env.SERVER_URL) {
+        updateEveryInterval(60);
+    }
+    else {
+        updateEveryInterval(5);
+    }
 }
 
 /**
