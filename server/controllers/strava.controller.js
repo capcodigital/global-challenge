@@ -199,7 +199,7 @@ function getStats(user) {
     var integerTime = Number(challengeDates[0]) / 1000;
     strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime }, function(err, result) {
         if (err) {
-            console.log("Error");
+            console.log("Error Accessing Strava activities for " + user.name);
             console.log(err);
         } else {
             console.log("Updating Strava Stats for: " + user.name);
@@ -230,27 +230,27 @@ function getStats(user) {
 
                     switch (user.activities[i].type) {
                         case 'Run':
-                            user.totalRun = user.totalRun + (user.activities[i].distance/1000);
+                            user.totalRun = Math.round(user.totalRun + (user.activities[i].distance/1000));
                             break;
                         case 'Swim':
-                            user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
+                            user.totalSwim = Math.round(user.totalSwim + (user.activities[i].distance/1000));
                             break;
                         case 'Ride':
-                            user.totalCycling = user.totalCycling + (user.activities[i].distance/1000);
-                            user.totalCyclingConverted = user.totalCyclingConverted + ((user.activities[i].distance/1000)/config.cyclingConversion);
+                            user.totalCycling = Math.round(user.totalCycling + (user.activities[i].distance/1000));
+                            user.totalCyclingConverted = Math.round(user.totalCyclingConverted + ((user.activities[i].distance/1000)/config.cyclingConversion));
                             break;
                         case 'Rowing':
-                            user.totalRowing = user.totalRowing + (user.activities[i].distance/1000);
+                            user.totalRowing = Math.round(user.totalRowing + (user.activities[i].distance/1000));
                             break;
                         default:
-                            user.totalWalk = user.totalWalk + (user.activities[i].distance/1000);
+                            user.totalWalk = Math.round(user.totalWalk + (user.activities[i].distance/1000));
                             break;
                     }
 
                     if (user.activities[i].type === 'Ride') {
-                        user.totalDistanceConverted = user.totalDistanceConverted + ((user.activities[i].distance/1000)/config.cyclingConversion);
+                        user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((user.activities[i].distance/1000)/config.cyclingConversion));
                     } else {
-                        user.totalDistanceConverted = user.totalDistanceConverted + (user.activities[i].distance/1000);
+                        user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (user.activities[i].distance/1000));
                     }
                 }
             }

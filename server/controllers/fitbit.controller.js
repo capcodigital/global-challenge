@@ -182,14 +182,7 @@ exports.updateIndividualUser = function(req, res) {
                 username: users[0].username,
                 location: users[0].location,
                 level: users[0].level,
-                totalSteps: users[0].totalSteps,
-                "2019-7-15": users[0]["2019-7-15"] ? users[0]["2019-7-15"].summary.distances[0].distance : 0,
-                "2019-7-16": users[0]["2019-7-16"] ? users[0]["2019-7-16"].summary.distances[0].distance : 0,
-                "2019-7-17": users[0]["2019-7-17"] ? users[0]["2019-7-17"].summary.distances[0].distance : 0,
-                "2019-7-18": users[0]["2019-7-18"] ? users[0]["2019-7-18"].summary.distances[0].distance : 0,
-                "2019-7-19": users[0]["2019-7-19"] ? users[0]["2019-7-19"].summary.distances[0].distance : 0,
-                "2019-7-20": users[0]["2019-7-20"] ? users[0]["2019-7-20"].summary.distances[0].distance : 0,
-                "2019-7-21": users[0]["2019-7-21"] ? users[0]["2019-7-21"].summary.distances[0].distance : 0
+                totalDistance: users[0].totalDistance
             });
         }
     });
@@ -303,16 +296,20 @@ function getStats(user, date) {
                     const totalTime = walkTime + runTime;
 
                     user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
-                    user.totalDistance = user.totalDistance + user.activities[challengeDates[i]].summary.distances[0].distance;
-                    user.totalDistanceConverted = user.totalDistanceConverted + user.activities[challengeDates[i]].summary.distances[0].distance;
+                    user.totalDistance = Math.round(user.totalDistance + user.activities[challengeDates[i]].summary.distances[0].distance);
+                    user.totalDistanceConverted = Math.round(user.totalDistanceConverted + user.activities[challengeDates[i]].summary.distances[0].distance);
                     user.totalDuration = user.totalDuration + totalTime;
                     // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
 
-                    const walkPercentage = walkTime/totalTime;
-                    const runPercentage = runTime/totalTime;
+                    if (walkTime > 0) {
+                        const walkPercentage = walkTime/totalTime;
+                        user.totalWalk = Math.round(user.totalWalk + (user.activities[challengeDates[i]].summary.distances[0].distance * walkPercentage));
+                    }
 
-                    user.totalWalk = user.totalWalk + (user.activities[challengeDates[i]].summary.distances[0].distance * walkPercentage);
-                    user.totalRun = user.totalDistance + (user.activities[challengeDates[i]].summary.distances[0].distance * runPercentage);
+                    if (runTime > 0) {
+                        const runPercentage = runTime/totalTime;
+                        user.totalRun = Math.round(user.totalRun + (user.activities[challengeDates[i]].summary.distances[0].distance * runPercentage));
+                    }
                 }
             }
 
