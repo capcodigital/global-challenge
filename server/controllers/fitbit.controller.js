@@ -297,7 +297,7 @@ function getStats(user, date) {
 
                     user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
                     user.totalDistance = Math.round(user.totalDistance + user.activities[challengeDates[i]].summary.distances[0].distance);
-                    user.totalDistanceConverted = user.totalDistanceConverted + user.activities[challengeDates[i]].summary.distances[0].distance;
+                    user.totalDistanceConverted = Math.round(user.totalDistanceConverted + user.activities[challengeDates[i]].summary.distances[0].distance);
                     user.totalDuration = user.totalDuration + totalTime;
                     // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
 

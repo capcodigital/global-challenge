@@ -348,7 +348,7 @@ function updateEveryInterval(minutes) {
                             team.activities.Rowing += userMap[member].totalRowing;
 
                             team.totalDistance += userMap[member].totalDistance;
-                            team.totalDistanceConverted += userMap[member].totalDistanceConverted;
+                            team.totalDistanceConverted += Math.round(userMap[member].totalDistanceConverted);
                         });
 
                         team.markModified('activities');

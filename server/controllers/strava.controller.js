@@ -200,7 +200,7 @@ function getStats(user) {
     strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime }, function(err, result) {
         if (err) {
             console.log("Error Accessing Strava activities for " + user.name);
-            console.log(err.StatusCodeError);
+            console.log(err);
         } else {
             console.log("Updating Strava Stats for: " + user.name);
             user.activities = result;
