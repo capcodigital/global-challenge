@@ -16,6 +16,7 @@ import HomePage from "components/homepage/homepage.container";
 import "./style.scss";
 import Dashboard, { TeamsDashboard } from "./dashboard/dashboard.container";
 import TeamsPage from "./teams/teams.container";
+import FaqPage from "./faq/FaqPage.component";
 
 const App = () => (
   <div className="app-wrapper">
@@ -32,6 +33,7 @@ const App = () => (
         <Route exact path="/" component={Dashboard} />
         <Route path="/team" component={TeamsDashboard} />
         <Route exact path="/teams/register" component={TeamsPage} />
+        <Route exact path="/faq" component={FaqPage} />
         <Route component={HomePage} />
       </Switch>
       <Footer />
