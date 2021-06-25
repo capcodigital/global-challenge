@@ -187,7 +187,7 @@ exports.create = function(req, res) {
             res.send(400, { message: 'createTeamFailedTooFewPeople'});
             return;
         }
-        if (team.members.length > maxMembers) {
+        if (team.members.length >= maxMembers) {
             console.log("Max Fail");
             res.send(400, { message: 'createTeamFailedTooManyPeople'});
             return;
@@ -236,7 +236,7 @@ exports.update = function(req, res) {
                 res.send(400, { message: 'joinTeamFailedAlreadyAMember'});
                 return;
             }
-            if (team.members.length > maxMembers) {
+            if (team.members.length >= maxMembers) {
                 res.send(400, { message: 'joinTeamFailedTooManyPeople'});
                 return;
             }
