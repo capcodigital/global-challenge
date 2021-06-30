@@ -253,7 +253,7 @@ function updateUser(user) {
 function getStats(user, date) {
     if (!date) {
         var today = new Date();
-        date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        date = today.toISOString().split('T')[0];
     }
     getOptions.path = "/1/user/" + user.user_id + "/activities/date/" + date + ".json";
     getOptions.headers.Authorization = "Bearer " + user.access_token;
@@ -291,25 +291,45 @@ function getStats(user, date) {
             for (var i = 0; i < activityCount; i++) {
                 if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].summary) {
 
-                    const walkTime = user.activities[challengeDates[i]].summary.fairlyActiveMinutes + user.activities[challengeDates[i]].summary.lightlyActiveMinutes;
-                    const runTime = user.activities[challengeDates[i]].summary.veryActiveMinutes;
-                    const totalTime = walkTime + runTime;
+                    // Strava stores distance in metres
+                    
+                    // Only moving time vs FitBit's Active, Very Active etc
+                    user.totalDuration = user.totalDuration + user.activities[challengeDates[i]].summary.fairlyActiveMinutes + 
+                                                                user.activities[challengeDates[i]].summary.lightlyActiveMinutes + 
+                                                                user.activities[challengeDates[i]].summary.veryActiveMinutes;
 
-                    user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
-                    user.totalDistance = Math.round(user.totalDistance + user.activities[challengeDates[i]].summary.distances[0].distance);
-                    user.totalDistanceConverted = Math.round(user.totalDistanceConverted + user.activities[challengeDates[i]].summary.distances[0].distance);
-                    user.totalDuration = user.totalDuration + totalTime;
-                    // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
+                    user.activities[challengeDates[i]].summary.distances.forEach (function(activityEntry) {
+                        switch (activityEntry.activity) {
+                            case 'Run':
+                                user.totalRun = Math.round(user.totalRun + (activityEntry.distance));
+                                break;
+                            case 'Swim':
+                                user.totalSwim = Math.round(user.totalSwim + (activityEntry.distance));
+                                break;
+                            case 'Bike':
+                                user.totalCycling = Math.round(user.totalCycling + (activityEntry.distance));
+                                user.totalCyclingConverted = Math.round(user.totalCyclingConverted + ((activityEntry.distance)/config.cyclingConversion));
+                                break;
+                            case 'Walk':
+                                user.totalWalk = Math.round(user.totalWalk + (activityEntry.distance));
+                                break;
+                            case 'total':
+                                // Ignore total as it seems to round down
+                                break;
+                            default:
+                                console.log("Unexpected activity type: " + activityEntry.activity + " - User: " + user.name);
+                                break;
+                        }
 
-                    if (walkTime > 0) {
-                        const walkPercentage = walkTime/totalTime;
-                        user.totalWalk = Math.round(user.totalWalk + (user.activities[challengeDates[i]].summary.distances[0].distance * walkPercentage));
-                    }
+                        user.totalDistance = Math.round(user.totalDistance + (activityEntry.distance));
 
-                    if (runTime > 0) {
-                        const runPercentage = runTime/totalTime;
-                        user.totalRun = Math.round(user.totalRun + (user.activities[challengeDates[i]].summary.distances[0].distance * runPercentage));
-                    }
+                        if (activityEntry.activity === 'Bike') {
+                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((activityEntry.distance)/config.cyclingConversion));
+                        } else {
+                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (activityEntry.distance));
+                        }
+                    });
+
                 }
             }
 

@@ -221,12 +221,11 @@ function getStats(user) {
             var activityCount = user.activities.length;
             for (var i = 0; i < activityCount; i++) {
                 if (challengeDates.includes(user.activities[i].start_date.substring(0,10))) {
-                    // user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
+                    
                     // Strava stores distance in metres
                     user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
                     // Only moving time vs FitBit's Active, Very Active etc
                     user.totalDuration = user.totalDuration + user.activities[i].moving_time;
-                    // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
 
                     switch (user.activities[i].type) {
                         case 'Run':
@@ -242,8 +241,11 @@ function getStats(user) {
                         case 'Rowing':
                             user.totalRowing = Math.round(user.totalRowing + (user.activities[i].distance/1000));
                             break;
-                        default:
+                        case 'Walk':
                             user.totalWalk = Math.round(user.totalWalk + (user.activities[i].distance/1000));
+                            break;
+                         default:
+                            console.log("Unexpected activity type: " + user.activities[i].type + " - User: " + user.name);
                             break;
                     }
 

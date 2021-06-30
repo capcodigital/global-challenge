@@ -51,31 +51,17 @@ exports.getCurrentChallengeDates = function(cb) {
             let dateAsString = challenge.startDate.toISOString().split('T')[0];
             dates.push(dateAsString);
 
-            if (dateAsString.charAt(5) === '0' || dateAsString.charAt(8) === '0') {
-                dateAsString = dateAsString.replace(/\-0/g, '-');
-                dates.push(dateAsString);
-            }
-
             let nextDate = new Date();
             nextDate.setDate(challenge.startDate.getDate() + 1);
 
             while (nextDate.getDate() !== challenge.endDate.getDate()) {
                 dateAsString = nextDate.toISOString().split('T')[0];
                 dates.push(dateAsString);
-                if (dateAsString.charAt(5) === '0' || dateAsString.charAt(8) === '0') {
-                    dateAsString = dateAsString.replace(/\-0/g, '-');
-                    dates.push(dateAsString);
-                }
                 nextDate.setDate(nextDate.getDate() + 1);
             }
 
             dateAsString = challenge.endDate.toISOString().split('T')[0];
             dates.push(dateAsString);
-
-            if (dateAsString.charAt(5) === '0' || dateAsString.charAt(8) === '0') {
-                dateAsString = dateAsString.replace(/\-0/g, '-');
-                dates.push(dateAsString);
-            }
 
             cb(dates);
         }
