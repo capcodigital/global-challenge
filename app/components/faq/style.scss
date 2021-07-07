@@ -1,0 +1,95 @@
+.faq {
+  a {
+    color: #00b3bc;
+
+    &:hover {
+      color: #00b3bc;
+      text-decoration: none;
+    }
+  }
+}
+
+.question-list {
+    font-size: 16px;
+}
+
+.question-section {
+    padding-top: 2rem !important;
+}
+
+.question-letter {
+    color:red;
+    font-size:60px;
+    border-left-style: solid;
+    border-left-width: thick;
+    background-color: #f4f4f4;
+}
+
+.question-text {
+    font-weight: bold;
+    background-color: #f4f4f4;
+    font-size: 20px;
+}
+
+.answer-section {
+    padding: 2rem 0 2rem 0 !important;
+}
+
+.answer-text {
+    font-size: 16px;
+}
+
+.answer-letter {
+    color: lightgray;
+    font-size:60px;
+    border-left-style: solid;
+    border-left-width: thick;
+}
+
+.bold-box {
+    font-size: 18px;
+    border-style: solid;
+    border-width: thick;
+}
+
+.fitbit-hue {
+    color:#00b3bc !important
+}
+
+.strava-hue {
+    color:#fc4c02 !important
+}
+
+.step-text {
+    font-size: 18px;
+    padding-top: 2rem;
+}
+
+.strava-text {
+    font-size: 16px;
+}
+
+.grid-column-normal {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+}
+
+.question-section-inner {
+    padding-top: 2rem !important;
+    padding-bottom: 3rem !important;
+}
+
+.sub-header {
+    font-size: 14px !important;
+    text-indent: 2em;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.sub-header-lower {
+    margin-bottom: 0px !important;
+}
+
+.header-following {
+    margin-top: 14px !important;
+}
