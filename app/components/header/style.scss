@@ -1,21 +1,34 @@
+@media screen and (max-width: 1000px) {
+  .header {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .mobile-header {
+    display: none;
+  }
+}
+
 .header {
+  padding-bottom: 1rem;
+
   .menu {
-    border-bottom: solid 1px #e6e6eb !important;
     .item:first-child {
       float: left;
+      padding-left: 0px !important;
+      margin-left: 0px !important;
     }
     .item:nth-child(2),
     .item:nth-child(3) {
       top: 50%;
       float: right;
     }
-    .item:nth-child(4) {
-      top: 50%;
-      float: right;
-    }
   }
 
   img {
+    max-width: 800px;
+    width: 60vw;
     &:first-of-type {
       margin-right: 10px;
     }
@@ -26,18 +39,63 @@
 }
 
 .button.ui.secondary.donate-button-header {
-  color: #fa451b;
-  border: 1px solid #fa451b;
+  color: #0f2046;
+  border: 1px solid #0f2046;
   width: 100px;
-  
+  border-radius: 60px;
+
   transform: translate(-50%, -50%);
   &:focus {
-    color: #fa451b;
+    color: #0f2046;
     background-color: transparent;
   }
   &:hover {
     color: white;
-    background-color: #fa451b;
+    background-color: #0f2046;
     text-decoration: none;
+  }
+}
+
+.button.ui.secondary.mobile-button-header {
+  color: #0f2046;
+  border: 1px solid #0f2046;
+  border-radius: 60px;
+  margin-right: 20px !important;
+
+  &:focus {
+    color: #0f2046;
+    background-color: transparent;
+  }
+  &:hover {
+    color: white;
+    background-color: #0f2046;
+    text-decoration: none;
+  }
+}
+
+.mobile-header {
+  padding-top: 1rem;
+
+  .mobile-container.ui.container {
+    margin: 0 !important;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .hamburger-menu {
+    border: none !important;
+    background-color: transparent !important;
+
+    .hamburger-icon {
+      font-size: 20px;
+      color: #0f2046;
+      margin: 0px 0px !important;
+    }
+  }
+
+  img {
+    width: 500px;
+    max-width: 100vw;
+    padding: 2rem;
   }
 }
