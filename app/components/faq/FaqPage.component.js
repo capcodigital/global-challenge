@@ -10,7 +10,6 @@ import EventRules from "./EventRules.component";
 import AboutChallenge from "./AboutChallenge.component";
 import SetupInstructions from "./SetupInstructions.component";
 import StravaSetupInstructions from "./StravaSetupInstructions.component";
-import QuickLinkMenu from "./QuickLinkMenu.component";
 
 function FaqPage() {
   return (
