@@ -291,13 +291,6 @@ function getStats(user, date) {
             for (var i = 0; i < activityCount; i++) {
                 if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].summary) {
 
-                    // Strava stores distance in metres
-                    
-                    // Only moving time vs FitBit's Active, Very Active etc
-                    user.totalDuration = user.totalDuration + user.activities[challengeDates[i]].summary.fairlyActiveMinutes + 
-                                                                user.activities[challengeDates[i]].summary.lightlyActiveMinutes + 
-                                                                user.activities[challengeDates[i]].summary.veryActiveMinutes;
-
                     user.activities[challengeDates[i]].summary.distances.forEach (function(activityEntry) {
                         switch (activityEntry.activity) {
                             case 'Run':
@@ -321,15 +314,23 @@ function getStats(user, date) {
                                 break;
                         }
 
-                        user.totalDistance = Math.round(user.totalDistance + (activityEntry.distance));
+                        // Only add valid activities to the total
+                        if (['Run','Swim','Bike','Walk'].includes(activityEntry.activity)) {
+                            // Only moving time vs FitBit's Active, Very Active etc
+                            user.totalDuration = user.totalDuration + user.activities[challengeDates[i]].summary.fairlyActiveMinutes + 
+                                                                    user.activities[challengeDates[i]].summary.lightlyActiveMinutes + 
+                                                                    user.activities[challengeDates[i]].summary.veryActiveMinutes;
 
-                        if (activityEntry.activity === 'Bike') {
-                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((activityEntry.distance)/config.cyclingConversion));
-                        } else {
-                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (activityEntry.distance));
+                            user.totalDistance = Math.round(user.totalDistance + (activityEntry.distance));
+
+                            if (activityEntry.activity === 'Bike') {
+                                user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((activityEntry.distance)/config.cyclingConversion));
+                            } else {
+                                user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (activityEntry.distance));
+                            }
                         }
-                    });
 
+                    });
                 }
             }
 

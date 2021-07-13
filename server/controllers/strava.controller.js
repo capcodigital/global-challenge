@@ -221,11 +221,6 @@ function getStats(user) {
             var activityCount = user.activities.length;
             for (var i = 0; i < activityCount; i++) {
                 if (challengeDates.includes(user.activities[i].start_date.substring(0,10))) {
-                    
-                    // Strava stores distance in metres
-                    user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
-                    // Only moving time vs FitBit's Active, Very Active etc
-                    user.totalDuration = user.totalDuration + user.activities[i].moving_time;
 
                     switch (user.activities[i].type) {
                         case 'Run':
@@ -249,10 +244,19 @@ function getStats(user) {
                             break;
                     }
 
-                    if (user.activities[i].type === 'Ride') {
-                        user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((user.activities[i].distance/1000)/config.cyclingConversion));
-                    } else {
-                        user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (user.activities[i].distance/1000));
+                    // Only add valid activities to the total
+                    if (['Run','Swim','Bike','Walk'].includes(activityEntry.activity)) {
+
+                        // Strava stores distance in metres
+                        user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
+                        // Only moving time vs FitBit's Active, Very Active etc
+                        user.totalDuration = user.totalDuration + user.activities[i].moving_time;
+
+                        if (user.activities[i].type === 'Ride') {
+                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((user.activities[i].distance/1000)/config.cyclingConversion));
+                        } else {
+                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (user.activities[i].distance/1000));
+                        }
                     }
                 }
             }
