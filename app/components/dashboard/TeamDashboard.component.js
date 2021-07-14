@@ -33,18 +33,10 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
   let total = teams
     .map((team) => team.totalDistance)
     .reduce((a, b) => a + b, 0);
-    console.log(team)
+
   return team ? (
     <div className="dashboard">
       <Segment className="secondary">
-        <div className="heading">
-          <div className="counter-uk">
-            <div className="wrapper">
-              <span className="text">Overal Distance: </span>
-              <span className="total">{total}km</span>
-            </div>
-          </div>
-        </div>
         <LoadScript
           googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
           libraries={libraries}
@@ -52,7 +44,7 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
           <MapUK teams={teams} team={team} />
         </LoadScript>
       </Segment>
-      <Segment className="primary">
+      <Segment className="secondary">
         <Grid container stackable columns={2} verticalAlign="middle">
           <Grid.Row>
             <Grid.Column>
@@ -72,90 +64,85 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
               />
             </Grid.Column>
             <Grid.Column>
-              <Header size="large">Sports Total</Header>
-              <Grid container stackable columns={2} verticalAlign="middle">
+              <Header size="large">SPORTS TOTAL</Header>
+              <Grid container verticalAlign="middle">
                 <Grid.Row>
-                  <Grid.Column width={8}>
-                    <div className="content-container-dashboard">
-                      <Header size="medium" className="container-header">
-                        <img src={runIcon} alt="Run Logo" />
-                        Run
-                      </Header>
-                      <TeamSportsLeaderboardTable
-                        height={290}
-                        data={team.members.map((member) => ({
-                          name: member.name,
-                          distance: member.totalRun,
-                        }))}
-                      />
-                    </div>
-                  </Grid.Column>
-                  <Grid.Column width={8}>
-                    <div className="content-container-dashboard">
-                      <Header size="medium" className="container-header">
-                        <img src={cycleIcon} alt="Walk Logo" />
-                        Bike
-                      </Header>
-                      <TeamSportsLeaderboardTable
-                        height={290}
-                        data={team.members.map((member) => ({
-                          name: member.name,
-                          distance: member.totalCyclingConverted,
-                          actualDistance: member.totalCycling,
-                        }))}
-                        showActualDistance={true}
-                      />
-                    </div>
-                  </Grid.Column>
+                  <div className="content-container-dashboard">
+                    <Header size="medium" className="container-header">
+                      <img src={runIcon} alt="Run Logo" />
+                      Run
+                    </Header>
+                    <TeamSportsLeaderboardTable
+                      height={170}
+                      data={team.members.map((member) => ({
+                        name: member.name,
+                        distance: member.totalRun,
+                      }))}
+                    />
+                  </div>
                 </Grid.Row>
                 <Grid.Row>
-                  <Grid.Column width={8}>
-                    <div className="content-container-dashboard">
-                      <Grid.Row>
-                        <Header size="medium" className="container-header">
-                          <img src={walkIcon} alt="Walk Logo" />
-                          Walk
-                        </Header>
-                        <TeamSportsLeaderboardTable
-                          height={250}
-                          data={team.members.map((member) => ({
-                            name: member.name,
-                            distance: member.totalWalk,
-                          }))}
-                        />
-                      </Grid.Row>
-                    </div>
-                  </Grid.Column>
-                  <Grid.Column width={8}>
-                    <div className="content-container-dashboard">
-                      <Grid.Row style={{ paddingBottom: 20 }}>
-                        <Header size="medium" className="container-header">
-                          <img src={swimIcon} alt="Swim Logo" />
-                          Swim
-                        </Header>
-                        <TeamSportsLeaderboardTable
-                          height={90}
-                          data={team.members.map((member) => ({
-                            name: member.name,
-                            distance: member.totalSwim,
-                          }))}
-                        />
-                      </Grid.Row>
-                      <Grid.Row>
-                        <Header size="medium" className="container-header">
-                          <img src={rowIcon} alt="Row Logo" />
-                          Row
-                        </Header>
-                        <TeamSportsLeaderboardTable
-                          height={90}
-                          data={team.members.map((member) => ({
-                            name: member.name,
-                            distance: member.totalRowing,
-                          }))}
-                        />
-                      </Grid.Row>
-                    </div>
-                  </Grid.Column>
+                  <div className="content-container-dashboard">
+                    <Header size="medium" className="container-header">
+                      <img src={cycleIcon} alt="Walk Logo" />
+                      Bike
+                    </Header>
+                    <TeamSportsLeaderboardTable
+                      height={170}
+                      data={team.members.map((member) => ({
+                        name: member.name,
+                        distance: member.totalCyclingConverted,
+                        actualDistance: member.totalCycling,
+                      }))}
+                      showActualDistance={true}
+                    />
+                  </div>
+                </Grid.Row>
+
+                <Grid.Row>
+                  <div className="content-container-dashboard">
+                    <Header size="medium" className="container-header">
+                      <img src={walkIcon} alt="Walk Logo" />
+                      Walk
+                    </Header>
+                    <TeamSportsLeaderboardTable
+                      height={170}
+                      data={team.members.map((member) => ({
+                        name: member.name,
+                        distance: member.totalWalk,
+                      }))}
+                    />
+                  </div>
+                </Grid.Row>
+                <Grid.Row style={{ paddingBottom: 20 }}>
+                  <div className="content-container-dashboard">
+                    <Header size="medium" className="container-header">
+                      <img src={swimIcon} alt="Swim Logo" />
+                      Swim
+                    </Header>
+                    <TeamSportsLeaderboardTable
+                      height={90}
+                      data={team.members.map((member) => ({
+                        name: member.name,
+                        distance: member.totalSwim,
+                      }))}
+                    />
+                  </div>
+                </Grid.Row>
+                <Grid.Row>
+                  <div className="content-container-dashboard">
+                    <Header size="medium" className="container-header">
+                      <img src={rowIcon} alt="Row Logo" />
+                      Row
+                    </Header>
+                    <TeamSportsLeaderboardTable
+                      height={90}
+                      data={team.members.map((member) => ({
+                        name: member.name,
+                        distance: member.totalRowing,
+                      }))}
+                    />
+                  </div>
                 </Grid.Row>
               </Grid>
             </Grid.Column>
