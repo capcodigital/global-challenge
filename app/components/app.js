@@ -18,6 +18,7 @@ import FaqPage from "./faq/FaqPage.component";
 import Tabs from "./tabs";
 import Sidebar from "./SidebarMenu/SidebarMenu.component";
 import AboutPage from "./about/AboutPage.component";
+import EventRules from "./EventRules/EventRules.component";
 import "./style.scss";
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
             <Route exact path="/teams/register" component={TeamsPage} />
             <Route exact path="/faq" component={FaqPage} />
             <Route exact path="/about" component={AboutPage} />
+            <Route exact path="/event-rules" component={EventRules} />
             <Route component={HomePage} />
           </Switch>
           <Footer />

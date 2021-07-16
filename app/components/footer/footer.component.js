@@ -8,12 +8,11 @@ function Footer() {
   const blueFooterPages = ["about", "event-rules", "how-to", "faq"];
   const location = useLocation();
   const colorFooter = () => {
-    return blueFooterPages.includes(`/${location.pathname}`) ? "blue" : null;
+    return blueFooterPages.includes(location.pathname.substring(1)) ? "blue" : null;
   };
 
   useEffect(() => {
     setBlue(colorFooter());
-    console.log(location)
   }, [location]);
 
   return (
