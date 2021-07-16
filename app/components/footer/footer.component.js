@@ -1,21 +1,43 @@
-import React from 'react';
-import { Container } from 'semantic-ui-react';
-import './style.scss';
+import React, { useEffect, useState } from "react";
+import { Container } from "semantic-ui-react";
+import { useLocation } from "react-router-dom";
+import "./style.scss";
 
-class Footer extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  render() {
-    return (
-      <footer className="footer">
-        <Container className="footer-container">
-          <div className="copyright-container">
-            <p>
-              Need help or support? Please contact the <a href="mailto:3cd19d49.capco.com@apac.teams.ms"> Global Challenge Team</a> via email
-            </p>
-          </div>
-        </Container>
-      </footer>
-    );
-  }
+function Footer() {
+  const [blue, setBlue] = useState(null);
+  const blueFooterPages = ["about", "event-rules", "how-to", "faq"];
+  const location = useLocation();
+  const colorFooter = () => {
+    return blueFooterPages.includes(`/${location.pathname}`) ? "blue" : null;
+  };
+
+  useEffect(() => {
+    setBlue(colorFooter());
+    console.log(location)
+  }, [location]);
+
+  return (
+    <footer className={`footer ${blue}`}>
+      <Container className="footer-container">
+        <div className="copyright-container">
+          <p>
+            You can download the Fitbit or Strava app from the{" "}
+            <a href="https://apps.apple.com/us/app/fitbit-health-fitness/id462638897">
+              Apple
+            </a>{" "}
+            or{" "}
+            <a href="https://play.google.com/store/apps/details?id=com.fitbit.FitbitMobile&hl=en_GB&gl=US">
+              Google
+            </a>{" "}
+            store | If you need support, please email the{" "}
+            <a href="mailto:3cd19d49.capco.com@apac.teams.ms">
+              Global Challenge Team
+            </a>
+          </p>
+        </div>
+      </Container>
+    </footer>
+  );
 }
 
 export default Footer;

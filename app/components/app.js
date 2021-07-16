@@ -17,6 +17,7 @@ import TeamsPage from "./teams/teams.container";
 import FaqPage from "./faq/FaqPage.component";
 import Tabs from "./tabs";
 import Sidebar from "./SidebarMenu/SidebarMenu.component";
+import AboutPage from "./about/AboutPage.component";
 import "./style.scss";
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
             <Route path="/team" component={TeamsDashboard} />
             <Route exact path="/teams/register" component={TeamsPage} />
             <Route exact path="/faq" component={FaqPage} />
+            <Route exact path="/about" component={AboutPage} />
             <Route component={HomePage} />
           </Switch>
           <Footer />

@@ -1,5 +1,5 @@
 @media screen and (max-width: 1000px) {
-  .header {
+  .desktop-header {
     display: none;
   }
 }
@@ -10,7 +10,7 @@
   }
 }
 
-.header {
+.desktop-header {
   padding-bottom: 1rem;
 
   .menu {
