@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const challengeStartDate = new Date(2021, 7, 1, 0, 0, 0, 0); // 7th August
+const challengeStartDate = new Date(2021, 7, 1, 0, 0, 0, 0); // 1th August
 const challengeEndDate = new Date(2021, 8, 1, 0, 0, 0, 0); // 31th August Midnight
 
 function getTimeRemaining() {
