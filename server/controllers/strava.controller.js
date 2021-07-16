@@ -200,7 +200,11 @@ function getStats(user) {
     strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime }, function(err, result) {
         if (err) {
             console.log("Error Accessing Strava activities for " + user.name);
-            console.log(err);
+            if (err.toString().includes("Authorization Error")){
+                console.log(user.name + " - User authentication error with Strava");
+            } else {
+                console.log(err);
+            }
         } else {
             console.log("Updating Strava Stats for: " + user.name);
             user.activities = result;
@@ -245,8 +249,7 @@ function getStats(user) {
                     }
 
                     // Only add valid activities to the total
-                    if (['Run','Swim','Bike','Walk'].includes(activityEntry.activity)) {
-
+                    if (['Run','Swim','Ride','Walk','Rowing'].includes(user.activities[i].type)) {
                         // Strava stores distance in metres
                         user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
                         // Only moving time vs FitBit's Active, Very Active etc

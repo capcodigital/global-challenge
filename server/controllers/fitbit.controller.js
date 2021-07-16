@@ -219,12 +219,13 @@ function updateUser(user) {
         console.log("FitBit Token Expired:" + user.name);
         options.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
-         // If token is expired refresh access token and get a new refresh token
+         // If token is expired, refresh access token and get a new refresh token
         var newReq2 = buildRequest(options, function(err, result) {
             if (err) {
-                console.log(user.name + " : " + err.message);
+                console.log(user.name + " : " + err);
             } else if (result.errors && result.errors.length > 0) {
-                console.log(user.name + " : " + result.errors[0].message);
+                console.log(user.name + ": " + result.errors[0].message);
+                console.log(JSON.stringify(result.errors[0]));
             } else {
                 var date = new Date();
                 var datemillis = date.getTime();
