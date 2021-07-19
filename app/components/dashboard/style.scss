@@ -1,6 +1,13 @@
 @import "../../styles/variables.scss";
 @import "../../styles/breakpoints.scss";
 
+div.row {
+  display: block !important;
+}
+.segment.ui.secondary {
+  padding-bottom: 20px !important;
+}
+
 .dashboard {
   margin: 0px;
   .sign-wrapper {
@@ -41,10 +48,10 @@
   .counter-uk {
     margin: 22px 0 22px 0;
     font-size: 24px;
-  
+
     .wrapper {
       width: 0;
-      margin:auto;
+      margin: auto;
       overflow: hidden;
       white-space: nowrap;
       letter-spacing: 0.1em;
@@ -99,8 +106,8 @@
   }
 
   .search-container {
-    margin-bottom: 2rem;
-    margin-top: 2rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 
     .search {
       .input {
@@ -118,9 +125,9 @@
   }
 
   .content-container-dashboard {
-    width: 290px;
+    width: 450px;
     .container-header {
-      color: #11a9b2;
+      color: black;
     }
   }
 
