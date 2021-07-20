@@ -19,6 +19,7 @@ import Tabs from "./tabs";
 import Sidebar from "./SidebarMenu/SidebarMenu.component";
 import AboutPage from "./about/AboutPage.component";
 import EventRules from "./EventRules/EventRules.component";
+import HowTo from "./HowTo/HowTo.component";
 import "./style.scss";
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
             <Route exact path="/faq" component={FaqPage} />
             <Route exact path="/about" component={AboutPage} />
             <Route exact path="/event-rules" component={EventRules} />
+            <Route exact path="/how-to" component={HowTo} />
             <Route component={HomePage} />
           </Switch>
           <Footer />
