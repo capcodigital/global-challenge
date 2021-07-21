@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 
 const challengeStartDate = new Date(2021, 7, 1, 0, 0, 0, 0); // 1th August
 const challengeEndDate = new Date(2021, 8, 1, 0, 0, 0, 0); // 31th August Midnight
@@ -27,6 +27,7 @@ function getTimeRemaining() {
 
 const Countdown = ({ overallDistance }) => {
   const [timeLeft, setTimeLeft] = useState(getTimeRemaining());
+  const [open, setOpen] = useState(true);
   useEffect(() => {
     const timer = setTimeout(() => {
       setTimeLeft(getTimeRemaining());
@@ -35,7 +36,13 @@ const Countdown = ({ overallDistance }) => {
   });
 
   return (
-    <div className="countdown">
+    <div className={`countdown ${!open && "closed"}`}>
+      <Icon
+        name="close"
+        className="close-icon"
+        onClick={() => setOpen(!open)}
+      />
+
       <div className="count">
         <div>
           <span className="days">{timeLeft.days}</span>

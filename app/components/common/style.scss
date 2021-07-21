@@ -262,6 +262,9 @@
 }
 
 .countdown {
+  &.closed {
+    display: none;
+  }
   margin-left: -7px;
   color: #fff;
   background: #ff6a4d;
@@ -271,6 +274,9 @@
   justify-content: space-around;
   flex-direction: column;
   padding: 30px;
+  @media screen and (max-width: 1000px) {
+    padding: 4px 30px 30px;
+  }
   position: absolute;
   z-index: 1;
   .count > div {
@@ -319,6 +325,14 @@
     color: black !important;
     &:hover {
       background-color: transparent !important;
+    }
+  }
+  .close-icon {
+    margin-left: 260px;
+    font-size: x-large;
+    cursor: pointer;
+    @media screen and (min-width: 1000px) {
+      display: none !important;
     }
   }
 }
