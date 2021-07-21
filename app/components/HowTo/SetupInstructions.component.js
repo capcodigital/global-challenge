@@ -23,7 +23,7 @@ const SetupInstructions = () => (
             platform. Open the challenge website.
           </List.Item>
           <List.Item>
-            2. Enter your Capco 4-letter ID in the '<a href='/register'>Registration</a>' section on this
+            2. Enter your Capco 4-letter ID on the <a href='/register'>Registration</a>{" "}
             page for either Strava or Fitbit.
           </List.Item>
         </List>
