@@ -1,95 +1,105 @@
-.faq {
+.faq-container {
+  background-color: #0f2046;
+  color: white !important;
+
+  .column-a {
+    height: 500px;
+    width: 38% !important;
+  }
+  .column-b {
+    max-width: 800px;
+    width: 62% !important;
+    padding-right: 5% !important;
+  }
+
+  .header {
+    color: white !important;
+  }
+
+  .faq-section {
+    
+    .faq-title {
+      padding-top: 40px ;
+      padding-bottom: 20px ;
+      font-size: 24px;
+    }
+
+    .section-header {
+      padding-bottom: 0px ;
+      font-size: 24px;
+    }
+  }
+
+  .faq-title {
+    padding-top: 40px ;
+    padding-bottom: 20px ;
+    color: white;
+    font-size: 24px;
+  }
+
   a {
-    color: #00b3bc;
+    color: #fa451b;
+    font-weight: 600;
 
     &:hover {
-      color: #00b3bc;
+      color: white;
       text-decoration: none;
     }
   }
 }
 
 .question-list {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .question-section {
-    padding-top: 2rem !important;
-}
-
-.question-letter {
-    color:red;
-    font-size:60px;
-    border-left-style: solid;
-    border-left-width: thick;
-    background-color: #f4f4f4;
+  padding-top: 1rem !important;
 }
 
 .question-text {
-    font-weight: bold;
-    background-color: #f4f4f4;
-    font-size: 20px;
-}
-
-.answer-section {
-    padding: 2rem 0 2rem 0 !important;
+  font-weight: 600;
+  font-size: 20px;
 }
 
 .answer-text {
-    font-size: 16px;
-}
-
-.answer-letter {
-    color: lightgray;
-    font-size:60px;
-    border-left-style: solid;
-    border-left-width: thick;
+  font-size: 16px;
+  font-weight: 300;
 }
 
 .bold-box {
-    font-size: 18px;
-    border-style: solid;
-    border-width: thick;
+  font-size: 18px;
+  border-style: solid;
+  border-width: thick;
 }
 
 .fitbit-hue {
-    color:#00b3bc !important
+  color: #00b3bc !important;
 }
 
 .strava-hue {
-    color:#fc4c02 !important
+  color: #fc4c02 !important;
 }
 
 .step-text {
-    font-size: 18px;
-    padding-top: 2rem;
+  font-size: 18px;
+  padding-top: 2rem;
 }
 
 .strava-text {
-    font-size: 16px;
-}
-
-.grid-column-normal {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
-}
-
-.question-section-inner {
-    padding-top: 2rem !important;
-    padding-bottom: 3rem !important;
+  font-size: 16px;
 }
 
 .sub-header {
-    font-size: 14px !important;
-    text-indent: 2em;
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
+  font-size: 14px !important;
+  text-indent: 2em;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
 }
 
 .sub-header-lower {
-    margin-bottom: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .header-following {
-    margin-top: 14px !important;
+  margin-top: 14px !important;
 }

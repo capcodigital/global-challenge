@@ -7,17 +7,15 @@ const SetupInstructions = () => (
   <>
     <Header
       id="set-up-instructions"
-      as="h1"
-      textAlign="center"
+      className="how-to-title"
     >
       Setup Instructions
     </Header>
-    <Grid className="step-text question-section" stackable centered>
+    <Grid className="step-text" stackable centered>
       <Grid.Column
-        className="question-section-inner"
         textAlign="left"
         verticalAlign="middle"
-        width={6}
+        width={12}
       >
         <List>
           <List.Item>
@@ -30,19 +28,15 @@ const SetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
-      <Grid.Column width={6}>
+      <Grid.Column width={4}>
         <img src={setupA} alt="Registration page screenshot" />
       </Grid.Column>
     </Grid>
-    <Grid className="step-text grid-column-normal" stackable centered>
-      <Grid.Column width={6}>
-        <img src={setupB} alt="Authorize Fitbit sharing data with Capco" />
-      </Grid.Column>
+    <Grid className="step-text" stackable centered>
       <Grid.Column
-        className="question-section-inner"
         textAlign="left"
         verticalAlign="middle"
-        width={6}
+        width={12}
       >
         <List>
           <List.Item>
@@ -54,21 +48,22 @@ const SetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
+      <Grid.Column width={4}>
+        <img src={setupB} alt="Authorize Fitbit sharing data with Capco" />
+      </Grid.Column>
     </Grid>
     <Header
       id="fitbit-specifc-steps"
-      as="h1"
-      textAlign="center"
-      className="fitbit-hue"
+      className="how-to-title fitbit-hue"
     >
       Fitbit Authorisation
     </Header>
-    <Grid className="step-text grid-column-normal" stackable centered>
+    <Grid className="step-text" stackable centered>
       <Grid.Column
         className="question-section-inner"
         textAlign="left"
         verticalAlign="middle"
-        width={6}
+        width={12}
       >
         <List>
           <List.Item>
@@ -81,15 +76,13 @@ const SetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
-      <Grid.Column width={6}>
+      <Grid.Column width={4}>
         <img src={setupC} alt="Fitbit login page" />
       </Grid.Column>
     </Grid>
     <Header
       id="strava-specifc-steps"
-      as="h1"
-      textAlign="center"
-      className="strava-hue"
+      className="how-to-title strava-hue"
     >
       Strava Authorisation
     </Header>
@@ -98,7 +91,7 @@ const SetupInstructions = () => (
         className="question-section-inner"
         textAlign="left"
         verticalAlign="middle"
-        width={6}
+        width={12}
       >
         <List>
           <List.Item>
@@ -111,19 +104,16 @@ const SetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
-      <Grid.Column width={6}>
+      <Grid.Column width={4}>
         <img src={setupD} alt="Strava login page" />
       </Grid.Column>
     </Grid>
-    <Grid className="step-text grid-column-normal" stackable centered>
-      <Grid.Column width={6}>
-        <img src={setupE} alt="Authorize Strava sharing data with Capco" />
-      </Grid.Column>
+    <Grid className="step-text" stackable centered>
       <Grid.Column
         className="question-section-inner"
         textAlign="left"
         verticalAlign="middle"
-        width={6}
+        width={12}
       >
         <List>
           <List.Item>
@@ -138,6 +128,9 @@ const SetupInstructions = () => (
             5. Your registration is now completed successfully!
           </List.Item>
         </List>
+      </Grid.Column>
+      <Grid.Column width={4}>
+        <img src={setupE} alt="Authorize Strava sharing data with Capco" />
       </Grid.Column>
     </Grid>
   </>

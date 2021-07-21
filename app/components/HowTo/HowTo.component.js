@@ -1,5 +1,7 @@
 import React from "react";
 import { Grid, Header, List } from "semantic-ui-react";
+import SetupInstructions from "./SetupInstructions.component";
+import StravaSetupInstructions from "./StravaSetupInstructions.component";
 import "./style.scss";
 
 const HowTo = () => (
@@ -10,9 +12,7 @@ const HowTo = () => (
         <Header className="how-to-title">How to</Header>
         <Grid>
           <Grid.Column className="column-c">
-            <Header className="how-to-title smaller">
-              How to Videos 
-            </Header>
+            <Header className="how-to-title smaller">How to Videos</Header>
             <List bulleted>
               <List.Item
                 href="https://www.youtube.com/watch?v=bkV4UvHMoIc"
@@ -38,9 +38,7 @@ const HowTo = () => (
             </List>
           </Grid.Column>
           <Grid.Column className="column-c">
-            <Header className="how-to-title smaller">
-              How to Guides
-            </Header>
+            <Header className="how-to-title smaller">How to Guides</Header>
             <List bulleted>
               <List.Item href="#set-up-instructions">
                 Challenge Setup Instructions
@@ -61,6 +59,10 @@ const HowTo = () => (
             </List>
           </Grid.Column>
         </Grid>
+        <Grid.Column className="how-to-section column-b">
+          <SetupInstructions />
+          <StravaSetupInstructions />
+        </Grid.Column>
       </Grid.Column>
     </Grid>
   </>

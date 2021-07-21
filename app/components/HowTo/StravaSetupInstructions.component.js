@@ -7,31 +7,21 @@ import "./style.scss";
 
 const StravaSetupInstructions = () => (
   <>
-    <Header
-      id="strava-no-device"
-      className="strava-hue"
-      as="h1"
-      textAlign="center"
-    >
+    <Header id="strava-no-device" className="how-to-title strava-hue">
       Strava Full Setup Guide
     </Header>
-    <Grid className="strava-text question-section" stackable centered>
-      <Grid.Column
-        className="question-section-inner"
-        textAlign="left"
-        verticalAlign="middle"
-        width={6}
-      >
+    <Grid className="strava-text question-section step-text" stackable centered>
+      <Grid.Column textAlign="left" verticalAlign="middle" width={12}>
         <List>
           <List.Item>
             Either download Strava on your mobile phone or sign up on your
             computer.
           </List.Item>
           <List.Item>
-            Strava is <b>free</b> to use, however there is a premium paid version
-            (Strava Summit) which encourages you to sign up (you do not need
-            this!). Just SKIP this whenever it appears, the free version is all
-            that is required for the challenge.
+            Strava is <b>free</b> to use, however there is a premium paid
+            version (Strava Summit) which encourages you to sign up (you do not
+            need this!). Just SKIP this whenever it appears, the free version is
+            all that is required for the challenge.
           </List.Item>
           <List.Item>
             <a
@@ -53,20 +43,6 @@ const StravaSetupInstructions = () => (
               www.strava.com/register/free
             </a>
           </List.Item>
-        </List>
-      </Grid.Column>
-      <Grid.Column width={6}>
-        <img src={StravaA}></img>
-      </Grid.Column>
-    </Grid>
-    <Grid className="grid-column-normal" stackable centered>
-      <Grid.Column
-        className="question-section-inner"
-        textAlign="left"
-        verticalAlign="middle"
-        width={6}
-      >
-        <List>
           <List.Item>
             1. You can sign up with Facebook or Google using your normal login
             for these services or you can enter you email address and sign up
@@ -80,6 +56,15 @@ const StravaSetupInstructions = () => (
           <List.Item>
             4. Select confirm email address on the email and log in to Strava
           </List.Item>
+        </List>
+      </Grid.Column>
+      <Grid.Column width={4}>
+        <img src={StravaA}></img>
+      </Grid.Column>
+    </Grid>
+    <Grid className="strava-text" stackable centered>
+      <Grid.Column textAlign="left" verticalAlign="middle" width={12}>
+        <List>
           <List.Item>
             5. You will now be on the Strava dashboard page – select your gender
             and your sport – for this select running (don’t worry this is simply
@@ -103,7 +88,8 @@ const StravaSetupInstructions = () => (
               target="_blank"
             >
               Strava's help page
-            </a>.
+            </a>
+            .
           </List.Item>
           <List.Item>
             7. To <b>record your activities</b> you can either:
@@ -138,7 +124,7 @@ const StravaSetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
-      <Grid.Column width={6}>
+      <Grid.Column width={4}>
         <img src={StravaB}></img>
       </Grid.Column>
     </Grid>
