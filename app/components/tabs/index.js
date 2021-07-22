@@ -1,1 +1,1 @@
-export { default } from './tabs.component';
+export { default } from './tabs.container';

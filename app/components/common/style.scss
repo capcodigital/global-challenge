@@ -261,33 +261,80 @@
   outline: none;
 }
 
-.clockdiv {
+.countdown {
+  &.closed {
+    display: none;
+  }
+  margin-left: -7px;
   color: #fff;
-  display: inline-block;
-  margin-top: 16px;
-  font-weight: 100;
-  text-align: center;
-  font-size: 24px;
-  background: #ff3000cc;
-  box-shadow: 0 0 10px #ff3000cc;
-  border-radius: 4px;
-}
-
-.clockdiv > div {
-  padding: 8px;
-  border-radius: 3px;
-  display: inline-block;
-}
-
-.clockdiv div > span {
-  padding: 4px;
-  border-radius: 3px;
-  display: inline-block;
-  width: 40px;
-}
-
-.smalltext {
-  font-size: 10px;
+  background: #ff6a4d;
+  height: 560px;
+  width: 330px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 30px;
+  @media screen and (max-width: 1000px) {
+    padding: 4px 30px 30px;
+  }
+  position: absolute;
+  z-index: 1;
+  .count > div {
+    text-align: center;
+    padding: 8px;
+    display: inline-block;
+    span {
+      font-size: 46px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+    .small-text {
+      padding-top: 16px;
+      font-size: 14px;
+    }
+  }
+  .distance-label {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .distance {
+    font-weight: 700;
+    color: #0f2046;
+    font-size: 100px;
+    padding-top: 25px;
+    div {
+      line-height: 1.5;
+    }
+  }
+  a.count-btn {
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    border: 1px solid white !important;
+  }
+  a.count-btn:first-child {
+    color: white !important;
+    background-color: transparent !important;
+    &:hover {
+      color: black !important;
+      background-color: white !important;
+    }
+  }
+  a.count-btn:nth-child(2) {
+    color: black !important;
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+  .close-icon {
+    margin-left: 260px;
+    font-size: x-large;
+    cursor: pointer;
+    @media screen and (min-width: 1000px) {
+      display: none !important;
+    }
+  }
 }
 
 div.ui.popup {
