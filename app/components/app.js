@@ -39,7 +39,9 @@ function App() {
             sidebarVisible={sidebarVisible}
             setSidebarVisible={setSidebarVisible}
           />
-          <Tabs />
+          {!["/teams/register", "/register"].includes(
+            window.location.pathname
+          ) && <Tabs />}
           <Switch>
             <Route path="/register" exact component={HomePage} />
             <Route exact path="/" component={Dashboard} />
