@@ -48,13 +48,17 @@ class Header extends React.Component {
           <Menu borderless secondary size="small">
             <Container>
               <Menu.Item>
-                <Link to="/">
+                <a
+                  onClick={() => {
+                    window.location.href = "/";
+                  }}
+                >
                   <img
                     src={ESTRChallenge}
                     alt="ESTR Challenge Logo"
                     className="global-challenge-logo"
                   />
-                </Link>
+                </a>
               </Menu.Item>
               <Menu.Item>
                 <Button

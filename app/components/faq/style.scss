@@ -1,15 +1,16 @@
 .faq-container {
   background-color: #0f2046;
   color: white !important;
+  display: flex;
+  justify-content: center;
 
-  .column-a {
-    height: 500px;
-    width: 38% !important;
-  }
   .column-b {
+    @media screen and (max-width: 1000px) {
+      margin: 560px 10px 0 10px !important;
+    }
     max-width: 800px;
-    width: 62% !important;
-    padding-right: 5% !important;
+    margin-left: 430px;
+    padding-right: 10% !important;
   }
 
   .header {

@@ -1,38 +1,37 @@
 .about-container {
-  background-color: #0F2046;
+  background-color: #0f2046;
+  display: flex;
+  justify-content: center;
 
-  .column-a {
-    height: 500px;
-    width: 38% !important;
-  }
   .column-b {
+    @media screen and (max-width: 1000px) {
+      margin: 560px 10px 0 10px !important;
+    }
     max-width: 800px;
-    width: 62% !important;
-    padding-right: 5% !important;
+    margin-left: 430px;
+    padding-right: 10% !important;
   }
 
   .about-section {
     color: white;
 
     .about-title {
-      padding-top: 40px ;
-      padding-bottom: 20px ;
+      padding-top: 40px;
+      padding-bottom: 20px;
       color: white;
       font-size: 24px;
     }
     a {
-      color: #FA451B !important;
+      color: #fa451b !important;
     }
 
     p {
       font-size: 20px;
 
       .red {
-        color: #FA451B !important;
+        color: #fa451b !important;
         display: inline;
       }
     }
   }
-
 }
-

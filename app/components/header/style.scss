@@ -1,5 +1,5 @@
 @media screen and (max-width: 1000px) {
-  .desktop-header {
+  .header {
     display: none;
   }
 }
@@ -16,6 +16,10 @@
 
 .header {
   padding-bottom: 1rem;
+
+  a {
+    cursor: pointer;
+  }
 
   .menu {
     .item:first-child {

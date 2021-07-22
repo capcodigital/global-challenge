@@ -7,9 +7,8 @@ import "./style.scss";
 const HowTo = () => (
   <Segment className="secondary">
     <Grid className="how-to-container" stackable centered>
-      <Grid.Column className="column-a"></Grid.Column>
       <Grid.Column className="how-to-section column-b">
-        <Header className="how-to-title">How to</Header>
+        <Header className="how-to-title main">How to</Header>
         <Grid>
           <Grid.Column className="column-c">
             <Header className="how-to-title smaller">How to Videos</Header>
@@ -58,11 +57,11 @@ const HowTo = () => (
               </List.Item>
             </List>
           </Grid.Column>
-        </Grid>
-        <Grid.Column className="how-to-section column-b">
+          <Grid.Column className="how-to-section column-d">
           <SetupInstructions />
           <StravaSetupInstructions />
-        </Grid.Column>
+          </Grid.Column>
+        </Grid>
       </Grid.Column>
     </Grid>
   </Segment>

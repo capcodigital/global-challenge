@@ -63,7 +63,7 @@ const Countdown = ({ overallDistance }) => {
       </div>
       <div className="distance-label">Overall distance</div>
       <div className="distance">
-        {overallDistance}
+        {overallDistance.toFixed(0)}
         <div>km</div>
       </div>
       <div>
