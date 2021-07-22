@@ -1,11 +1,11 @@
 import React from "react";
-import { Grid, Header, List } from "semantic-ui-react";
+import { Grid, Header, List, Segment } from "semantic-ui-react";
 import SetupInstructions from "./SetupInstructions.component";
 import StravaSetupInstructions from "./StravaSetupInstructions.component";
 import "./style.scss";
 
 const HowTo = () => (
-  <>
+  <Segment className="secondary">
     <Grid className="how-to-container" stackable centered>
       <Grid.Column className="column-a"></Grid.Column>
       <Grid.Column className="how-to-section column-b">
@@ -65,7 +65,7 @@ const HowTo = () => (
         </Grid.Column>
       </Grid.Column>
     </Grid>
-  </>
+  </Segment>
 );
 
 export default HowTo;

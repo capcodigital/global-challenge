@@ -5,7 +5,6 @@ import {
   MapUK,
   TeamLeaderboardTable,
   TeamSportsLeaderboardTable,
-  Countdown,
 } from "components/common";
 import { LoadScript } from "@react-google-maps/api";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
@@ -58,17 +57,7 @@ class Dashboard extends React.Component {
     return (
       !error && (
         <div className="dashboard">
-          <Segment loading={isLoading} className="secondary">
-            <div className="heading">
-              <Countdown />
-              <div className="counter-uk">
-                <div className="wrapper">
-                  <span className="text">Overall Distance: </span>
-                  <span className="total">{total}km</span>
-                </div>
-              </div>
-            </div>
-
+          <Segment loading={isLoading} className="secondary segment-padding">
             <LoadScript
               googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
               libraries={libraries}
@@ -76,11 +65,11 @@ class Dashboard extends React.Component {
               <MapUK teams={teams} />
             </LoadScript>
           </Segment>
-          <Segment loading={isLoading || isSearchLoading} className="primary">
+          <Segment loading={isLoading || isSearchLoading} className="secondary">
             <Grid container stackable columns={2} verticalAlign="middle">
               <Grid.Row>
                 <Grid.Column>
-                  <Header size="large">Team Leaderboard</Header>
+                  <Header size="large">TEAM LEADERBOARD</Header>
                   <div className="search-container">
                     <Search
                       input={{ icon: "search", iconPosition: "left" }}
@@ -98,94 +87,89 @@ class Dashboard extends React.Component {
                   />
                 </Grid.Column>
                 <Grid.Column>
-                  <Header size="large">Sports Total</Header>
-                  <Grid container stackable columns={2} verticalAlign="middle">
+                  <Header size="large">SPORTS TOTAL</Header>
+                  <Grid container verticalAlign="middle">
                     <Grid.Row>
-                      <Grid.Column width={8}>
-                        <div className="content-container-dashboard">
-                          <Header size="medium" className="container-header">
-                            <img src={runIcon} alt="Run Logo" />
-                            Run
-                          </Header>
-                          <TeamSportsLeaderboardTable
-                            height={290}
-                            data={teams.map((team) => ({
-                              name: team.name,
-                              distance: team.activities["Run"],
-                              position: team.activities.runPosition,
-                            }))}
-                          />
-                        </div>
-                      </Grid.Column>
-                      <Grid.Column width={8}>
-                        <div className="content-container-dashboard">
-                          <Header size="medium" className="container-header">
-                            <img src={cycleIcon} alt="Walk Logo" />
-                            Bike
-                          </Header>
-                          <TeamSportsLeaderboardTable
-                            height={290}
-                            data={teams.map((team) => ({
-                              name: team.name,
-                              distance: team.activities["CyclingConverted"],
-                              position:
-                                team.activities.cyclingConvertedPosition,
-                            }))}
-                          />
-                        </div>
-                      </Grid.Column>
+                      <div className="content-container-dashboard">
+                        <Header size="medium" className="container-header">
+                          <img src={runIcon} alt="Run Logo" />
+                          Run
+                        </Header>
+                        <TeamSportsLeaderboardTable
+                          height={170}
+                          data={teams.map((team) => ({
+                            name: team.name,
+                            distance: team.activities["Run"],
+                            position: team.activities.runPosition,
+                          }))}
+                        />
+                      </div>
                     </Grid.Row>
                     <Grid.Row>
-                      <Grid.Column width={8}>
-                        <div className="content-container-dashboard">
-                          <Grid.Row>
-                            <Header size="medium" className="container-header">
-                              <img src={walkIcon} alt="Walk Logo" />
-                              Walk
-                            </Header>
-                            <TeamSportsLeaderboardTable
-                              height={250}
-                              data={teams.map((team) => ({
-                                name: team.name,
-                                distance: team.activities["Walk"],
-                                position: team.activities.walkPosition,
-                              }))}
-                            />
-                          </Grid.Row>
-                        </div>
-                      </Grid.Column>
-                      <Grid.Column width={8}>
-                        <div className="content-container-dashboard">
-                          <Grid.Row style={{ paddingBottom: 20 }}>
-                            <Header size="medium" className="container-header">
-                              <img src={swimIcon} alt="Swim Logo" />
-                              Swim
-                            </Header>
-                            <TeamSportsLeaderboardTable
-                              height={90}
-                              data={teams.map((team) => ({
-                                name: team.name,
-                                distance: team.activities["Swim"],
-                                position: team.activities.swimPosition,
-                              }))}
-                            />
-                          </Grid.Row>
-                          <Grid.Row>
-                            <Header size="medium" className="container-header">
-                              <img src={rowIcon} alt="Row Logo" />
-                              Row
-                            </Header>
-                            <TeamSportsLeaderboardTable
-                              height={90}
-                              data={teams.map((team) => ({
-                                name: team.name,
-                                distance: team.activities["Rowing"],
-                                position: team.activities.rowingPosition,
-                              }))}
-                            />
-                          </Grid.Row>
-                        </div>
-                      </Grid.Column>
+                      <div className="content-container-dashboard">
+                        <Header size="medium" className="container-header">
+                          <img src={cycleIcon} alt="Walk Logo" />
+                          Bike
+                        </Header>
+                        <TeamSportsLeaderboardTable
+                          height={170}
+                          data={teams.map((team) => ({
+                            name: team.name,
+                            distance: team.activities["CyclingConverted"],
+                            position: team.activities.cyclingConvertedPosition,
+                          }))}
+                        />
+                      </div>
+                    </Grid.Row>
+
+                    <Grid.Row>
+                      <div className="content-container-dashboard">
+                        <Header size="medium" className="container-header">
+                          <img src={walkIcon} alt="Walk Logo" />
+                          Walk
+                        </Header>
+                        <TeamSportsLeaderboardTable
+                          height={170}
+                          data={teams.map((team) => ({
+                            name: team.name,
+                            distance: team.activities["Walk"],
+                            position: team.activities.walkPosition,
+                          }))}
+                        />
+                      </div>
+                    </Grid.Row>
+
+                    <Grid.Row>
+                      <div className="content-container-dashboard">
+                        <Header size="medium" className="container-header">
+                          <img src={swimIcon} alt="Swim Logo" />
+                          Swim
+                        </Header>
+                        <TeamSportsLeaderboardTable
+                          height={90}
+                          data={teams.map((team) => ({
+                            name: team.name,
+                            distance: team.activities["Swim"],
+                            position: team.activities.swimPosition,
+                          }))}
+                        />{" "}
+                      </div>
+                    </Grid.Row>
+                    <Grid.Row>
+                      <div className="content-container-dashboard">
+                        <Header size="medium" className="container-header">
+                          <img src={rowIcon} alt="Row Logo" />
+                          Row
+                        </Header>
+                        <TeamSportsLeaderboardTable
+                          height={90}
+                          data={teams.map((team) => ({
+                            name: team.name,
+                            distance: team.activities["Rowing"],
+                            position: team.activities.rowingPosition,
+                          }))}
+                        />
+                      </div>
                     </Grid.Row>
                   </Grid>
                 </Grid.Column>

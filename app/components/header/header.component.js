@@ -44,7 +44,7 @@ class Header extends React.Component {
             <img src={ESTRChallengeMobile} alt="ESTR Challenge Logo" />
           </div>
         </div>
-        <div className="desktop-header">
+        <div className="header">
           <Menu borderless secondary size="small">
             <Container>
               <Menu.Item>
