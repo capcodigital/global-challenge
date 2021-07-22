@@ -20,21 +20,21 @@
     
     .faq-title {
       padding-top: 40px ;
-      padding-bottom: 20px ;
-      font-size: 24px;
+      padding-bottom: 0px ;
+      color: white;
+      font-size: 26px;
     }
 
     .section-header {
-      padding-bottom: 0px ;
+      margin-top: 35px;
+      margin-bottom: 5px;
       font-size: 24px;
     }
-  }
 
-  .faq-title {
-    padding-top: 40px ;
-    padding-bottom: 20px ;
-    color: white;
-    font-size: 24px;
+    .divider {
+      margin-top: 0px !important;
+      margin-bottom: 5px !important;
+    }
   }
 
   a {
@@ -64,6 +64,7 @@
 .answer-text {
   font-size: 16px;
   font-weight: 300;
+  padding-top: 0px !important;
 }
 
 .bold-box {
