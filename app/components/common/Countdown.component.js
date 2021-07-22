@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button, Icon } from "semantic-ui-react";
 
 const challengeStartDate = new Date(2021, 7, 1, 0, 0, 0, 0); // 1th August
 const challengeEndDate = new Date(2021, 8, 1, 0, 0, 0, 0); // 31th August Midnight
@@ -24,8 +25,9 @@ function getTimeRemaining() {
   };
 }
 
-const Countdown = () => {
+const Countdown = ({ overallDistance }) => {
   const [timeLeft, setTimeLeft] = useState(getTimeRemaining());
+  const [open, setOpen] = useState(true);
   useEffect(() => {
     const timer = setTimeout(() => {
       setTimeLeft(getTimeRemaining());
@@ -34,22 +36,50 @@ const Countdown = () => {
   });
 
   return (
-    <div className="clockdiv">
-      <div>
-        <span className="days">{timeLeft.days}</span>
-        <div className="smalltext">DAYS</div>
+    <div className={`countdown ${!open && "closed"}`}>
+      <Icon
+        name="close"
+        className="close-icon"
+        onClick={() => setOpen(!open)}
+      />
+
+      <div className="count">
+        <div>
+          <span className="days">{timeLeft.days}</span>
+          <div className="small-text">DAYS</div>
+        </div>
+        <div>
+          <span className="hours">{timeLeft.hours}</span>
+          <div className="small-text">HOURS</div>
+        </div>
+        <div>
+          <span className="minutes">{timeLeft.minutes}</span>
+          <div className="small-text">MIN</div>
+        </div>
+        <div>
+          <span className="seconds">{timeLeft.seconds}</span>
+          <div className="small-text">SEC</div>
+        </div>
+      </div>
+      <div className="distance-label">Overall distance</div>
+      <div className="distance">
+        {overallDistance}
+        <div>km</div>
       </div>
       <div>
-        <span className="hours">{timeLeft.hours}</span>
-        <div className="smalltext">HOURS</div>
-      </div>
-      <div>
-        <span className="minutes">{timeLeft.minutes}</span>
-        <div className="smalltext">MIN</div>
-      </div>
-      <div>
-        <span className="seconds">{timeLeft.seconds}</span>
-        <div className="smalltext">SEC</div>
+        <Button
+          secondary
+          fluid
+          as="a"
+          href="https://give.roomtoread.org/campaign/capco-active-for-education/c186488"
+          target="_blank"
+          className="count-btn"
+        >
+          Donate
+        </Button>
+        <Button secondary fluid as="a" href="/register" className="count-btn">
+          Register
+        </Button>
       </div>
     </div>
   );
