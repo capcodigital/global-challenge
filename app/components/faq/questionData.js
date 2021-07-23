@@ -18,12 +18,12 @@ export const questionData = {
     {
       questionId: "do-i-need-to-use-a-smart-device",
       questionText: "Do I have to use a smart device?",
-      answerText: "No, if you do not have a wearable device then you can enter your manually tracked data into either Strava or Fitbit, please see setup guides here <b>Desktop Setup Guide </b> <a href='#strava-no-device'>Strava </a> / <a href='https://www.youtube.com/watch?v=bkV4UvHMoIc'>FitBit</a>."
+      answerText: "No, if you do not have a wearable device then you can enter your manually tracked data into either Strava or Fitbit, please see setup guides here <b>Desktop Setup Guide </b> <a href='/how-to/#strava-no-device'>Strava </a> / <a href='https://www.youtube.com/watch?v=bkV4UvHMoIc'>FitBit</a>."
     },
     {
       questionId: "do-i-need-to-use-a-mobile-phone",
       questionText: "Do I need to use a mobile phone?",
-      answerText: "No, you can setup Strava / Fitbit from your desktop and link to the challenge app. <b>Desktop Setup Guide </b> <a href='#strava-no-device'>Strava </a> / <a href='https://www.youtube.com/watch?v=bkV4UvHMoIc'>FitBit</a>."
+      answerText: "No, you can setup Strava / Fitbit from your desktop and link to the challenge app. <b>Desktop Setup Guide </b> <a href='/how-to/#strava-no-device'>Strava </a> / <a href='https://www.youtube.com/watch?v=bkV4UvHMoIc'>FitBit</a>."
     },
     {
       questionId: "use-mobile-phone",

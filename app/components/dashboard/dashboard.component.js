@@ -57,7 +57,7 @@ class Dashboard extends React.Component {
     return (
       !error && (
         <div className="dashboard">
-          <Segment loading={isLoading} className="secondary">
+          <Segment loading={isLoading} className="secondary segment-padding">
             <LoadScript
               googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
               libraries={libraries}

@@ -1,0 +1,38 @@
+.event-rules-container {
+  background-color: #0f2046;
+  display: flex;
+  justify-content: center;
+
+  .column-b {
+    @media screen and (max-width: 1000px) {
+      margin: 560px 10px 0 10px !important;
+    }
+    max-width: 800px;
+    margin-left: 430px;
+    padding-right: 10% !important;
+    min-height: 560px;
+  }
+
+  .event-rules-section {
+    color: white;
+
+    .event-rules-title {
+      padding-top: 40px;
+      padding-bottom: 20px;
+      color: white;
+      font-size: 24px;
+    }
+    a {
+      color: #fa451b !important;
+    }
+
+    p {
+      font-size: 20px;
+
+      .red {
+        color: #fa451b !important;
+        display: inline;
+      }
+    }
+  }
+}

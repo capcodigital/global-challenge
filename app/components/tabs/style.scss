@@ -5,9 +5,11 @@
 }
 
 .tab {
-  padding: 1rem 4rem !important;
+  padding: 1rem 0px !important;
   font-size: 16px;
   font-weight: 700 !important;
+  justify-content: center;
+  width: 165px;
 }
 
 .ui.menu > .item.active {

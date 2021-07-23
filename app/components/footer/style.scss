@@ -1,11 +1,27 @@
 .footer {
-  margin-top: 3rem;
-  margin-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
   text-align: center;
 
   .footer-container {
     .copyright-container {
       padding: 40px 0!important;
+    }
+  }
+}
+
+.blue {
+  color: white;
+  background-color: #0F2046 !important;
+
+  .footer-container {
+    background-color: #0F2046 !important;
+    .copyright-container {
+      padding: 40px 0!important;
+      background-color: #0F2046 !important;
+      a {
+        color: #FA451B !important;
+      }
     }
   }
 }

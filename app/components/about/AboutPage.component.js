@@ -1,14 +1,12 @@
 import React from "react";
-import { Grid, List, Header } from "semantic-ui-react";
+import { Grid, Header, Segment } from "semantic-ui-react";
 import "./style.scss";
 
-const AboutChallenge = () => (
-  <>
-    <Grid id="about-challenge" className="question-section" stackable centered>
-      <Grid.Column width={12} className="bold-box question-section-inner">
-        <Header as="h1" textAlign="center">
-          What's the challenge about?
-        </Header>
+const AboutPage = () => (
+  <Segment className="secondary">
+    <Grid className="about-container">
+      <Grid.Column className="about-section column-b">
+        <Header className="about-title">About</Header>
         <p>
           We challenge you to walk, run, cycle, row or swim throughout August -
           all at your own pace, whenever and wherever – with a view to
@@ -34,19 +32,15 @@ const AboutChallenge = () => (
           on!
         </p>
         <p>
-          <b>
-            <u>Event Details</u>
-          </b>
-        </p>
-        <p>
-          <b>Register By:</b> 29th July
-        </p>
-        <p>
-          <b>Challenge Date Range:</b> 1st to 30th August
+          <b>Event Details</b> <br />
+          Register By: 
+          <p className="red">29th July</p>
+          <br />
+          Challenge Date Range: <p className="red">1st - 30th August</p>
         </p>
       </Grid.Column>
     </Grid>
-  </>
+  </Segment>
 );
 
-export default AboutChallenge;
+export default AboutPage;
