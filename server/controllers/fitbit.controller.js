@@ -219,12 +219,13 @@ function updateUser(user) {
         console.log("FitBit Token Expired:" + user.name);
         options.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
-         // If token is expired refresh access token and get a new refresh token
+         // If token is expired, refresh access token and get a new refresh token
         var newReq2 = buildRequest(options, function(err, result) {
             if (err) {
-                console.log(user.name + " : " + err.message);
+                console.log(user.name + " : " + err);
             } else if (result.errors && result.errors.length > 0) {
-                console.log(user.name + " : " + result.errors[0].message);
+                console.log(user.name + ": " + result.errors[0].message);
+                console.log(JSON.stringify(result.errors[0]));
             } else {
                 var date = new Date();
                 var datemillis = date.getTime();
@@ -253,7 +254,7 @@ function updateUser(user) {
 function getStats(user, date) {
     if (!date) {
         var today = new Date();
-        date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        date = today.toISOString().split('T')[0];
     }
     getOptions.path = "/1/user/" + user.user_id + "/activities/date/" + date + ".json";
     getOptions.headers.Authorization = "Bearer " + user.access_token;
@@ -291,25 +292,46 @@ function getStats(user, date) {
             for (var i = 0; i < activityCount; i++) {
                 if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].summary) {
 
-                    const walkTime = user.activities[challengeDates[i]].summary.fairlyActiveMinutes + user.activities[challengeDates[i]].summary.lightlyActiveMinutes;
-                    const runTime = user.activities[challengeDates[i]].summary.veryActiveMinutes;
-                    const totalTime = walkTime + runTime;
+                    user.activities[challengeDates[i]].summary.distances.forEach (function(activityEntry) {
+                        switch (activityEntry.activity) {
+                            case 'Run':
+                                user.totalRun = Math.round(user.totalRun + (activityEntry.distance));
+                                break;
+                            case 'Swim':
+                                user.totalSwim = Math.round(user.totalSwim + (activityEntry.distance));
+                                break;
+                            case 'Bike':
+                                user.totalCycling = Math.round(user.totalCycling + (activityEntry.distance));
+                                user.totalCyclingConverted = Math.round(user.totalCyclingConverted + ((activityEntry.distance)/config.cyclingConversion));
+                                break;
+                            case 'Walk':
+                                user.totalWalk = Math.round(user.totalWalk + (activityEntry.distance));
+                                break;
+                            case 'total':
+                                // Ignore total as it seems to round down
+                                break;
+                            default:
+                                console.log("Unexpected activity type: " + activityEntry.activity + " - User: " + user.name);
+                                break;
+                        }
 
-                    user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
-                    user.totalDistance = Math.round(user.totalDistance + user.activities[challengeDates[i]].summary.distances[0].distance);
-                    user.totalDistanceConverted = Math.round(user.totalDistanceConverted + user.activities[challengeDates[i]].summary.distances[0].distance);
-                    user.totalDuration = user.totalDuration + totalTime;
-                    // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
+                        // Only add valid activities to the total
+                        if (['Run','Swim','Bike','Walk'].includes(activityEntry.activity)) {
+                            // Only moving time vs FitBit's Active, Very Active etc
+                            user.totalDuration = user.totalDuration + user.activities[challengeDates[i]].summary.fairlyActiveMinutes + 
+                                                                    user.activities[challengeDates[i]].summary.lightlyActiveMinutes + 
+                                                                    user.activities[challengeDates[i]].summary.veryActiveMinutes;
 
-                    if (walkTime > 0) {
-                        const walkPercentage = walkTime/totalTime;
-                        user.totalWalk = Math.round(user.totalWalk + (user.activities[challengeDates[i]].summary.distances[0].distance * walkPercentage));
-                    }
+                            user.totalDistance = Math.round(user.totalDistance + (activityEntry.distance));
 
-                    if (runTime > 0) {
-                        const runPercentage = runTime/totalTime;
-                        user.totalRun = Math.round(user.totalRun + (user.activities[challengeDates[i]].summary.distances[0].distance * runPercentage));
-                    }
+                            if (activityEntry.activity === 'Bike') {
+                                user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((activityEntry.distance)/config.cyclingConversion));
+                            } else {
+                                user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (activityEntry.distance));
+                            }
+                        }
+
+                    });
                 }
             }
 

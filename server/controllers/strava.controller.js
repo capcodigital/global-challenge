@@ -200,7 +200,11 @@ function getStats(user) {
     strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime }, function(err, result) {
         if (err) {
             console.log("Error Accessing Strava activities for " + user.name);
-            console.log(err);
+            if (err.toString().includes("Authorization Error")){
+                console.log(user.name + " - User authentication error with Strava");
+            } else {
+                console.log(err);
+            }
         } else {
             console.log("Updating Strava Stats for: " + user.name);
             user.activities = result;
@@ -221,12 +225,6 @@ function getStats(user) {
             var activityCount = user.activities.length;
             for (var i = 0; i < activityCount; i++) {
                 if (challengeDates.includes(user.activities[i].start_date.substring(0,10))) {
-                    // user.totalSteps = user.totalSteps + user.activities[challengeDates[i]].summary.steps;
-                    // Strava stores distance in metres
-                    user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
-                    // Only moving time vs FitBit's Active, Very Active etc
-                    user.totalDuration = user.totalDuration + user.activities[i].moving_time;
-                    // user.totalCalories = user.totalCalories + user.activities[challengeDates[i]].summary.activityCalories;
 
                     switch (user.activities[i].type) {
                         case 'Run':
@@ -242,15 +240,26 @@ function getStats(user) {
                         case 'Rowing':
                             user.totalRowing = Math.round(user.totalRowing + (user.activities[i].distance/1000));
                             break;
-                        default:
+                        case 'Walk':
                             user.totalWalk = Math.round(user.totalWalk + (user.activities[i].distance/1000));
+                            break;
+                         default:
+                            console.log("Unexpected activity type: " + user.activities[i].type + " - User: " + user.name);
                             break;
                     }
 
-                    if (user.activities[i].type === 'Ride') {
-                        user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((user.activities[i].distance/1000)/config.cyclingConversion));
-                    } else {
-                        user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (user.activities[i].distance/1000));
+                    // Only add valid activities to the total
+                    if (['Run','Swim','Ride','Walk','Rowing'].includes(user.activities[i].type)) {
+                        // Strava stores distance in metres
+                        user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
+                        // Only moving time vs FitBit's Active, Very Active etc
+                        user.totalDuration = user.totalDuration + user.activities[i].moving_time;
+
+                        if (user.activities[i].type === 'Ride') {
+                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((user.activities[i].distance/1000)/config.cyclingConversion));
+                        } else {
+                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (user.activities[i].distance/1000));
+                        }
                     }
                 }
             }

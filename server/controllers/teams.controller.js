@@ -10,18 +10,21 @@ var config = require("../config/config");
 
 const maxMembers = config.maxTeamSize;
 const minMembers = config.minTeamSize;
+const teamStatsDelay = 300000; // Wait 5 minutes to ensure individual FitBit and Strava updates are compelete
 
 const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
 if (cluster.isMaster) {
-    if (process.env.SERVER_URL) {
-        updateEveryInterval(60);
-    }
-    else {
-        updateEveryInterval(5);
-    }
+    setTimeout(function(){
+        if (process.env.SERVER_URL) {
+            updateEveryInterval(60);
+        }
+        else {
+            updateEveryInterval(5);
+        }
+    }, teamStatsDelay);
 }
 
 /**
