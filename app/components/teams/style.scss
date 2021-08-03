@@ -1,14 +1,28 @@
 @import '../../styles/variables.scss';
 
-.homepage {
+.team-registration {
+
+  .segment {
+    @media screen and (min-width: 1000px) {
+      padding-top: 70px !important;
+    }
+  }
+
   .banner {
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
     
   .header {
-    font-size: 1.5rem !important;
+    font-size: 1.2rem !important;
+    font-weight: 600;
     text-transform: uppercase !important;
+
+    &.select-team {
+      @media screen and (min-width: 1000px) {
+        text-align: center !important;
+      }
+    }
   }
 
   .progress-button {
@@ -17,9 +31,15 @@
     }
   }
 
+  .spacer-column {
+    @media screen and (max-width: 1000px) {
+      display: none !important;
+    }
+  }
+
   .registration {
     a {
-        margin-top: 2rem;
+      margin-top: 2rem;
     }
     div {
       margin-bottom: 2rem;
@@ -27,6 +47,18 @@
       .item {
         margin-bottom: 0rem;
       }
+
+    }
+
+    ::placeholder {
+      color: #000000 !important;
+      font-size: 16px;
+      opacity: 1 !important;
+    }
+
+    .default {
+      color: #000000 !important;
+      font-family: Lato !important;
     }
   }
 

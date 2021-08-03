@@ -16,7 +16,7 @@
   "homepage.fitbitError": "Error contacting Fitbit, please try again later",
 
   "teams.title": "Create or join a team",
-  "teams.create": "Create a new Team (3-5 People including you)",
+  "teams.create": "Create a new Team (3-5 People)",
   "teams.join": "Select Team to Join",
   "teams.members": "Add team members who have already signed up to the challenge",
   "teams.unique": "The Team name you have entered is already in use, please type a different name",
@@ -27,6 +27,7 @@
   "teams.joinFailed": "Unable to join team, please try again later",
   "teams.joinAlready": "You are already a member of this team",
   "teams.userNotFound": "The Capco ID you entered could not be found. Please register first or if you have already registered, try again later ",
+  "teams.progress": "View our Progress",
 
   "register.fitbit": "Register with Fitbit",
   "register.strava": "Register with Strava",
