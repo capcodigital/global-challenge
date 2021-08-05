@@ -1,7 +1,6 @@
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 .team-registration {
-
   .segment {
     @media screen and (min-width: 1000px) {
       padding-top: 70px !important;
@@ -12,7 +11,7 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
-    
+
   .header {
     font-size: 1.2rem !important;
     font-weight: 600;
@@ -47,7 +46,6 @@
       .item {
         margin-bottom: 0rem;
       }
-
     }
 
     ::placeholder {
@@ -59,6 +57,23 @@
     .default {
       color: #000000 !important;
       font-family: Lato !important;
+    }
+
+    .dropdown.icon {
+      background-color: #333030;
+      border-radius: 50%;
+      padding: 4px 7px !important;
+      color: white;
+    }
+    .dropdown {
+      .dropdown.icon {
+        top: 50% !important;
+      }
+    }
+    .dropdown-team-list {
+      .dropdown.icon {
+        top: 15% !important;
+      }
     }
   }
 
