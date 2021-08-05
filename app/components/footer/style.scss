@@ -5,7 +5,11 @@
 
   .footer-container {
     .copyright-container {
-      padding: 40px 0!important;
+      padding: 40px 0 !important;
+      @media screen and (max-width: 1000px) {
+        padding-top: 0px !important;
+        padding-bottom: 20px !important;
+      }
     }
     a {
       color: #FA451B !important;
