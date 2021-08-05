@@ -28,7 +28,7 @@ const SetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
-      <Grid.Column width={4}>
+      <Grid.Column width={4} className="text-image">
         <img src={setupA} alt="Registration page screenshot" />
       </Grid.Column>
     </Grid>
@@ -48,7 +48,7 @@ const SetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
-      <Grid.Column width={4}>
+      <Grid.Column width={4} className="text-image">
         <img src={setupB} alt="Authorize Fitbit sharing data with Capco" />
       </Grid.Column>
     </Grid>
@@ -76,7 +76,7 @@ const SetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
-      <Grid.Column width={4}>
+      <Grid.Column width={4} className="text-image">
         <img src={setupC} alt="Fitbit login page" />
       </Grid.Column>
     </Grid>
@@ -104,7 +104,7 @@ const SetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
-      <Grid.Column width={4}>
+      <Grid.Column width={4} className="text-image">
         <img src={setupD} alt="Strava login page" />
       </Grid.Column>
     </Grid>
@@ -129,7 +129,7 @@ const SetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
-      <Grid.Column width={4}>
+      <Grid.Column width={4} className="text-image">
         <img src={setupE} alt="Authorize Strava sharing data with Capco" />
       </Grid.Column>
     </Grid>
