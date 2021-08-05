@@ -8,9 +8,9 @@ const SidebarMenu = ({ children, sidebarVisible, setSidebarVisible }) => {
   return (
     <Sidebar.Pushable className="sidebar">
       <Sidebar
+        className="sidebar-menu"
         as={Menu}
         animation="overlay"
-        icon="labeled"
         onHide={() => setSidebarVisible(false)}
         vertical
         visible={sidebarVisible}
