@@ -167,148 +167,138 @@ class TeamsPage extends React.Component {
     const { isLoading, users, teams } = this.props;
 
     return (
-      <div className="homepage">
+      <div className="team-registration">
         <Container>
-          <div className="banner">
-            <img src={ESTRBanner} width="100%" alt="Capco banner" />
-          </div>
-          <Segment style={{ padding: "0" }} vertical>
-            <Grid columns="equal" stackable>
+          <Segment vertical>
+            <Grid columns="equal" stackable centered>
               <Grid.Column
                 style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
+                width={6}
                 className="registration"
               >
-                <Header as="h2" className="header">
+                <Header className="header">
                   <FormattedMessage id="teams.create" />
                 </Header>
 
                 <div className="registration-form-container">
                   <Form size="large" onSubmit={this.handleCreateSubmit}>
-                    <Segment stacked>
-                      <Form.Input
-                        fluid
-                        icon="user"
-                        iconPosition="left"
-                        maxLength="4"
-                        placeholder="Capco ID"
-                        name="createUser"
-                        id="createUser"
-                        pattern="[A-Za-z]{4}"
-                        title="Please enter your 4 letter Capco ID"
-                        required
-                      />
-                      <Form.Input
-                        fluid
-                        icon="user"
-                        iconPosition="left"
-                        placeholder="Team Name"
-                        name="name"
-                        id="name"
-                        title="Please enter a unique name for your team"
-                        required
-                      />
-                      <Form.Dropdown
-                        placeholder="Members"
-                        name="members"
-                        fluid
-                        multiple
-                        search
-                        selection
-                        options={membersList}
-                        className="dropdown"
-                        onChange={this.memberListChange}
-                      />
+                    <Form.Input
+                      fluid
+                      maxLength="4"
+                      placeholder="Capco ID"
+                      name="createUser"
+                      id="createUser"
+                      pattern="[A-Za-z]{4}"
+                      title="Please enter your 4 letter Capco ID"
+                      required
+                    />
+                    <Form.Input
+                      fluid
+                      placeholder="Team Name"
+                      name="name"
+                      id="name"
+                      title="Please enter a unique name for your team"
+                      required
+                    />
+                    <Form.Dropdown
+                      placeholder="Members"
+                      name="members"
+                      fluid
+                      multiple
+                      search
+                      selection
+                      options={membersList}
+                      className="dropdown"
+                      onChange={this.memberListChange}
+                    />
 
-                      {this.state.createJoinResult == "createTeamSuccess" ? (
-                        <FormattedMessage id="teams.createSuccess" />
-                      ) : this.state.createJoinResult == "createTeamFailed" ? (
-                        <FormattedMessage id="teams.createFailed" />
-                      ) : this.state.createJoinResult ==
-                        "createTeamFailedUserNotFound" ? (
-                        <FormattedMessage id="teams.userNotFound" />
-                      ) : (
-                        <div></div>
-                      )}
+                    {this.state.createJoinResult == "createTeamSuccess" ? (
+                      <FormattedMessage id="teams.createSuccess" />
+                    ) : this.state.createJoinResult == "createTeamFailed" ? (
+                      <FormattedMessage id="teams.createFailed" />
+                    ) : this.state.createJoinResult ==
+                      "createTeamFailedUserNotFound" ? (
+                      <FormattedMessage id="teams.userNotFound" />
+                    ) : (
+                      <div></div>
+                    )}
 
-                      <Button
-                        className="fitbit"
-                        fluid
-                        size="large"
-                        type="submit"
-                        disabled={!this.state.allowCreate}
-                      >
-                        <FormattedMessage id="Create Team" />
-                      </Button>
-                    </Segment>
+                    <Button
+                      className="team-registration"
+                      fluid
+                      size="large"
+                      type="submit"
+                      disabled={!this.state.allowCreate}
+                    >
+                      <FormattedMessage id="Create Team" />
+                    </Button>
                   </Form>
                 </div>
               </Grid.Column>
               <Grid.Column
+                className="spacer-column"
+                width={2}
+              ></Grid.Column>
+              <Grid.Column
                 style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
                 className="registration"
+                width={6}
               >
-                <Header as="h2" className="header">
+                <Header className="header select-team">
                   <FormattedMessage id="teams.join" />
                 </Header>
 
                 <div className="registration-form-container">
                   <Form size="large" onSubmit={this.handleJoinSubmit}>
-                    <Segment stacked>
-                      <Form.Input
-                        fluid
-                        icon="user"
-                        iconPosition="left"
-                        maxLength="4"
-                        placeholder="Capco ID"
-                        name="joinUser"
-                        id="joinUser"
-                        pattern="[A-Za-z]{4}"
-                        title="Please enter your 4 letter Capco ID"
-                        required
-                      />
-                      <Form.Dropdown
-                        placeholder="Team"
-                        name="team"
-                        fluid
-                        search
-                        selection
-                        options={teamsList}
-                        className="dropdown"
-                        onChange={this.joinTeamChange}
-                      />
+                    <Form.Input
+                      fluid
+                      maxLength="4"
+                      placeholder="Capco ID"
+                      name="joinUser"
+                      id="joinUser"
+                      pattern="[A-Za-z]{4}"
+                      title="Please enter your 4 letter Capco ID"
+                      required
+                    />
+                    <Form.Dropdown
+                      placeholder="Team Name"
+                      name="team"
+                      fluid
+                      search
+                      selection
+                      options={teamsList}
+                      style={{ minHeight: "114px" }}
+                      className="dropdown-team-list"
+                      onChange={this.joinTeamChange}
+                    />
 
-                      {this.state.createJoinResult == "joinTeamSuccess" ? (
-                        <FormattedMessage id="teams.joinSuccess" />
-                      ) : this.state.createJoinResult == "joinTeamFailed" ? (
-                        <FormattedMessage id="teams.joinFailed" />
-                      ) : this.state.createJoinResult ==
-                        "joinTeamFailedAlreadyAMember" ? (
-                        <FormattedMessage id="teams.joinAlready" />
-                      ) : this.state.createJoinResult ==
-                        "joinTeamFailedUserNotFound" ? (
-                        <FormattedMessage id="teams.userNotFound" />
-                      ) : (
-                        <div></div>
-                      )}
+                    {this.state.createJoinResult == "joinTeamSuccess" ? (
+                      <FormattedMessage id="teams.joinSuccess" />
+                    ) : this.state.createJoinResult == "joinTeamFailed" ? (
+                      <FormattedMessage id="teams.joinFailed" />
+                    ) : this.state.createJoinResult ==
+                      "joinTeamFailedAlreadyAMember" ? (
+                      <FormattedMessage id="teams.joinAlready" />
+                    ) : this.state.createJoinResult ==
+                      "joinTeamFailedUserNotFound" ? (
+                      <FormattedMessage id="teams.userNotFound" />
+                    ) : (
+                      <div></div>
+                    )}
 
-                      <Button className="fitbit" fluid size="large">
-                        <FormattedMessage id="Join Team" />
-                      </Button>
-                    </Segment>
+                    <Button className="team-registration" fluid size="large">
+                      <FormattedMessage id="Join Team" />
+                    </Button>
+                    <Button
+                      className="team-registration-light"
+                      fluid
+                      size="large"
+                      as="a"
+                      href="/"
+                    >
+                      <FormattedMessage id="teams.progress" />
+                    </Button>
                   </Form>
-                </div>
-
-                <div className="progress-button-container">
-                  <Button
-                    color="black"
-                    basic
-                    size="massive"
-                    as="a"
-                    href="/"
-                    className="progress-button"
-                  >
-                    <FormattedMessage id="homepage.progress" />
-                  </Button>
                 </div>
               </Grid.Column>
             </Grid>

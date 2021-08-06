@@ -44,3 +44,9 @@
   margin: 0px !important;
   color: #0f2046;
 }
+
+.pusher {
+  &.dimmed{
+    height: 100%;
+  }
+}

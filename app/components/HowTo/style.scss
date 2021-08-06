@@ -8,6 +8,9 @@
     margin-left: 430px;
     width: 800px !important;
     padding-right: 10% !important;
+    @media screen and (max-width: 1000px){
+      padding-right: 1rem !important;
+    }
   }
   .column-c {
     width: 300px !important;
@@ -17,6 +20,15 @@
     max-width: 800px;
     width: 800px !important;
     padding-right: 10% !important;
+    @media screen and (max-width: 1000px){
+      padding-right: 1rem !important;
+    }
+  }
+
+  .text-image {
+    @media screen and (max-width: 1000px){
+      text-align: center !important;
+    }
   }
 
   .how-to-section {
@@ -38,7 +50,7 @@
       font-size: 24px;
       &.main {
         @media screen and (max-width: 1000px){
-          margin: 560px 10px 0 10px !important;
+          margin: 560px 10px 0px 0px !important;
         }
       }
       &.smaller {

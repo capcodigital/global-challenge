@@ -15,6 +15,7 @@
 }
 
 .header {
+  padding-top: 2rem;
   padding-bottom: 1rem;
 
   a {
@@ -29,7 +30,7 @@
     }
     .item:nth-child(2),
     .item:nth-child(3) {
-      top: 50%;
+      top: 25%;
       float: right;
     }
   }
@@ -104,6 +105,6 @@
   img {
     width: 500px;
     max-width: 100vw;
-    padding: 2rem;
+    padding: 0rem 2rem 1rem 2rem;
   }
 }

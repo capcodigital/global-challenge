@@ -1,6 +1,5 @@
-@import './variables.scss';
-@import './global-styles.scss';
-
+@import "./variables.scss";
+@import "./global-styles.scss";
 
 body {
   .segment {
@@ -27,7 +26,7 @@ body {
         color: $text-primary !important;
         background-color: $button-primary;
       }
-  
+
       &.secondary {
         color: $text-tertiary;
         background-color: $button-primary;
@@ -50,7 +49,29 @@ body {
         color: $text-secondary;
         background-color: #fc4c02 !important;
       }
-      
+
+      &.team-registration {
+        color: $text-secondary;
+        background-color: #4fb0ba !important;
+        border-radius: 25px;
+      }
+
+      &.team-registration-light {
+        color: #0f2046;
+        border: 1px solid #392c2c;
+        background-color: transparent !important;
+        border-radius: 25px;
+
+        &:focus {
+          color: #0f2046;
+          background-color: transparent;
+        }
+        &:hover {
+          color: white;
+          background-color: #0f2046 !important;
+          text-decoration: none;
+        }
+      }
     }
   }
 }
