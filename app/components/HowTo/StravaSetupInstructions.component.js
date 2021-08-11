@@ -58,7 +58,7 @@ const StravaSetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
-      <Grid.Column width={4}>
+      <Grid.Column width={4} className="text-image">
         <img src={StravaA}></img>
       </Grid.Column>
     </Grid>
@@ -124,7 +124,7 @@ const StravaSetupInstructions = () => (
           </List.Item>
         </List>
       </Grid.Column>
-      <Grid.Column width={4}>
+      <Grid.Column width={4} className="text-image">
         <img src={StravaB}></img>
       </Grid.Column>
     </Grid>
