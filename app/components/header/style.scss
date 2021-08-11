@@ -16,7 +16,6 @@
 
 .header {
   padding-bottom: 1rem;
-
   a {
     cursor: pointer;
   }
@@ -46,13 +45,13 @@
   }
 }
 
-.button.ui.secondary.donate-button-header {
+.button.ui.secondary.button-header {
   color: #0f2046;
   border: 1px solid #0f2046;
-  width: 100px;
+  min-width: 100px;
   border-radius: 60px;
 
-  transform: translate(-50%, -50%);
+  transform: translate(50%,-50%);
   &:focus {
     color: #0f2046;
     background-color: transparent;

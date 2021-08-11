@@ -34,9 +34,9 @@ const AboutPage = () => (
         <p>
           <b>Event Details</b> <br />
           Register By: 
-          <p className="red">29th July</p>
+          <p className="red">31st August</p>
           <br />
-          Challenge Date Range: <p className="red">1st - 30th August</p>
+          Challenge Date Range: <p className="red">1st - 30th September</p>
         </p>
       </Grid.Column>
     </Grid>

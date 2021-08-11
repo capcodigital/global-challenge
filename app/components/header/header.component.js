@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Menu, Container, Button, Icon } from "semantic-ui-react";
 import ESTRChallenge from "./images/estr-challenge-full.png";
 import ESTRChallengeMobile from "./images/estr-mobile-logo.png";
@@ -60,29 +59,60 @@ class Header extends React.Component {
                   />
                 </a>
               </Menu.Item>
-              <Menu.Item>
-                <Button
-                  secondary
-                  fluid
-                  as="a"
-                  href="/register"
-                  className="donate-button-header"
-                >
-                  Register
-                </Button>
-              </Menu.Item>
-              <Menu.Item>
-                <Button
-                  secondary
-                  fluid
-                  as="a"
-                  href="https://give.roomtoread.org/campaign/capco-active-for-education/c186488"
-                  target="_blank"
-                  className="donate-button-header"
-                >
-                  Donate
-                </Button>
-              </Menu.Item>
+              {window.location.pathname === "/register" ? (
+                <>
+                  <Menu.Item>
+                    <Button
+                      secondary
+                      fluid
+                      size="large"
+                      as="a"
+                      href="/teams/register"
+                      className="button-header"
+                    >
+                      Teams
+                    </Button>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Button
+                      secondary
+                      fluid
+                      size="large"
+                      as="a"
+                      href="/"
+                      className="button-header"
+                    >
+                      View Progress
+                    </Button>
+                  </Menu.Item>
+                </>
+              ) : (
+                <>
+                  <Menu.Item>
+                    <Button
+                      secondary
+                      fluid
+                      as="a"
+                      href="/register"
+                      className="button-header"
+                    >
+                      Register
+                    </Button>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Button
+                      secondary
+                      fluid
+                      as="a"
+                      href="https://uk.virginmoneygiving.com/CapcoUKCSR1"
+                      target="_blank"
+                      className="button-header"
+                    >
+                      Donate
+                    </Button>
+                  </Menu.Item>
+                </>
+              )}
             </Container>
           </Menu>
         </div>

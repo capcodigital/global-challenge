@@ -14,7 +14,6 @@ const SERVER_URL = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/`
 const RegistrationForm = () => (
   <div className="login-form">
     <Form size="large" action="https://www.fitbit.com/oauth2/authorize?">
-      <Segment stacked>
         <input type="hidden" name="response_type" value="code" />
         <input type="hidden" name="client_id" value="228MZ3" />
         <input type="hidden" name="redirect_uri" value={`${SERVER_URL}fitbit/auth`} />
@@ -32,8 +31,6 @@ const RegistrationForm = () => (
 
         <Form.Input
           fluid
-          icon="user"
-          iconPosition="left"
           maxLength="4"
           placeholder="Capco ID"
           name="state"
@@ -43,14 +40,13 @@ const RegistrationForm = () => (
           required
         />
         <Button className="fitbit" fluid size="large">
-          <Image avatar src={Fitbit} verticalAlign="middle" />
           <FormattedMessage id="register.fitbit" />
         </Button>
-      </Segment>
+    
     </Form>
   
     <Form size="large" action="https://www.strava.com/oauth/authorize?">
-      <Segment stacked>
+  
         <input type="hidden" name="response_type" value="code" />
         <input type="hidden" name="client_id" value="7291" />
         <input type="hidden" name="redirect_uri" value={`${SERVER_URL}strava/auth`} />
@@ -68,8 +64,6 @@ const RegistrationForm = () => (
 
         <Form.Input
           fluid
-          icon="user"
-          iconPosition="left"
           maxLength="4"
           placeholder="Capco ID"
           name="state"
@@ -79,10 +73,8 @@ const RegistrationForm = () => (
           required
         />
         <Button className="strava" fluid size="large">
-          <Image avatar src={Strava} verticalAlign="middle" />
           <FormattedMessage id="register.strava" />
         </Button>
-      </Segment>
     </Form>
   </div>
 );
