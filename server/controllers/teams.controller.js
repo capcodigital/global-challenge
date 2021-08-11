@@ -196,6 +196,8 @@ exports.create = function(req, res) {
             return;
         }
 
+        team.activities = {};
+
         team.save(function(err) {
             if (err) {
                 console.log("Error creating team: " + team.name);
@@ -332,6 +334,10 @@ function updateEveryInterval(minutes) {
                 Team.find().exec(function(err, teams) {
 
                     teams.forEach(function(team) {
+
+                        if (!team.activities) {
+                            team.activities = {};
+                        }
 
                         team.activities.Walk = 0;
                         team.activities.Run = 0;
