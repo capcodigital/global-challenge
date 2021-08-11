@@ -1,28 +1,24 @@
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 .homepage {
   .banner {
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
-    
+
   .header {
     font-size: 1.5rem !important;
     text-transform: uppercase !important;
   }
-
-  .progress-button {
-    &:hover {
-      text-decoration: none !important;
-    }
-  }
-
   .registration {
-    a {
-        margin-top: 2rem;
+    .donate {
+      border-radius: 30px !important;
+      padding: 15px !important;
+      color: black !important;
+      border: 1px solid black !important;
     }
-    div {
-      margin-bottom: 2rem;
+    a {
+      margin-top: 2rem;
     }
   }
 

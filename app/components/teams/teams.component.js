@@ -7,17 +7,10 @@ import {
   Grid,
   Segment,
   Header,
-  Image,
   Container,
-  List,
   Button,
-  Divider,
-  Dropdown,
 } from "semantic-ui-react";
-import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
-import RegistrationForm from "../register";
-import Banner from "./images/banner.png";
-import ESTRBanner from "./images/ESTR-banner.png";
+import { FormattedMessage } from "react-intl";
 import "./style.scss";
 
 export const SERVER_URL = process.env.SERVER_URL
@@ -71,7 +64,7 @@ class TeamsPage extends React.Component {
     }
   }
 
-  memberListChange = (event, { value }) => {
+  memberListChange = ({ value }) => {
     if (value.length > 4 || value.length < 2) {
       this.setState({ allowCreate: false });
     } else {
@@ -80,7 +73,7 @@ class TeamsPage extends React.Component {
     }
   };
 
-  joinTeamChange = (event, { value }) => {
+  joinTeamChange = ({ value }) => {
     this.state.selectedTeam = value;
   };
 
@@ -164,8 +157,6 @@ class TeamsPage extends React.Component {
   render() {
     const { membersList, teamsList } = this.state;
 
-    const { isLoading, users, teams } = this.props;
-
     return (
       <div className="team-registration">
         <Container>
@@ -235,10 +226,7 @@ class TeamsPage extends React.Component {
                   </Form>
                 </div>
               </Grid.Column>
-              <Grid.Column
-                className="spacer-column"
-                width={2}
-              ></Grid.Column>
+              <Grid.Column className="spacer-column" width={2}></Grid.Column>
               <Grid.Column
                 style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
                 className="registration"

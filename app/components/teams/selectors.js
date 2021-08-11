@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { keyBy, cloneDeep } from 'lodash';
 
 const getState = (state) => state;
 
