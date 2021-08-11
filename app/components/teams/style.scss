@@ -71,6 +71,9 @@
       }
     }
     .dropdown-team-list {
+      div.visible.menu.transition {
+        margin-top: -70px;
+      }
       .dropdown.icon {
         top: 15% !important;
       }

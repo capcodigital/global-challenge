@@ -37,11 +37,14 @@ const Countdown = ({ overallDistance }) => {
 
   return (
     <div className={`countdown ${!open && "closed"}`}>
-      <Icon
-        name="close"
-        className="close-icon"
-        onClick={() => setOpen(!open)}
-      />
+      {(window.location.pathname === "/" ||
+        window.location.pathname.includes("/team")) && (
+        <Icon
+          name="close"
+          className="close-icon"
+          onClick={() => setOpen(!open)}
+        />
+      )}
 
       <div className="count">
         <div>

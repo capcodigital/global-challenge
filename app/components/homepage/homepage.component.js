@@ -4,8 +4,6 @@ import React from "react";
 import {
   Grid,
   Segment,
-  Header,
-  Image,
   Container,
   List,
   Button,
@@ -43,14 +41,14 @@ const HomePage = () => (
               <RegistrationForm />
             </div>
             <h2>How to participate?</h2>
-            <List>
+            <List ordered>
               <List.Item>
                 Make a donation to our partner charity, using the ‘Donate’
                 button on this page
               </List.Item>
               <List.Item>
                 If you don't already have a Strava account please either
-                register via desktop or download and install this on your
+                register via desktop or download and install this on your{" "}
                 <a
                   href="https://itunes.apple.com/us/app/fitbit-activity-calorie-tracker/id462638897?"
                   target="_blank"
@@ -85,7 +83,7 @@ const HomePage = () => (
               <List.Item>
                 Fitbit users. You can link your Fitbit to a Strava Account and
                 then register for the challenge as above (preferred) please see
-                the <a href="/how-to"> see our How To</a> for further
+                the see our <a href="/how-to">How To</a> for further
                 information. This will ensure you auto tracked fitbit activity
                 is synced with the application.
               </List.Item>
@@ -96,8 +94,8 @@ const HomePage = () => (
               </List.Item>
               <List.Item>
                 You can also setup your iPhone to track your activity using
-                Fitbit if you do not have a wearable device – please see our{" "}
-                <a href="/how-to"> see our How To</a> for more details.
+                Fitbit if you do not have a wearable device – please see our see
+                our <a href="/how-to">How To</a> for more details.
               </List.Item>
               <List.Item>
                 Please donate by clicking on the button below before registering
