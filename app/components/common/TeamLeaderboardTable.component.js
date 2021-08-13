@@ -6,7 +6,28 @@ import Avatar from "./Avatar.component";
 import "./style.scss";
 
 const orange = "#fa451b";
-const blue = "#11A9B2";
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const formatCompletionDate = (compDate) => {
+  const completionDate = new Date(compDate);
+
+  return `${completionDate.getHours()}:${completionDate.getMinutes()} ${completionDate.getDate()} ${
+    monthNames[completionDate.getMonth()]
+  }`;
+};
 
 const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
   const history = useHistory();
@@ -72,7 +93,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
                     {isMainDashboard ? (
                       <Table.Cell className={`main date ${dateCompletion}`}>
                         {item.completionDate
-                          ? item.completionDate
+                          ? formatCompletionDate(item.completionDate)
                           : "Still to finish"}
                       </Table.Cell>
                     ) : (
@@ -110,7 +131,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
               <span>
                 <div className={"date"}>
                   {item.completionDate
-                    ? item.completionDate
+                    ? formatCompletionDate(item.completionDate)
                     : "Still to finish"}
                 </div>
                 {item.name}

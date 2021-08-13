@@ -277,7 +277,7 @@
   position: absolute;
   z-index: 1;
   @media screen and (max-width: 1000px) {
-    padding: 14px 30px 30px;
+    padding: 44px 30px 30px;
     height: 460px;
   }
   .count > div {
@@ -337,9 +337,6 @@
     cursor: pointer;
     @media screen and (min-width: 1000px) {
       display: none !important;
-    }
-    @media screen and (max-width: 1000px) {
-      margin-top: 20px;
     }
   }
 }
