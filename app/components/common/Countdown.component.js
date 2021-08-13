@@ -74,7 +74,7 @@ const Countdown = ({ overallDistance }) => {
           secondary
           fluid
           as="a"
-          href="https://give.roomtoread.org/campaign/capco-active-for-education/c186488"
+          href="https://uk.virginmoneygiving.com/CapcoUKCSR1"
           target="_blank"
           className="count-btn"
         >

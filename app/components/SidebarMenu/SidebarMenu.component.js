@@ -27,6 +27,13 @@ const SidebarMenu = ({ children, sidebarVisible, setSidebarVisible }) => {
           to="/"
         />
         <Menu.Item
+          name="teamRegistration"
+          className="menu-item"
+          as={NavLink}
+          exact
+          to="/teams/register"
+        />
+        <Menu.Item
           name="about"
           className="menu-item"
           as={NavLink}
