@@ -15,8 +15,10 @@ const port = require('./util//port');
 const setup = require('./middlewares/frontendMiddleware');
 
 var models = require("./config/models");
+var cors = require('cors');
 
 const app = express();
+app.use(cors);
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
