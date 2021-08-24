@@ -12,6 +12,7 @@ import { getInitials } from "./Avatar.component";
 const containerStyle = {
   width: "100%",
   height: "80vh",
+  minHeight: "600px",
 };
 
 const center = {
