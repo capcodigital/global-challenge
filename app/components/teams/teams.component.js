@@ -64,7 +64,7 @@ class TeamsPage extends React.Component {
     }
   }
 
-  memberListChange = ({ value }) => {
+  memberListChange = (event, { value }) => {
     if (value.length > 4 || value.length < 2) {
       this.setState({ allowCreate: false });
     } else {
@@ -73,7 +73,7 @@ class TeamsPage extends React.Component {
     }
   };
 
-  joinTeamChange = ({ value }) => {
+  joinTeamChange = (event, { value }) => {
     this.state.selectedTeam = value;
   };
 
@@ -188,7 +188,8 @@ class TeamsPage extends React.Component {
                       placeholder="Team Name"
                       name="name"
                       id="name"
-                      title="Please enter a unique name for your team"
+                      pattern="^[A-Za-z0-9_-]*$"
+                      title="Team name can only contain letters and numbers."
                       required
                     />
                     <Form.Dropdown
