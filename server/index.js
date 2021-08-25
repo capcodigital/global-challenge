@@ -15,8 +15,13 @@ const port = require('./util//port');
 const setup = require('./middlewares/frontendMiddleware');
 
 var models = require("./config/models");
+const cors = require('cors');
 
 const app = express();
+// Enable cors on Production but not locally as Chrome does not support it for localhost
+if (process.env.SERVER_URL) {
+	app.use(cors);
+}
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
