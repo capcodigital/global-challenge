@@ -6,6 +6,9 @@ var https = require("https");
 var citService = require('../services/cit.service');
 var challenges = require('./challenges.controller');
 var User = mongoose.model('User');
+var Level = mongoose.model('Level');
+var Location = mongoose.model('Location');
+
 var strava = require('strava-v3');
 var cluster = require('cluster');
 var fs = require('fs');
@@ -72,7 +75,7 @@ exports.authorize = function(req, res) {
                     } else {
                         var user = new User();
 
-                        user.username = username;
+                        user.username = username.toLowerCase();
                         user.app = "Strava";
                         user.access_token = result.access_token;
                         user.refresh_token = result.refresh_token;
@@ -123,6 +126,8 @@ exports.authorize = function(req, res) {
                         user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
 
+                        Location.AddOrUpdate(user.location, username.toLowerCase());
+                        Level.AddOrUpdate(user.level, username.toLowerCase());
 
                         user.save(function(err, newUser) {
                             if (err) {

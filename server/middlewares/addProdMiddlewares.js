@@ -7,6 +7,8 @@ var teams = require('../controllers/teams.controller');
 var challenges = require('../controllers/challenges.controller');
 var fitbit = require('../controllers/fitbit.controller');
 var strava = require('../controllers/strava.controller');
+var levels = require('../controllers/levels.controller');
+var locations = require('../controllers/locations.controller');
 
 module.exports = function addProdMiddlewares(app, options) {
   const publicPath = options.publicPath || '/';
@@ -46,6 +48,12 @@ module.exports = function addProdMiddlewares(app, options) {
   app.get('/strava/update', strava.update);
 
   // app.get('/strava/userUpdate/:user', strava.updateIndividualUser);
+
+  app.get('/levels/list', levels.list);
+  app.get('/levels', levels.all);
+
+  app.get('/locations/list', locations.list);
+  app.get('/locations', telocationsams.all);
 
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
 };

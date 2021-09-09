@@ -6,6 +6,9 @@ var https = require("https");
 var citService = require('../services/cit.service');
 var challenges = require('./challenges.controller');
 var User = mongoose.model('User');
+var Level = mongoose.model('Level');
+var Location = mongoose.model('Location');
+
 var _ = require('lodash');
 var cluster = require('cluster');
 var fs = require('fs');
@@ -94,7 +97,7 @@ exports.authorize = function(req, res) {
                         var expiration = new Date();
                         expiration.setTime(datemillis + expiresTimeMillis);
 
-                        user.username = username;
+                        user.username = username.toLowerCase();
                         user.app = "FitBit";
                         user.user_id = result.user_id;
                         user.token_type = result.token_type;
@@ -133,6 +136,9 @@ exports.authorize = function(req, res) {
                         user.totalCycling = 0;
                         user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
+
+                        Location.AddOrUpdate(user.location, username.toLowerCase());
+                        Level.AddOrUpdate(user.level, username.toLowerCase());
 
                         save(user, res);
                     }
