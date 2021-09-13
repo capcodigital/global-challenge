@@ -21,12 +21,15 @@ const monthNames = [
   "November",
   "December",
 ];
+
+const formatTime = (t) => (t < 10 ? "0" + t : t);
+
 const formatCompletionDate = (compDate) => {
   const completionDate = new Date(compDate);
 
-  return `${completionDate.getHours()}:${completionDate.getMinutes()} ${completionDate.getDate()} ${
-    monthNames[completionDate.getMonth()]
-  }`;
+  return `${formatTime(completionDate.getHours())}:${formatTime(
+    completionDate.getMinutes()
+  )} ${completionDate.getDate()} ${monthNames[completionDate.getMonth()]}`;
 };
 
 const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
