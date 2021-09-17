@@ -12,6 +12,7 @@ var ChallengeSchema = new Schema({
         type: String,
         unique: true
     },
+    challengeName: String,
     owner: {
         type: String
     },

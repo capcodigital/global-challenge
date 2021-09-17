@@ -3,11 +3,11 @@
  */
 var mongoose = require('mongoose');
 var https = require("https");
-var citService = require('../services/cit.service');
 var challenges = require('./challenges.controller');
+var levels = require('./levels.controller');
+var locations = require('./locations.controller');
 var User = mongoose.model('User');
-var Level = mongoose.model('Level');
-var Location = mongoose.model('Location');
+var Capco = mongoose.model('Capco');
 
 var _ = require('lodash');
 var cluster = require('cluster');
@@ -20,6 +20,8 @@ if (!secret || !client_id) {
     secret = fs.readFileSync('./config/keys/fitbit_secret.txt', 'utf8');
     client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
 }
+
+const challengeName = process.env.CHALLENGE_NAME ? `${process.env.CHALLENGE_NAME}` : 'dev';
 
 var challengeDates = [];
 challenges.getCurrentChallengeDates(function(dates) {
@@ -82,7 +84,7 @@ exports.authorize = function(req, res) {
                 console.log(result.errors[0].message);
             } else {
 
-                citService.getUser(username.toLowerCase(), function(err, profile) {
+                Capco.find({username: username.toLowerCase()}).exec(function(err, profile) {
                     if (err) {
                         res.json({error: "Could not find your Capco ID"});
                     } else {
@@ -105,23 +107,22 @@ exports.authorize = function(req, res) {
                         user.access_token = result.access_token;
                         user.refresh_token = result.refresh_token;
 
-                        user.level = profile.title;
-                        user.name = profile.displayName;
+                        user.level = profile.level;
+                        user.name = profile.name;
                         user.email = profile.email;
-                        user.picName = profile.profilePictureName;
 
-                        if (profile.locationName === "New York RISC") {
+                        if (profile.location === "New York RISC") {
                             user.location = "New York";
-                        } else if (profile.locationName === "Washington DC Metro") {
+                        } else if (profile.location === "Washington DC Metro") {
                             user.location = "Washington DC";
-                        } else if (profile.locationName === "Orlando RISC") {
+                        } else if (profile.location === "Orlando RISC") {
                             user.location = "Orlando";
-                        } else if (profile.locationName === "Antwerp") {
+                        } else if (profile.location === "Antwerp") {
                             user.location = "Brussels";
-                        } else if (profile.locationName === "Malaysia") {
+                        } else if (profile.location === "Malaysia") {
                             user.location = "Kuala Lumpur";
                         } else {
-                            user.location = profile.locationName;
+                            user.location = profile.location;
                         }
 
                         user.activities = {};
@@ -137,8 +138,8 @@ exports.authorize = function(req, res) {
                         user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
 
-                        Location.AddOrUpdate(user.location, username.toLowerCase());
-                        Level.AddOrUpdate(user.level, username.toLowerCase());
+                        locations.AddOrUpdate(user.location, username.toLowerCase());
+                        levels.AddOrUpdate(user.level, username.toLowerCase());
 
                         save(user, res);
                     }

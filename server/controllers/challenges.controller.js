@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 var Challenge = mongoose.model('Challenge');
 var User = mongoose.model('User');
 
+const challengeName = process.env.CHALLENGE_NAME ? `${process.env.CHALLENGE_NAME}` : 'dev';
+
 /**
  * List all Challenges
  */
@@ -42,7 +44,7 @@ exports.get = function(req, res, next) {
  */
 exports.getCurrentChallengeDates = function(cb) {
     Challenge.findOne({
-        status: 'In Progress'
+        status: 'In Progress', challengeName: challengeName
     }).exec(function(err, challenge) {
         if (err) {
             return [];
