@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Marker,
@@ -6,8 +6,8 @@ import {
   InfoWindow,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import mapStyles from "./mapStyles";
-import { getInitials } from "./Avatar.component";
+import mapUKStyles from "./mapUKStyles";
+import { getInitials } from "../../common/Avatar.component";
 
 const containerStyle = {
   width: "100%",
@@ -21,7 +21,7 @@ const center = {
 };
 
 const options = {
-  styles: mapStyles,
+  styles: mapUKStyles,
   disableDefaultUI: true,
   zoomControl: true,
   minZoom: 5.5,

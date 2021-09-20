@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Table, List } from "semantic-ui-react";
-import Avatar from "./Avatar.component";
+import Avatar from "../../common/Avatar.component";
 import "./style.scss";
 
 const orange = "#fa451b";

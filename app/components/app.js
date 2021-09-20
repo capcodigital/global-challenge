@@ -6,16 +6,17 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "components/header";
 import Footer from "components/footer";
 import HomePage from "components/homepage/homepage.container";
-import Dashboard, { TeamsDashboard } from "./dashboard/dashboard.container";
+import DashboardGlobal, { TeamsDashboardGlobal } from "./global/dashboard/dashboard.container";
+import DashboardUK, { TeamsDashboardUK } from "./uk/dashboard/dashboard.container";
 import TeamsPage from "./teams/teams.container";
 import FaqPage from "./faq/FaqPage.component";
-import Tabs from "./tabs";
+import TabsUK from "./uk/tabs";
 import Sidebar from "./SidebarMenu/SidebarMenu.component";
 import AboutPage from "./about/AboutPage.component";
 import EventRules from "./EventRules/EventRules.component";
@@ -44,11 +45,11 @@ function App() {
           />
           {!["/teams/register", "/register"].includes(
             window.location.pathname
-          ) && <Tabs />}
+          ) && <TabsUK />}
           <Switch>
             <Route path="/register" exact component={HomePage} />
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/team" component={TeamsDashboard} />
+            <Route exact path="/" component={DashboardGlobal} />
+            <Route path="/team" component={TeamsDashboardGlobal} />
             <Route exact path="/teams/register" component={TeamsPage} />
             <Route exact path="/faq" component={FaqPage} />
             <Route exact path="/about" component={AboutPage} />

@@ -2,8 +2,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import Dashboard from './dashboard.component';
-import TeamDashboard from './TeamDashboard.component';
+import DashboardUK from './dashboardUK.component';
+import TeamDashboardUK from './TeamDashboardUK.component';
 import { filterActivities, fetchEmployeeActivities, fetchTeamsList } from './actions';
 import {
   filteredActivitiesSelector,
@@ -67,10 +67,10 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(Dashboard);
+)(DashboardUK);
 
-export const TeamsDashboard = compose(
+export const TeamsDashboardUK = compose(
   withReducer,
   withSaga,
   withConnect,
-)(TeamDashboard);
+)(TeamDashboardUK);

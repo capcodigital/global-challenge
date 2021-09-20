@@ -5,14 +5,14 @@ import {
   MapUK,
   TeamLeaderboardTable,
   TeamSportsLeaderboardTable,
-} from "components/common";
+} from "../common";
 import { LoadScript } from "@react-google-maps/api";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
 import "./style.scss";
 
 const libraries = ["geometry"];
 
-class Dashboard extends React.Component {
+class DashboardUK extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -182,9 +182,9 @@ class Dashboard extends React.Component {
   }
 }
 
-Dashboard.propTypes = {
+DashboardUK.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.shape({}),
 };
 
-export default Dashboard;
+export default DashboardUK;
