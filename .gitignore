@@ -15,3 +15,6 @@ yarn-error.log
 
 # Kubernetes secrets
 kubernetes/
+
+# Evironment variables
+.env

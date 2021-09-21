@@ -127,7 +127,7 @@ const MapUK = ({ teams, team }) => {
           options={{
             suppressMarkers: true,
             preserveViewport: true,
-            polylineOptions: { strokeColor: "orange" },
+            polylineOptions: { strokeColor: "rgb(253,196,55)" },
           }}
         />
       )}
@@ -152,7 +152,7 @@ const MapUK = ({ teams, team }) => {
             setSelectedInfo(null);
           }}
           icon={{
-            url: `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><circle fill='rgb(255,69,27)' cx='15' cy='15' r='15'/><text text-anchor='middle' x='15' y='20' fill='white' font-size='15' font-family='Helvetica'>${getInitials(
+            url: `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><circle fill='rgb(253,196,55)' cx='15' cy='15' r='15'/><text text-anchor='middle' x='15' y='20' fill='black' font-size='15' font-family='Helvetica'>${getInitials(
               marker.name
             )}</text></svg>`,
             anchor: new window.google.maps.Point(15, 30),
