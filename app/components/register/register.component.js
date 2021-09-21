@@ -9,17 +9,24 @@ const SERVER_URL = process.env.SERVER_URL
   ? `https://${process.env.SERVER_URL}/`
   : "http://localhost/";
 
+const FITBIT_CLIENT_ID = process.env.FITBIT_CLIENT_ID
+? `https://${process.env.FITBIT_CLIENT_ID}/`
+: "23BBKM";
+
+const STRAVA_CLIENT_ID = process.env.STRAVA_CLIENT_ID
+? `https://${process.env.STRAVA_CLIENT_ID}/`
+: "7291";
+
 const RegistrationForm = () => (
   <div className="login-form">
     <Form size="large" action="https://www.strava.com/oauth/authorize?">
       <input type="hidden" name="response_type" value="code" />
-      <input type="hidden" name="client_id" value="7291" />
+      <input type="hidden" name="client_id" value="{`${STRAVA_CLIENT_ID}`}" />
       <input
         type="hidden"
         name="redirect_uri"
         value={`${SERVER_URL}strava/auth`}
       />
-      {/*<input type="hidden" name="redirect_uri" value="https://localhost/strava/auth" />*/}
       <input type="hidden" name="scope" value="activity:read_all" />
 
       {parameters.success == "stravaSuccess" ? (
@@ -53,13 +60,12 @@ const RegistrationForm = () => (
 
     <Form size="large" action="https://www.fitbit.com/oauth2/authorize?">
       <input type="hidden" name="response_type" value="code" />
-      <input type="hidden" name="client_id" value="228MZ3" />
+      <input type="hidden" name="client_id" value={`${FITBIT_CLIENT_ID}`} />
       <input
         type="hidden"
         name="redirect_uri"
         value={`${SERVER_URL}fitbit/auth`}
       />
-      {/*}<input type="hidden" name="redirect_uri" value="https://localhost/fitbit/auth" />*/}
       <input type="hidden" name="scope" value="activity location" />
 
       {parameters.success == "fitBitSuccess" ? (
