@@ -34,7 +34,7 @@ exports.list = function(req, res, next) {
                 status: 500
             });
         } else {
-            res.jsonp(levels);
+            res.jsonp(locations);
         }
     });
 };
