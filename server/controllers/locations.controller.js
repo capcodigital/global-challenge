@@ -34,7 +34,7 @@ exports.list = function(req, res, next) {
                 status: 500
             });
         } else {
-            res.jsonp(levels);
+            res.jsonp(locations);
         }
     });
 };
@@ -139,7 +139,7 @@ function updateEveryInterval(minutes) {
 
                         location.save(function(err) {
                             if (err) {
-                                console.log("Error updating level stats: " + level.name);
+                                console.log("Error updating level stats: " + location.name);
                             }
                         });
                     });
