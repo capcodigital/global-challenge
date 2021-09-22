@@ -139,7 +139,7 @@ function updateEveryInterval(minutes) {
 
                         location.save(function(err) {
                             if (err) {
-                                console.log("Error updating level stats: " + level.name);
+                                console.log("Error updating level stats: " + location.name);
                             }
                         });
                     });
