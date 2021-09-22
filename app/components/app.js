@@ -28,10 +28,10 @@ function App() {
   return (
     <div className="app-wrapper">
       <Helmet
-        titleTemplate="%s - Capco Global Challenge"
-        defaultTitle="Capco Global Challenge"
+        titleTemplate="%s - Capco ESTR Challenge"
+        defaultTitle="Capco ESTR Challenge"
       >
-        <meta name="description" content="Capco Global Challenge" />
+        <meta name="description" content="Capco ESTR Challenge" />
       </Helmet>
       <Router>
         <Sidebar
