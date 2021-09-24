@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Table, Popup, List } from "semantic-ui-react";
-import Avatar from "./Avatar.component";
+import Avatar from "../../common/Avatar.component";
 import "./style.scss";
 
 const grey = "#a7a7a7";
