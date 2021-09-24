@@ -21,6 +21,7 @@ import DashboardUK, {
 import TeamsPage from "./teams/teams.container";
 import FaqPage from "./faq/FaqPage.component";
 import TabsUK from "./uk/tabs";
+import TabsGlobal from "./global/tabs";
 import Sidebar from "./SidebarMenu/SidebarMenu.component";
 import AboutPage from "./about/AboutPage.component";
 import EventRules from "./EventRules/EventRules.component";
@@ -51,7 +52,7 @@ function App() {
               />
               {!["/teams/register", "/register"].includes(
                 window.location.pathname
-              ) && <TabsUK />}
+              ) && <TabsGlobal />}
               <Switch>
                 <Route path="/register" exact component={HomePage} />
                 <Route exact path="/" component={DashboardGlobal} />

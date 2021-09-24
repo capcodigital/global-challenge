@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { Segment, Grid, Header, Search } from "semantic-ui-react";
 import Map from "../map";
 import { TeamLeaderboardTable, TeamSportsLeaderboardTable } from "../common";
+import LeaderboardTabs from "../leaderboardTabs"
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
 import { allCities, geometries, officeMap } from "./constants";
 import "./style.scss";
@@ -14,7 +15,7 @@ class DashboardGlobal extends React.Component {
     super(props);
     this.state = {
       worldData: [],
-      height: 450,
+      height: 600,
       width: 850,
       scale: 50,
       region: [],
@@ -196,6 +197,7 @@ class DashboardGlobal extends React.Component {
             </div>
           </Segment>
           <Segment loading={isLoading || isSearchLoading} className="secondary">
+            <LeaderboardTabs />
             <Grid container stackable columns={2} verticalAlign="middle">
               <Grid.Row>
                 <Grid.Column>

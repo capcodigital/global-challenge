@@ -3,7 +3,7 @@ import { Menu, Container } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import "./style.scss";
 
-export default class TabsUK extends Component {
+export default class TabsGlobal extends Component {
   constructor(props) {
     super(props);
     this.state = {
