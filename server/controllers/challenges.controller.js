@@ -53,10 +53,10 @@ exports.getCurrentChallengeDates = function(cb) {
             let dateAsString = challenge.startDate.toISOString().split('T')[0];
             dates.push(dateAsString);
 
-            let nextDate = new Date();
+            let nextDate = new Date(dateAsString);
             nextDate.setDate(challenge.startDate.getDate() + 1);
 
-            while (nextDate.getDate() !== challenge.endDate.getDate()) {
+            while (!(nextDate.getDate() === challenge.endDate.getDate() && nextDate.getMonth() === challenge.endDate.getMonth())) {
                 dateAsString = nextDate.toISOString().split('T')[0];
                 dates.push(dateAsString);
                 nextDate.setDate(nextDate.getDate() + 1);

@@ -156,19 +156,31 @@ function updateEveryInterval(minutes) {
  */
  exports.AddOrUpdate = function(name, userName) {
 
+    if (!name) {
+        console.log("Error adding unspecified location name");
+        return;
+    }
+
+    if (!userName) {
+        console.log("Error adding unspecified user to location");
+        return;
+    }
+
     Location.findOne({
         name: name
     }).exec(function(err, location) {
 
         if (location && location.name) {
+            console.log("Updating location: " + name);
             location.members.push(userName);
             location.markModified('members');
         } else {
+            console.log("Creating location: " + name);
             location = new Location();
 
             location.name = name;
             location.members = [];
-            members.push(userName);
+            location.members.push(userName);
 
             location.activities = {};
 

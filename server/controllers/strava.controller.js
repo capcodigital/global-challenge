@@ -70,8 +70,8 @@ exports.authorize = function(req, res) {
                 res.redirect(callbackUrl + 'register?success=stravaError');
             } else {
             
-                Capco.find({username: username.toLowerCase()}).exec(function(err, profile) {
-                    if (err) {
+                Capco.findOne({username: username.toUpperCase()}).exec(function(err, profile) {
+                    if (err || !profile) {
                         res.render('error', { errormsg: "Could not find your Capco ID" });
                     } else {
                         var user = new User();
@@ -131,6 +131,7 @@ exports.authorize = function(req, res) {
 
                         user.save(function(err, newUser) {
                             if (err) {
+                                console.log(err.message);
                                 if (err.code == 11000) {
                                     if (user.app == "FitBit") {
                                         res.redirect(callbackUrl + 'register?success=fitBitRegistered');
@@ -138,7 +139,6 @@ exports.authorize = function(req, res) {
                                         res.redirect(callbackUrl + 'register?success=stravaRegistered');
                                     }
                                 } else {
-                                    console.log(err);
                                     res.redirect(callbackUrl + 'register?success=serverError');
                                 }
                             } else {

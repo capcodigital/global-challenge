@@ -84,8 +84,8 @@ exports.authorize = function(req, res) {
                 console.log(result.errors[0].message);
             } else {
 
-                Capco.find({username: username.toLowerCase()}).exec(function(err, profile) {
-                    if (err) {
+                Capco.findOne({username: username.toUpperCase()}).exec(function(err, profile) {
+                    if (err || !profile) {
                         res.json({error: "Could not find your Capco ID"});
                     } else {
                         var user = new User();
@@ -315,7 +315,12 @@ function getStats(user, date) {
                                 user.totalWalk = Math.round(user.totalWalk + (activityEntry.distance));
                                 break;
                             case 'total':
-                                // Ignore total as it seems to round down
+                            case 'loggedActivities':
+                            case 'sedentaryActive':
+                            case 'lightlyActive':
+                            case 'moderatelyActive':
+                            case 'veryActive':
+                                // Ignore supplied totals as they may contain extra activties
                                 break;
                             default:
                                 console.log("Unexpected activity type: " + activityEntry.activity + " - User: " + user.name);
@@ -357,6 +362,7 @@ function getStats(user, date) {
 function save(user, res) {
     user.save(function(err, newUser) {
         if (err) {
+            console.log(err.message);
             if (err.code == 11000) {
                 if (user.app == "Strava") {
                     res.redirect(callbackUrl + 'register?success=stravaRegistered');
@@ -364,7 +370,6 @@ function save(user, res) {
                     res.redirect(callbackUrl + 'register?success=fitbitRegistered');
                 }
             } else {
-                console.log(err.message);
                 res.redirect(callbackUrl + 'register?success=serverError');
             }
         } else {
