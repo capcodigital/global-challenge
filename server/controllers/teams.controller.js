@@ -69,7 +69,9 @@ exports.all = function(req, res, next) {
                         let updatedMembers = [];
 
                         team.members.forEach(function(member) {
-                            updatedMembers.push(userMap[member]);
+                            if (userMap[member]) {
+                                updatedMembers.push(userMap[member]);
+                            }
                         });
 
                         team.members = updatedMembers;
@@ -109,7 +111,9 @@ exports.teamMembers = function(req, res, next) {
                         let updatedMembers = [];
 
                         team.members.forEach(function(member) {
-                            updatedMembers.push(userMap[member]);
+                            if (userMap[member]) {
+                                updatedMembers.push(userMap[member]);
+                            }
                         });
 
                         team.members = updatedMembers;
@@ -286,36 +290,29 @@ exports.update = function(req, res) {
  */
 exports.remove = function(req, res) {
 
-    User.findOne({
-        username: req.body.member
-    }).exec(function(err, user) {
+    Team.findOne({
+        name: req.body.team
+    }).exec(function(err, team) {
         if (err) res.send(400, { message: 'removeFromTeamFailed'});
-        if (!user) res.send(400, { message: 'removeFromTeamFailedUserNotFound'});
-    
-        Team.findOne({
-            name: req.body.team
-        }).exec(function(err, team) {
-            if (err) res.send(400, { message: 'removeFromTeamFailed'});
-            if (!team) res.send(400, { message: 'removeFromTeamFailed'});
-            if (team == null) res.send(400, { message: 'removeFromTeamFailed'});
+        if (!team) res.send(400, { message: 'removeFromTeamFailed'});
+        if (team == null) res.send(400, { message: 'removeFromTeamFailed'});
 
-            const index = team.members.indexOf(req.body.member);
+        const index = team.members.indexOf(req.body.member);
 
-            if (index < 0) {
-                res.send(400, { message: 'removeFromTeamFailedNotAMember'});
+        if (index < 0) {
+            res.send(400, { message: 'removeFromTeamFailedNotAMember'});
+        }
+
+        team.members.splice(index, 1);
+        team.markModified('members');
+            
+        team.save(function(err) {
+            if (err) {
+                console.log("Error joining team: " + team.name);
+                res.send(400, { message: 'joinTeamFailed'});
+            } else {
+                res.jsonp(team);
             }
-
-            team.members.splice(index, 1);
-            team.markModified('members');
-                
-            team.save(function(err) {
-                if (err) {
-                    console.log("Error joining team: " + team.name);
-                    res.send(400, { message: 'joinTeamFailed'});
-                } else {
-                    res.jsonp(team);
-                }
-            });
         });
     });
 };
@@ -358,15 +355,17 @@ function updateEveryInterval(minutes) {
                         team.totalDistanceConverted = 0;
 
                         team.members.forEach(function(member) {
-                            team.activities.Walk += userMap[member].totalWalk;
-                            team.activities.Run += userMap[member].totalRun;
-                            team.activities.Swim += userMap[member].totalSwim;
-                            team.activities.Cycling += userMap[member].totalCycling;
-                            team.activities.CyclingConverted += userMap[member].totalCyclingConverted;
-                            team.activities.Rowing += userMap[member].totalRowing;
+                            if (userMap[member]) {
+                                team.activities.Walk += userMap[member].totalWalk;
+                                team.activities.Run += userMap[member].totalRun;
+                                team.activities.Swim += userMap[member].totalSwim;
+                                team.activities.Cycling += userMap[member].totalCycling;
+                                team.activities.CyclingConverted += userMap[member].totalCyclingConverted;
+                                team.activities.Rowing += userMap[member].totalRowing;
 
-                            team.totalDistance += userMap[member].totalDistance;
-                            team.totalDistanceConverted += Math.round(userMap[member].totalDistanceConverted);
+                                team.totalDistance += userMap[member].totalDistance;
+                                team.totalDistanceConverted += Math.round(userMap[member].totalDistanceConverted);
+                            }
                         });
 
                         team.markModified('activities');

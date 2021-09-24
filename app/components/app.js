@@ -29,7 +29,6 @@ import "./style.scss";
 
 function App() {
   const [sidebarVisible, setSidebarVisible] = React.useState(false);
-  console.log(process.env.CHALLENGE_NAME);
 
   return (
     <div className="app-wrapper">

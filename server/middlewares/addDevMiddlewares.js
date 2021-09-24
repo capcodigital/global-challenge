@@ -8,6 +8,8 @@ var teams = require('../controllers/teams.controller');
 var challenges = require('../controllers/challenges.controller');
 var fitbit = require('../controllers/fitbit.controller');
 var strava = require('../controllers/strava.controller');
+var levels = require('../controllers/levels.controller');
+var locations = require('../controllers/locations.controller');
 
 function createWebpackMiddleware(compiler, publicPath) {
   return webpackDevMiddleware(compiler, {
@@ -57,6 +59,12 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   app.get('/strava/update', strava.update);
 
   // app.get('/strava/userUpdate/:user', strava.updateIndividualUser);
+
+  app.get('/levels/list', levels.list);
+  app.get('/levels', levels.all);
+
+  app.get('/locations/list', locations.list);
+  app.get('/locations', locations.all);
 
   app.get('*', (req, res) => {
     fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
