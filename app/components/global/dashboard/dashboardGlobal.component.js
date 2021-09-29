@@ -27,6 +27,8 @@ class DashboardGlobal extends React.Component {
       teams: props.teams,
       value: "",
       isSearchLoading: false,
+      locations: props.locations,
+      levels: props.levels
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
@@ -57,8 +59,8 @@ class DashboardGlobal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { breakdown, teams } = nextProps;
-    this.setState({ teams: teams });
+    const { breakdown, teams, locations, levels } = nextProps;
+    this.setState({ teams: teams, locations: locations, levels: levels });
     if (breakdown.offices && breakdown.offices.length) {
       const statistics = keyBy(breakdown.offices, "name");
       this.setState({ statistics });
@@ -145,7 +147,7 @@ class DashboardGlobal extends React.Component {
   };
 
   handleSearchChange = (e, { value }) => {
-    this.setState({ isSearchLoading: true, value, teams: this.props.teams });
+    this.setState({ isSearchLoading: true, value, teams: this.props.teams});
 
     const filteredResults = this.props.teams.filter((team) =>
       team.name.toLowerCase().includes(value.toLowerCase().trim())
@@ -165,6 +167,8 @@ class DashboardGlobal extends React.Component {
   render() {
     const {
       teams,
+      locations,
+      levels,
       cities,
       worldData,
       width,
@@ -173,7 +177,6 @@ class DashboardGlobal extends React.Component {
       isSearchLoading,
       value,
     } = this.state;
-
     const {
       isLoading,
       distance,

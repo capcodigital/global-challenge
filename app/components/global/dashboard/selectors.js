@@ -20,6 +20,18 @@ const teamsListSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("teamsList")
 );
 
+// Locations selectors
+
+const locationsListSelector = createSelector(getState, (state) =>
+  state.get("dashboard").get("locations")
+);
+
+// Levels selectors
+
+const levelsListSelector = createSelector(getState, (state) =>
+  state.get("dashboard").get("levels")
+);
+
 const getPositionByActivity = (teamData, activity) =>
   teamData
     .sort((a, b) => b.activities[activity] - a.activities[activity])
@@ -43,6 +55,34 @@ const teamsSelector = createSelector([teamsListSelector], (teamsList) => {
     return teamsData
       .sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)
       .map((team, idx) => ({ ...team, position: idx + 1 }));
+  } else [];
+});
+
+const locationsSelector = createSelector([locationsListSelector], (locations) => {
+  if (locations) {
+    let locationsData = locations.toJS();
+
+    ["Run", "Swim", "Walk", "Rowing", "CyclingConverted"].map(
+      (activity) => (locationsData = getPositionByActivity(locationsData, activity))
+    );
+
+    return locationsData
+      .sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)
+      .map((location, idx) => ({ ...location, position: idx + 1 }));
+  } else [];
+});
+
+const levelsSelector = createSelector([levelsListSelector], (levels) => {
+  if (levels) {
+    let levelsData = levels.toJS();
+
+    ["Run", "Swim", "Walk", "Rowing", "CyclingConverted"].map(
+      (activity) => (levelsData = getPositionByActivity(levelsData, activity))
+    );
+
+    return levelsData
+      .sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)
+      .map((location, idx) => ({ ...location, position: idx + 1 }));
   } else [];
 });
 
@@ -167,4 +207,6 @@ export {
   totalStepSelector,
   averageSelector,
   totalDistanceSelector,
+  locationsSelector,
+  levelsSelector
 };

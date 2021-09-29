@@ -15,7 +15,9 @@ import {
   leaderboardSelector,
   totalDistanceSelector,
   teamsListSelector,
-  teamsSelector
+  teamsSelector,
+  locationsSelector,
+  levelsSelector
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -31,6 +33,8 @@ function mapStateToProps(state) {
   const distance = totalDistanceSelector(state);
   const leaderboard = leaderboardSelector(state);
   const teamsList = teamsListSelector(state);
+  const locations = locationsSelector(state);
+  const levels = levelsSelector(state);
   const teams = teamsSelector(state);
 
   return {
@@ -45,7 +49,9 @@ function mapStateToProps(state) {
     teamsSelector,
     teamsListSelector,
     teamsList,
-    teams
+    teams,
+    locations,
+    levels
   };
 }
 
