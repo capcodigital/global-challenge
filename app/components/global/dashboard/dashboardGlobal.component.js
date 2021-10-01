@@ -70,7 +70,7 @@ class DashboardGlobal extends React.Component {
       currentData: personal,
       locations: locations,
       levels: levels,
-      personal: personal
+      personal: personal,
     });
     if (breakdown.offices && breakdown.offices.length) {
       const statistics = keyBy(breakdown.offices, "name");
@@ -158,6 +158,7 @@ class DashboardGlobal extends React.Component {
   };
 
   handleSearchChange = (e, { value }) => {
+    console.log(value);
     this.setState({ isSearchLoading: true, value, teams: this.props.teams });
 
     const filteredResults = this.props.teams.filter((team) =>
@@ -179,16 +180,16 @@ class DashboardGlobal extends React.Component {
     const { teams, locations, levels, personal } = this.props;
     switch (tabName) {
       case "personal":
-        this.setState({ currentData: personal });
+        this.setState({ currentData: personal, activeTab: "personal" });
         return this.forceUpdate();
       case "team":
-        this.setState({ currentData: teams });
+        this.setState({ currentData: teams, activeTab: "team" });
         return this.forceUpdate();
       case "office":
-        this.setState({ currentData: locations });
+        this.setState({ currentData: locations, activeTab: "office" });
         return this.forceUpdate();
       case "grade":
-        this.setState({ currentData: levels });
+        this.setState({ currentData: levels, activeTab: "grade" });
         return this.forceUpdate();
     }
   };
@@ -203,9 +204,10 @@ class DashboardGlobal extends React.Component {
       statistics,
       isSearchLoading,
       value,
+      activeTab,
     } = this.state;
     const { isLoading, distance, error } = this.props;
-    console.log(currentData)
+    console.log(activeTab);
     return (
       !error && (
         <div className="dashboard">
@@ -228,7 +230,7 @@ class DashboardGlobal extends React.Component {
             <Grid container stackable columns={2} verticalAlign="middle">
               <Grid.Row>
                 <Grid.Column>
-                  <Header size="large">TEAM LEADERBOARD</Header>
+                  <Header size="large">LEADERBOARDS</Header>
                   <div className="search-container">
                     <Search
                       input={{ icon: "search", iconPosition: "left" }}
@@ -242,7 +244,7 @@ class DashboardGlobal extends React.Component {
                   <TeamLeaderboardTable
                     isLoading={isSearchLoading}
                     data={currentData}
-                    isMainDashboard={true}
+                    isMainDashboard={activeTab === "team"}
                   />
                 </Grid.Column>
                 <Grid.Column>
