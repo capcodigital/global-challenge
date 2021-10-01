@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Menu, Container } from "semantic-ui-react";
 import "./style.scss";
 
-export default function LeaderboardTabs() {
+export default function LeaderboardTabs({ changeTab }) {
   const [activeItem, setActiveItem] = useState("personal");
-
+  const onClickTab = (tabName) => {
+    changeTab(tabName);
+    setActiveItem(tabName);
+  };
   return (
     <Container>
       <Menu className="leaderboard-tabs" text>
@@ -12,25 +15,25 @@ export default function LeaderboardTabs() {
           name="PERSONAL"
           className="leaderboard-tab"
           active={activeItem === "personal"}
-          onClick={() => setActiveItem("personal")}
+          onClick={() => onClickTab("personal")}
         />
         <Menu.Item
           name="TEAM"
           className="leaderboard-tab"
           active={activeItem === "team"}
-          onClick={() => setActiveItem("team")}
+          onClick={() => onClickTab("team")}
         />
         <Menu.Item
           name="OFFICE"
           className="leaderboard-tab"
           active={activeItem === "office"}
-          onClick={() => setActiveItem("office")}
+          onClick={() => onClickTab("office")}
         />
         <Menu.Item
           name="GRADE"
           className="leaderboard-tab"
           active={activeItem === "grade"}
-          onClick={() => setActiveItem("grade")}
+          onClick={() => onClickTab("grade")}
         />
       </Menu>
     </Container>

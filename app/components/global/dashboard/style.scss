@@ -10,6 +10,9 @@ div.row {
 
 .dashboard {
   margin: 0px;
+  .ui.segment.secondary {
+    background-color: black !important;
+  }
   .sign-wrapper {
     width: 100%;
     margin-bottom: 2rem;
