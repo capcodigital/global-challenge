@@ -17,7 +17,8 @@ import {
   teamsListSelector,
   teamsSelector,
   locationsSelector,
-  levelsSelector
+  levelsSelector,
+  personalSelector
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -36,6 +37,7 @@ function mapStateToProps(state) {
   const locations = locationsSelector(state);
   const levels = levelsSelector(state);
   const teams = teamsSelector(state);
+  const personal = personalSelector(state);
 
   return {
     activities,
@@ -51,7 +53,8 @@ function mapStateToProps(state) {
     teamsList,
     teams,
     locations,
-    levels
+    levels,
+    personal,
   };
 }
 

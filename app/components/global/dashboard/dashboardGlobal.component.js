@@ -29,8 +29,9 @@ class DashboardGlobal extends React.Component {
       teams: props.teams,
       locations: props.locations,
       levels: props.levels,
+      personal: props.personal,
       activeTab: "personal",
-      currentData: props.teams,
+      currentData: props.personal,
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleClickTab = this.handleClickTab.bind(this);
@@ -62,13 +63,14 @@ class DashboardGlobal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { breakdown, teams, locations, levels } = nextProps;
+    const { breakdown, teams, locations, levels, personal } = nextProps;
 
     this.setState({
       teams: teams,
-      currentData: teams,
+      currentData: personal,
       locations: locations,
       levels: levels,
+      personal: personal
     });
     if (breakdown.offices && breakdown.offices.length) {
       const statistics = keyBy(breakdown.offices, "name");
@@ -174,10 +176,10 @@ class DashboardGlobal extends React.Component {
   }
 
   handleClickTab = (tabName) => {
-    const { teams, locations, levels } = this.props;
+    const { teams, locations, levels, personal } = this.props;
     switch (tabName) {
       case "personal":
-        this.setState({ currentData: teams });
+        this.setState({ currentData: personal });
         return this.forceUpdate();
       case "team":
         this.setState({ currentData: teams });
@@ -201,9 +203,9 @@ class DashboardGlobal extends React.Component {
       statistics,
       isSearchLoading,
       value,
-      activeTab,
     } = this.state;
     const { isLoading, distance, error } = this.props;
+    console.log(currentData)
     return (
       !error && (
         <div className="dashboard">
@@ -237,7 +239,6 @@ class DashboardGlobal extends React.Component {
                       placeholder={"Search Team Name"}
                     />
                   </div>
-                  {activeTab}
                   <TeamLeaderboardTable
                     isLoading={isSearchLoading}
                     data={currentData}
