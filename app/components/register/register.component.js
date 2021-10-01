@@ -15,7 +15,7 @@ const FITBIT_CLIENT_ID = process.env.FITBIT_CLIENT_ID
 
 const STRAVA_CLIENT_ID = process.env.STRAVA_CLIENT_ID
 ? `https://${process.env.STRAVA_CLIENT_ID}/`
-: "7291";
+: "72068";
 
 const RegistrationForm = () => (
   <div className="login-form">
