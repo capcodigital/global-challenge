@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Menu, Container } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
-import Countdown from "../common/Countdown.component";
 import "./style.scss";
 
-export default class Tabs extends Component {
+export default class TabsUK extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,7 +56,6 @@ export default class Tabs extends Component {
           </Menu.Item>
           <Menu.Item name="FAQ" className="tab" as={NavLink} exact to="/faq" />
         </Menu>
-        <Countdown overallDistance={total} />
       </Container>
     );
   }

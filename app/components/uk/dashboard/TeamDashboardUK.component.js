@@ -6,14 +6,14 @@ import {
   MapUK,
   TeamLeaderboardTable,
   TeamSportsLeaderboardTable,
-} from "components/common";
+} from "../common";
 import { LoadScript } from "@react-google-maps/api";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
 import "./style.scss";
 
 const libraries = ["geometry"];
 
-const TeamDashboard = ({ getTeamsList, teams }) => {
+const TeamDashboardUK = ({ getTeamsList, teams }) => {
   const [teamName, setTeamName] = useState("");
   const [team, setTeam] = useState(null);
 
@@ -153,8 +153,8 @@ const TeamDashboard = ({ getTeamsList, teams }) => {
   ) : null;
 };
 
-TeamDashboard.propTypes = {
+TeamDashboardUK.propTypes = {
   teams: PropTypes.array.isRequired,
 };
 
-export default TeamDashboard;
+export default TeamDashboardUK;

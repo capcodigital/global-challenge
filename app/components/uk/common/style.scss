@@ -1,0 +1,353 @@
+.list {
+  &.scrolling {
+    height: 290px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+.ui.header {
+  display: block;
+}
+
+.sports-mobile {
+  @media screen and (min-width: 1000px) {
+    display: none !important;
+  }
+  margin: 0 !important;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  span {
+    margin-right: 10px;
+    display: inline-block;
+    &.distance {
+      width: 55px;
+    }
+    &.sports-position {
+      width: 20px;
+    }
+  }
+}
+.sports-desktop {
+  @media screen and (max-width: 1000px) {
+    display: none !important;
+  }
+}
+
+.leaderboard-mobile {
+  @media screen and (min-width: 1000px) {
+    display: none !important;
+  }
+  height: 400px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .leaderboard-header {
+    font-weight: bold;
+    color: #939393;
+    span {
+      padding: 0 80px 0px 10px;
+    }
+  }
+  .leaderboard-item {
+    display: flex !important;
+    background: rgba(250, 69, 27, 0.2);
+    margin: 5px 0;
+    span {
+      padding: 10px;
+      margin: auto 0;
+      font-weight: 700;
+    }
+    .date {
+      font-weight: 300;
+      font-size: 14px;
+      padding-bottom: 5px;
+    }
+    .distance {
+      padding-top: 10px;
+      font-weight: 300;
+      font-size: 18px;
+    }
+  }
+}
+
+.leaderboard-desktop {
+  @media screen and (max-width: 1000px) {
+    display: none !important;
+  }
+  width: 100%;
+  height: 1000px;
+  overflow-x: hidden;
+  &.sports {
+    overflow-y: scroll;
+
+    .avatar {
+      margin-left: 5px;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .ui.very.basic.table {
+    width: 100%;
+    padding-left: 16px;
+
+    thead tr:first-child > th {
+      position: sticky !important;
+      top: 0;
+    }
+
+    th {
+      border: none;
+      color: #717171;
+      font-weight: 400;
+      padding-left: 0;
+    }
+
+    tr td {
+      border: none;
+      padding-left: 0;
+      padding-bottom: 0rem;
+    }
+
+    tbody.main-table {
+      cursor: pointer;
+      .finish {
+        td {
+          background: #dbfaec;
+        }
+      }
+      :hover {
+        td {
+          background: rgba(250, 69, 27, 0.5);
+        }
+      }
+      &.loading {
+        td {
+          background: linear-gradient(90deg, #d9d9d9, #ffffff);
+          background-size: 200% 200%;
+          animation: Animation 1s ease infinite;
+
+          @keyframes Animation {
+            50% {
+              background-position: 0% 50%;
+            }
+            100% {
+              background-position: 50% 100%;
+            }
+          }
+        }
+      }
+    }
+
+    color: #0f2046;
+    .team-name {
+      font-weight: bold;
+    }
+    .date,
+    .distance {
+      font-weight: 300;
+    }
+
+    .distance {
+      font-size: 20px;
+    }
+
+    .pending.date {
+      color: #717171;
+    }
+
+    &.main {
+      text-align: center;
+      padding-left: 0px;
+      border-spacing: 0px 5px;
+      thead > tr {
+        padding-right: 5px;
+        :first-child {
+          width: 50px;
+        }
+        :nth-child(2) {
+          width: 60px;
+        }
+        :nth-child(3) {
+          text-align: left;
+          width: 210px;
+        }
+        :nth-child(4) {
+          width: 120px;
+        }
+      }
+
+      tbody {
+        display: block;
+        height: 100%;
+        overflow: auto;
+      }
+
+      thead,
+      tbody tr {
+        border: none;
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        padding-right: 5px;
+      }
+
+      tr td {
+        padding: 10px 0 10px 0;
+        background: rgba(250, 69, 27, 0.1);
+        height: 82px;
+        &.loading {
+          height: 52px;
+        }
+        &.position {
+          width: 50px !important;
+        }
+        &.avatar {
+          width: 60px;
+        }
+        &.team-name {
+          text-align: left;
+          width: 210px;
+        }
+        &.distance {
+          width: 80px;
+        }
+        &.date {
+          width: 120px;
+        }
+      }
+    }
+  }
+}
+
+.map-pop-up {
+  display: flex;
+  align-items: center;
+}
+
+.map-pop-up-content {
+  padding: 8px;
+  div:first-child {
+    display: flex;
+    padding-bottom: 8px;
+  }
+  .map-team-name {
+    padding-right: 16px;
+    font-size: 18px;
+    font-weight: 300;
+    color: black;
+  }
+  .map-distance {
+    font-size: 18px;
+    color: grey;
+    font-weight: 500;
+  }
+  .map-position {
+    font-size: 18px;
+    color: grey;
+  }
+}
+
+*:focus {
+  outline: none;
+}
+
+.countdown {
+  &.closed {
+    display: none;
+  }
+  margin-left: -7px;
+  color: #fff;
+  background: #ff6a4d;
+  height: 560px;
+  width: 330px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 30px;
+  position: absolute;
+  z-index: 1;
+  @media screen and (max-width: 1000px) {
+    padding: 44px 30px 30px;
+    height: 460px;
+  }
+  .count > div {
+    text-align: center;
+    padding: 8px;
+    display: inline-block;
+    span {
+      font-size: 44px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+    .small-text {
+      padding-top: 16px;
+      font-size: 14px;
+    }
+  }
+  .distance-label {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .distance {
+    font-weight: 700;
+    color: #0f2046;
+    font-size: 100px;
+    padding-top: 25px;
+    div {
+      line-height: 1.5;
+    }
+    @media screen and (max-width: 1000px) {
+      padding-top: 35px;
+    }
+  }
+  a.count-btn {
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    border: 1px solid white !important;
+  }
+  a.count-btn:first-child {
+    color: white !important;
+    background-color: transparent !important;
+    &:hover {
+      color: black !important;
+      background-color: white !important;
+    }
+  }
+  a.count-btn:nth-child(2) {
+    color: black !important;
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+  .close-icon {
+    margin-left: 260px;
+    font-size: x-large;
+    cursor: pointer;
+    @media screen and (min-width: 1000px) {
+      display: none !important;
+    }
+  }
+}
+
+div.ui.popup {
+  :first-child {
+    font-size: 18px;
+  }
+  :nth-child(2) {
+    padding-top: 4px;
+    font-size: 16px;
+    color: grey;
+  }
+}
