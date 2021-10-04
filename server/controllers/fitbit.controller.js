@@ -21,7 +21,8 @@ if (!secret || !client_id) {
     client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
 }
 
-const challengeName = process.env.CHALLENGE_NAME ? `${process.env.CHALLENGE_NAME}` : 'dev';
+const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
+const challengeName = process.env.CHALLENGE_NAME;
 
 var challengeDates = [];
 challenges.getCurrentChallengeDates(function(dates) {
@@ -63,8 +64,6 @@ if (cluster.isMaster) {
         updateEveryInterval(5);
     }
 }
-
-const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 
 exports.authorize = function(req, res) {
 

@@ -172,8 +172,10 @@ function updateEveryInterval(minutes) {
 
         if (level && level.name) {
             console.log("Updating level: " + name);
-            level.members.push(userName);
-            level.markModified('members');
+            if (!level.members.includes(userName)) {
+                level.members.push(userName);
+                level.markModified('members');
+            }
         } else {
             console.log("Creating level: " + name);
             level = new Level();

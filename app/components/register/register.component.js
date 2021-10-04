@@ -21,7 +21,7 @@ const RegistrationForm = () => (
   <div className="login-form">
     <Form size="large" action="https://www.strava.com/oauth/authorize?">
       <input type="hidden" name="response_type" value="code" />
-      <input type="hidden" name="client_id" value="{`${STRAVA_CLIENT_ID}`}" />
+      <input type="hidden" name="client_id" value={`${STRAVA_CLIENT_ID}`} />
       <input
         type="hidden"
         name="redirect_uri"

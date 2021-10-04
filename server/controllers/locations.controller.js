@@ -172,8 +172,10 @@ function updateEveryInterval(minutes) {
 
         if (location && location.name) {
             console.log("Updating location: " + name);
-            location.members.push(userName);
-            location.markModified('members');
+            if (!location.members.includes(userName)) {
+                location.members.push(userName);
+                location.markModified('members');
+            }
         } else {
             console.log("Creating location: " + name);
             location = new Location();

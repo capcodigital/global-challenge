@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-process.env.CHALLENGE_NAME = process.env.CHALLENGE_NAME || 'global';
+process.env.CHALLENGE_NAME = process.env.CHALLENGE_NAME || 'dev';
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);

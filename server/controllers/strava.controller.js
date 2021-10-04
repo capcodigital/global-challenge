@@ -42,7 +42,7 @@ var authOptions = {
 };
 
 const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
-const challengeName = process.env.CHALLENGE_NAME ? `${process.env.CHALLENGE_NAME}` : 'dev';
+const challengeName = process.env.CHALLENGE_NAME;
 
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
