@@ -176,11 +176,11 @@ exports.create = function(req, res) {
         username: req.body.captain
     }).exec(function(err, user) {
         if (err) {
-            res.send(400, { message: 'createTeamFailed'});
+            res.status(400).send({ message: 'createTeamFailed'});
             return;
         }
         if (!user) { 
-            res.send(400, { message: 'createTeamFailedUserNotFound'});
+            res.status(400).send({ message: 'createTeamFailedUserNotFound'});
             return;
         }
 
@@ -191,12 +191,12 @@ exports.create = function(req, res) {
 
         if (team.members.length < minMembers) {
             console.log("Min Fail");
-            res.send(400, { message: 'createTeamFailedTooFewPeople'});
+            res.status(400).send({ message: 'createTeamFailedTooFewPeople'});
             return;
         }
         if (team.members.length >= maxMembers) {
             console.log("Max Fail");
-            res.send(400, { message: 'createTeamFailedTooManyPeople'});
+            res.status(400).send({ message: 'createTeamFailedTooManyPeople'});
             return;
         }
 
@@ -215,7 +215,7 @@ exports.create = function(req, res) {
             if (err) {
                 console.log("Error creating team: " + team.name);
                 console.log(err);
-                res.send(400, { message: 'createTeamFailed'});
+                res.status(400).send({ message: 'createTeamFailed'});
             } else {
                 res.jsonp(team);
             }
@@ -231,31 +231,37 @@ exports.update = function(req, res) {
     User.findOne({
         username: req.body.member
     }).exec(function(err, user) {
-        if (err) res.send(400, { message: 'joinTeamFailed'});
-        if (!user) res.send(400, { message: 'joinTeamFailedUserNotFound'});
+        if (err) {
+            res.status(400).send({ message: 'joinTeamFailed'});
+            return;
+        }
+        if (!user) { 
+            res.status(400).send({ message: 'joinTeamFailedUserNotFound'});
+            return;
+        }
     
         Team.findOne({
             name: req.body.team
         }).exec(function(err, team) {
             if (err) { 
-                res.send(400, { message: 'joinTeamFailed'});
+                res.status(400).send({ message: 'joinTeamFailed'});
                 return;
             }
             if (!team) { 
-                res.send(400, { message: 'joinTeamFailed'});
+                res.status(400).send({ message: 'joinTeamFailed'});
                 return;
             }
             if (team == null) { 
-                res.send(400, { message: 'joinTeamFailed'});
+                res.status(400).send({ message: 'joinTeamFailed'});
                 return
             }
 
             if (team.members.includes(req.body.member)) { 
-                res.send(400, { message: 'joinTeamFailedAlreadyAMember'});
+                res.status(400).send({ message: 'joinTeamFailedAlreadyAMember'});
                 return;
             }
             if (team.members.length >= maxMembers) {
-                res.send(400, { message: 'joinTeamFailedTooManyPeople'});
+                res.status(400).send({ message: 'joinTeamFailedTooManyPeople'});
                 return;
             }
 
@@ -268,15 +274,15 @@ exports.update = function(req, res) {
                     res.send(400, { message: 'joinTeamFailed'});
                 } else {
 
-                    // User.findOne({
-                    //     username: team.captain
-                    // }).exec(function(err, captain) {
-                    //     let emailText = "Hello " + captain.name + "\n\r" + user.name + " has applied to join your team " + team.name;
+                    User.findOne({
+                        username: team.captain
+                    }).exec(function(err, captain) {
+                        let emailText = "Hello " + captain.name + "\n\r" + user.name + " has applied to join your team " + team.name;
 
-                    //     mailer.sendMail(captain.email, "New Capco Challenge Team Member", emailText, function() {
-                    //         console.log("email sent to " + captain.email);
-                    //     });
-                    // });
+                        mailer.sendMail(captain.email, "New Capco Challenge Team Member", emailText, function() {
+                            console.log("email sent to " + captain.email);
+                        });
+                    });
 
                     res.jsonp(team);
                 }
