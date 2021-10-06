@@ -15,18 +15,19 @@ const port = require('./util//port');
 const setup = require('./middlewares/frontendMiddleware');
 
 var models = require("./config/models");
-// const cors = require('cors');
+const cors = require('cors');
 
 const app = express();
 // Enable cors on Production but not locally as Chrome does not support it for localhost
 if (process.env.SERVER_URL) {
-	// app.use(cors);
+	app.use(cors());
 }
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.CHALLENGE_NAME = process.env.CHALLENGE_NAME || 'dev';
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);

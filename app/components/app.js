@@ -32,7 +32,7 @@ function App() {
 
   return (
     <div className="app-wrapper">
-      {process.env.CHALLENGE_NAME == "global" && (
+      {(process.env.CHALLENGE_NAME == "global" || process.env.CHALLENGE_NAME == "dev") && (
         <>
           <Helmet
             titleTemplate="%s - Capco Global Challenge"

@@ -156,19 +156,33 @@ function updateEveryInterval(minutes) {
  */
  exports.AddOrUpdate = function(name, userName) {
 
+    if (!name) {
+        console.log("Error adding unspecified level name");
+        return;
+    }
+
+    if (!userName) {
+        console.log("Error adding unspecified user to level");
+        return;
+    }
+
     Level.findOne({
         name: name
     }).exec(function(err, level) {
 
-        if (level && location.name) {
-            level.members.push(userName);
-            level.markModified('members');
+        if (level && level.name) {
+            console.log("Updating level: " + name);
+            if (!level.members.includes(userName)) {
+                level.members.push(userName);
+                level.markModified('members');
+            }
         } else {
-            level = new Location();
+            console.log("Creating level: " + name);
+            level = new Level();
 
             level.name = name;
             level.members = [];
-            members.push(userName);
+            level.members.push(userName);
 
             level.activities = {};
 
