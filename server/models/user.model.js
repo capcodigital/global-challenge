@@ -9,23 +9,18 @@ var mongoose = require('mongoose'),
  */
 var UserSchema = new Schema({
     name: String,
-    username: {
-        type: String,
-        unique: true
-    },
+    username: String,
     email: String,
     app: String,
     location: String,
     level: String,
+    challengeName: String,
     access_token: String,
     token_type: String,
     refresh_token: String,
     expires_in: Date,
     expires_at: Number,
-    user_id: {
-        type: String,
-        unique: true
-    },
+    user_id: String,
     activities: {},
     picName: String,
     totalDistance: Number,

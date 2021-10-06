@@ -3,11 +3,11 @@
  */
 var mongoose = require('mongoose');
 var https = require("https");
-var citService = require('../services/cit.service');
 var challenges = require('./challenges.controller');
+var levels = require('./levels.controller');
+var locations = require('./locations.controller');
 var User = mongoose.model('User');
-var Level = mongoose.model('Level');
-var Location = mongoose.model('Location');
+var Capco = mongoose.model('Capco');
 
 var strava = require('strava-v3');
 var cluster = require('cluster');
@@ -42,6 +42,7 @@ var authOptions = {
 };
 
 const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
+const challengeName = process.env.CHALLENGE_NAME;
 
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
@@ -69,8 +70,8 @@ exports.authorize = function(req, res) {
                 res.redirect(callbackUrl + 'register?success=stravaError');
             } else {
             
-                citService.getUser(username.toLowerCase(), function(err, profile) {
-                    if (err) {
+                Capco.findOne({username: username.toUpperCase()}).exec(function(err, profile) {
+                    if (err || !profile) {
                         res.render('error', { errormsg: "Could not find your Capco ID" });
                     } else {
                         var user = new User();
@@ -93,24 +94,23 @@ exports.authorize = function(req, res) {
                         user.expires_at = result.expires_at;
                         user.user_id = result.athlete.id;
 
-                        user.name = profile.displayName;
+                        user.name = profile.name;
                         user.email = profile.email;
                         user.location = profile.location;
-                        user.level = profile.title;
-                        user.picName = profile.profilePictureName;
+                        user.level = profile.level;
 
-                        if (profile.locationName === "New York RISC") {
+                        if (profile.location === "New York RISC") {
                             user.location = "New York";
-                        } else if (profile.locationName === "Washington DC Metro") {
+                        } else if (profile.location === "Washington DC Metro") {
                             user.location = "Washington DC";
-                        } else if (profile.locationName === "Orlando RISC") {
+                        } else if (profile.location === "Orlando RISC") {
                             user.location = "Orlando";
-                        } else if (profile.locationName === "Antwerp") {
+                        } else if (profile.location === "Antwerp") {
                             user.location = "Brussels";
-                        } else if (profile.locationName === "Malaysia") {
+                        } else if (profile.location === "Malaysia") {
                             user.location = "Kuala Lumpur";
                         } else {
-                            user.location = profile.locationName;
+                            user.location = profile.location;
                         }
 
                         user.activities = {};
@@ -126,11 +126,12 @@ exports.authorize = function(req, res) {
                         user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
 
-                        Location.AddOrUpdate(user.location, username.toLowerCase());
-                        Level.AddOrUpdate(user.level, username.toLowerCase());
+                        locations.AddOrUpdate(user.location, username.toLowerCase());
+                        levels.AddOrUpdate(user.level, username.toLowerCase());
 
                         user.save(function(err, newUser) {
                             if (err) {
+                                console.log(err.message);
                                 if (err.code == 11000) {
                                     if (user.app == "FitBit") {
                                         res.redirect(callbackUrl + 'register?success=fitBitRegistered');
@@ -138,7 +139,6 @@ exports.authorize = function(req, res) {
                                         res.redirect(callbackUrl + 'register?success=stravaRegistered');
                                     }
                                 } else {
-                                    console.log(err);
                                     res.redirect(callbackUrl + 'register?success=serverError');
                                 }
                             } else {

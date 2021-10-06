@@ -33,7 +33,7 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
 
   app.get('/users/userStats', users.stats);
   app.get('/users/list', users.list);
-  app.get('/users/activities', users.activities);
+  app.get('/users', users.all);
   app.get('/users/citUpdate', users.citUpdate);
   app.get('/users/inactiveUsers', users.inactiveUsers);
 

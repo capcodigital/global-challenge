@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 var Challenge = mongoose.model('Challenge');
 var User = mongoose.model('User');
 
+const challengeName = process.env.CHALLENGE_NAME ? `${process.env.CHALLENGE_NAME}` : 'dev';
+
 /**
  * List all Challenges
  */
@@ -42,7 +44,7 @@ exports.get = function(req, res, next) {
  */
 exports.getCurrentChallengeDates = function(cb) {
     Challenge.findOne({
-        status: 'In Progress'
+        status: 'In Progress', challengeName: challengeName
     }).exec(function(err, challenge) {
         if (err) {
             return [];
@@ -51,10 +53,10 @@ exports.getCurrentChallengeDates = function(cb) {
             let dateAsString = challenge.startDate.toISOString().split('T')[0];
             dates.push(dateAsString);
 
-            let nextDate = new Date();
+            let nextDate = new Date(dateAsString);
             nextDate.setDate(challenge.startDate.getDate() + 1);
 
-            while (nextDate.getDate() !== challenge.endDate.getDate()) {
+            while (!(nextDate.getDate() === challenge.endDate.getDate() && nextDate.getMonth() === challenge.endDate.getMonth())) {
                 dateAsString = nextDate.toISOString().split('T')[0];
                 dates.push(dateAsString);
                 nextDate.setDate(nextDate.getDate() + 1);

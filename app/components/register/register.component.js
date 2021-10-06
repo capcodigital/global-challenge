@@ -15,13 +15,13 @@ const FITBIT_CLIENT_ID = process.env.FITBIT_CLIENT_ID
 
 const STRAVA_CLIENT_ID = process.env.STRAVA_CLIENT_ID
 ? `https://${process.env.STRAVA_CLIENT_ID}/`
-: "7291";
+: "72068";
 
 const RegistrationForm = () => (
   <div className="login-form">
     <Form size="large" action="https://www.strava.com/oauth/authorize?">
       <input type="hidden" name="response_type" value="code" />
-      <input type="hidden" name="client_id" value="{`${STRAVA_CLIENT_ID}`}" />
+      <input type="hidden" name="client_id" value={`${STRAVA_CLIENT_ID}`} />
       <input
         type="hidden"
         name="redirect_uri"
