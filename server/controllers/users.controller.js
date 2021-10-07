@@ -3,7 +3,7 @@
  */
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var citService = require('../services/cit.service');
+var Capco = mongoose.model('Capco');
 
 /**
  * List of Users Stats
@@ -41,17 +41,18 @@ exports.stats = function(req, res, next) {
 };
 
 /**
- * Activities of Users
- */
-exports.activities = function(req, res, next) {
-    User.find({}).exec(function(err, users) {
-        if (err) {
-          console.log(err);
-            res.json({error: "Server error please try again later" });
-        } else {
-          res.jsonp(users);
-        }
-    });
+* All Users data
+*/
+exports.all = function(req, res, next) {
+
+   // Get all the users first so we can include their real names etc.
+   User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').exec(function(err, users) {
+       if (err) {
+           console.log("Data error please try again later");
+       } else {
+            res.jsonp(users);
+       }
+   });
 };
 
 exports.citUpdate = function(req, res) {
@@ -71,14 +72,14 @@ exports.citUpdate = function(req, res) {
 };
 
 function updateUser(user) {
-    citService.getUser(user.username, function(err, profile) {
+    Capco.find({username: username.toLowerCase()}).exec(function(err, profile) {
         if (err) {
             console.log("Could not update: " + user.username);
         } else {
-            user.name = profile.displayName;
+            user.name = profile.name;
             user.location = profile.location;
-            user.level = profile.title;
-            user.picName = profile.picName;
+            user.level = profile.level;
+            user.email = profile.email;
 
             user.save(function(err, newUser) {
                 if (err) {

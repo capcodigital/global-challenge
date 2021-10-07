@@ -1,8 +1,6 @@
 
 import express from 'express';
-import {
-  list, create, update
-} from '../controllers/teams.controller';
+import {list, create, update, all, teamMembers, notInATeam } from '../controllers/teams.controller';
 
 const router = express.Router();
 
