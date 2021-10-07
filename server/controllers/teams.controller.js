@@ -294,14 +294,23 @@ exports.update = function(req, res) {
 /**
  * Remove member from a team
  */
-exports.remove = function(req, res) {
+ exports.remove = function(req, res) {
 
     Team.findOne({
         name: req.body.team
     }).exec(function(err, team) {
-        if (err) res.send(400, { message: 'removeFromTeamFailed'});
-        if (!team) res.send(400, { message: 'removeFromTeamFailed'});
-        if (team == null) res.send(400, { message: 'removeFromTeamFailed'});
+        if (err) { 
+            res.send(400, { message: 'removeFromTeamFailed'});
+            return;
+        }
+        if (!team) {
+            res.send(400, { message: 'removeFromTeamFailed'});
+            return;
+        }
+        if (team == null) {
+            res.send(400, { message: 'removeFromTeamFailed'});
+            return;
+        }
 
         const index = team.members.indexOf(req.body.member);
 
@@ -320,6 +329,52 @@ exports.remove = function(req, res) {
                 res.jsonp(team);
             }
         });
+    });
+};
+
+/**
+ * Remove member from a team
+ */
+exports.removeById = function(req, res) {
+
+    Team.findOne({
+        _id: req.body.team
+    }).exec(function(err, team) {
+        if (err) { 
+            res.send(400, { message: 'removeFromTeamFailed'});
+            return;
+        }
+        if (!team) {
+            res.send(400, { message: 'removeFromTeamFailed'});
+            return;
+        }
+        if (team == null) {
+            res.send(400, { message: 'removeFromTeamFailed'});
+            return;
+        }
+
+        User.findOne({
+            _id: req.body.member
+        }).exec(function(err, user) {
+            const index = team.members.indexOf(user.username);
+
+            if (index < 0) {
+                res.send(400, { message: 'removeFromTeamFailedNotAMember'});
+            }
+
+            team.members.splice(index, 1);
+            team.markModified('members');
+                
+            team.save(function(err) {
+                if (err) {
+                    console.log("Error joining team: " + team.name);
+                    res.send(400, { message: 'joinTeamFailed'});
+                } else {
+                    res.jsonp(team);
+                }
+            });
+
+        });        
     });
 };
 
