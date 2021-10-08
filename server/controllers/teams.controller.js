@@ -274,6 +274,14 @@ exports.update = function(req, res) {
                     res.send(400, { message: 'joinTeamFailed'});
                 } else {
 
+                    let memberEmailText = "Hello " + user.name + " you have join the team " + team.name + ".\n\r" +
+                        "If you wish to remove yourself from this team please click the following link: \n\r" +
+                        callbackUrl + "teams/remove?team=" + team._id + "&member" + user._id;
+
+                    mailer.sendMail(user.email, "Joined Capco Challenge Team", memberEmailText, function() {
+                        console.log("email sent to " + user.email);
+                    });
+
                     User.findOne({
                         username: team.captain
                     }).exec(function(err, captain) {
@@ -316,6 +324,7 @@ exports.update = function(req, res) {
 
         if (index < 0) {
             res.send(400, { message: 'removeFromTeamFailedNotAMember'});
+            return;
         }
 
         team.members.splice(index, 1);
@@ -338,7 +347,7 @@ exports.update = function(req, res) {
 exports.removeById = function(req, res) {
 
     Team.findOne({
-        _id: req.body.team
+        _id: req.query.team
     }).exec(function(err, team) {
         if (err) { 
             res.send(400, { message: 'removeFromTeamFailed'});
@@ -354,12 +363,13 @@ exports.removeById = function(req, res) {
         }
 
         User.findOne({
-            _id: req.body.member
+            _id: req.query.member
         }).exec(function(err, user) {
             const index = team.members.indexOf(user.username);
 
             if (index < 0) {
                 res.send(400, { message: 'removeFromTeamFailedNotAMember'});
+                return;
             }
 
             team.members.splice(index, 1);

@@ -8,6 +8,7 @@ var levels = require('./levels.controller');
 var locations = require('./locations.controller');
 var User = mongoose.model('User');
 var Capco = mongoose.model('Capco');
+var config = require("../config/config");
 
 var _ = require('lodash');
 var cluster = require('cluster');
@@ -313,6 +314,12 @@ function getStats(user, date) {
                             case 'Walk':
                                 user.totalWalk = Math.round(user.totalWalk + (activityEntry.distance));
                                 break;
+                            // case 'Yoga':
+                            //     user.totalWalk = Math.round(user.totalWalk + (user.activities[i].moving_time*20));
+                            //     break;
+                            // case 'Circuit Training':
+                            //     user.totalRun = Math.round(user.totalRun + (user.activities[i].moving_time*160));
+                            //     break;
                             case 'total':
                             case 'loggedActivities':
                             case 'sedentaryActive':
@@ -327,7 +334,7 @@ function getStats(user, date) {
                         }
 
                         // Only add valid activities to the total
-                        if (['Run','Swim','Bike','Walk'].includes(activityEntry.activity)) {
+                        if (['Run','Swim','Bike','Walk','Yoga','Circuit Training'].includes(activityEntry.activity)) {
                             // Only moving time vs FitBit's Active, Very Active etc
                             user.totalDuration = user.totalDuration + user.activities[challengeDates[i]].summary.fairlyActiveMinutes + 
                                                                     user.activities[challengeDates[i]].summary.lightlyActiveMinutes + 

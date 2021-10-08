@@ -248,20 +248,30 @@ function getStats(user) {
                         case 'Walk':
                             user.totalWalk = Math.round(user.totalWalk + (user.activities[i].distance/1000));
                             break;
-                         default:
+                        case 'Yoga':
+                            user.totalWalk = Math.round(user.totalWalk + (((user.activities[i].moving_time/60)*20)/1000));
+                            break;
+                        case 'Workout':
+                            user.totalRun = Math.round(user.totalRun + (((user.activities[i].moving_time/60)*160)/1000));
+                            break;
+                        default:
                             console.log("Unexpected activity type: " + user.activities[i].type + " - User: " + user.name);
                             break;
                     }
 
                     // Only add valid activities to the total
-                    if (['Run','Swim','Ride','Walk','Rowing'].includes(user.activities[i].type)) {
+                    if (['Run','Swim','Ride','Walk','Rowing','Yoga','Workout'].includes(user.activities[i].type)) {
                         // Strava stores distance in metres
                         user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
                         // Only moving time vs FitBit's Active, Very Active etc
-                        user.totalDuration = user.totalDuration + user.activities[i].moving_time;
+                        user.totalDuration = user.totalDuration + user.activities[i].moving_time/60;
 
                         if (user.activities[i].type === 'Ride') {
                             user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((user.activities[i].distance/1000)/config.cyclingConversion));
+                        } else if (user.activities[i].type === 'Yoga') {
+                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (((user.activities[i].moving_time/60)*20)/1000));
+                        } else if (user.activities[i].type === 'Workout') {
+                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (((user.activities[i].moving_time/60)*160)/1000));
                         } else {
                             user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (user.activities[i].distance/1000));
                         }
