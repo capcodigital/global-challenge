@@ -32,6 +32,7 @@ class DashboardGlobal extends React.Component {
       personal: props.personal,
       activeTab: "personal",
       currentData: props.personal,
+      filteredData: props.personal
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleClickTab = this.handleClickTab.bind(this);
@@ -68,6 +69,7 @@ class DashboardGlobal extends React.Component {
     this.setState({
       teams: teams,
       currentData: personal,
+      filteredData: personal,
       locations: locations,
       levels: levels,
       personal: personal,
@@ -79,7 +81,7 @@ class DashboardGlobal extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { width, height, worldData, region } = this.state;
+    const { width, height, worldData, region, value, filteredData, currentData } = this.state;
 
     const { filteredActivities, isLoading } = this.props;
 
@@ -88,7 +90,9 @@ class DashboardGlobal extends React.Component {
       height !== nextState.height ||
       worldData !== nextState.worldData ||
       region !== nextState.region ||
-      filteredActivities !== nextProps.filteredActivities ||
+      value !== nextState.value ||
+      filteredData !== nextState.filteredData ||
+      currentData !== nextState.currentData ||
       isLoading !== nextProps.isLoading
     );
   }
@@ -158,16 +162,14 @@ class DashboardGlobal extends React.Component {
   };
 
   handleSearchChange = (e, { value }) => {
-    console.log(value);
-    this.setState({ isSearchLoading: true, value, teams: this.props.teams });
+    this.setState({ isSearchLoading: true, value, filteredData: this.state.currentData });
 
-    const filteredResults = this.props.teams.filter((team) =>
-      team.name.toLowerCase().includes(value.toLowerCase().trim())
+    const filteredResults = this.state.currentData.filter((data) =>
+      data.name.toLowerCase().includes(value.toLowerCase().trim())
     );
-
     this.setState({
       isSearchLoading: false,
-      teams: filteredResults,
+      filteredData: filteredResults,
     });
   };
 
@@ -180,16 +182,16 @@ class DashboardGlobal extends React.Component {
     const { teams, locations, levels, personal } = this.props;
     switch (tabName) {
       case "personal":
-        this.setState({ currentData: personal, activeTab: "personal" });
+        this.setState({ currentData: personal, filteredData: personal, activeTab: "personal" });
         return this.forceUpdate();
       case "team":
-        this.setState({ currentData: teams, activeTab: "team" });
+        this.setState({ currentData: teams, filteredData: teams, activeTab: "team" });
         return this.forceUpdate();
       case "office":
-        this.setState({ currentData: locations, activeTab: "office" });
+        this.setState({ currentData: locations, filteredData: locations, activeTab: "office" });
         return this.forceUpdate();
       case "grade":
-        this.setState({ currentData: levels, activeTab: "grade" });
+        this.setState({ currentData: levels, filteredData: levels, activeTab: "grade" });
         return this.forceUpdate();
     }
   };
@@ -197,6 +199,7 @@ class DashboardGlobal extends React.Component {
   render() {
     const {
       currentData,
+      filteredData,
       cities,
       worldData,
       width,
@@ -207,7 +210,7 @@ class DashboardGlobal extends React.Component {
       activeTab,
     } = this.state;
     const { isLoading, distance, error } = this.props;
-    console.log(activeTab);
+    
     return (
       !error && (
         <div className="dashboard">
@@ -243,7 +246,7 @@ class DashboardGlobal extends React.Component {
                   </div>
                   <TeamLeaderboardTable
                     isLoading={isSearchLoading}
-                    data={currentData}
+                    data={filteredData}
                     isMainDashboard={activeTab === "team"}
                   />
                 </Grid.Column>
@@ -258,7 +261,7 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={currentData.map((team) => ({
+                          data={filteredData.map((team) => ({
                             name: team.name,
                             distance: team.activities["Run"],
                             position: team.activities.runPosition,
@@ -274,7 +277,7 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={currentData.map((team) => ({
+                          data={filteredData.map((team) => ({
                             name: team.name,
                             distance: team.activities["CyclingConverted"],
                             position: team.activities.cyclingConvertedPosition,
@@ -291,7 +294,7 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={currentData.map((team) => ({
+                          data={filteredData.map((team) => ({
                             name: team.name,
                             distance: team.activities["Walk"],
                             position: team.activities.walkPosition,
@@ -308,7 +311,7 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={90}
-                          data={currentData.map((team) => ({
+                          data={filteredData.map((team) => ({
                             name: team.name,
                             distance: team.activities["Swim"],
                             position: team.activities.swimPosition,
@@ -324,7 +327,7 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={90}
-                          data={currentData.map((team) => ({
+                          data={filteredData.map((team) => ({
                             name: team.name,
                             distance: team.activities["Rowing"],
                             position: team.activities.rowingPosition,
