@@ -15,8 +15,12 @@ function Footer() {
     setBlue(colorFooter());
   }, [location]);
 
+  const challenge_name = process.env.CHALLENGE_NAME
+      ? `${process.env.CHALLENGE_NAME}`
+      : "global";
+
   return (
-    <footer className={`footer ${blue}`}>
+    <footer className={`footer ${blue} ${challenge_name}`}>
       <Container className="footer-container">
         <div className="copyright-container">
           <p>
