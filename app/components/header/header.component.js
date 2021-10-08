@@ -2,14 +2,18 @@ import React from "react";
 import { Menu, Container, Button, Icon } from "semantic-ui-react";
 import ESTRChallenge from "./images/estr-challenge-full.png";
 import ESTRChallengeMobile from "./images/estr-mobile-logo.png";
+import GlobalChallenge from "./images/global_challenge_logo.png";
 import "./style.scss";
 
 class Header extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
   render() {
+    const challenge_name = process.env.CHALLENGE_NAME
+      ? `${process.env.CHALLENGE_NAME}`
+      : "global";
     return (
       <>
-        <div className="mobile-header">
+        <div className={`mobile-header white-button ${challenge_name}`}>
           <Menu borderless secondary size="small">
             <Container className="mobile-container">
               <Menu.Item>
@@ -23,7 +27,10 @@ class Header extends React.Component {
                     )
                   }
                 >
-                  <Icon name="bars" className="hamburger-icon" />
+                  <Icon
+                    name="bars"
+                    className={`hamburger-icon ${challenge_name}`}
+                  />
                 </Button>
               </Menu.Item>
               <Menu.Item>
@@ -32,18 +39,23 @@ class Header extends React.Component {
                   fluid
                   as="a"
                   href="/register"
-                  className="mobile-button-header"
+                  className={`mobile-button-header white-button ${challenge_name}`}
                 >
                   Register
                 </Button>
               </Menu.Item>
             </Container>
           </Menu>
-          <div>
-            <img src={ESTRChallengeMobile} alt="ESTR Challenge Logo" />
+          <div className={`mobile-logo ${challenge_name}`}>
+            {challenge_name == "global" && (
+              <img src={GlobalChallenge} alt="ESTR Challenge Logo" />
+            )}
+            {challenge_name == "uk" && (
+              <img src={ESTRChallengeMobile} alt="ESTR Challenge Logo" />
+            )}
           </div>
         </div>
-        <div className="header">
+        <div className={`header ${challenge_name}`}>
           <Menu borderless secondary size="small">
             <Container>
               <Menu.Item>
@@ -52,11 +64,20 @@ class Header extends React.Component {
                     window.location.href = "/";
                   }}
                 >
-                  <img
-                    src={ESTRChallenge}
-                    alt="ESTR Challenge Logo"
-                    className="global-challenge-logo"
-                  />
+                  {challenge_name == "global" && (
+                    <img
+                      src={GlobalChallenge}
+                      alt="Global Challenge Logo"
+                      className="global-challenge-logo"
+                    />
+                  )}
+                  {challenge_name == "uk" && (
+                    <img
+                      src={ESTRChallenge}
+                      alt="ESTR Challenge Logo"
+                      className="uk-challenge-logo"
+                    />
+                  )}
                 </a>
               </Menu.Item>
               {window.location.pathname === "/register" ? (
@@ -68,7 +89,7 @@ class Header extends React.Component {
                       size="large"
                       as="a"
                       href="/teams/register"
-                      className="button-header"
+                      className={`button-header ${challenge_name}`}
                     >
                       Teams
                     </Button>
@@ -80,7 +101,7 @@ class Header extends React.Component {
                       size="large"
                       as="a"
                       href="/"
-                      className="button-header"
+                      className={`button-header ${challenge_name}`}
                     >
                       View Progress
                     </Button>
@@ -94,7 +115,7 @@ class Header extends React.Component {
                       fluid
                       as="a"
                       href="/register"
-                      className="button-header"
+                      className={`button-header white-button ${challenge_name}`}
                     >
                       Register
                     </Button>
@@ -106,7 +127,7 @@ class Header extends React.Component {
                       as="a"
                       href="https://uk.virginmoneygiving.com/CapcoUKCSR1"
                       target="_blank"
-                      className="button-header"
+                      className={`button-header ${challenge_name}`}
                     >
                       Donate
                     </Button>

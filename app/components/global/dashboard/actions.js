@@ -25,7 +25,7 @@ export const FETCH_LEVELS_SUCCESS = 'FETCH_LEVELS_SUCCESS';
 export const FETCH_LOCATIONS_SUCCESS = 'FETCH_LOCATIONS_SUCCESS'
 
 // used by redux-saga
-export const fetchActivitiesApi = () => axios.get(`${SERVER_URL}users/activities`).then(({ data }) => data);
+export const fetchActivitiesApi = () => axios.get(`${SERVER_URL}users`).then(({ data }) => data);
 export const fetchTeamsApi = () => axios.get(`${SERVER_URL}teams`).then(({ data }) => data);
 export const fetchLevelsApi = () => axios.get(`${SERVER_URL}levels`).then(({ data }) => data);
 export const fetchLocationsApi = () => axios.get(`${SERVER_URL}locations`).then(({ data }) => data);

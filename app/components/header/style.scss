@@ -15,8 +15,21 @@
 }
 
 .header {
-  padding-top: 2rem;
-  padding-bottom: 1rem;
+  &.global {
+    background-color: #000000;
+    padding-top: 2rem !important;
+
+    .global-challenge-logo {
+      max-width: 500px;
+    }
+    padding-top: 2rem;
+  }
+
+  &.uk {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+
   a {
     cursor: pointer;
   }
@@ -52,7 +65,7 @@
   min-width: 100px;
   border-radius: 60px;
 
-  transform: translate(50%,-50%);
+  transform: translate(50%, -50%);
   &:focus {
     color: #0f2046;
     background-color: transparent;
@@ -61,6 +74,38 @@
     color: white;
     background-color: #0f2046;
     text-decoration: none;
+  }
+
+  &.global {
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    background-color: #000000;
+
+    &:focus {
+      color: #000000 !important;
+      background-color: white !important;
+    }
+    &:hover {
+      color: #000000 !important;
+      // border: transparent;
+      background-color: white !important;
+    }
+
+    &.white-button {
+      color: black;
+      border: 1px solid #ffffff;
+      background-color: white;
+
+      &:focus {
+        color: #000000 !important;
+        background-color: white !important;
+      }
+      &:hover {
+        color: white !important;
+        border: 1px solid white !important;
+        background-color: #000000 !important;
+      }
+    }
   }
 }
 
@@ -79,10 +124,57 @@
     background-color: #0f2046;
     text-decoration: none;
   }
+
+  &.global {
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    background-color: #000000;
+
+    &:focus {
+      color: #000000 !important;
+      background-color: white !important;
+    }
+    &:hover {
+      color: #000000 !important;
+      background-color: white !important;
+    }
+    &.white-button {
+      color: black;
+      border: 1px solid #ffffff;
+      background-color: white;
+
+      &:focus {
+        color: #000000 !important;
+        background-color: white !important;
+      }
+      &:hover {
+        color: white !important;
+        border: 1px solid white !important;
+        background-color: #000000 !important;
+      }
+    }
+  }
 }
 
 .mobile-header {
+  &.global {
+    background-color: #000000;
+    padding-top: 2rem !important;
+
+    .global-challenge-logo {
+      max-width: 500px;
+    }
+    padding-top: 2rem;
+  }
   padding-top: 1rem;
+
+  .mobile-logo {
+    &.global {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 
   .mobile-container.ui.container {
     margin: 0 !important;
@@ -98,6 +190,10 @@
       font-size: 20px;
       color: #0f2046;
       margin: 0px 0px !important;
+
+      &.global {
+        color: white;
+      }
     }
   }
 
@@ -105,5 +201,8 @@
     width: 500px;
     max-width: 100vw;
     padding: 0rem 2rem 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

@@ -15,9 +15,20 @@
   padding: 22px !important;
 }
 
+.sidebar-menu {
+  &.global {
+    background-color: #00aabb !important;
+  }
+}
 .ui.sidebar > .item.active {
-  color: #ff6a4c !important;
-  background-color: transparent !important;
+  &.global {
+    color: #fdc437 !important;
+    background-color: transparent !important;
+  }
+  &.uk {
+    color: #ff6a4c !important;
+    background-color: transparent !important;
+  }
 }
 
 .ui.sidebar > .item:not(.active) {
@@ -47,7 +58,7 @@
 }
 
 .pusher {
-  &.dimmed{
+  &.dimmed {
     height: -webkit-fill-available !important;
   }
 }
