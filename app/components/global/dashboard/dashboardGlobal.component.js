@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { Segment, Grid, Header, Search } from "semantic-ui-react";
 import Map from "../map";
 import { TeamLeaderboardTable, TeamSportsLeaderboardTable } from "../common";
+import LeaderboardTabs from "../leaderboardTabs";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
 import { allCities, geometries, officeMap } from "./constants";
 import "./style.scss";
@@ -14,7 +15,7 @@ class DashboardGlobal extends React.Component {
     super(props);
     this.state = {
       worldData: [],
-      height: 450,
+      height: 600,
       width: 850,
       scale: 50,
       region: [],
@@ -23,11 +24,18 @@ class DashboardGlobal extends React.Component {
       cities: allCities,
       statistics: {},
       searchString: "",
-      teams: props.teams,
       value: "",
       isSearchLoading: false,
+      teams: props.teams,
+      locations: props.locations,
+      levels: props.levels,
+      personal: props.personal,
+      activeTab: "personal",
+      currentData: props.personal,
+      filteredData: props.personal
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleClickTab = this.handleClickTab.bind(this);
   }
 
   componentDidMount() {
@@ -56,8 +64,16 @@ class DashboardGlobal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { breakdown, teams } = nextProps;
-    this.setState({ teams: teams });
+    const { breakdown, teams, locations, levels, personal } = nextProps;
+
+    this.setState({
+      teams: teams,
+      currentData: personal,
+      filteredData: personal,
+      locations: locations,
+      levels: levels,
+      personal: personal,
+    });
     if (breakdown.offices && breakdown.offices.length) {
       const statistics = keyBy(breakdown.offices, "name");
       this.setState({ statistics });
@@ -65,7 +81,7 @@ class DashboardGlobal extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { width, height, worldData, region } = this.state;
+    const { width, height, worldData, region, value, filteredData, currentData } = this.state;
 
     const { filteredActivities, isLoading } = this.props;
 
@@ -74,7 +90,9 @@ class DashboardGlobal extends React.Component {
       height !== nextState.height ||
       worldData !== nextState.worldData ||
       region !== nextState.region ||
-      filteredActivities !== nextProps.filteredActivities ||
+      value !== nextState.value ||
+      filteredData !== nextState.filteredData ||
+      currentData !== nextState.currentData ||
       isLoading !== nextProps.isLoading
     );
   }
@@ -144,15 +162,14 @@ class DashboardGlobal extends React.Component {
   };
 
   handleSearchChange = (e, { value }) => {
-    this.setState({ isSearchLoading: true, value, teams: this.props.teams });
+    this.setState({ isSearchLoading: true, value, filteredData: this.state.currentData });
 
-    const filteredResults = this.props.teams.filter((team) =>
-      team.name.toLowerCase().includes(value.toLowerCase().trim())
+    const filteredResults = this.state.currentData.filter((data) =>
+      data.name.toLowerCase().includes(value.toLowerCase().trim())
     );
-
     this.setState({
       isSearchLoading: false,
-      teams: filteredResults,
+      filteredData: filteredResults,
     });
   };
 
@@ -161,9 +178,28 @@ class DashboardGlobal extends React.Component {
     getActivities();
   }
 
+  handleClickTab = (tabName) => {
+    const { teams, locations, levels, personal } = this.props;
+    switch (tabName) {
+      case "personal":
+        this.setState({ currentData: personal, filteredData: personal, activeTab: "personal" });
+        return this.forceUpdate();
+      case "team":
+        this.setState({ currentData: teams, filteredData: teams, activeTab: "team" });
+        return this.forceUpdate();
+      case "office":
+        this.setState({ currentData: locations, filteredData: locations, activeTab: "office" });
+        return this.forceUpdate();
+      case "grade":
+        this.setState({ currentData: levels, filteredData: levels, activeTab: "grade" });
+        return this.forceUpdate();
+    }
+  };
+
   render() {
     const {
-      teams,
+      currentData,
+      filteredData,
       cities,
       worldData,
       width,
@@ -171,13 +207,10 @@ class DashboardGlobal extends React.Component {
       statistics,
       isSearchLoading,
       value,
+      activeTab,
     } = this.state;
-
-    const {
-      isLoading,
-      distance,
-      error,
-    } = this.props;
+    const { isLoading, distance, error } = this.props;
+    
     return (
       !error && (
         <div className="dashboard">
@@ -196,10 +229,11 @@ class DashboardGlobal extends React.Component {
             </div>
           </Segment>
           <Segment loading={isLoading || isSearchLoading} className="secondary">
+            <LeaderboardTabs changeTab={this.handleClickTab} />
             <Grid container stackable columns={2} verticalAlign="middle">
               <Grid.Row>
                 <Grid.Column>
-                  <Header size="large">TEAM LEADERBOARD</Header>
+                  <Header size="large">LEADERBOARDS</Header>
                   <div className="search-container">
                     <Search
                       input={{ icon: "search", iconPosition: "left" }}
@@ -212,8 +246,8 @@ class DashboardGlobal extends React.Component {
                   </div>
                   <TeamLeaderboardTable
                     isLoading={isSearchLoading}
-                    data={teams}
-                    isMainDashboard={true}
+                    data={filteredData}
+                    isMainDashboard={activeTab === "team"}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -227,7 +261,7 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={teams.map((team) => ({
+                          data={filteredData.map((team) => ({
                             name: team.name,
                             distance: team.activities["Run"],
                             position: team.activities.runPosition,
@@ -243,7 +277,7 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={teams.map((team) => ({
+                          data={filteredData.map((team) => ({
                             name: team.name,
                             distance: team.activities["CyclingConverted"],
                             position: team.activities.cyclingConvertedPosition,
@@ -260,7 +294,7 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={teams.map((team) => ({
+                          data={filteredData.map((team) => ({
                             name: team.name,
                             distance: team.activities["Walk"],
                             position: team.activities.walkPosition,
@@ -277,7 +311,7 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={90}
-                          data={teams.map((team) => ({
+                          data={filteredData.map((team) => ({
                             name: team.name,
                             distance: team.activities["Swim"],
                             position: team.activities.swimPosition,
@@ -293,7 +327,7 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={90}
-                          data={teams.map((team) => ({
+                          data={filteredData.map((team) => ({
                             name: team.name,
                             distance: team.activities["Rowing"],
                             position: team.activities.rowingPosition,

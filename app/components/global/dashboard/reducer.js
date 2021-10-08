@@ -8,6 +8,8 @@ import {
   FETCH_TEAMS_REQUEST,
   FETCH_TEAMS_SUCCESS,
   FETCH_TEAMS_ERROR,
+  FETCH_LEVELS_SUCCESS,
+  FETCH_LOCATIONS_SUCCESS,
 } from "./actions";
 
 const initialState = fromJS({
@@ -16,6 +18,8 @@ const initialState = fromJS({
   filteredActivities: [],
   isLoading: false,
   teamName: "",
+  levels: [],
+  locations: [],
 });
 
 export const getActivies = (state) => state.get("dashboard").get("activities");
@@ -49,6 +53,18 @@ export default (state = initialState, action) => {
     case FETCH_TEAMS_SUCCESS:
       return state.merge({
         teamsList: action.payload,
+        error: null,
+        isLoading: false,
+      });
+    case FETCH_LEVELS_SUCCESS:
+      return state.merge({
+        levels: action.payload,
+        error: null,
+        isLoading: false,
+      });
+    case FETCH_LOCATIONS_SUCCESS:
+      return state.merge({
+        locations: action.payload,
         isLoading: false,
         error: null,
       });

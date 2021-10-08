@@ -20,6 +20,18 @@ const teamsListSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("teamsList")
 );
 
+// Locations selectors
+
+const locationsListSelector = createSelector(getState, (state) =>
+  state.get("dashboard").get("locations")
+);
+
+// Levels selectors
+
+const levelsListSelector = createSelector(getState, (state) =>
+  state.get("dashboard").get("levels")
+);
+
 const getPositionByActivity = (teamData, activity) =>
   teamData
     .sort((a, b) => b.activities[activity] - a.activities[activity])
@@ -32,6 +44,22 @@ const getPositionByActivity = (teamData, activity) =>
       },
     }));
 
+const getPositionByMemberActivity = (memberData, activity) => {
+  const activityName = activity.replace(/total/g, "");
+  return memberData
+    .sort((a, b) => b[activity] - a[activity])
+    .map((member, idx) => ({
+      ...member,
+      activities: {
+        ...member.activities,
+        [activityName]: member[activity],
+        [`${
+          activityName.charAt(0).toLowerCase() + activityName.slice(1)
+        }Position`]: idx + 1,
+      },
+    }));
+};
+
 const teamsSelector = createSelector([teamsListSelector], (teamsList) => {
   if (teamsList) {
     let teamsData = teamsList.toJS();
@@ -43,6 +71,66 @@ const teamsSelector = createSelector([teamsListSelector], (teamsList) => {
     return teamsData
       .sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)
       .map((team, idx) => ({ ...team, position: idx + 1 }));
+  } else [];
+});
+
+const locationsSelector = createSelector(
+  [locationsListSelector],
+  (locations) => {
+    if (locations) {
+      let locationsData = locations.toJS();
+
+      ["Run", "Swim", "Walk", "Rowing", "CyclingConverted"].map(
+        (activity) =>
+          (locationsData = getPositionByActivity(locationsData, activity))
+      );
+
+      return locationsData
+        .sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)
+        .map((location, idx) => ({ ...location, position: idx + 1 }));
+    } else [];
+  }
+);
+
+const levelsSelector = createSelector([levelsListSelector], (levels) => {
+  if (levels) {
+    let levelsData = levels.toJS();
+
+    ["Run", "Swim", "Walk", "Rowing", "CyclingConverted"].map(
+      (activity) => (levelsData = getPositionByActivity(levelsData, activity))
+    );
+
+    return levelsData
+      .sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)
+      .map((location, idx) => ({ ...location, position: idx + 1 }));
+  } else [];
+});
+
+const removeDuplicates = (membersList) =>
+  membersList.filter(
+    (member, index, self) =>
+      index === self.findIndex((m) => m.name === member.name)
+  );
+
+const personalSelector = createSelector([teamsListSelector], (teamsList) => {
+  if (teamsList) {
+    let membersData = removeDuplicates(
+      teamsList.toJS().flatMap((team) => team.members)
+    );
+
+    [
+      "totalRun",
+      "totalSwim",
+      "totalWalk",
+      "totalRowing",
+      "totalCyclingConverted",
+    ].map((activity) => {
+      return (membersData = getPositionByMemberActivity(membersData, activity));
+    });
+
+    return membersData
+      .sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)
+      .map((member, idx) => ({ ...member, position: idx + 1 }));
   } else [];
 });
 
@@ -167,4 +255,7 @@ export {
   totalStepSelector,
   averageSelector,
   totalDistanceSelector,
+  locationsSelector,
+  levelsSelector,
+  personalSelector,
 };

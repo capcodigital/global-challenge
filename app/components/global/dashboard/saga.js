@@ -1,5 +1,5 @@
 import {
-  call, put, select, takeEvery, takeLatest
+  all, call, put, select, takeEvery, takeLatest
 } from 'redux-saga/effects';
 import { keyBy } from 'lodash';
 import { delay } from 'redux-saga';
@@ -16,7 +16,11 @@ import {
   teamsRecieved,
   teamsFailed,
   fetchTeamsApi,
-  FETCH_TEAMS_REQUEST
+  fetchLevelsApi,
+  fetchLocationsApi,
+  FETCH_TEAMS_REQUEST,
+  levelsRecieved,
+  locationsRecieved
 } from './actions';
 import { getActivies } from './reducer';
 
@@ -47,8 +51,16 @@ export function* fetchActivitiesSaga() {
 
 export function* fetchTeamsSaga() {
   try {
-    const teamsList = yield call(fetchTeamsApi);
-    yield put(teamsRecieved(teamsList));
+    const [teamsList, locations, levels] = yield all([
+      call(fetchTeamsApi),
+      call(fetchLocationsApi),
+      call(fetchLevelsApi)
+    ])
+    yield all([
+      put(teamsRecieved(teamsList)),
+      put(locationsRecieved(locations)),
+      put(levelsRecieved(levels))
+    ])
   } catch (error) {
     yield put(teamsFailed(error));
   }

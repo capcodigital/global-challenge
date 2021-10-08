@@ -188,7 +188,7 @@ class TeamsPage extends React.Component {
                       placeholder="Team Name"
                       name="name"
                       id="name"
-                      pattern="^[A-Za-z0-9_-]*$"
+                      pattern="^[A-Za-z0-9_- ]*$"
                       title="Team name can only contain letters and numbers."
                       required
                     />
