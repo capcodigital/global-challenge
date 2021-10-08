@@ -2,9 +2,13 @@ import React from "react";
 import { Grid, Header, Segment } from "semantic-ui-react";
 import "./style.scss";
 
+const challenge_name = process.env.CHALLENGE_NAME
+  ? `${process.env.CHALLENGE_NAME}`
+  : "global";
+
 const AboutPage = () => (
   <Segment className="secondary">
-    <Grid className="about-container">
+    <Grid className={`about-container ${challenge_name}`}>
       <Grid.Column className="about-section column-b">
         <Header className="about-title">About</Header>
         <p>

@@ -4,9 +4,13 @@ import SetupInstructions from "./SetupInstructions.component";
 import StravaSetupInstructions from "./StravaSetupInstructions.component";
 import "./style.scss";
 
+const challenge_name = process.env.CHALLENGE_NAME
+  ? `${process.env.CHALLENGE_NAME}`
+  : "global";
+
 const HowTo = () => (
   <Segment className="secondary">
-    <Grid className="how-to-container" stackable centered>
+    <Grid className={`how-to-container ${challenge_name}`} stackable centered>
       <Grid.Column className="how-to-section column-b">
         <Header className="how-to-title main">How to</Header>
         <Grid>

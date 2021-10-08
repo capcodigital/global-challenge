@@ -1,5 +1,5 @@
 .about-container {
-  background-color: #0f2046;
+  // background-color: #0f2046;
   display: flex;
   justify-content: center;
 
@@ -31,6 +31,24 @@
       .red {
         color: #fa451b !important;
         display: inline;
+      }
+    }
+  }
+  &.global {
+    background-color: black;
+
+    .about-section {
+      a {
+        color: #FDC437 !important;
+      }
+  
+      p {
+        font-size: 20px;
+  
+        .red {
+          color: #FDC437 !important;
+          display: inline;
+        }
       }
     }
   }

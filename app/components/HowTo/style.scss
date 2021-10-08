@@ -76,4 +76,27 @@
 
   }
 
+  &.global {
+    background-color: black;
+
+    .how-to-section {
+      .list>a.item:before {
+        color: #FDC437 !important;
+      }
+      .step-text {
+        a {
+          color: #FDC437  !important;
+        }
+      }
+  
+      p {
+        font-size: 20px;
+  
+        .red {
+          color: #FDC437 !important;
+          display: inline;
+        }
+      }
+    }
+  }
 }
