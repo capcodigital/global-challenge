@@ -58,6 +58,9 @@
 }
 
 .pusher {
+  &.global {
+    background-color: #000 !important;
+  }
   &.dimmed {
     height: -webkit-fill-available !important;
   }
