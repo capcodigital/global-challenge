@@ -233,7 +233,7 @@ class DashboardGlobal extends React.Component {
             <Grid container stackable columns={2} verticalAlign="middle">
               <Grid.Row>
                 <Grid.Column>
-                  <Header size="large">LEADERBOARDS</Header>
+                  <Header size="large" className="global-header">LEADERBOARDS</Header>
                   <div className="search-container">
                     <Search
                       input={{ icon: "search", iconPosition: "left" }}
@@ -251,7 +251,7 @@ class DashboardGlobal extends React.Component {
                   />
                 </Grid.Column>
                 <Grid.Column>
-                  <Header size="large">SPORTS TOTAL</Header>
+                  <Header size="large" className="global-header">SPORTS TOTAL</Header>
                   <Grid container verticalAlign="middle">
                     <Grid.Row>
                       <div className="content-container-dashboard">

@@ -39,9 +39,13 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
     history.push(`/team/${teamName.toLowerCase().replace(/\s/g, "-")}`);
   };
 
+  const challenge_name = process.env.CHALLENGE_NAME
+    ? `${process.env.CHALLENGE_NAME}`
+    : "global";
+
   return (
     <>
-      <div className={"leaderboard-desktop"}>
+      <div className={"leaderboard-desktop-global"}>
         <Table collapsing basic="very" className="main">
           <Table.Header>
             <Table.Row>
@@ -79,7 +83,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
                       {item.position ? item.position : idx + 1}
                     </Table.Cell>
                     <Table.Cell className={"main avatar"}>
-                      <Avatar name={item.name} color={orange} size={40} />
+                      <Avatar name={item.name} color={"#00AABB"} size={40} />
                     </Table.Cell>
                     <Table.Cell
                       className={`main team-name ${!isMainDashboard && "team"}`}
