@@ -15,6 +15,27 @@
       color: #FA451B !important;
     }
   }
+
+  &.global {
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    text-align: center;
+    color: white;
+
+  .footer-container {
+    .copyright-container {
+      padding: 40px 0 !important;
+      @media screen and (max-width: 1000px) {
+        padding-top: 0px !important;
+        padding-bottom: 20px !important;
+      }
+    }
+    a {
+      color: white !important;
+      font-weight: bold;
+    }
+  }
+  }
 }
 
 .blue {
@@ -31,4 +52,18 @@
       }
     }
   }
+  &.global {
+    background-color: transparent !important;
+    .footer-container {
+      background-color: transparent !important;
+      .copyright-container {
+        background-color: transparent !important;
+        a {
+          color: white !important;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
 }

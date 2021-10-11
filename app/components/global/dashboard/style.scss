@@ -11,7 +11,7 @@ div.row {
 .dashboard {
   margin: 0px;
   .ui.segment.secondary {
-    background-color: white !important;
+    background-color: black !important;
   }
   .sign-wrapper {
     width: 100%;
@@ -130,7 +130,7 @@ div.row {
   .content-container-dashboard {
     width: 450px;
     .container-header {
-      color: black;
+      color: #00AABB !important;
     }
   }
 
@@ -161,4 +161,11 @@ div.row {
   margin: 0 auto;
   padding-top: 2rem;
   max-width: 680px;
+}
+
+.global-header {
+  padding-top: 2rem !important;
+  color: white !important;
+  font-size: 16px !important;
+  font-weight:300 !important;
 }

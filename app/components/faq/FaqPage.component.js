@@ -6,10 +6,14 @@ import QAndAPair from "./QAndAPair.component";
 import { questionData } from "./questionData";
 import "./style.scss";
 
+const challenge_name = process.env.CHALLENGE_NAME
+  ? `${process.env.CHALLENGE_NAME}`
+  : "global";
+
 function FaqPage() {
   return (
     <Segment className="secondary">
-      <Grid className="faq-container">
+      <Grid className={`faq-container ${challenge_name}`}>
         <Grid.Column className="faq-section column-b">
           <Header className="faq-title">FAQ</Header>
           <>

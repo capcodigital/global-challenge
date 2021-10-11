@@ -47,6 +47,19 @@
       text-decoration: none;
     }
   }
+  &.global {
+    background-color: black;
+
+    a {
+    color: #FDC437;
+    font-weight: 600;
+
+    &:hover {
+      color: white;
+      text-decoration: none;
+    }
+  }
+  }
 }
 
 .question-list {

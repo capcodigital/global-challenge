@@ -13,8 +13,12 @@ import RegistrationForm from "../register";
 import landing from "./images/landing.svg";
 import "./style.scss";
 
+const challenge_name = process.env.CHALLENGE_NAME
+  ? `${process.env.CHALLENGE_NAME}`
+  : "global";
+
 const HomePage = () => (
-  <div className="homepage">
+  <div className={`homepage ${challenge_name}`}>
     <Container>
       <Segment vertical>
         <Grid stackable>

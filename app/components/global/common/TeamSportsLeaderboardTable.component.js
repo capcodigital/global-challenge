@@ -29,11 +29,15 @@ const TeamSportsLeaderboardTable = ({
   });
   let maxDistance = Math.max(...data.map((item) => item.distance));
 
+  const challenge_name = process.env.CHALLENGE_NAME
+    ? `${process.env.CHALLENGE_NAME}`
+    : "global";
+
   return (
     <>
       <div className="sports-desktop">
         <div
-          className={"leaderboard-desktop sports sports-desktop"}
+          className={"leaderboard-desktop-global sports sports-desktop"}
           style={{ height: height }}
         >
           <Table basic="very" collapsing>
@@ -57,7 +61,7 @@ const TeamSportsLeaderboardTable = ({
                         {item.position ? item.position : idx + 1}
                       </Table.Cell>
                       <Table.Cell>
-                        <Avatar name={item.name} color={grey} size={30} />
+                        <Avatar name={item.name} color={'#FDC437'} size={30} />
                       </Table.Cell>
                       <Table.Cell className="distance">
                         {item.distance}km
@@ -67,13 +71,14 @@ const TeamSportsLeaderboardTable = ({
                           width={svgBarWidth + 10}
                           height="16"
                           viewBox="0 0 210 16"
+                          fill="#00AABB"
                         >
                           <rect
                             width={
                               (svgBarWidth * item.distance) / maxDistance + 10
                             } // 10px minimum width
                             height="16"
-                            fill={"#FF6A4C"}
+                            fill={"#00AABB"}
                             rx={8}
                           />
                         </svg>
