@@ -97,6 +97,12 @@
       display: none;
     }
   }
+  &::-webkit-scrollbar {
+    background-color: #002023;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #fdc437;
+  }
 
   .ui.very.basic.table {
     width: 100%;
@@ -130,7 +136,7 @@
       }
       :hover {
         td {
-          background: #00AABB !important;
+          background: #00aabb !important;
         }
       }
       &.loading {
@@ -264,82 +270,84 @@
   outline: none;
 }
 
-.countdown {
-  &.closed {
-    display: none;
+hr {
+  border: 1px solid #00aabb;
+  &.team {
+    border: 1px solid#FDC437;
   }
-  margin-left: -7px;
-  color: #fff;
-  background: #00AABB;
-  height: 560px;
-  width: 330px;
+}
+
+.countdown-global {
   display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  padding: 30px;
-  position: absolute;
-  z-index: 1;
-  @media screen and (max-width: 1000px) {
-    padding: 44px 30px 30px;
-    height: 460px;
+  background: #00aabb;
+  &.team {
+    background: #fdc437;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  justify-content: space-between;
+  align-items: center;
+  height: 120px;
+  padding: 0 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  .details {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding-top: 14px;
+    height: 100%;
+    justify-content: space-evenly;
+    :first-child {
+      font-size: 68px;
+    }
+    :nth-child(2) {
+      font-size: 14px;
+    }
   }
   .count > div {
     text-align: center;
     padding: 8px;
     display: inline-block;
+    color: black;
     span {
       font-size: 44px;
       border-radius: 3px;
       display: inline-block;
     }
     .small-text {
-      padding-top: 16px;
+      padding-top: 8px;
       font-size: 14px;
     }
   }
-  .distance-label {
-    font-size: 24px;
-    font-weight: 700;
-  }
-  .distance {
-    font-weight: 700;
-    color: #0f2046;
-    font-size: 100px;
-    padding-top: 25px;
-    div {
-      line-height: 1.5;
-    }
-    @media screen and (max-width: 1000px) {
-      padding-top: 35px;
-    }
-  }
-  a.count-btn {
-    font-size: 16px;
-    font-weight: 700;
-    border-radius: 30px;
-    margin-bottom: 20px;
-    border: 1px solid white !important;
-  }
-  a.count-btn:first-child {
-    color: white !important;
-    background-color: transparent !important;
-    &:hover {
-      color: black !important;
-      background-color: white !important;
-    }
-  }
-  a.count-btn:nth-child(2) {
-    color: black !important;
-    &:hover {
-      background-color: transparent !important;
-    }
-  }
-  .close-icon {
-    margin-left: 260px;
-    font-size: x-large;
-    cursor: pointer;
-    @media screen and (min-width: 1000px) {
-      display: none !important;
+  @media screen and (max-width: 1000px) {
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 170px;
+    background-size: cover;
+    background-position: right 140% bottom 20%;
+    height: 200px;
+    &.team {
+      background-size: cover;
+      .details {
+        :first-child {
+          font-size: 36px;
+        }
+        :nth-child(2) {
+          font-size: 14px;
+        }
+      }
+      .details.distance {
+        font-weight: bold;
+        :first-child {
+          font-size: 66px;
+        }
+        :nth-child(2) {
+          font-size: 14px;
+        }
+      }
     }
   }
 }

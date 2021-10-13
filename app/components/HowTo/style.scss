@@ -1,14 +1,17 @@
 .how-to-container {
-  background-color: #0F2046;
+  background-color: #0f2046;
   display: flex;
   justify-content: center;
 
   .column-b {
     max-width: 800px;
     margin-left: 430px;
+    &.global {
+      margin-left: 0px;
+    }
     width: 800px !important;
     padding-right: 10% !important;
-    @media screen and (max-width: 1000px){
+    @media screen and (max-width: 1000px) {
       padding-right: 1rem !important;
     }
   }
@@ -20,13 +23,13 @@
     max-width: 800px;
     width: 800px !important;
     padding-right: 10% !important;
-    @media screen and (max-width: 1000px){
+    @media screen and (max-width: 1000px) {
       padding-right: 1rem !important;
     }
   }
 
   .text-image {
-    @media screen and (max-width: 1000px){
+    @media screen and (max-width: 1000px) {
       text-align: center !important;
     }
   }
@@ -34,23 +37,26 @@
   .how-to-section {
     color: white;
 
-    .list>a.item {
+    .list > a.item {
       margin: 10px 0;
     }
 
-    .list>a.item:before {
-      color: #FA451B !important;
+    .list > a.item:before {
+      color: #fa451b !important;
       font-size: 30px;
     }
 
     .how-to-title {
-      padding-top: 40px ;
-      padding-bottom: 20px ;
+      padding-top: 40px;
+      padding-bottom: 20px;
       color: white;
       font-size: 24px;
       &.main {
-        @media screen and (max-width: 1000px){
+        @media screen and (max-width: 1000px) {
           margin: 460px 10px 0px 0px !important;
+          &.global {
+            margin: 0px 10px 0 10px !important;
+          }
         }
       }
       &.smaller {
@@ -60,40 +66,38 @@
     }
 
     .step-text {
-
       img {
         max-width: 250px;
       }
 
       a {
-        color: #FA451B !important;
+        color: #fa451b !important;
       }
     }
 
     a {
-      color: white !important;
+      color: #fdc437 !important;
     }
-
   }
 
   &.global {
     background-color: black;
 
     .how-to-section {
-      .list>a.item:before {
-        color: #FDC437 !important;
+      .list > a.item:before {
+        color: #fdc437 !important;
       }
       .step-text {
         a {
-          color: #FDC437  !important;
+          color: #fdc437 !important;
         }
       }
-  
+
       p {
         font-size: 20px;
-  
+
         .red {
-          color: #FDC437 !important;
+          color: #fdc437 !important;
           display: inline;
         }
       }

@@ -14,16 +14,16 @@
     .button.ui.secondary.donate {
       border-radius: 30px !important;
       padding: 15px !important;
-      color: #0f2046 !important;
-      border: 1px solid #0f2046;
-
+      color: white !important;
+      border: 1px solid white;
+      background-color: black !important;
       &:focus {
         color: #0f2046;
         background-color: white !important;
       }
       &:hover {
-        color: white !important;
-        background-color: #0f2046 !important;
+        color: black !important;
+        background-color: white !important;
       }
     }
     a {
@@ -32,10 +32,10 @@
   }
 
   a {
-    color: #00b3bc;
+    color: #fdc437;
 
     &:hover {
-      color: #00b3bc;
+      color: #fdc437;
       text-decoration: underline;
     }
   }

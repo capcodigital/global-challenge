@@ -1,16 +1,11 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
-import {
-  Grid,
-  Segment,
-  Container,
-  List,
-  Button,
-} from "semantic-ui-react";
+import { Grid, Segment, Container, List, Button } from "semantic-ui-react";
 import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
 import RegistrationForm from "../register";
 import landing from "./images/landing.svg";
+import landingGlobal from "./images/landing-global.png";
 import "./style.scss";
 
 const challenge_name = process.env.CHALLENGE_NAME
@@ -23,7 +18,12 @@ const HomePage = () => (
       <Segment vertical>
         <Grid stackable>
           <Grid.Column width={10}>
-            <img src={landing} />
+            {challenge_name == "global" && (
+              <img src={landingGlobal} width="650px" alt="Global Challenge" />
+            )}
+            {challenge_name == "uk" && (
+              <img rc={landing} alt="ESTR UK Challenge" />
+            )}
           </Grid.Column>
           <Grid.Column width={6} className="registration">
             <FormattedHTMLMessage id="homepage.instructionsESTR" />
@@ -45,67 +45,31 @@ const HomePage = () => (
               <RegistrationForm />
             </div>
             <h2>How to participate?</h2>
+            <p>To register for the Capco Global Challenge:</p>
             <List ordered>
               <List.Item>
-                Make a donation to our partner charity, using the ‘Donate’
-                button on this page
+                1. Make a donation to our chosen charity for this year’s
+                Challenge, the World Health Organization COVID-19 Solidarity
+                Response Fund using the button above. All money raised will be
+                matched by Capco through our Corporate Matching Program (up to a
+                value of $2000).
               </List.Item>
               <List.Item>
-                If you don't already have a Strava account please either
-                register via desktop or download and install this on your{" "}
-                <a
-                  href="https://itunes.apple.com/us/app/fitbit-activity-calorie-tracker/id462638897?"
-                  target="_blank"
-                >
-                  iOS
-                </a>{" "}
-                or{" "}
-                <a
-                  href="https://play.google.com/store/apps/details?id=com.fitbit.FitbitMobile"
-                  target="_blank"
-                >
-                  Android
-                </a>{" "}
-                device
+                2. If you have a Strava or Fitbit account, please enter your
+                Capco 4-letter ID below to register. If you don't have a Strava
+                or Fitbit account, please create an account via your desktop or
+                by downloading and installing an app to allow you to register.
+                For more information on setting up an account and syncing your
+                data, please visit the <a href="/how-to">"How to"</a> page.
               </List.Item>
               <List.Item>
-                Follow the prompts in Strava to create your personal account.
-              </List.Item>
-              <List.Item>
-                In the 'Register' section on this page, enter your Capco
-                4-letter ID.
-              </List.Item>
-              <List.Item>
-                Click 'Register with Strava' and you'll be taken to a page which
-                will ask you to give permission for Capco to access your
-                activity and location data. Please click 'allow'.
-              </List.Item>
-              <List.Item>
-                Either enter data manually through the Strava application or
-                wear and sync your device with Strava.
-              </List.Item>
-              <List.Item>
-                Fitbit users. You can link your Fitbit to a Strava Account and
-                then register for the challenge as above (preferred) please see
-                the see our <a href="/how-to">How To</a> for further
-                information. This will ensure you auto tracked fitbit activity
-                is synced with the application.
-              </List.Item>
-              <List.Item>
-                You can alternatively register directly with the Capco
-                application, but please note that this method is still in
-                development and may cause some synchronisation issues.
-              </List.Item>
-              <List.Item>
-                You can also setup your iPhone to track your activity using
-                Fitbit if you do not have a wearable device – please see our see
-                our <a href="/how-to">How To</a> for more details.
-              </List.Item>
-              <List.Item>
-                Please donate by clicking on the button below before registering
-                for the Challenge. We ask that you donate £5 or more, or
-                whatever you can spare. Through our Corporate Matching Program,
-                Capco will also contribute to the money raised.
+                3. Once you have registered, if you would like to create or sign
+                up for a team, you can do so using the ‘Teams’ button in the top
+                right-hand corner. Each team will need to have four team members
+                and will complete a virtual Mount Fiji Ultra Marathon – a
+                distance of 166 KM! Team members will be able to view their
+                progress on a map alongside other teams and all kilometers will
+                be added to our global total.
               </List.Item>
             </List>
           </Grid.Column>

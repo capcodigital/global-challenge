@@ -17,6 +17,11 @@ export const SERVER_URL = process.env.SERVER_URL
   ? `https://${process.env.SERVER_URL}/`
   : "http://localhost/";
 
+
+const challenge_name = process.env.CHALLENGE_NAME
+? `${process.env.CHALLENGE_NAME}`
+: "global";
+
 class TeamsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -158,7 +163,7 @@ class TeamsPage extends React.Component {
     const { membersList, teamsList } = this.state;
 
     return (
-      <div className="team-registration">
+      <div className={`team-registration ${challenge_name}`}>
         <Container>
           <Segment vertical>
             <Grid columns="equal" stackable centered>

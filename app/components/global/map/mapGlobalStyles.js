@@ -44,15 +44,15 @@ export default [
       },
     ],
   },
-  {
-    featureType: "all",
-    elementType: "labels.icon",
-    stylers: [
-      {
-        visibility: "off",
-      },
-    ],
-  },
+  // {
+  //   featureType: "all",
+  //   elementType: "labels.icon",
+  //   stylers: [
+  //     {
+  //       visibility: "off",
+  //     },
+  //   ],
+  // },
   {
     featureType: "landscape",
     elementType: "geometry",

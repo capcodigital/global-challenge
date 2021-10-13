@@ -5,6 +5,7 @@ import { Segment, Grid, Header, Icon } from "semantic-ui-react";
 import {
   TeamLeaderboardTable,
   TeamSportsLeaderboardTable,
+  TeamPageHeader,
 } from "../common";
 import MapGlobalTeams from "../map/MapGlobalTeams";
 import { LoadScript } from "@react-google-maps/api";
@@ -30,32 +31,35 @@ const TeamsDashboardGlobal = ({ getTeamsList, teams }) => {
     setTeam(selectedTeam[0]);
   });
 
-  let total = teams
-    .map((team) => team.totalDistance)
-    .reduce((a, b) => a + b, 0);
-
   return team ? (
     <div className="dashboard">
       <Segment className="secondary">
-        <LoadScript
-          googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
-          libraries={libraries}
-        >
-          <MapGlobalTeams teams={teams} team={team} />
-        </LoadScript>
+        <Grid container stackable columns={1}>
+          <Grid.Row>
+            <Link to="/" className="back-link">
+              <Icon name="angle left" />
+              BACK
+            </Link>
+            <TeamPageHeader
+              teamName={team.name}
+              totalDistance={team.totalDistanceConverted}
+            />
+            <LoadScript
+              googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
+              libraries={libraries}
+            >
+              <MapGlobalTeams teams={teams} team={team} />
+            </LoadScript>
+          </Grid.Row>
+        </Grid>
       </Segment>
       <Segment className="secondary">
         <Grid container stackable columns={2} verticalAlign="middle">
           <Grid.Row>
             <Grid.Column>
-              <Link to="/" className="back-link">
-                <Icon name="angle left" />
-                Back to leaderboard
-              </Link>
-              <Header size="large">{team.name}</Header>
-              <div className="team-distance">
-                Team Distance: {team.totalDistanceConverted}km
-              </div>
+              <Header size="large" className="global-header">
+                LEADERBOARDS
+              </Header>
               <TeamLeaderboardTable
                 data={team.members.sort(
                   (a, b) => b.totalDistanceConverted - a.totalDistanceConverted

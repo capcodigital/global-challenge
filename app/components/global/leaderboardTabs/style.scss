@@ -1,5 +1,5 @@
 .leaderboard-tabs {
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   padding: 1% 0%;
   margin-top: 0px !important;
   background-color: black !important;
@@ -13,17 +13,27 @@
   }
 
   &.ui.menu > .item.active {
-    // background-color: #818da7 !important;
-    color:#FDB604 !important;
-    border: 1px solid #FDB604 !important;
+    color: #fdb604 !important;
+    border: 1px solid #fdb604 !important;
     border-radius: 50px;
   }
 
   &.ui.menu > .item:not(.active) {
-    color:white !important;
+    color: white !important;
   }
-  
 }
-
-
-
+@media screen and (max-width: 1000px) {
+  .ui.container {
+    width: 100% !important;
+    overflow-x: auto !important;
+  }
+  .leaderboard-tabs {
+    &.ui.menu {
+      justify-content: flex-start !important;
+    }
+    .leaderboard-tab {
+      margin: 0px 10px !important;
+      width: 110px;
+    }
+  }
+}

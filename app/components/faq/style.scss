@@ -7,9 +7,15 @@
   .column-b {
     @media screen and (max-width: 1000px) {
       margin: 460px 10px 0 10px !important;
+      &.global {
+        margin: 0px 10px 0 10px !important;
+      }
     }
-    max-width: 800px;
+    max-width: 80%;
     margin-left: 430px;
+    &.global {
+      margin-left: 0px;
+    }
     padding-right: 10% !important;
   }
 
@@ -18,10 +24,9 @@
   }
 
   .faq-section {
-    
     .faq-title {
-      padding-top: 40px ;
-      padding-bottom: 0px ;
+      padding-top: 40px;
+      padding-bottom: 0px;
       color: white;
       font-size: 26px;
     }
@@ -51,14 +56,14 @@
     background-color: black;
 
     a {
-    color: #FDC437;
-    font-weight: 600;
+      color: #fdc437;
+      font-weight: 600;
 
-    &:hover {
-      color: white;
-      text-decoration: none;
+      &:hover {
+        color: white;
+        text-decoration: none;
+      }
     }
-  }
   }
 }
 

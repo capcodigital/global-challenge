@@ -1,6 +1,54 @@
 @import "../../styles/variables.scss";
 
 .team-registration {
+  &.global{
+    .registration-form-container{
+      .ui.input>input {
+        background: #808080 !important;
+        color: white !important;
+      }
+      ::placeholder { 
+        color: #cccccc !important;
+        opacity: 1;
+      }
+      .ui.dropdown {
+        background: #808080 !important;
+        color: white !important;
+        .default{ 
+          color: #cccccc !important;
+          opacity: 1;
+        }
+      }
+      .team-registration-light {
+        color: #ffffff !important;
+        border: 1px solid #ffffff !important;
+        background-color: #000000;
+  
+        &:focus {
+          color: #000000 !important;
+          background-color: white !important;
+        }
+        &:hover {
+          color: #000000 !important;
+          background-color: white !important;
+        }
+      }
+      .team-registration {
+        color: #ffffff !important;
+        background-color: #FDC437 !important;
+  
+        &:focus {
+          color: #FDC437 !important;
+          background-color: white !important;
+        }
+        &:hover {
+          color: #FDC437 !important;
+          background-color: white !important;
+        }
+      }
+    }
+  }
+
   .segment {
     @media screen and (min-width: 1000px) {
       padding-top: 70px !important;
