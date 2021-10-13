@@ -20,7 +20,7 @@ const AboutPage = () => (
         <p>
           This is about staying active and being involved in the Capco
           community. Further, we will be{" "}
-          <a href="https://uk.virginmoneygiving.com/CapcoUKCSR1" taget="_blank">
+          <a href="https://fundraise.unfoundation.org/fundraiser/3140126" taget="_blank">
             fundraising for the NHS
           </a>
           , to thank all of those heroes who have gone above and beyond during

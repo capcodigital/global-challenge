@@ -32,7 +32,7 @@ const HomePage = () => (
               fluid
               size="large"
               as="a"
-              href="https://uk.virginmoneygiving.com/CapcoUKCSR1"
+              href="https://fundraise.unfoundation.org/fundraiser/3140126"
               target="_blank"
               className="donate"
             >
