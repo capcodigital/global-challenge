@@ -133,7 +133,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
                 {item.position ? item.position : idx + 1}
               </span>
               <span className={"avatar"}>
-                <Avatar name={item.name} color={orange} size={40} />
+                <Avatar name={item.name} color={"#00AABB"} size={40} />
               </span>
               <span>
                 <div className={"date"}>

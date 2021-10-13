@@ -17,6 +17,7 @@
   @media screen and (min-width: 1000px) {
     display: none !important;
   }
+  color: white;
   margin: 0 !important;
   overflow: auto;
   &::-webkit-scrollbar {
@@ -45,6 +46,7 @@
   }
   height: 400px;
   overflow: auto;
+  color: white;
   &::-webkit-scrollbar {
     display: none;
   }
