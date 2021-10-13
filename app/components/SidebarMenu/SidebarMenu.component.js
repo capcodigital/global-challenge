@@ -2,7 +2,7 @@ import React from "react";
 import { Menu, Sidebar, Icon } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import ESTRChallengeSidebar from "./images/estr-sidebar-logo.png";
-import GlobalChallengeSidebar from "./images/global-sidebar-logo.png"
+import GlobalChallengeSidebar from "./images/global_challenge_banner.png"
 import "./style.scss";
 
 const challenge_name =  process.env.CHALLENGE_NAME ? `${process.env.CHALLENGE_NAME}` : "global";
