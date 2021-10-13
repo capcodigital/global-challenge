@@ -24,6 +24,7 @@ if (!secret || !client_id) {
 
 const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 const challengeName = process.env.CHALLENGE_NAME;
+const CYCLING_CONVERSION = config.cyclingConversion || 3;
 
 var challengeDates = [];
 challenges.getCurrentChallengeDates(function(dates) {
@@ -297,36 +298,28 @@ function getStats(user, date) {
 
             var activityCount = challengeDates.length;
             for (var i = 0; i < activityCount; i++) {
-                if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].summary) {
+                if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].activities) {
 
-                    user.activities[challengeDates[i]].summary.distances.forEach (function(activityEntry) {
-                        switch (activityEntry.activity) {
+                    user.activities[challengeDates[i]].activities.forEach (function(activityEntry) {
+                        switch (activityEntry.name) {
                             case 'Run':
-                                user.totalRun = Math.round(user.totalRun + (activityEntry.distance));
+                                user.totalRun = user.totalRun + activityEntry.distance;
                                 break;
                             case 'Swim':
-                                user.totalSwim = Math.round(user.totalSwim + (activityEntry.distance));
+                                user.totalSwim = user.totalSwim + activityEntry.distance;
                                 break;
                             case 'Bike':
-                                user.totalCycling = Math.round(user.totalCycling + (activityEntry.distance));
-                                user.totalCyclingConverted = Math.round(user.totalCyclingConverted + ((activityEntry.distance)/config.cyclingConversion));
+                                user.totalCycling = user.totalCycling + activityEntry.distance;
+                                user.totalCyclingConverted = user.totalCyclingConverted + (activityEntry.distance/CYCLING_CONVERSION);
                                 break;
                             case 'Walk':
-                                user.totalWalk = Math.round(user.totalWalk + (activityEntry.distance));
+                                user.totalWalk = user.totalWalk + activityEntry.distance;
                                 break;
-                            // case 'Yoga':
-                            //     user.totalWalk = Math.round(user.totalWalk + (user.activities[i].moving_time*20));
-                            //     break;
-                            // case 'Circuit Training':
-                            //     user.totalRun = Math.round(user.totalRun + (user.activities[i].moving_time*160));
-                            //     break;
-                            case 'total':
-                            case 'loggedActivities':
-                            case 'sedentaryActive':
-                            case 'lightlyActive':
-                            case 'moderatelyActive':
-                            case 'veryActive':
-                                // Ignore supplied totals as they may contain extra activties
+                            case 'Yoga':
+                                user.totalWalk = user.totalWalk + (((activityEntry.duration/60000)*20)/1000);
+                                break;
+                            case 'Circuit Training':
+                                user.totalRun = user.totalRun + (((activityEntry.duration/60000)*160)/1000);
                                 break;
                             default:
                                 console.log("Unexpected activity type: " + activityEntry.activity + " - User: " + user.name);
@@ -334,24 +327,38 @@ function getStats(user, date) {
                         }
 
                         // Only add valid activities to the total
-                        if (['Run','Swim','Bike','Walk','Yoga','Circuit Training'].includes(activityEntry.activity)) {
-                            // Only moving time vs FitBit's Active, Very Active etc
-                            user.totalDuration = user.totalDuration + user.activities[challengeDates[i]].summary.fairlyActiveMinutes + 
-                                                                    user.activities[challengeDates[i]].summary.lightlyActiveMinutes + 
-                                                                    user.activities[challengeDates[i]].summary.veryActiveMinutes;
+                        if (['Run','Swim','Bike','Walk','Yoga','Circuit Training'].includes(activityEntry.name)) {
+                            user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
 
-                            user.totalDistance = Math.round(user.totalDistance + (activityEntry.distance));
+                            if (activityEntry.name === 'Bike' && activityEntry.distance > 0) {
+                                user.totalDistanceConverted = user.totalDistanceConverted + (activityEntry.distance/CYCLING_CONVERSION);
+                                user.totalDistance = user.totalDistance + activityEntry.distance;
 
-                            if (activityEntry.activity === 'Bike') {
-                                user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((activityEntry.distance)/config.cyclingConversion));
+                            } else if (activityEntry.name === 'Yoga') {
+                                user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*20)/1000);
+                                user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*20)/1000);
+
+                            } else if (activityEntry.name === 'Circuit Training') {
+                                user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*160)/1000);
+                                user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*160)/1000);
+
                             } else {
-                                user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (activityEntry.distance));
+                                user.totalDistanceConverted = user.totalDistanceConverted + activityEntry.distance;
+                                user.totalDistance = user.totalDistance + activityEntry.distance;
                             }
                         }
-
                     });
                 }
             }
+
+            user.totalRun = Math.floor(user.totalRun*100)/100;
+            user.totalSwim = Math.floor(user.totalSwim*100)/100;
+            user.totalCycling = Math.floor(user.totalCycling*100)/100;
+            user.totalCyclingConverted = Math.floor(user.totalCyclingConverted*100)/100;
+            user.totalWalk = Math.floor(user.totalWalk*100)/100;
+            
+            user.totalDistanceConverted = Math.floor(user.totalDistanceConverted*100)/100;
+            user.totalDistance = Math.floor(user.totalDistance*100)/100;
 
             user.markModified('activities');
             user.save(function(err, newUser) {

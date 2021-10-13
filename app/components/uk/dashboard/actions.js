@@ -17,7 +17,7 @@ export const FETCH_TEAMS_SUCCESS = 'FETCH_TEAMS_SUCCESS';
 export const FETCH_TEAMS_ERROR = 'FETCH_TEAMS_ERROR';
 
 // used by redux-saga
-export const fetchActivitiesApi = () => axios.get(`${SERVER_URL}users/activities`).then(({ data }) => data);
+export const fetchActivitiesApi = () => axios.get(`${SERVER_URL}users`).then(({ data }) => data);
 export const fetchTeamsApi = () => axios.get(`${SERVER_URL}teams`).then(({ data }) => data);
 
 // action creators
