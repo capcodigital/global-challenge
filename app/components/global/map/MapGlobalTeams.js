@@ -16,39 +16,39 @@ const containerStyle = {
 };
 
 const center = {
-  lat: 54.2511,
-  lng: -4.4632,
+  lat: 35.4,
+  lng: 138.78,
 };
 
 const options = {
   styles: mapGlobalStyles,
   disableDefaultUI: true,
   zoomControl: true,
-  minZoom: 5.5,
+  minZoom: 11,
   maxZoom: 16,
   restriction: {
     latLngBounds: {
-      north: 59,
-      south: 49,
-      west: -21,
-      east: 14,
+      north: 36.3,
+      south: 34.3,
+      west: 137.4,
+      east: 140,
     },
     strictBounds: false,
   },
 };
 
 const waypts = [
-  "Epping, England",
-  "Caistor, England",
-  "Market Weighton, England",
-  "Middleton Tyas, England",
-  "Alston, England",
-  "Moffat, Scotland",
-].map((address) => ({ location: address, stopover: true }));
+  { location: {lat: 35.2758070, lng: 138.6890650}, stopover: true },
+  { location: {lat: 35.450880, lng: 138.573757}, stopover: true },
+  { location: {lat: 35.474304, lng: 138.574885}, stopover: true },
+  { location: {lat: 35.422493, lng: 138.929906}, stopover: true },
+  { location: {lat: 35.485507, lng: 138.868400}, stopover: true },
+  { location: {lat: 35.485421, lng: 138.867366}, stopover: true },
+];
 
-const MapUK = ({ teams, team }) => {
-  const londonOffice = { lat: 51.5255401, lng: -0.0827686 };
-  const edinburghOffice = { lat: 55.953222, lng: -3.194448 };
+const MapGlobal = ({ teams, team }) => {
+  const startWaypoint = { lat: 35.2498470, lng: 138.7691520 };
+  const endWaypoint = { lat: 35.5069180, lng: 138.7628180 }
   
   const [selectedInfo, setSelectedInfo] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
@@ -61,8 +61,8 @@ const MapUK = ({ teams, team }) => {
     const directionsService = new window.google.maps.DirectionsService();
     directionsService.route(
       {
-        origin: londonOffice,
-        destination: edinburghOffice,
+        origin: startWaypoint,
+        destination: endWaypoint,
         waypoints: waypts,
         optimizeWaypoints: true,
         travelMode: google.maps.TravelMode.DRIVING,
@@ -110,7 +110,7 @@ const MapUK = ({ teams, team }) => {
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      zoom={selectedTeam ? 8 : 6}
+      zoom={selectedTeam ? 8 : 4}
       center={
         selectedTeam
           ? {
@@ -133,7 +133,7 @@ const MapUK = ({ teams, team }) => {
       )}
       <Marker
         className="marker"
-        position={edinburghOffice}
+        position={endWaypoint}
         icon={{
           scaledSize: new window.google.maps.Size(100, 100),
           url: "https://findicons.com/files/icons/2061/f1/128/checkered_flag.png",
@@ -199,9 +199,9 @@ const MapUK = ({ teams, team }) => {
   );
 };
 
-MapUK.propTypes = {
+MapGlobal.propTypes = {
   teams: PropTypes.array.isRequired,
   team: PropTypes.object,
 };
 
-export default MapUK;
+export default MapGlobal;
