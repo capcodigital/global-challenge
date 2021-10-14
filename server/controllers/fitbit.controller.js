@@ -9,6 +9,7 @@ var locations = require('./locations.controller');
 var User = mongoose.model('User');
 var Capco = mongoose.model('Capco');
 var config = require("../config/config");
+var mailer = require('../services/mail.service');
 
 var _ = require('lodash');
 var cluster = require('cluster');

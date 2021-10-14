@@ -17,7 +17,7 @@ if (!emailUser || !emailPassword) {
 
 var emailConnectionDetails = {
     // host: "smtp.office365.com",
-    // port: 587,
+    port: 587,
     service: "Outlook365",
     // secure: false,
     auth: {

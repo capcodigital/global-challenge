@@ -13,6 +13,7 @@ var strava = require('strava-v3');
 var cluster = require('cluster');
 var fs = require('fs');
 var config = require("../config/config");
+var mailer = require('../services/mail.service');
 
 var apiKey = process.env.STRAVA_API_KEY;
 var secret = process.env.STRAVA_SECRET;

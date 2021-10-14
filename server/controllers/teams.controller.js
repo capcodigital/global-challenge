@@ -274,9 +274,9 @@ exports.update = function(req, res) {
                     res.send(400, { message: 'joinTeamFailed'});
                 } else {
 
-                    let memberEmailText = "Hello " + user.name + " you have join the team " + team.name + ".\n\r" +
+                    let memberEmailText = "Hello " + user.name + " you have joined the team " + team.name + ".\n\r" +
                         "If you wish to remove yourself from this team please click the following link: \n\r" +
-                        callbackUrl + "teams/remove?team=" + team._id + "&member" + user._id;
+                        callbackUrl + "teams/remove?team=" + team._id + "&member=" + user._id;
 
                     mailer.sendMail(user.email, "Joined Capco Challenge Team", memberEmailText, function() {
                         console.log("email sent to " + user.email);
@@ -285,7 +285,7 @@ exports.update = function(req, res) {
                     User.findOne({
                         username: team.captain
                     }).exec(function(err, captain) {
-                        let emailText = "Hello " + captain.name + "\n\r" + user.name + " has applied to join your team " + team.name;
+                        let emailText = "Hello " + captain.name + "\n\r" + user.name + " has joined your team " + team.name;
 
                         mailer.sendMail(captain.email, "New Capco Challenge Team Member", emailText, function() {
                             console.log("email sent to " + captain.email);
@@ -347,7 +347,7 @@ exports.update = function(req, res) {
 exports.removeById = function(req, res) {
 
     Team.findOne({
-        _id: req.query.team
+        _id: mongoose.Types.ObjectId(req.query.team)
     }).exec(function(err, team) {
         if (err) { 
             res.send(400, { message: 'removeFromTeamFailed'});
@@ -362,9 +362,24 @@ exports.removeById = function(req, res) {
             return;
         }
 
+        console.log(req.query.member);
+
         User.findOne({
-            _id: req.query.member
+            _id: mongoose.Types.ObjectId(req.query.member)
         }).exec(function(err, user) {
+            if (err) { 
+                res.send(400, { message: 'removeFromTeamFailed'});
+                return;
+            }
+            if (!user) {
+                res.send(400, { message: 'removeFromTeamFailed'});
+                return;
+            }
+            if (user == null) {
+                res.send(400, { message: 'removeFromTeamFailed'});
+                return;
+            }
+
             const index = team.members.indexOf(user.username);
 
             if (index < 0) {
