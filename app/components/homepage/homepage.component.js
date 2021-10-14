@@ -11,6 +11,7 @@ import {
 import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
 import RegistrationForm from "../register";
 import landing from "./images/landing.svg";
+import landingGlobal from "./images/landing-global.png";
 import "./style.scss";
 
 const challenge_name = process.env.CHALLENGE_NAME
@@ -23,7 +24,12 @@ const HomePage = () => (
       <Segment vertical>
         <Grid stackable>
           <Grid.Column width={10}>
-            <img src={landing} />
+            {challenge_name == "global" && (
+              <img src={landingGlobal} width="650px" alt="Global Challenge" />
+            )}
+            {challenge_name == "uk" && (
+              <img rc={landing} alt="ESTR UK Challenge" />
+            )}
           </Grid.Column>
           <Grid.Column width={6} className="registration">
             <FormattedHTMLMessage id="homepage.instructionsESTR" />
