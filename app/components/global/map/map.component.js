@@ -2,6 +2,7 @@ import React from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import PropTypes from 'prop-types';
 import { scaleLinear } from 'd3-scale';
+import "./style.scss";
 
 const SCALE = scaleLinear()
   .domain([0, 8000000])
