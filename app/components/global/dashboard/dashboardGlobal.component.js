@@ -249,7 +249,6 @@ class DashboardGlobal extends React.Component {
           <Segment loading={isLoading} className="secondary segment-padding">
             <Grid container stackable columns={1}>
               <Grid.Row>
-                <CountDown totalDistance={688} />
                 <div ref={this.saveRef}>
                   <Map
                     worldData={worldData}

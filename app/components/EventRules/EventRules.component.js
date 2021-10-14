@@ -9,9 +9,10 @@ const challenge_name = process.env.CHALLENGE_NAME
 const EventRules = () => (
   <Segment className="secondary">
     <Grid className={`event-rules-container ${challenge_name}`}>
-      <Grid.Column className="event-rules-section column-b">
+      <Grid.Column className={`event-rules-section column-b ${challenge_name}`}>
         {challenge_name === "global" && (
           <>
+          <Header className="event-rules-title">Event Rules</Header>
             <p>Here are a few Global Challenge rules to get you started:</p>
             <p>
               <b>Only input data into Strava / Fitbit</b> that you have

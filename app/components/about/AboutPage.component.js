@@ -9,9 +9,10 @@ const challenge_name = process.env.CHALLENGE_NAME
 const AboutPage = () => (
   <Segment className="secondary">
     <Grid className={`about-container ${challenge_name}`}>
-      <Grid.Column className="about-section column-b">
+      <Grid.Column className={`about-section column-b ${challenge_name}`}>
         {challenge_name === "global" && (
           <>
+            <Header className="about-title">About</Header>
             <p>The Capco Global Challenge is making a return this year!</p>
             <p>
               Organized by the Wellbeing@Capco team in partnership with Capco

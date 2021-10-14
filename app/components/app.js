@@ -53,7 +53,7 @@ function App() {
               />
               {!["/teams/register", "/register"].includes(
                 window.location.pathname
-              ) && !window.location.pathname.includes("/team") && <TabsGlobal />}
+              ) && !window.location.pathname.includes('/team') && <TabsGlobal />}
               <Switch>
                 <Route path="/register" exact component={HomePage} />
                 <Route exact path="/" component={DashboardGlobal} />

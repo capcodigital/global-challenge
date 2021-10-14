@@ -11,8 +11,10 @@ const challenge_name = process.env.CHALLENGE_NAME
 const HowTo = () => (
   <Segment className="secondary">
     <Grid className={`how-to-container ${challenge_name}`} stackable centered>
-      <Grid.Column className="how-to-section column-b">
-        <Header className="how-to-title main">How to</Header>
+      <Grid.Column className={`how-to-section column-b ${challenge_name}`}>
+        <Header className={`how-to-title main ${challenge_name}`}>
+          How to
+        </Header>
         <Grid>
           <Grid.Column className="column-c">
             <Header className="how-to-title smaller">How to Videos</Header>
@@ -62,8 +64,8 @@ const HowTo = () => (
             </List>
           </Grid.Column>
           <Grid.Column className="how-to-section column-d">
-          <SetupInstructions />
-          <StravaSetupInstructions />
+            <SetupInstructions />
+            <StravaSetupInstructions />
           </Grid.Column>
         </Grid>
       </Grid.Column>

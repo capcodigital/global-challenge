@@ -30,6 +30,7 @@ const TeamsDashboardGlobal = ({ getTeamsList, teams }) => {
       .sort((a, b) => b.totalDistance - a.totalDistance);
     setTeam(selectedTeam[0]);
   });
+
   return team ? (
     <div className="dashboard">
       <Segment className="secondary">

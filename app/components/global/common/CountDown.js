@@ -37,9 +37,12 @@ const CountDown = ({ totalDistance }) => {
   return (
     <>
       <hr />
-      <div className="countdown-global" style={{ backgroundImage: `url(${worldmap})`}}>
+      <div
+        className="countdown-global"
+        style={{ backgroundImage: `url(${worldmap})` }}
+      >
         <div className="details">
-          <div>{totalDistance}km</div>
+          <div>{Math.round(totalDistance)}km</div>
           <div>TOTAL DISTANCE</div>
         </div>
         <div className="count">

@@ -14,25 +14,47 @@ function FaqPage() {
   return (
     <Segment className="secondary">
       <Grid className={`faq-container ${challenge_name}`}>
-        <Grid.Column className="faq-section column-b">
-          <Header className="faq-title">FAQ</Header>
-          <>
-            <Header className="section-header">General</Header>
-            <Divider />
-            {questionData.general.map((question) => (
-              <QAndAPair key={question.questionId} question={question} />
-            ))}
-            <Header className="section-header">Team</Header>
-            <Divider />
-            {questionData.team.map((question) => (
-              <QAndAPair key={question.questionId} question={question} />
-            ))}
-            <Header className="section-header">Data</Header>
-            <Divider />
-            {questionData.data.map((question) => (
-              <QAndAPair key={question.questionId} question={question} />
-            ))}
-          </>
+        <Grid.Column className={`faq-section column-b ${challenge_name}`}>
+          {challenge_name === "global" && (
+            <>
+              <Header className="faq-title">FAQ</Header>
+              <Header className="section-header">General</Header>
+              <Divider />
+              {questionData.general.map((question) => (
+                <QAndAPair key={question.questionId} question={question} />
+              ))}
+              <Header className="section-header">Team</Header>
+              <Divider />
+              {questionData.team.map((question) => (
+                <QAndAPair key={question.questionId} question={question} />
+              ))}
+              <Header className="section-header">Data</Header>
+              <Divider />
+              {questionData.data.map((question) => (
+                <QAndAPair key={question.questionId} question={question} />
+              ))}
+            </>
+          )}
+          {challenge_name === "uk" && (
+            <>
+              <Header className="faq-title">FAQ</Header>
+              <Header className="section-header">General</Header>
+              <Divider />
+              {questionData.general.map((question) => (
+                <QAndAPair key={question.questionId} question={question} />
+              ))}
+              <Header className="section-header">Team</Header>
+              <Divider />
+              {questionData.team.map((question) => (
+                <QAndAPair key={question.questionId} question={question} />
+              ))}
+              <Header className="section-header">Data</Header>
+              <Divider />
+              {questionData.data.map((question) => (
+                <QAndAPair key={question.questionId} question={question} />
+              ))}
+            </>
+          )}
         </Grid.Column>
       </Grid>
     </Segment>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Menu, Container } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
+import CountDown from "../common/CountDown";
 import "./style.scss";
 
 export default class TabsGlobal extends Component {
@@ -56,6 +57,7 @@ export default class TabsGlobal extends Component {
           </Menu.Item>
           <Menu.Item name="FAQ" className="tab" as={NavLink} exact to="/faq" />
         </Menu>
+        {/* <CountDown totalDistance={total} /> */}
       </Container>
     );
   }
