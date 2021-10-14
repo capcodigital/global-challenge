@@ -328,6 +328,27 @@ hr {
     height: 170px;
     background-size: cover;
     background-position: right 140% bottom 20%;
+    height: 200px;
+    &.team {
+      background-size: cover;
+      .details {
+        :first-child {
+          font-size: 36px;
+        }
+        :nth-child(2) {
+          font-size: 14px;
+        }
+      }
+      .details.distance {
+        font-weight: bold;
+        :first-child {
+          font-size: 66px;
+        }
+        :nth-child(2) {
+          font-size: 14px;
+        }
+      }
+    }
   }
 }
 

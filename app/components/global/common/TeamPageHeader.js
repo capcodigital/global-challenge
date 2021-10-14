@@ -14,7 +14,7 @@ const TeamPageHeader = ({ totalDistance, teamName }) => {
           <div>{teamName}</div>
           <div>TEAM</div>
         </div>
-        <div className="details">
+        <div className="details distance">
           <div>{totalDistance}km</div>
           <div>TOTAL DISTANCE</div>
         </div>
