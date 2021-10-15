@@ -46,7 +46,6 @@ const waypts = [
   { location: {lat: 35.218391, lng: 138.520095}, stopover: true },
   { location: {lat: 35.174668, lng: 138.668790}, stopover: true },
   { location: {lat: 35.119774, lng: 138.897975}, stopover: true },
-  // { location: {lat: 35.225768, lng: 138.912327}, stopover: true },
 ];
 
 const MapGlobal = ({ teams, team }) => {
