@@ -14,6 +14,10 @@ import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
 import { allCities, geometries, officeMap } from "./constants";
 import "./style.scss";
 
+const challenge_name = process.env.CHALLENGE_NAME
+? `${process.env.CHALLENGE_NAME}`
+: "global";
+
 class DashboardGlobal extends React.Component {
   constructor(props) {
     super(props);
@@ -272,7 +276,7 @@ class DashboardGlobal extends React.Component {
                   <Header size="large" className="global-header">
                     LEADERBOARDS
                   </Header>
-                  <div className="search-container">
+                  <div className={`search-container ${challenge_name}`}>
                     <Search
                       input={{ icon: "search", iconPosition: "left" }}
                       fluid

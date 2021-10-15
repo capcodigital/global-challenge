@@ -113,9 +113,24 @@ div.row {
     margin-bottom: 1rem;
     margin-top: 1rem;
 
+    &.global{
+      .ui.input>input {
+        background: transparent !important;
+        color: white !important;
+        border: 1px solid #005F65 !important;
+      }
+      ::placeholder { 
+        color: white !important;
+        opacity: 1;
+      }
+      .icon {
+        color: white !important
+      }
+    }
     .search {
       .input {
         width: 100%;
+        font-size: 18px;
       }
     }
   }
