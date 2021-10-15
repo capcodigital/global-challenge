@@ -194,7 +194,7 @@ exports.create = function(req, res) {
             res.status(400).send({ message: 'createTeamFailedTooFewPeople'});
             return;
         }
-        if (team.members.length >= maxMembers) {
+        if (team.members.length > maxMembers) {
             console.log("Max Fail");
             res.status(400).send({ message: 'createTeamFailedTooManyPeople'});
             return;
@@ -213,9 +213,15 @@ exports.create = function(req, res) {
 
         team.save(function(err) {
             if (err) {
-                console.log("Error creating team: " + team.name);
-                console.log(err);
-                res.status(400).send({ message: 'createTeamFailed'});
+                if (err.code == 11000) {
+                    console.log("Duplicate team: " + team.name);
+                    console.log(err);
+                    res.status(400).send({ message: 'createTeamDuplicate'});
+                } else {
+                    console.log("Error creating team: " + team.name);
+                    console.log(err);
+                    res.status(400).send({ message: 'createTeamFailed'});
+                }
             } else {
                 res.jsonp(team);
             }
@@ -278,18 +284,18 @@ exports.update = function(req, res) {
                         "If you wish to remove yourself from this team please click the following link: \n\r" +
                         callbackUrl + "teams/remove?team=" + team._id + "&member=" + user._id;
 
-                    mailer.sendMail(user.email, "Joined Capco Challenge Team", memberEmailText, function() {
-                        console.log("email sent to " + user.email);
-                    });
+                    // mailer.sendMail(user.email, "Joined Capco Challenge Team", memberEmailText, function() {
+                    //     console.log("email sent to " + user.email);
+                    // });
 
                     User.findOne({
                         username: team.captain
                     }).exec(function(err, captain) {
                         let emailText = "Hello " + captain.name + "\n\r" + user.name + " has joined your team " + team.name;
 
-                        mailer.sendMail(captain.email, "New Capco Challenge Team Member", emailText, function() {
-                            console.log("email sent to " + captain.email);
-                        });
+                        // mailer.sendMail(captain.email, "New Capco Challenge Team Member", emailText, function() {
+                        //     console.log("email sent to " + captain.email);
+                        // });
                     });
 
                     res.jsonp(team);
@@ -350,15 +356,15 @@ exports.removeById = function(req, res) {
         _id: mongoose.Types.ObjectId(req.query.team)
     }).exec(function(err, team) {
         if (err) { 
-            res.send(400, { message: 'removeFromTeamFailed'});
+            res.send(400, { message: "Unable to remove user from team"});
             return;
         }
         if (!team) {
-            res.send(400, { message: 'removeFromTeamFailed'});
+            res.send(400, { message: "Unable to remove user from team"});
             return;
         }
         if (team == null) {
-            res.send(400, { message: 'removeFromTeamFailed'});
+            res.send(400, { message: "Unable to remove user from team"});
             return;
         }
 
@@ -367,23 +373,25 @@ exports.removeById = function(req, res) {
         User.findOne({
             _id: mongoose.Types.ObjectId(req.query.member)
         }).exec(function(err, user) {
+            let errorMessage = "Unable to remove user from team " + team.name;
             if (err) { 
-                res.send(400, { message: 'removeFromTeamFailed'});
+                res.send(400, { message: errorMessage});
                 return;
             }
             if (!user) {
-                res.send(400, { message: 'removeFromTeamFailed'});
+                res.send(400, { message: errorMessage});
                 return;
             }
             if (user == null) {
-                res.send(400, { message: 'removeFromTeamFailed'});
+                res.send(400, { message: errorMessage});
                 return;
             }
 
             const index = team.members.indexOf(user.username);
+            errorMessage = "Unable to remove " + user.name + " from team " + team.name;
 
             if (index < 0) {
-                res.send(400, { message: 'removeFromTeamFailedNotAMember'});
+                res.send(400, { message: errorMessage});
                 return;
             }
 
@@ -392,10 +400,10 @@ exports.removeById = function(req, res) {
                 
             team.save(function(err) {
                 if (err) {
-                    console.log("Error joining team: " + team.name);
-                    res.send(400, { message: 'joinTeamFailed'});
+                    console.log(errorMessage);
+                    res.send(400, { message: errorMessage});
                 } else {
-                    res.jsonp(team);
+                    res.send(200, {message: 'Successfully removed from Team'});
                 }
             });
 

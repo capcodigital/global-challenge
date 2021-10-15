@@ -208,9 +208,17 @@ class TeamsPage extends React.Component {
                       <FormattedMessage id="teams.createSuccess" />
                     ) : this.state.createJoinResult == "createTeamFailed" ? (
                       <FormattedMessage id="teams.createFailed" />
+                    ) : this.state.createJoinResult == "createTeamDuplicate" ? (
+                        <FormattedMessage id="teams.duplicateName" />
                     ) : this.state.createJoinResult ==
                       "createTeamFailedUserNotFound" ? (
                       <FormattedMessage id="teams.userNotFound" />
+                    ) : this.state.createJoinResult ==
+                      "createTeamFailedTooFewPeople" ? (
+                      <FormattedMessage id="teams.tooFew" />
+                    ) : this.state.createJoinResult ==
+                      "createTeamFailedTooManyPeople" ? (
+                      <FormattedMessage id="teams.tooMany" />
                     ) : (
                       <div></div>
                     )}
@@ -271,6 +279,9 @@ class TeamsPage extends React.Component {
                     ) : this.state.createJoinResult ==
                       "joinTeamFailedUserNotFound" ? (
                       <FormattedMessage id="teams.userNotFound" />
+                    ) : this.state.createJoinResult ==
+                      "joinTeamFailedTooManyPeople" ? (
+                      <FormattedMessage id="teams.teamFull" />
                     ) : (
                       <div></div>
                     )}
