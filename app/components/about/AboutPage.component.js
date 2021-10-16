@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Header, Segment } from "semantic-ui-react";
+import { Grid, Header, Segment, Container } from "semantic-ui-react";
 import "./style.scss";
 
 const challenge_name = process.env.CHALLENGE_NAME
@@ -7,69 +7,110 @@ const challenge_name = process.env.CHALLENGE_NAME
   : "global";
 
 const AboutPage = () => (
-  <Segment className="secondary">
-    <Grid className={`about-container ${challenge_name}`}>
-      <Grid.Column className={`about-section column-b ${challenge_name}`}>
-        {challenge_name === "global" && (
-          <>
-            <Header className="about-title">About</Header>
-            <p>The Capco Global Challenge is making a return this year!</p>
-            <p>
-              Organized by the Wellbeing@Capco team in partnership with Capco
-              CSR, this annual event brings Capco colleagues together to
-              collaborate and compete while raising important funds for charity.
-              <br />
-              <br /> Run, walk, bike, swim or row while raising funds for our
-              chosen charity, the{" "}
-              <a
-                href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/donate"
-                taget="_blank"
-              >
-                World Health Organization COVID-19 Solidarity Response Fund
-              </a>
-              .
-            </p>
-            <p>
-              All distances will be tracked via the Capco Global Challenge app
-              and will help us to achieve our collective target of 50,000 Kms -
-              the distance* between all our Capco offices.
-            </p>
-            <p>
-              <b>Sign up for the Challenge today!</b>
-            </p>
-            <p>
-              <b>Event Details</b> <br />
-              <b>Registration Deadline: </b>
-              <p className="red">October, 31st 2021</p>
-              <br />
-              <b>Challenge Starts: </b>
-              <p className="red">November, 1 2021</p> (and ends when we reach
-              50,000 Kms!)
-              <br />
-              <b>Registration: </b>
-              Donate to WHO COVID-19 Response and register as an individual
-              participant or team (see below) using the buttons in the top
-              right-hand corner.
-              <br />
-              <b>Team Challenge: </b>
-              Participants are invited to form a team of four to complete a
-              virtual Mount Fiji Ultra Marathon – a distance of 166 Kms! All
-              kilometers will be added to our global total, with the bonus of
-              being able to compete against other teams.
-              <br />
-              <b>COVID-19 Restrictions</b>
-              If you are unable to take part in outdoor exercise due to local
-              Covid-19 restrictions, you can still participate. Please see the
-              FAQs page{" "}
-              <a href="" target="_blank">
-                here
-              </a>{" "}
-              for more information.
-            </p>
-          </>
-        )}
-        {challenge_name === "uk" && (
-          <>
+  <Container>
+    <Segment vertical>
+      {challenge_name === "global" && (
+        <>
+          <Grid
+            columns="equal"
+            stackable
+            centered
+            className="about-container-global"
+          >
+            <Grid.Column
+              style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
+              width={16}
+              className=""
+            >
+              <Header className="global-title">About</Header>
+            </Grid.Column>
+          </Grid>
+          <Grid
+            columns="equal"
+            stackable
+            centered
+            className="about-container-global"
+          >
+            <Grid.Column
+              style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
+              width={8}
+              className="about-section"
+            >
+              <p>The Capco Global Challenge is making a return this year!</p>
+              <p>
+                Organized by the Wellbeing@Capco team in partnership with Capco
+                CSR, this annual event brings Capco colleagues together to
+                collaborate and compete while raising important funds for
+                charity.
+                <br />
+                <br /> Run, walk, bike, swim or row while raising funds for our
+                chosen charity, the{" "}
+                <a
+                  href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/donate"
+                  taget="_blank"
+                >
+                  World Health Organization COVID-19 Solidarity Response Fund
+                </a>
+                .
+              </p>
+              <p>
+                All distances will be tracked via the Capco Global Challenge app
+                and will help us to achieve our collective target of 50,000 Kms
+                - the distance* between all our Capco offices.
+              </p>
+              <p>
+                <b>Sign up for the Challenge today!</b>
+              </p>
+              <i> *Distance is approximate and can vary by route</i>
+            </Grid.Column>
+
+            <Grid.Column
+              style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
+              className="about-section"
+              width={8}
+            >
+              <p>
+                <b>Event Details</b> <br />
+                <br />
+                <b>Registration Deadline: </b>
+                <p className="red">October, 31st 2021</p>
+                <br />
+                <b>Challenge Starts: </b>
+                <p className="red">November, 1 2021</p> (and ends when we reach
+                50,000 Kms!)
+                <br />
+                <br />
+                <p>
+                  <b>Registration: </b>
+                  Donate to WHO COVID-19 Response and register as an individual
+                  participant or team (see below) using the buttons in the top
+                  right-hand corner.
+                </p>
+                <b>Team Challenge: </b>
+                Participants are invited to form a team of four to complete a
+                virtual Mount Fiji Ultra Marathon – a distance of 166 Kms! All
+                kilometers will be added to our global total, with the bonus of
+                being able to compete against other teams.
+                <br />
+                <br />
+                <b>COVID-19 Restrictions: </b>
+                If you are unable to take part in outdoor exercise due to local
+                Covid-19 restrictions, you can still participate. Please see the
+                FAQs page{" "}
+                <a href="" target="_blank">
+                  here
+                </a>{" "}
+                for more information.
+                <br />
+                <br />
+              </p>
+            </Grid.Column>
+          </Grid>
+        </>
+      )}
+      {challenge_name === "uk" && (
+        <Grid className="about-container">
+          <Grid.Column className="about-section column-b">
             <Header className="about-title">About</Header>
             <p>
               We challenge you to walk, run, cycle, row or swim throughout
@@ -105,11 +146,11 @@ const AboutPage = () => (
               <br />
               Challenge Date Range: <p className="red">1st - 30th September</p>
             </p>
-          </>
-        )}
-      </Grid.Column>
-    </Grid>
-  </Segment>
+          </Grid.Column>
+        </Grid>
+      )}
+    </Segment>
+  </Container>
 );
 
 export default AboutPage;

@@ -58,3 +58,29 @@
     }
   }
 }
+
+.global-title {
+  padding-top: 40px;
+  padding-bottom: 20px;
+  color: white !important;
+  font-size: 30px !important;
+}
+.about-container-global {
+  color: white;
+  
+  .about-section {
+
+    a {
+      color: #fdc437 !important;
+    }
+
+    p {
+      font-size: 16px;
+
+      .red {
+        color: #fdc437 !important;
+        display: inline;
+      }
+    }
+  }
+}

@@ -184,7 +184,7 @@ const MapGlobal = ({ teams, team }) => {
         >
           <div className="map-pop-up">
             <svg width={50} height={50}>
-              <circle fill="rgb(255,69,27)" cx="25" cy="25" r="25" />
+              <circle fill="#00AABB" cx="25" cy="25" r="25" />
               <text
                 textAnchor="middle"
                 x="25"
