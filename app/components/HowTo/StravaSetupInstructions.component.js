@@ -14,14 +14,13 @@ const StravaSetupInstructions = () => (
       <Grid.Column textAlign="left" verticalAlign="middle" width={12}>
         <List>
           <List.Item>
-            Either download Strava on your mobile phone or sign up on your
-            computer.
+            You can either download Strava on your mobile phone or sign up on
+            your computer.
           </List.Item>
           <List.Item>
-            Strava is <b>free</b> to use, however there is a premium paid
-            version (Strava Summit) which encourages you to sign up (you do not
-            need this!). Just SKIP this whenever it appears, the free version is
-            all that is required for the challenge.
+            Strava is <b> free </b> to use, however there is a premium paid
+            version (Strava Summit) which you will be asked if you would like to
+            sign up for, however you do not need this for the Challenge.
           </List.Item>
           <List.Item>
             <a
@@ -44,9 +43,8 @@ const StravaSetupInstructions = () => (
             </a>
           </List.Item>
           <List.Item>
-            1. You can sign up with Facebook or Google using your normal login
-            for these services or you can enter you email address and sign up
-            manually.
+            1. You can sign up with Facebook or Google or you can enter your
+            email address and sign up manually.
           </List.Item>
           <List.Item>2. Complete the form and select ‘Sign Up’.</List.Item>
           <List.Item>
@@ -54,7 +52,7 @@ const StravaSetupInstructions = () => (
             you are unable to locate, try your spam folder.
           </List.Item>
           <List.Item>
-            4. Select confirm email address on the email and log in to Strava
+            4. Select confirm email address on the email and log in to Strava.
           </List.Item>
         </List>
       </Grid.Column>
@@ -66,12 +64,14 @@ const StravaSetupInstructions = () => (
       <Grid.Column textAlign="left" verticalAlign="middle" width={12}>
         <List>
           <List.Item>
-            5. You will now be on the Strava dashboard page – select your gender
-            and your sport – for this select running (don’t worry this is simply
-            a setting and you do not have to run always - this is a multi sport
-            event). There is a range of other data that Strava will request from
-            you at this point however you can select ‘skip’ if you do not want
-            to enter this.
+            5. On the Strava dashboard page, you will be asked to select your
+            sport – for the Capco Global Challenge please select running (you
+            will still have the option to walk, swim, cycle or row).{" "}
+            <i>
+              There is a range of other data that Strava will request from you
+              at this point, however you can select ‘skip’ if you do not want to
+              enter this.{" "}
+            </i>
           </List.Item>
           <List.Item>
             6. To 
@@ -79,9 +79,9 @@ const StravaSetupInstructions = () => (
               ensure your activity is syncing and that your distance is measured
               in Kilometres
             </b>
-             select your avatar (image), then select settings from the drop down
-            menu, select display preferences and update Units & Measurements and
-            Default Sport. For additional profile changes and assistance please
+             select your avatar (image), then select settings from the drop-down
+            menu > display preferences > update units and measurements and
+            default sport. For additional profile changes and assistance, please
             refer to{" "}
             <a
               href="https://support.strava.com/hc/en-us/articles/216917697-Your-Strava-Profile-Page"
@@ -92,12 +92,9 @@ const StravaSetupInstructions = () => (
             .
           </List.Item>
           <List.Item>
-            7. To <b>record your activities</b> you can either:
+            7. To <b>record your activities</b> you can:
             <List bulleted>
-              <List.Item>
-                Use the Dashboard to log activity (from your web browser on your
-                PC)
-              </List.Item>
+              <List.Item>Access the Strava dashboard on your PC</List.Item>
               <List.Item>
                 <a href="www.strava.com/mobile" target="_blank">
                   Download the Strava app to your phone
