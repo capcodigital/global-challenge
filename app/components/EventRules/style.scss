@@ -41,7 +41,30 @@
       }
     }
   }
-  &.global {
-    background-color: black;
+}
+
+.event-rules-global {
+  color: white;
+  background-color: black;
+
+  .event-rules-section {
+    .event-rules-title {
+      padding-top: 40px;
+      padding-bottom: 20px;
+      color: white !important;
+      font-size: 30px !important;
+    }
+    a {
+      color: #fdc437 !important;
+    }
+
+    p {
+      font-size: 18px;
+
+      .red {
+        color: #fdc437 !important;
+        display: inline;
+      }
+    }
   }
 }

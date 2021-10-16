@@ -20,7 +20,6 @@ const AboutPage = () => (
             <Grid.Column
               style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
               width={16}
-              className=""
             >
               <Header className="global-title">About</Header>
             </Grid.Column>
@@ -97,7 +96,7 @@ const AboutPage = () => (
                 If you are unable to take part in outdoor exercise due to local
                 Covid-19 restrictions, you can still participate. Please see the
                 FAQs page{" "}
-                <a href="" target="_blank">
+                <a href="/faq" target="_blank">
                   here
                 </a>{" "}
                 for more information.
