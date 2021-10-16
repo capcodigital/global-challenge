@@ -1,0 +1,77 @@
+@import "./variables.scss";
+@import "./global-styles.scss";
+
+body {
+  .segment {
+    &.ui {
+      &.primary {
+        box-shadow: none;
+        border-top: 1px solid #d9d9d9;
+        border-bottom: none;
+        border-right: none;
+        border-left: none;
+      }
+
+      &.secondary {
+        padding: 0;
+        box-shadow: none;
+        border: none;
+        background: #fff;
+      }
+    }
+  }
+  .button {
+    &.ui {
+      &.primary {
+        color: $text-primary !important;
+        background-color: $button-primary;
+      }
+
+      &.secondary {
+        color: $text-tertiary;
+        background-color: $button-primary;
+        border: 1px solid $button-secondary;
+
+        &:hover {
+          border: none;
+          color: $text-secondary;
+          background-color: $button-secondary-hover;
+          text-decoration: none;
+        }
+      }
+
+      &.fitbit {
+        color: $text-secondary;
+        background-color: #00b3bc !important;
+      }
+
+      &.strava {
+        color: $text-secondary;
+        background-color: #fc4c02 !important;
+      }
+
+      &.team-registration {
+        color: $text-secondary;
+        background-color: #4fb0ba !important;
+        border-radius: 25px;
+      }
+
+      &.team-registration-light {
+        color: #0f2046;
+        border: 1px solid #392c2c;
+        background-color: transparent !important;
+        border-radius: 25px;
+
+        &:focus {
+          color: #0f2046;
+          background-color: transparent;
+        }
+        &:hover {
+          color: white;
+          background-color: #0f2046 !important;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

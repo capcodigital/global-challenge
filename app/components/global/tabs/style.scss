@@ -1,0 +1,31 @@
+@media screen and (max-width: 1000px) {
+  .tabs {
+    display: none !important;
+  }
+}
+
+.tabs {
+  justify-content: space-between;
+  background-color: #000 !important;
+
+  .tab {
+    padding: 1rem 0px !important;
+    font-size: 16px;
+    font-weight: 700 !important;
+    justify-content: center;
+    width: 165px;
+  }
+  
+  &.ui.menu > .item.active {
+    background-color: #000 !important;
+    color:#FDC437 !important;
+  }
+
+  &.ui.menu > .item:not(.active) {
+    color:white !important;
+    background-color: #000 !important;
+  }
+}
+
+
+
