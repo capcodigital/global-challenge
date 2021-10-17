@@ -15,8 +15,8 @@ import { allCities, geometries, officeMap } from "./constants";
 import "./style.scss";
 
 const challenge_name = process.env.CHALLENGE_NAME
-? `${process.env.CHALLENGE_NAME}`
-: "global";
+  ? `${process.env.CHALLENGE_NAME}`
+  : "global";
 
 class DashboardGlobal extends React.Component {
   constructor(props) {
@@ -244,8 +244,13 @@ class DashboardGlobal extends React.Component {
       isSearchLoading,
       value,
       activeTab,
+      teams,
     } = this.state;
     const { isLoading, distance, error } = this.props;
+
+    let totalTeamsDistance = teams
+      .map((team) => team.totalDistanceConverted)
+      .reduce((a, b) => a + b, 0);
 
     return (
       !error && (
@@ -253,12 +258,15 @@ class DashboardGlobal extends React.Component {
           <Segment loading={isLoading} className="secondary segment-padding">
             <Grid container stackable columns={1}>
               <Grid.Row>
+                <CountDown totalDistance={totalTeamsDistance} />
+              </Grid.Row>
+              <Grid.Row>
                 <div ref={this.saveRef}>
                   <Map
                     worldData={worldData}
                     statistics={statistics}
                     cities={cities}
-                    distance={distance}
+                    distance={totalTeamsDistance}
                     width={width}
                     scale={width < 400 ? 70 : 150}
                     geoCenter={[0, 10]}

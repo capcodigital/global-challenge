@@ -25,7 +25,7 @@ export default class TabsUK extends Component {
     const { teams } = this.state;
 
     let total = teams
-      .map((team) => team.totalDistance)
+      .map((team) => team.totalDistanceConverted)
       .reduce((a, b) => a + b, 0);
 
     return (
