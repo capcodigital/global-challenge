@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Header, List, Segment } from "semantic-ui-react";
+import { Grid, Header, List, Segment, Container } from "semantic-ui-react";
 import SetupInstructions from "./SetupInstructions.component";
 import StravaSetupInstructions from "./StravaSetupInstructions.component";
 import "./style.scss";
@@ -9,14 +9,26 @@ const challenge_name = process.env.CHALLENGE_NAME
   : "global";
 
 const HowTo = () => (
-  <Segment className="secondary">
+  <Container>
+  <Segment vertical>
     <Grid className={`how-to-container ${challenge_name}`} stackable centered>
-      <Grid.Column className="how-to-section column-b">
-        <Header className="how-to-title main">How to</Header>
-        <Grid>
-          <Grid.Column className="column-c">
+      <Grid.Column className={`how-to-section ${challenge_name}`}
+        style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
+        width={16}
+      >
+        <Header className={`how-to-title main ${challenge_name}`}>
+          How to
+        </Header>
+        <Grid stackable>
+          <Grid.Column width={8}>
             <Header className="how-to-title smaller">How to Videos</Header>
             <List bulleted>
+              <List.Item
+                href="https://youtu.be/LHtCxdrZFJ8?t=482"
+                target="_blank"
+              >
+                Strava Account Setup Video
+              </List.Item>
               <List.Item
                 href="https://www.youtube.com/watch?v=bkV4UvHMoIc"
                 target="_blank"
@@ -32,15 +44,9 @@ const HowTo = () => (
               >
                 Fitbit Manually add activity Video
               </List.Item>
-              <List.Item
-                href="https://youtu.be/LHtCxdrZFJ8?t=482"
-                target="_blank"
-              >
-                Strava Account Setup Video
-              </List.Item>
             </List>
           </Grid.Column>
-          <Grid.Column className="column-c">
+          <Grid.Column width={8}>
             <Header className="how-to-title smaller">How to Guides</Header>
             <List bulleted>
               <List.Item href="#set-up-instructions">
@@ -61,14 +67,15 @@ const HowTo = () => (
               </List.Item>
             </List>
           </Grid.Column>
-          <Grid.Column className="how-to-section column-d">
-          <SetupInstructions />
-          <StravaSetupInstructions />
+          <Grid.Column width={12} className="how-to-section">
+            <SetupInstructions />
+            <StravaSetupInstructions />
           </Grid.Column>
         </Grid>
       </Grid.Column>
     </Grid>
   </Segment>
+ </Container>
 );
 
 export default HowTo;

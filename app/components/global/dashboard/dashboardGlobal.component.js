@@ -4,11 +4,19 @@ import { keyBy } from "lodash";
 import PropTypes from "prop-types";
 import { Segment, Grid, Header, Search } from "semantic-ui-react";
 import Map from "../map";
-import { TeamLeaderboardTable, TeamSportsLeaderboardTable } from "../common";
+import {
+  TeamLeaderboardTable,
+  TeamSportsLeaderboardTable,
+  CountDown,
+} from "../common";
 import LeaderboardTabs from "../leaderboardTabs";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
 import { allCities, geometries, officeMap } from "./constants";
 import "./style.scss";
+
+const challenge_name = process.env.CHALLENGE_NAME
+  ? `${process.env.CHALLENGE_NAME}`
+  : "global";
 
 class DashboardGlobal extends React.Component {
   constructor(props) {
@@ -32,7 +40,7 @@ class DashboardGlobal extends React.Component {
       personal: props.personal,
       activeTab: "personal",
       currentData: props.personal,
-      filteredData: props.personal
+      filteredData: props.personal,
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleClickTab = this.handleClickTab.bind(this);
@@ -81,7 +89,15 @@ class DashboardGlobal extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { width, height, worldData, region, value, filteredData, currentData } = this.state;
+    const {
+      width,
+      height,
+      worldData,
+      region,
+      value,
+      filteredData,
+      currentData,
+    } = this.state;
 
     const { filteredActivities, isLoading } = this.props;
 
@@ -162,7 +178,11 @@ class DashboardGlobal extends React.Component {
   };
 
   handleSearchChange = (e, { value }) => {
-    this.setState({ isSearchLoading: true, value, filteredData: this.state.currentData });
+    this.setState({
+      isSearchLoading: true,
+      value,
+      filteredData: this.state.currentData,
+    });
 
     const filteredResults = this.state.currentData.filter((data) =>
       data.name.toLowerCase().includes(value.toLowerCase().trim())
@@ -182,16 +202,32 @@ class DashboardGlobal extends React.Component {
     const { teams, locations, levels, personal } = this.props;
     switch (tabName) {
       case "personal":
-        this.setState({ currentData: personal, filteredData: personal, activeTab: "personal" });
+        this.setState({
+          currentData: personal,
+          filteredData: personal,
+          activeTab: "personal",
+        });
         return this.forceUpdate();
       case "team":
-        this.setState({ currentData: teams, filteredData: teams, activeTab: "team" });
+        this.setState({
+          currentData: teams,
+          filteredData: teams,
+          activeTab: "team",
+        });
         return this.forceUpdate();
       case "office":
-        this.setState({ currentData: locations, filteredData: locations, activeTab: "office" });
+        this.setState({
+          currentData: locations,
+          filteredData: locations,
+          activeTab: "office",
+        });
         return this.forceUpdate();
       case "grade":
-        this.setState({ currentData: levels, filteredData: levels, activeTab: "grade" });
+        this.setState({
+          currentData: levels,
+          filteredData: levels,
+          activeTab: "grade",
+        });
         return this.forceUpdate();
     }
   };
@@ -208,33 +244,47 @@ class DashboardGlobal extends React.Component {
       isSearchLoading,
       value,
       activeTab,
+      teams,
     } = this.state;
     const { isLoading, distance, error } = this.props;
-    
+
+    let totalTeamsDistance = teams
+      .map((team) => team.totalDistanceConverted)
+      .reduce((a, b) => a + b, 0);
+
     return (
       !error && (
         <div className="dashboard">
           <Segment loading={isLoading} className="secondary segment-padding">
-            <div ref={this.saveRef}>
-              <Map
-                worldData={worldData}
-                statistics={statistics}
-                cities={cities}
-                distance={distance}
-                width={width}
-                scale={width < 400 ? 70 : 150}
-                geoCenter={[0, 10]}
-                height={height}
-              />
-            </div>
+            <Grid container stackable columns={1}>
+              <Grid.Row>
+                <CountDown totalDistance={totalTeamsDistance} />
+              </Grid.Row>
+              <Grid.Row>
+                <div ref={this.saveRef}>
+                  <Map
+                    worldData={worldData}
+                    statistics={statistics}
+                    cities={cities}
+                    distance={totalTeamsDistance}
+                    width={width}
+                    scale={width < 400 ? 70 : 150}
+                    geoCenter={[0, 10]}
+                    height={height}
+                  />
+                </div>
+              </Grid.Row>
+            </Grid>
           </Segment>
           <Segment loading={isLoading || isSearchLoading} className="secondary">
             <LeaderboardTabs changeTab={this.handleClickTab} />
             <Grid container stackable columns={2} verticalAlign="middle">
               <Grid.Row>
                 <Grid.Column>
-                  <Header size="large" className="global-header">LEADERBOARDS</Header>
-                  <div className="search-container">
+                  <Header size="large" className="global-header">
+                    LEADERBOARDS
+                  </Header>
+                  <div className={`search-container ${challenge_name}`}>
                     <Search
                       input={{ icon: "search", iconPosition: "left" }}
                       fluid
@@ -251,7 +301,9 @@ class DashboardGlobal extends React.Component {
                   />
                 </Grid.Column>
                 <Grid.Column>
-                  <Header size="large" className="global-header">SPORTS TOTAL</Header>
+                  <Header size="large" className="global-header">
+                    SPORTS TOTAL
+                  </Header>
                   <Grid container verticalAlign="middle">
                     <Grid.Row>
                       <div className="content-container-dashboard">

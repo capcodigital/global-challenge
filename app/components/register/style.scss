@@ -4,3 +4,16 @@
   padding: 15px !important;
   margin-bottom: 15px !important;
 }
+
+.login-form{
+  &.global {
+    .ui.input>input {
+      background: #808080 !important;
+      color: white !important;
+    }
+    ::placeholder { 
+      color: #cccccc !important;
+      opacity: 1;
+    }
+  }
+}

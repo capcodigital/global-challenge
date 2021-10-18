@@ -6,9 +6,15 @@
   .column-b {
     @media screen and (max-width: 1000px) {
       margin: 460px 10px 0 10px !important;
+      &.global {
+        margin: 0px 10px 0 10px !important;
+      }
     }
     max-width: 800px;
     margin-left: 430px;
+    &.global {
+      margin-left: 0px;
+    }
     padding-right: 10% !important;
     min-height: 560px;
   }
@@ -35,7 +41,30 @@
       }
     }
   }
-  &.global {
-    background-color: black;
+}
+
+.event-rules-global {
+  color: white;
+  background-color: black;
+
+  .event-rules-section {
+    .event-rules-title {
+      padding-top: 40px;
+      padding-bottom: 20px;
+      color: white !important;
+      font-size: 30px !important;
+    }
+    a {
+      color: #fdc437 !important;
+    }
+
+    p {
+      font-size: 18px;
+
+      .red {
+        color: #fdc437 !important;
+        display: inline;
+      }
+    }
   }
 }

@@ -82,8 +82,9 @@ div.row {
   }
 
   .back-link {
-    font-size: 18px;
-    color: #fa451b;
+    color: #fdc437 !important;
+    font-weight: bold;
+    font-size: 14px;
   }
 
   .team-distance {
@@ -112,9 +113,24 @@ div.row {
     margin-bottom: 1rem;
     margin-top: 1rem;
 
+    &.global{
+      .ui.input>input {
+        background: transparent !important;
+        color: white !important;
+        border: 1px solid #005F65 !important;
+      }
+      ::placeholder { 
+        color: white !important;
+        opacity: 1;
+      }
+      .icon {
+        color: white !important
+      }
+    }
     .search {
       .input {
         width: 100%;
+        font-size: 18px;
       }
     }
   }
@@ -130,7 +146,7 @@ div.row {
   .content-container-dashboard {
     width: 450px;
     .container-header {
-      color: #00AABB !important;
+      color: #00aabb !important;
     }
   }
 
@@ -167,5 +183,5 @@ div.row {
   padding-top: 2rem !important;
   color: white !important;
   font-size: 16px !important;
-  font-weight:300 !important;
+  font-weight: 300 !important;
 }

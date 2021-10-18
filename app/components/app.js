@@ -33,7 +33,8 @@ function App() {
 
   return (
     <div className="app-wrapper">
-      {(process.env.CHALLENGE_NAME == "global" || process.env.CHALLENGE_NAME == "dev") && (
+      {(process.env.CHALLENGE_NAME == "global" ||
+        process.env.CHALLENGE_NAME == "dev") && (
         <>
           <Helmet
             titleTemplate="%s - Capco Global Challenge"
@@ -52,7 +53,7 @@ function App() {
               />
               {!["/teams/register", "/register"].includes(
                 window.location.pathname
-              ) && <TabsGlobal />}
+              ) && !window.location.pathname.includes('/team') && <TabsGlobal />}
               <Switch>
                 <Route path="/register" exact component={HomePage} />
                 <Route exact path="/" component={DashboardGlobal} />

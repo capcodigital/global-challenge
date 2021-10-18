@@ -111,7 +111,7 @@ const TeamSportsLeaderboardTable = ({
                   {item.position ? item.position : idx + 1}
                 </span>
                 <span>
-                  <Avatar name={item.name} color={grey} size={30} />
+                  <Avatar name={item.name} color={'#FDC437'} size={30} />
                 </span>
                 <span className="distance">{item.distance}km</span>
                 <span>
@@ -119,7 +119,7 @@ const TeamSportsLeaderboardTable = ({
                     <rect
                       width={(svgBarWidth * item.distance) / maxDistance + 10} // 10px minimum width
                       height="16"
-                      fill={"#FF6A4C"}
+                      fill={"#00AABB"}
                       rx={8}
                     />
                   </svg>

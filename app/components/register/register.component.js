@@ -17,8 +17,12 @@ const STRAVA_CLIENT_ID = process.env.STRAVA_CLIENT_ID
 ? `https://${process.env.STRAVA_CLIENT_ID}/`
 : "72068";
 
+const challenge_name = process.env.CHALLENGE_NAME
+  ? `${process.env.CHALLENGE_NAME}`
+  : "global";
+
 const RegistrationForm = () => (
-  <div className="login-form">
+  <div className={`login-form ${challenge_name}`}>
     <Form size="large" action="https://www.strava.com/oauth/authorize?">
       <input type="hidden" name="response_type" value="code" />
       <input type="hidden" name="client_id" value={`${STRAVA_CLIENT_ID}`} />

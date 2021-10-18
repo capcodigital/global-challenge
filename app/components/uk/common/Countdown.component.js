@@ -74,7 +74,7 @@ const Countdown = ({ overallDistance }) => {
           secondary
           fluid
           as="a"
-          href="https://uk.virginmoneygiving.com/CapcoUKCSR1"
+          href="https://fundraise.unfoundation.org/fundraiser/3140126"
           target="_blank"
           className="count-btn"
         >

@@ -2,7 +2,7 @@ import React from "react";
 import { Menu, Container, Button, Icon } from "semantic-ui-react";
 import ESTRChallenge from "./images/estr-challenge-full.png";
 import ESTRChallengeMobile from "./images/estr-mobile-logo.png";
-import GlobalChallenge from "./images/global_challenge_logo.png";
+import GlobalChallenge from "./images/global_challenge_banner.png";
 import "./style.scss";
 
 class Header extends React.Component {
@@ -125,7 +125,7 @@ class Header extends React.Component {
                       secondary
                       fluid
                       as="a"
-                      href="https://uk.virginmoneygiving.com/CapcoUKCSR1"
+                      href="https://fundraise.unfoundation.org/fundraiser/3140126"
                       target="_blank"
                       className={`button-header ${challenge_name}`}
                     >

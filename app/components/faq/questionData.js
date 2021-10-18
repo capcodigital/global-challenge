@@ -1,100 +1,90 @@
 export const questionData = {
   general: [
     {
-      questionId: "how-to-deregister",
-      questionText: "How do I de-register or re-register for the challenge?",
+      questionId: "view-list-participants",
+      questionText: "Can I view a list of Capco Global Challenge participants?",
       answerText:
-        "Please get in touch with <a href='mailto:3cd19d49.capco.com@apac.teams.ms'>Challenge Team Support</a> and request to de-register, or ask for help with re-registering.",
+        "You can view a list of Challenge participants, and the teams that have been created <a href='/'>here</a>.",
     },
     {
-      questionId: "how-do-I-see who-else-is-registered",
-      questionText: "How do I see who else is registered?",
-      answerText:
-        "A daily update on registered teams / participants will be provided.",
-    },
-    {
-      questionId: "how-do-I-update-my-data",
-      questionText: "How do I update my activity data?",
-      answerText:
-        "You must be registered with Fitbit or Strava and then have linked your account with the Challenge Application. Once you have done this you can either track your activity and sync your smart device or manually input activity into Fitbit / Strava. Please open and refresh your selected application (Fitbit / Strava) daily to ensure data is syncing.",
-    },
-    {
-      questionId: "do-i-need-to-use-a-smart-device",
-      questionText: "Do I have to use a smart device?",
-      answerText:
-        "No, if you do not have a wearable device then you can enter your manually tracked data into either Strava or Fitbit, please see setup guides here <b>Desktop Setup Guide </b> <a href='/how-to/#strava-no-device'>Strava </a> / <a href='https://www.youtube.com/watch?v=bkV4UvHMoIc'>FitBit</a>.",
-    },
-    {
-      questionId: "do-i-need-to-use-a-mobile-phone",
-      questionText: "Do I need to use a mobile phone?",
-      answerText:
-        "No, you can setup Strava / Fitbit from your desktop and link to the challenge app. <b>Desktop Setup Guide </b> <a href='/how-to/#strava-no-device'>Strava </a> / <a href='https://www.youtube.com/watch?v=bkV4UvHMoIc'>FitBit</a>.",
-    },
-    {
-      questionId: "use-mobile-phone",
-      questionText: "Can I use my mobile phone to track my activity?",
-      answerText:
-        "If you do not have a smart device but do have smart phone (not <i>all</i> phones are supported) and wish to use this to track activity you can do so using the fitbit app – setup instructions here; <a href='https://help.fitbit.com/articles/en_US/Help_article/1875.htm#:~:text=MobileTrack%20lets%20you%20use%20the,%2C%20sleep%2C%20or%20active%20minutes'> Mobile Track Guide</a>.",
-    },
-    {
-      questionId: "how-to-setup-apple-watch",
+      questionId: "participate-when-restricted-activity",
       questionText:
-        "How do I setup My Apple Watch to sync with the application?",
+        "Can I participate if I am restricted by COVID-19 rules on outdoor exercise?",
       answerText:
-        "Please ensure that you have setup Strava on your Apple watch and then link your Strava account to sync with the Challenge. It is possible to link your Apple Watch to Fitbit, via Strava and then link your FitBit account to Challenge application. Detailed instructions <a href='https://www.theverge.com/2019/8/27/20830247/fitbit-app-apple-watch-strava-connect-how-to'> Link Apple Watch to Fitbit (Via Strava)</a>.",
+        "Yes, if you have any form of indoor trainer (bike, running machine, rower etc) you can use that and enter your activity on the app (Strava/Fitbit) manually. <br /><br /> Alternatively, if you do not have access to an indoor trainer then you can complete indoor workouts (circuits, yoga etc) and enter your activity on your selected app (Strava/Fitbit) manually – please select either Workout/Circuit/ Yoga as applicable. See the table below for a guide on the ‘distance’ that will be attributed to the selected exercise based on duration. <br /> <br /> <span style='color: #fc4c02;font-weight: bold'> Strava Activity Name </span>/<span style='color: #00b3bc;font-weight: bold'> Fitbit Activity Name </span> <br /> <table>  <tr>	<style>      table,      th,      td {        padding: 10px;        border: 1px solid white;        border-collapse: collapse;      }    </style>    <th>Time (Minutes)</th>    <th> <span style='color: #fc4c02'> Workout </span>/ <span style='color: #00b3bc'>Circuit </span>		(160 conversion factor)	</th>    <th><span style='color: #fc4c02'> Yoga </span> / <span style='color: #00b3bc'>Yoga </span>	(20 conversion factor)	</th>  </tr>  <tr>    <td>5</td>    <td>800 meters</td>    <td>100 meters</td>  </tr>	<tr>    <td>10</td>    <td>1600 meters</td>    <td>200 meters</td>  </tr><tr>    <td>15</td>    <td>2400 meters</td>    <td>300 meters</td>  </tr><tr>    <td>30</td>    <td>4800 meters</td>    <td>600 meters</td>  </tr><tr>    <td>45</td>    <td>7200 meters</td>    <td>900 meters</td>  </tr></table>",
+    },
+  ],
+  trackingActivity: [
+    {
+      questionId: "how-to-track-my-activity",
+      questionText: "How can I track my activity?",
+      answerText:
+        'You can track your activity using the following apps: <ul><li>Fitbit App (<a href="https://apps.apple.com/us/app/fitbit-health-fitness/id462638897">iOS</a> or <a href="https://play.google.com/store/apps/details?id=com.fitbit.FitbitMobile&hl=en_GB&gl=US"> Android</a>)</li><li>Strava App (<a href="https://apps.apple.com/us/app/strava-run-ride-swim/id426826309">iOS</a> or <a href="https://play.google.com/store/apps/details?id=com.strava&hl=en_GB&gl=US"> Android</a>)</li></ul>',
+    },
+    {
+      questionId: "tracking-with-smart-watch",
+      questionText: "How can I track my activity?",
+      answerText:
+        'If you are using a smart watch to track your activity, you will need to set-up the Strava or Fitbit app on your watch and then link your Strava/Fitbit account to sync with the Challenge. For more information, visit the ‘How To’ page <a href="/how-to">here</a>.',
+    },
+    {
+      questionId: "tracking-with-mobile-phone",
+      questionText: "How can I track my activity?",
+      answerText:
+        'If you wish to use a smart phone (not all phones are supported) to track your activity, you can do so using the Fitbit app. For more information, you can access a Fitbit Mobile Track how-to guide <a href="/how-to">here</a>.',
+    },
+    {
+      questionId: "do-i-need-a-wearable",
+      questionText: "Do I need to use a wearable device?",
+      answerText:
+        'If you do not have a wearable device, then you can enter your manually tracked data into the Strava or Fitbit app or on your desktop and link to the Capco Global Challenge app.',
+    },
+    {
+      questionId: "upload-data-to-challenge",
+      questionText: "How do I upload my activity data to the Capco Global Challenge app?",
+      answerText:
+        'You can upload your activity data from Strava or Fitbit by linking your account to the Capco Global Challenge app. Once you have linked your account you can either track your activity and sync your smart device or manually input activity into Strava/Fitbit. More information is available on the ‘How To’ page <a href="/how-to">here</a>.',
+    },
+    {
+      questionId: "cycling-distance-conversion",
+      questionText: "How will cycling distances be recorded?",
+      answerText:
+        'Cycling distances will be converted using a ratio of 3:1 throughout the Challenge to allow comparable participation across walkers, runners, rowers and cyclists. This is one of the broadly accepted conversion ratios.',
     },
   ],
   team: [
     {
       questionId: "how-to-join-a-team",
-      questionText: "How do I join a team?",
+      questionText: "How do I join or set-up a team?",
       answerText:
-        "Please follow the steps to either join or setup a team through the <a href='/teams/register'>Team Registration page</a>.",
+        "When you click to register, you can select ‘Teams’ in the top right-hand corner and have the option to create or join a team. <a href='/teams/register'>Or click here after registering</a>!",
     },
     {
       questionId: "how-to-leave-a-team",
       questionText: "How do I leave a team?",
       answerText:
-        "You should receive an email from <a href='mailto:3cd19d49.capco.com@apac.teams.ms'>Challenge Team Support</a> with a unique link to leave a team. Please use the link and then join the team you want to join.",
-    },
-    {
-      questionId: "how-do-I-rename-a-team",
-      questionText: "How do I rename my team?",
-      answerText:
-        "Please contact <a href='mailto:3cd19d49.capco.com@apac.teams.ms'>Challenge Team Support</a> and request to change the team name – this may not be possible.",
-    },
-    {
-      questionId: "how-do-i-see-which-teams-have-spaces",
-      questionText: "How do I see which teams have spaces?",
-      answerText:
-        "Please see the daily report containing Registered Teams / individual participants.",
-    },
-    {
-      questionId: "how-do-i-remove-someone-from-my-team",
-      questionText: "How do I remove someone from my Team?",
-      answerText:
-        "Please contact the individual directly and request that they leave the team using the unique link they will have received in an email from the Capco.Challenge.com team when they registered. If unsuccessful contact <a href='mailto:3cd19d49.capco.com@apac.teams.ms'>Challenge Team Support</a> and request assistance.",
+        "Use the unique link which you will have received in your email from the Challenge Team Support when you were registered for the team. You can then join another team if you wish.",
     },
   ],
   data: [
     {
       questionId: "is-my-data-syncing",
-      questionText: "Is my Data Syncing?",
+      questionText: "How can I check that my data is syncing?",
       answerText:
-        "Please view the daily report for users and data sync success. Available in Teams channel.",
+        "We would advise you to open and refresh your selected app (Strava/Fitbit) daily to ensure the data is syncing. ",
     },
     {
       questionId: "why-is-my-data-not-syncing",
       questionText:
-        "Why is my data not syncing with the Challenge application?",
+        "Why is my data not syncing with the Capco Global Challenge application?",
       answerText:
-        "<ul><li>Please confirm you have registered correctly by trying to register again.</li><li> If this does not work then, please open and refresh your selected fitness app (Fitbit / Strava) and allow <b>1 hour</b> for data to sync.</li><li> If the previous two steps do not work, please contact <a href='mailto:3cd19d49.capco.com@apac.teams.ms'>Challenge Team Support</a> for further assistance.</li></ul>",
+        "Please confirm that you have registered correctly by trying to register again. If this does not work, please open and refresh your app (Strava/Fitbit) and allow one hour for the data to sync. We also recommend opening your app daily throughout the Challenge to allow the data to sync. If this still does not work, please contact <a href='mailto:3cd19d49.capco.com@apac.teams.ms'>Challenge Team Support</a> for further assistance.",
     },
     {
       questionId: "will-you-see-my-location",
-      questionText: "Will you see my location?",
+      questionText: "Will Capco be able to view my location through the app?",
       answerText:
-        "No, Capco does not retrieve, store or process your GPS data if available from Strava / Fitbit. Capco cannot see your location.",
+        "No, Capco does not retrieve, store or process your GPS data if available from Strava/Fitbit, therefore Capco cannot see your location.",
     },
     {
       questionId: "will-you-share-my-data",
@@ -105,13 +95,7 @@ export const questionData = {
       questionId: "how-will-you-store-my-data",
       questionText: "How long will you store my data?",
       answerText:
-        "Your data will be stored for the duration of the challenge, plus a further 30 days. Following this date all personally identifying data will be deleted.",
-    },
-    {
-      questionId: "how-is-cycling-distance-converted",
-      questionText: "How is cycling distance converted?",
-      answerText:
-        "Cycling distance is converted by a Ratio or 3:1 throughout the challenge (less for the individual cycling “actual distance” detail).",
+        "Your data will be stored for the duration of the Capco Global Challenge, plus a further 30 days. Following this date all personally identifying data will be deleted.",
     },
   ],
 };
