@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import worldmap from "./worldmap.svg";
 
-const challengeStartDate = new Date(2021, 10, 1, 0, 0, 0, 0); // 1st November 
+const challengeStartDate = new Date(2021, 9, 1, 0, 0, 0, 0); // 1st November 
 const challengeEndDate = new Date(2021, 10, 30, 0, 0, 0, 0); // 30th November Midnight
 
 function getTimeRemaining() {
