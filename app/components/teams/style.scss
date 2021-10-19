@@ -2,7 +2,15 @@
 
 .team-registration {
   &.global{
+    .header {
+      color:white;
+    }
     .registration-form-container{
+      .ui.form {
+        .team-message {
+          color:white !important;
+        }
+      }
       .ui.input>input {
         background: #808080 !important;
         color: white !important;

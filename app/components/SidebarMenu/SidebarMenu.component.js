@@ -57,7 +57,7 @@ const SidebarMenu = ({ children, sidebarVisible, setSidebarVisible }) => {
           exact
           to="/how-to"
         >
-          How to
+          Setup
         </Menu.Item>
         <Menu.Item
           name="FAQ"

@@ -22,12 +22,6 @@ export default class TabsGlobal extends Component {
   }
 
   render() {
-    const { teams } = this.state;
-
-    let total = teams
-      .map((team) => team.totalDistance)
-      .reduce((a, b) => a + b, 0);
-
     return (
       <Container>
         <Menu className="tabs" text>
@@ -53,11 +47,10 @@ export default class TabsGlobal extends Component {
             exact
             to="/how-to"
           >
-            How to
+            Setup
           </Menu.Item>
           <Menu.Item name="FAQ" className="tab" as={NavLink} exact to="/faq" />
         </Menu>
-        {/* <CountDown totalDistance={total} /> */}
       </Container>
     );
   }

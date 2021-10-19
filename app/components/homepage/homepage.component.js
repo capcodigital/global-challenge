@@ -60,7 +60,7 @@ const HomePage = () => (
                 or Fitbit account, please create an account via your desktop or
                 by downloading and installing an app to allow you to register.
                 For more information on setting up an account and syncing your
-                data, please visit the <a href="/how-to">"How to"</a> page.
+                data, please visit the <a href="/how-to">"Setup"</a> page.
               </List.Item>
               <List.Item>
                 3. Once you have registered, if you would like to create or sign

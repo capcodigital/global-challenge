@@ -17,7 +17,7 @@ const HowTo = () => (
         width={16}
       >
         <Header className={`how-to-title main ${challenge_name}`}>
-          How to
+          Setup
         </Header>
         <Grid stackable>
           <Grid.Column width={8}>

@@ -25,7 +25,7 @@ export const questionData = {
       questionId: "tracking-with-smart-watch",
       questionText: "How can I track my activity?",
       answerText:
-        'If you are using a smart watch to track your activity, you will need to set-up the Strava or Fitbit app on your watch and then link your Strava/Fitbit account to sync with the Challenge. For more information, visit the ‘How To’ page <a href="/how-to">here</a>.',
+        'If you are using a smart watch to track your activity, you will need to set-up the Strava or Fitbit app on your watch and then link your Strava/Fitbit account to sync with the Challenge. For more information, visit the ‘Setup’ page <a href="/how-to">here</a>.',
     },
     {
       questionId: "tracking-with-mobile-phone",
@@ -43,7 +43,7 @@ export const questionData = {
       questionId: "upload-data-to-challenge",
       questionText: "How do I upload my activity data to the Capco Global Challenge app?",
       answerText:
-        'You can upload your activity data from Strava or Fitbit by linking your account to the Capco Global Challenge app. Once you have linked your account you can either track your activity and sync your smart device or manually input activity into Strava/Fitbit. More information is available on the ‘How To’ page <a href="/how-to">here</a>.',
+        'You can upload your activity data from Strava or Fitbit by linking your account to the Capco Global Challenge app. Once you have linked your account you can either track your activity and sync your smart device or manually input activity into Strava/Fitbit. More information is available on the ‘Setup’ page <a href="/how-to">here</a>.',
     },
     {
       questionId: "cycling-distance-conversion",

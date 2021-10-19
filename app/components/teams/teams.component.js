@@ -17,10 +17,9 @@ export const SERVER_URL = process.env.SERVER_URL
   ? `https://${process.env.SERVER_URL}/`
   : "http://localhost/";
 
-
 const challenge_name = process.env.CHALLENGE_NAME
-? `${process.env.CHALLENGE_NAME}`
-: "global";
+  ? `${process.env.CHALLENGE_NAME}`
+  : "global";
 
 class TeamsPage extends React.Component {
   constructor(props) {
@@ -70,7 +69,7 @@ class TeamsPage extends React.Component {
   }
 
   memberListChange = (event, { value }) => {
-    if (value.length > 4 || value.length < 2) {
+    if (value.length > 3 || value.length < 3) {
       this.setState({ allowCreate: false });
     } else {
       this.state.selectedMembers = value;
@@ -175,7 +174,6 @@ class TeamsPage extends React.Component {
                 <Header className="header">
                   <FormattedMessage id="teams.create" />
                 </Header>
-
                 <div className="registration-form-container">
                   <Form size="large" onSubmit={this.handleCreateSubmit}>
                     <Form.Input
@@ -208,18 +206,22 @@ class TeamsPage extends React.Component {
                       className="dropdown"
                       onChange={this.memberListChange}
                     />
-
                     {this.state.createJoinResult == "createTeamSuccess" ? (
-                      <FormattedMessage id="teams.createSuccess" />
+                      <div className="team-message">
+                        <FormattedMessage id="teams.createSuccess" />
+                      </div>
                     ) : this.state.createJoinResult == "createTeamFailed" ? (
-                      <FormattedMessage id="teams.createFailed" />
+                      <div className="team-message">
+                        <FormattedMessage id="teams.createFailed" />
+                      </div>
                     ) : this.state.createJoinResult ==
                       "createTeamFailedUserNotFound" ? (
-                      <FormattedMessage id="teams.userNotFound" />
+                      <div className="team-message">
+                        <FormattedMessage id="teams.userNotFound" />
+                      </div>
                     ) : (
                       <div></div>
                     )}
-
                     <Button
                       className="team-registration"
                       fluid
@@ -241,7 +243,6 @@ class TeamsPage extends React.Component {
                 <Header className="header select-team">
                   <FormattedMessage id="teams.join" />
                 </Header>
-
                 <div className="registration-form-container">
                   <Form size="large" onSubmit={this.handleJoinSubmit}>
                     <Form.Input
@@ -265,17 +266,24 @@ class TeamsPage extends React.Component {
                       className="dropdown-team-list"
                       onChange={this.joinTeamChange}
                     />
-
                     {this.state.createJoinResult == "joinTeamSuccess" ? (
-                      <FormattedMessage id="teams.joinSuccess" />
+                      <div className="team-message">
+                        <FormattedMessage id="teams.joinSuccess" />
+                      </div>
                     ) : this.state.createJoinResult == "joinTeamFailed" ? (
-                      <FormattedMessage id="teams.joinFailed" />
+                      <div className="team-message">
+                        <FormattedMessage id="teams.joinFailed" />
+                      </div>
                     ) : this.state.createJoinResult ==
                       "joinTeamFailedAlreadyAMember" ? (
-                      <FormattedMessage id="teams.joinAlready" />
+                      <div className="team-message">
+                        <FormattedMessage id="teams.joinAlready" />
+                      </div>
                     ) : this.state.createJoinResult ==
                       "joinTeamFailedUserNotFound" ? (
-                      <FormattedMessage id="teams.userNotFound" />
+                      <div className="team-message">
+                        <FormattedMessage id="teams.userNotFound" />
+                      </div>
                     ) : (
                       <div></div>
                     )}
