@@ -34,6 +34,7 @@ module.exports = function addProdMiddlewares(app, options) {
   app.put('/teams', teams.update);
   app.get('/teams/teamMembers', teams.teamMembers);
   app.get('/teams/notInATeam', teams.notInATeam);
+  app.get('/teams/remove', teams.removeById);
 
   app.get('/challenges/list', challenges.list);
   app.get('/challenges', challenges.get);
