@@ -9,6 +9,7 @@ module.exports = () => {
   router.get('/list', list);
   router.get('/teamMembers', teamMembers);
   router.get('/notInATeam', notInATeam);
+  router.get('/remove', removeById);
   router.get('/', all);
   router.post('/', create);
   router.put('/', update);

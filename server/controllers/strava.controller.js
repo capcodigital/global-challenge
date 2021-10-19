@@ -13,6 +13,7 @@ var strava = require('strava-v3');
 var cluster = require('cluster');
 var fs = require('fs');
 var config = require("../config/config");
+var mailer = require('../services/mail.service');
 
 var apiKey = process.env.STRAVA_API_KEY;
 var secret = process.env.STRAVA_SECRET;
@@ -43,6 +44,7 @@ var authOptions = {
 
 const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 const challengeName = process.env.CHALLENGE_NAME;
+const CYCLING_CONVERSION = config.cyclingConversion || 3;
 
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
@@ -142,6 +144,15 @@ exports.authorize = function(req, res) {
                                     res.redirect(callbackUrl + 'register?success=serverError');
                                 }
                             } else {
+                                let emailText = "Hello " + user.name + ",\n\r You have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
+                                "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
+                                "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
+                                "Good Luck \n\r Capco Health & Wellbeing";
+
+                                mailer.sendMail(user.email, "Capco Challenge Registration Successfull", emailText, function() {
+                                    console.log("email sent to " + user.email);
+                                });
+
                                 res.redirect(callbackUrl + 'register?success=stravaSuccess');
                             }
                         });
@@ -233,41 +244,65 @@ function getStats(user) {
 
                     switch (user.activities[i].type) {
                         case 'Run':
-                            user.totalRun = Math.round(user.totalRun + (user.activities[i].distance/1000));
+                            user.totalRun = user.totalRun + (user.activities[i].distance/1000);
                             break;
                         case 'Swim':
-                            user.totalSwim = Math.round(user.totalSwim + (user.activities[i].distance/1000));
+                            user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
                             break;
                         case 'Ride':
-                            user.totalCycling = Math.round(user.totalCycling + (user.activities[i].distance/1000));
-                            user.totalCyclingConverted = Math.round(user.totalCyclingConverted + ((user.activities[i].distance/1000)/config.cyclingConversion));
+                            user.totalCycling = user.totalCycling + (user.activities[i].distance/1000);
+                            user.totalCyclingConverted = user.totalCyclingConverted + ((user.activities[i].distance/1000)/CYCLING_CONVERSION);
                             break;
                         case 'Rowing':
-                            user.totalRowing = Math.round(user.totalRowing + (user.activities[i].distance/1000));
+                            user.totalRowing = user.totalRowing + (user.activities[i].distance/1000);
                             break;
                         case 'Walk':
-                            user.totalWalk = Math.round(user.totalWalk + (user.activities[i].distance/1000));
+                            user.totalWalk = user.totalWalk + (user.activities[i].distance/1000);
                             break;
-                         default:
+                        case 'Yoga':
+                            user.totalWalk = user.totalWalk + (((user.activities[i].moving_time/60)*20)/1000);
+                            break;
+                        case 'Workout':
+                            user.totalRun = user.totalRun + (((user.activities[i].moving_time/60)*160)/1000);
+                            break;
+                        default:
                             console.log("Unexpected activity type: " + user.activities[i].type + " - User: " + user.name);
                             break;
                     }
 
                     // Only add valid activities to the total
-                    if (['Run','Swim','Ride','Walk','Rowing'].includes(user.activities[i].type)) {
-                        // Strava stores distance in metres
-                        user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
-                        // Only moving time vs FitBit's Active, Very Active etc
-                        user.totalDuration = user.totalDuration + user.activities[i].moving_time;
+                    if (['Run','Swim','Ride','Walk','Rowing','Yoga','Workout'].includes(user.activities[i].type)) {
+                        user.totalDuration = user.totalDuration + user.activities[i].moving_time/60;
 
                         if (user.activities[i].type === 'Ride') {
-                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + ((user.activities[i].distance/1000)/config.cyclingConversion));
+                            user.totalDistanceConverted = user.totalDistanceConverted + ((user.activities[i].distance/1000)/CYCLING_CONVERSION);
+                            user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
+
+                        } else if (user.activities[i].type === 'Yoga') {
+                            user.totalDistanceConverted = user.totalDistanceConverted + (((user.activities[i].moving_time/60)*20)/1000);
+                            user.totalDistance = user.totalDistance + (((user.activities[i].moving_time/60)*20)/1000);
+
+                        } else if (user.activities[i].type === 'Workout') {
+                            user.totalDistanceConverted = user.totalDistanceConverted + (((user.activities[i].moving_time/60)*160)/1000);
+                            user.totalDistance = user.totalDistance + (((user.activities[i].moving_time/60)*160)/1000);
+
                         } else {
-                            user.totalDistanceConverted = Math.round(user.totalDistanceConverted + (user.activities[i].distance/1000));
+                            user.totalDistanceConverted = user.totalDistanceConverted + (user.activities[i].distance/1000);
+                            user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
                         }
                     }
                 }
             }
+
+            user.totalRun = Math.floor(user.totalRun*100)/100;
+            user.totalSwim = Math.floor(user.totalSwim*100)/100;
+            user.totalRowing = Math.floor(user.totalRowing*100)/100;
+            user.totalCycling = Math.floor(user.totalCycling*100)/100;
+            user.totalCyclingConverted = Math.floor(user.totalCyclingConverted*100)/100;
+            user.totalWalk = Math.floor(user.totalWalk*100)/100;
+            
+            user.totalDistanceConverted = Math.floor(user.totalDistanceConverted*100)/100;
+            user.totalDistance = Math.floor(user.totalDistance*100)/100;
 
             user.markModified('activities');
             user.save(function(err, newUser) {
