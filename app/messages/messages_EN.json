@@ -23,10 +23,14 @@
 
   "teams.createSuccess": "Created Team Successfully",
   "teams.createFailed": "Team could not be created, please try again later",
+  "teams.duplicateName": "Team name already in use, please enter an alternative",
+  "teams.tooFew": "Team size is below the minimum, please add more members",
+  "teams.tooMany": "Team size is too large",
   "teams.joinSuccess": "Joined Team Successfully",
   "teams.joinFailed": "Unable to join team, please try again later",
   "teams.joinAlready": "You are already a member of this team",
   "teams.userNotFound": "The Capco ID you entered could not be found. Please register first or if you have already registered, try again later ",
+  "teams.teamFull": "This Team has already reached maximum capcity. Please select a different team or check with the team Captain",
   "teams.progress": "View our Progress",
 
   "register.fitbit": "Register with Fitbit",

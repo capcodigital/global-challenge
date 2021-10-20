@@ -16,13 +16,16 @@ if (!emailUser || !emailPassword) {
 }
 
 var emailConnectionDetails = {
-    // host: "localhost",
-    // service: "gmail",
-    // port: 587,
+    // host: "smtp.office365.com",
+    port: 587,
+    service: "Outlook365",
     // secure: false,
     auth: {
         user: emailUser,
         pass: emailPassword
+    // },
+    // tls: {
+    //     ciphers: 'SSLv3'
     }
 };
 
