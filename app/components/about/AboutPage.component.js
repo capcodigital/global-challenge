@@ -46,7 +46,7 @@ const AboutPage = () => (
                 chosen charity, the{" "}
                 <a
                   href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/donate"
-                  taget="_blank"
+                  target="_blank"
                 >
                   World Health Organization COVID-19 Solidarity Response Fund
                 </a>
@@ -54,40 +54,39 @@ const AboutPage = () => (
               </p>
               <p>
                 All distances will be tracked via the Capco Global Challenge app
-                and will help us to achieve our collective target of 50,000 Kms
+                and will help us to achieve our collective target of 50,000 Km
                 - the distance* between all our Capco offices.
               </p>
               <p>
-                <b>Sign up for the Challenge today!</b>
+                <b><a href='/register'>Sign up for the Challenge today!</a></b>
               </p>
               <i> *Distance is approximate and can vary by route</i>
             </Grid.Column>
 
             <Grid.Column
               style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
-              className="about-section"
+              className="about-section boxed"
               width={8}
             >
               <p>
                 <b>Event Details</b> <br />
                 <br />
                 <b>Registration Deadline: </b>
-                <p className="red">October, 31st 2021</p>
+                <p className="red">November, 7th 2021</p>
                 <br />
-                <b>Challenge Starts: </b>
-                <p className="red">November, 1 2021</p> (and ends when we reach
-                50,000 Kms!)
+                <b>Challenge Dates: </b>
+                <p className="red">November 8, 2021 - November 21, 2021</p>
                 <br />
                 <br />
                 <p>
                   <b>Registration: </b>
-                  Donate to WHO COVID-19 Response and register as an individual
-                  participant or team (see below) using the buttons in the top
-                  right-hand corner.
+                  Donate $5 (or equivalent currency) or whatever you can spare to
+                  WHO COVID-19 Response Fund and register as an individual participant
+                  or team (see below) using the buttons in the top right-hand corner.
                 </p>
                 <b>Team Challenge: </b>
                 Participants are invited to form a team of four to complete a
-                virtual Mount Fiji Ultra Marathon – a distance of 166 Kms! All
+                virtual Mount Fiji Ultra Marathon – a distance of 166 Km! All
                 kilometers will be added to our global total, with the bonus of
                 being able to compete against other teams.
                 <br />
@@ -96,7 +95,7 @@ const AboutPage = () => (
                 If you are unable to take part in outdoor exercise due to local
                 Covid-19 restrictions, you can still participate. Please see the
                 FAQs page{" "}
-                <a href="/faq" target="_blank">
+                <a href="/faq">
                   here
                 </a>{" "}
                 for more information.

@@ -80,9 +80,9 @@ class Map extends React.PureComponent {
                   key={`marker-${i + 0}`}
                   cx={this.projection()(city.coordinates)[0]}
                   cy={this.projection()(city.coordinates)[1]}
-                  r={statistics[city.name] ? SCALE(statistics[city.name].steps) : SCALE(0)}
-                  fill={city.distance >= distance ? '#0058bb' : '#c00d0d'}
-                  opacity={0.7}
+                  r={4}
+                  fill={city.distance >= distance ? '#00aabb' : '#b4181b'}
+                  opacity={0.8}
                 />
               ))
             }
@@ -96,7 +96,8 @@ class Map extends React.PureComponent {
                   d={this.getRoute(city, i)}
                   className="route-path"
                   fill="none"
-                  stroke={city.distance >= distance ? '#0058bb' : '#c00d0d'}
+                  stroke={city.distance >= distance ? '#00aabb' : '#b4181b'}
+                  strokeWidth={2.5}
                 />
               ))
             }

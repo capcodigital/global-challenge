@@ -27,7 +27,7 @@ const SetupInstructions = () => (
       </Grid.Column>
     </Grid>
     <Header id="strava-specifc-steps" className="how-to-title strava-hue">
-      Strava Authorisation
+      Strava Authorization
     </Header>
     <Grid className="step-text grid-column-normal" stackable centered>
       <Grid.Column
@@ -82,7 +82,7 @@ const SetupInstructions = () => (
       </Grid.Column>
     </Grid>
     <Header id="fitbit-specifc-steps" className="how-to-title fitbit-hue">
-      Fitbit Authorisation
+      Fitbit Authorization
     </Header>
     <Grid className="step-text" stackable centered>
       <Grid.Column

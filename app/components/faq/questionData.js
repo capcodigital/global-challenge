@@ -23,15 +23,15 @@ export const questionData = {
     },
     {
       questionId: "tracking-with-smart-watch",
-      questionText: "How can I track my activity?",
+      questionText: "Tracking with a smart watch",
       answerText:
-        'If you are using a smart watch to track your activity, you will need to set-up the Strava or Fitbit app on your watch and then link your Strava/Fitbit account to sync with the Challenge. For more information, visit the ‘How To’ page <a href="/how-to">here</a>.',
+        'If you are using a smart watch to track your activity, you will need to set-up the Strava or Fitbit app on your watch and then link your Strava/Fitbit account to sync with the Challenge. For more information, visit the ‘Setup’ page <a href="/how-to">here</a>.',
     },
     {
       questionId: "tracking-with-mobile-phone",
-      questionText: "How can I track my activity?",
+      questionText: "Tracking with a mobile phone",
       answerText:
-        'If you wish to use a smart phone (not all phones are supported) to track your activity, you can do so using the Fitbit app. For more information, you can access a Fitbit Mobile Track how-to guide <a href="/how-to">here</a>.',
+        'If you wish to use a smart phone (not all phones are supported) to track your activity, you can do so using the Fitbit app. For more information, you can view the Fitbit MobileTrack help page <a href="https://help.fitbit.com/articles/en_US/Help_article/1875.htm#:~:text=MobileTrack%20lets%20you%20use%20the,%2C%20sleep%2C%20or%20active%20minutes" target="blank">here</a>.',
     },
     {
       questionId: "do-i-need-a-wearable",
@@ -43,7 +43,7 @@ export const questionData = {
       questionId: "upload-data-to-challenge",
       questionText: "How do I upload my activity data to the Capco Global Challenge app?",
       answerText:
-        'You can upload your activity data from Strava or Fitbit by linking your account to the Capco Global Challenge app. Once you have linked your account you can either track your activity and sync your smart device or manually input activity into Strava/Fitbit. More information is available on the ‘How To’ page <a href="/how-to">here</a>.',
+        'You can upload your activity data from Strava or Fitbit by linking your account to the Capco Global Challenge app. Once you have linked your account you can either track your activity and sync your smart device or manually input activity into Strava/Fitbit. More information is available on the ‘Setup’ page <a href="/how-to">here</a>.',
     },
     {
       questionId: "cycling-distance-conversion",
@@ -57,7 +57,7 @@ export const questionData = {
       questionId: "how-to-join-a-team",
       questionText: "How do I join or set-up a team?",
       answerText:
-        "When you click to register, you can select ‘Teams’ in the top right-hand corner and have the option to create or join a team. <a href='/teams/register'>Or click here after registering</a>!",
+        "When you click to register, you can select ‘Teams’ in the top right-hand corner and have the option to create or join a team. <a href='/teams/register'>Or click here after registering</a>.",
     },
     {
       questionId: "how-to-leave-a-team",
