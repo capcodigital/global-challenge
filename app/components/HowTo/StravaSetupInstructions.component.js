@@ -96,7 +96,7 @@ const StravaSetupInstructions = () => (
             <List bulleted>
               <List.Item>Access the Strava dashboard on your PC</List.Item>
               <List.Item>
-                <a href="www.strava.com/mobile" target="_blank">
+                <a href="https://www.strava.com/mobile" target="_blank">
                   Download the Strava app to your phone
                 </a>
               </List.Item>
