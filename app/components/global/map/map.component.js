@@ -125,7 +125,7 @@ class Map extends React.PureComponent {
               y={555}
               className="legend-text-desktop"
             >
-              Still to go
+              Route
             </text>
             <text
               key='complete text'
@@ -133,9 +133,9 @@ class Map extends React.PureComponent {
               y={580}
               className="legend-text-desktop"
             >
-              Completed
+              Progress
             </text>
-            <rect x="5" y="535" width="118" height="55"
+            <rect x="5" y="535" width="105" height="55"
               className="legend-desktop"
               rx="3"
               fill="none"
@@ -165,7 +165,7 @@ class Map extends React.PureComponent {
               y={500}
               className="legend-text-mobile"
             >
-              Still to go
+              Route
             </text>
             <text
               key='complete text mobile'
@@ -173,7 +173,7 @@ class Map extends React.PureComponent {
               y={525}
               className="legend-text-mobile"
             >
-              Completed
+              Progress
             </text>
           </g>
         </svg>

@@ -16,9 +16,7 @@ const HowTo = () => (
         style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
         width={16}
       >
-        <Header className={`how-to-title main ${challenge_name}`}>
-          Setup
-        </Header>
+        
         <Grid stackable>
           <Grid.Column width={8}>
             <Header className="how-to-title smaller">How to Videos</Header>
