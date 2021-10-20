@@ -58,8 +58,6 @@ const MapGlobal = ({ teams, team }) => {
   const [directions, setDirections] = useState(null);
   const [setError] = useState(null);
 
-  console.log(directions)
-
   useEffect(() => {
     const google = window.google;
     const directionsService = new window.google.maps.DirectionsService();
@@ -114,7 +112,7 @@ const MapGlobal = ({ teams, team }) => {
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      zoom={selectedTeam ? 8 : 6}
+      zoom={selectedTeam ? 12 : 10.2}
       center={
         selectedTeam
           ? {
