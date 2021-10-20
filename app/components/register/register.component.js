@@ -10,11 +10,11 @@ const SERVER_URL = process.env.SERVER_URL
   : "http://localhost/";
 
 const FITBIT_CLIENT_ID = process.env.FITBIT_CLIENT_ID
-? `${process.env.FITBIT_CLIENT_ID}/`
+? `${process.env.FITBIT_CLIENT_ID}`
 : "23BBKM";
 
 const STRAVA_CLIENT_ID = process.env.STRAVA_CLIENT_ID
-? `${process.env.STRAVA_CLIENT_ID}/`
+? `${process.env.STRAVA_CLIENT_ID}`
 : "72068";
 
 const challenge_name = process.env.CHALLENGE_NAME
