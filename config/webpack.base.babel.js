@@ -77,7 +77,9 @@ module.exports = (options) => ({
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         GOOGLE_MAPS_API_KEY: JSON.stringify(process.env.GOOGLE_MAPS_API_KEY),
         SERVER_URL: JSON.stringify(process.env.SERVER_URL),
-        CHALLENGE_NAME: JSON.stringify(process.env.CHALLENGE_NAME)
+        CHALLENGE_NAME: JSON.stringify(process.env.CHALLENGE_NAME),
+        STRAVA_CLIENT_ID: JSON.stringify(process.env.STRAVA_CLIENT_ID),
+        FITBIT_CLIENT_ID: JSON.stringify(process.env.FITBIT_CLIENT_ID)
       }
     })
   ]),
