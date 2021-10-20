@@ -14,6 +14,7 @@ const containerStyle = {
   width: "100%",
   height: "80vh",
   minHeight: "600px",
+  maxHeight: "900px"
 };
 
 const center = {

@@ -324,23 +324,6 @@ class DashboardGlobal extends React.Component {
                     <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
-                          <img src={cycleIcon} alt="Walk Logo" />
-                          Bike
-                        </Header>
-                        <TeamSportsLeaderboardTable
-                          height={170}
-                          data={filteredData.map((team) => ({
-                            name: team.name,
-                            distance: team.activities["CyclingConverted"],
-                            position: team.activities.cyclingConvertedPosition,
-                          }))}
-                        />
-                      </div>
-                    </Grid.Row>
-
-                    <Grid.Row>
-                      <div className="content-container-dashboard">
-                        <Header size="medium" className="container-header">
                           <img src={walkIcon} alt="Walk Logo" />
                           Walk
                         </Header>
@@ -354,7 +337,22 @@ class DashboardGlobal extends React.Component {
                         />
                       </div>
                     </Grid.Row>
-
+                    <Grid.Row>
+                      <div className="content-container-dashboard">
+                        <Header size="medium" className="container-header">
+                          <img src={cycleIcon} alt="Walk Logo" />
+                          Bike
+                        </Header>
+                        <TeamSportsLeaderboardTable
+                          height={170}
+                          data={filteredData.map((team) => ({
+                            name: team.name,
+                            distance: team.activities["CyclingConverted"],
+                            position: team.activities.cyclingConvertedPosition,
+                          }))}
+                        />
+                      </div>
+                    </Grid.Row>
                     <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
