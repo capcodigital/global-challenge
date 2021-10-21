@@ -60,7 +60,8 @@ if (cluster.isMaster) {
 exports.authorize = function(req, res) {
 
     if (!req.query.code || req.query.error) {
-        res.render('error', { user: "Could not authenticate with your Strava account" });
+        console.log("Could not authenticate with your Strava account");
+        res.redirect(callbackUrl + 'register?success=stravaError');
     } else {
         var username = req.query.state;
         var userOptions = authOptions;
@@ -70,6 +71,9 @@ exports.authorize = function(req, res) {
             if (err) {
                 console.log("Request Error: " + err);
                 res.redirect(callbackUrl + 'register?success=stravaError');
+            } else if (result.errors && result.errors.length > 0) {
+                    console.log("Request Error: " + result.errors);
+                    res.redirect(callbackUrl + 'register?success=stravaError');
             } else {
             
                 Capco.findOne({username: username.toUpperCase()}).exec(function(err, profile) {
@@ -77,9 +81,6 @@ exports.authorize = function(req, res) {
                         res.json({error: "Could not find your Capco ID"});
                     } else {
                         var user = new User();
-
-                        console.log("Strava user sign up data:");
-                        console.log(result);
 
                         user.username = username.toLowerCase();
                         user.app = "Strava";

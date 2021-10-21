@@ -73,15 +73,16 @@ exports.authorize = function(req, res) {
     if (req.query.success) {
         res.end();
     } else if (!req.query.code || req.query.error) {
-        res.json({error: { user: " Could not authenticate with your Fitbit account"}});
+        console.log("Could not authenticate with your Fitbit account");
+        res.redirect(callbackUrl + 'register?success=fitBitError');
     } else {
         var username = req.query.state;
         options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=" + callbackUrl + "fitbit/auth";
 
         var newReq = buildRequest(options, function(err, result) {
             if (err) {
-              console.log(err);
-              res.redirect(callbackUrl + 'register?success=fitBitError');
+                console.log("Request Error: " + err);
+                res.redirect(callbackUrl + 'register?success=fitBitError');
             } else if (result.errors && result.errors.length > 0) {
                 console.log(result.errors[0].message);
             } else {
