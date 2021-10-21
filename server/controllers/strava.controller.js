@@ -74,7 +74,7 @@ exports.authorize = function(req, res) {
             
                 Capco.findOne({username: username.toUpperCase()}).exec(function(err, profile) {
                     if (err || !profile) {
-                        res.render('error', { errormsg: "Could not find your Capco ID" });
+                        res.json({error: "Could not find your Capco ID"});
                     } else {
                         var user = new User();
 
