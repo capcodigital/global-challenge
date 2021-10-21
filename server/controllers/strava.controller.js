@@ -75,7 +75,7 @@ exports.authorize = function(req, res) {
                     console.log("Request Error: " + result.errors);
                     res.redirect(callbackUrl + 'register?success=stravaError');
             } else {
-            
+                console.log("Strava Result: " + result);
                 Capco.findOne({username: username.toUpperCase()}).exec(function(err, profile) {
                     if (err || !profile) {
                         res.json({error: "Could not find your Capco ID"});
