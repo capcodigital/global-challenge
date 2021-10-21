@@ -78,6 +78,9 @@ exports.authorize = function(req, res) {
                     } else {
                         var user = new User();
 
+                        console.log("Strava user sign up data:");
+                        console.log(result);
+
                         user.username = username.toLowerCase();
                         user.app = "Strava";
                         user.access_token = result.access_token;
