@@ -23,7 +23,7 @@ import 'sanitize.css/sanitize.css';
 
 // Load the favicon and apple touch icon
 /* eslint-disable import/no-webpack-loader-syntax */
-import '!file-loader?name=[name].[ext]!./images/global_challenge_favicon.png';
+import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import '!file-loader?name=[name].[ext]!./images/apple-touch-icon.png';
 /* eslint-enable import/no-webpack-loader-syntax */
 

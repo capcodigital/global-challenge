@@ -124,6 +124,7 @@ class Map extends React.PureComponent {
               x={35}
               y={555}
               className="legend-text-desktop"
+              fill="white"
             >
               Route
             </text>
@@ -132,6 +133,7 @@ class Map extends React.PureComponent {
               x={35}
               y={580}
               className="legend-text-desktop"
+              fill="white"
             >
               Progress
             </text>
@@ -164,6 +166,7 @@ class Map extends React.PureComponent {
               x={35}
               y={500}
               className="legend-text-mobile"
+              fill="white"
             >
               Route
             </text>
@@ -172,6 +175,7 @@ class Map extends React.PureComponent {
               x={35}
               y={525}
               className="legend-text-mobile"
+              fill="white"
             >
               Progress
             </text>
