@@ -102,6 +102,80 @@ class Map extends React.PureComponent {
               ))
             }
           </g>
+          <g>
+            <circle
+              className="legend-desktop"
+              key='legend blue'
+              cx={20}
+              cy={550}
+              r={8}
+              fill={'#00aabb'}
+            />
+            <circle
+              className="legend-desktop"
+              key='legend red'
+              cx={20}
+              cy={575}
+              r={8}
+              fill={'#b4181b'}
+            />
+            <text
+              key='incomplete text'
+              x={35}
+              y={555}
+              className="legend-text-desktop"
+            >
+              Route
+            </text>
+            <text
+              key='complete text'
+              x={35}
+              y={580}
+              className="legend-text-desktop"
+            >
+              Progress
+            </text>
+            <rect x="5" y="535" width="105" height="55"
+              className="legend-desktop"
+              rx="3"
+              fill="none"
+              stroke="white"
+              strokeWidth="1"
+              strokeOpacity=".7"
+            />
+            <circle
+              className="legend-mobile"
+              key='legend blue mobile'
+              cx={20}
+              cy={495}
+              r={8}
+              fill={'#00aabb'}
+            />
+            <circle
+              className="legend-mobile"
+              key='legend red mobile'
+              cx={20}
+              cy={520}
+              r={8}
+              fill={'#b4181b'}
+            />
+            <text
+              key='incomplete text mobile'
+              x={35}
+              y={500}
+              className="legend-text-mobile"
+            >
+              Route
+            </text>
+            <text
+              key='complete text mobile'
+              x={35}
+              y={525}
+              className="legend-text-mobile"
+            >
+              Progress
+            </text>
+          </g>
         </svg>
       </div>
     );

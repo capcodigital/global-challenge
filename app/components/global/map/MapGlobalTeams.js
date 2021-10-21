@@ -14,6 +14,7 @@ const containerStyle = {
   width: "100%",
   height: "80vh",
   minHeight: "600px",
+  maxHeight: "900px"
 };
 
 const center = {
@@ -57,8 +58,6 @@ const MapGlobal = ({ teams, team }) => {
   const [markers, setMarkers] = useState([]);
   const [directions, setDirections] = useState(null);
   const [setError] = useState(null);
-
-  console.log(directions)
 
   useEffect(() => {
     const google = window.google;
@@ -114,7 +113,7 @@ const MapGlobal = ({ teams, team }) => {
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      zoom={selectedTeam ? 8 : 6}
+      zoom={selectedTeam ? 12 : 10.2}
       center={
         selectedTeam
           ? {
