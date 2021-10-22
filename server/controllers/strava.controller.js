@@ -72,7 +72,7 @@ exports.authorize = function(req, res) {
                 console.log("Request Error: " + err);
                 res.redirect(callbackUrl + 'register?success=stravaError');
             } else if (result.errors && result.errors.length > 0) {
-                console.log("Request Error: " + result.errors);
+                console.log("Strava Error: " + Json.stringify(result.errors));
                 res.redirect(callbackUrl + 'register?success=stravaError');
             } else {
                 console.log("Strava Result: " + result);
