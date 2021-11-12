@@ -82,14 +82,29 @@ class Map extends React.PureComponent {
                   cy={this.projection()(city.coordinates)[1]}
                   r={4}
                   fill={city.distance >= distance ? '#00aabb' : '#b4181b'}
+                  // fill={city.distance >= distance ? '#b4181b' : '#00aabb'}
                   opacity={0.8}
                 />
               ))
             }
           </g>
-
+        <g className="markercircle">
+         <circle
+              //key={`key`}
+             // cx={this.projection()(cities(head))[0]}
+             // cy={this.projection()(cities(head))[1]}
+               //cx={this.projection()(100.6333)}
+               //cy={this.projection()(23.5505)}
+              cx= {this.projection()("46.6333")}
+              cy= {this.projection()("-23.5505")}
+              r={10}
+              fill={'#b4181b'}
+              opacity={0.8}
+              />
+          </g>
           <g className="routes">
             {
+              // stroke
               cities.map((city, i) => (
                 <path
                   key={`route-${i + 0}`}

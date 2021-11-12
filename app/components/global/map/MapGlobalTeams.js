@@ -130,7 +130,7 @@ const MapGlobal = ({ teams, team }) => {
           options={{
             suppressMarkers: true,
             preserveViewport: true,
-            polylineOptions: { strokeColor: "rgb(253,196,55)" },
+            polylineOptions: { strokeColor: "rgb(257,196,55)" },
           }}
         />
       )}
