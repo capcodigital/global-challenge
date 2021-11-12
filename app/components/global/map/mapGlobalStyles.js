@@ -31,7 +31,7 @@ export default [
     elementType: "labels.text.stroke",
     stylers: [
       {
-        weight: "0.96",
+        weight: "0.01",
       },
       {
         saturation: "9",
