@@ -3,8 +3,6 @@
 import React from "react";
 import { Header, Grid } from "semantic-ui-react";
 import "./style.scss";
-import SetupInstructions from "./SetupInstructions.component";
-import StravaSetupInstructions from "./StravaSetupInstructions.component";
 
 function SetupInstructions() {
   return (
