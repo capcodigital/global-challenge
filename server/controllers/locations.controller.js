@@ -7,7 +7,7 @@ var User = mongoose.model('User');
 var Location = mongoose.model('Location');
 var config = require("../config/config");
 
-const locationStatsDelay = 300000; // Wait 5 minutes to ensure individual FitBit and Strava updates are compelete
+const locationStatsDelay = 600000; // Wait 10 minutes to ensure individual FitBit and Strava updates are compelete
 
 const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 
@@ -45,14 +45,14 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').exec(function(err, users) {
+    User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
 
             let userMap = [];
             users.forEach(function(user) {
-                userMap[user.username] = user;
+                userMap[user.username.toLowerCase()] = user;
             });
 
             Location.find({}).exec(function(err, locations) {
@@ -66,8 +66,8 @@ exports.all = function(req, res, next) {
                         let updatedMembers = [];
 
                         location.members.forEach(function(member) {
-                            if (userMap[member]) {
-                                updatedMembers.push(userMap[member]);
+                            if (userMap[member.toLowerCase()]) {
+                                updatedMembers.push(userMap[member.toLowerCase()]);
                             }
                         });
 
@@ -98,7 +98,7 @@ function updateEveryInterval(minutes) {
 
                 let userMap = [];
                 users.forEach(function(user) {
-                    userMap[user.username] = user;
+                    userMap[user.username.toLowerCase()] = user;
                 });
 
                 Location.find().exec(function(err, locations) {
@@ -120,16 +120,17 @@ function updateEveryInterval(minutes) {
 
                         location.members.forEach(function(member) {
 
-                            if (userMap[member]) {
-                                location.activities.Walk += userMap[member].totalWalk;
-                                location.activities.Run += userMap[member].totalRun;
-                                location.activities.Swim += userMap[member].totalSwim;
-                                location.activities.Cycling += userMap[member].totalCycling;
-                                location.activities.CyclingConverted += userMap[member].totalCyclingConverted;
-                                location.activities.Rowing += userMap[member].totalRowing;
+                            if (userMap[member.toLowerCase()]) {
+                                let teamMember = userMap[member.toLowerCase()];
+                                location.activities.Walk += teamMember.totalWalk;
+                                location.activities.Run += teamMember.totalRun;
+                                location.activities.Swim += teamMember.totalSwim;
+                                location.activities.Cycling += teamMember.totalCycling;
+                                location.activities.CyclingConverted += teamMember.totalCyclingConverted;
+                                location.activities.Rowing += teamMember.totalRowing;
 
-                                location.totalDistance += userMap[member].totalDistance;
-                                location.totalDistanceConverted += Math.round(userMap[member].totalDistanceConverted);
+                                location.totalDistance += teamMember.totalDistance;
+                                location.totalDistanceConverted += Math.round(teamMember.totalDistanceConverted);
                             }
                         });
 

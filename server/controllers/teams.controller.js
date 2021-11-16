@@ -10,7 +10,7 @@ var config = require("../config/config");
 
 const maxMembers = config.maxTeamSize;
 const minMembers = config.minTeamSize;
-const teamStatsDelay = 300000; // Wait 5 minutes to ensure individual FitBit and Strava updates are compelete
+const teamStatsDelay = 600000; // Wait 10 minutes to ensure individual FitBit and Strava updates are compelete
 
 const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 
@@ -48,14 +48,14 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').exec(function(err, users) {
+    User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
 
             let userMap = [];
             users.forEach(function(user) {
-                userMap[user.username] = user;
+                userMap[user.username.toLowerCase()] = user;
             });
 
             Team.find({}).exec(function(err, teams) {
@@ -69,8 +69,8 @@ exports.all = function(req, res, next) {
                         let updatedMembers = [];
 
                         team.members.forEach(function(member) {
-                            if (userMap[member]) {
-                                updatedMembers.push(userMap[member]);
+                            if (userMap[member.toLowerCase()]) {
+                                updatedMembers.push(userMap[member.toLowerCase()]);
                             }
                         });
 
@@ -173,7 +173,7 @@ exports.notInATeam = function(req, res, next) {
 exports.create = function(req, res) {
 
     User.findOne({
-        username: req.body.captain
+        username: req.body.captain.toLowerCase()
     }).exec(function(err, user) {
         if (err) {
             res.status(400).send({ message: 'createTeamFailed'});
@@ -185,8 +185,8 @@ exports.create = function(req, res) {
         }
 
         var team = new Team(req.body);
-        if (!team.members.includes(team.captain)) {
-            team.members.push(team.captain);
+        if (!team.members.includes(team.captain.toLowerCase()) && !team.members.includes(team.captain.toUpperCase())) {
+            team.members.push(team.captain.toLowerCase());
         }
 
         if (team.members.length < minMembers) {
@@ -251,7 +251,7 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
 
     User.findOne({
-        username: req.body.member
+        username: req.body.member.toLowerCase()
     }).exec(function(err, user) {
         if (err) {
             res.status(400).send({ message: 'joinTeamFailed'});
@@ -278,7 +278,7 @@ exports.update = function(req, res) {
                 return
             }
 
-            if (team.members.includes(req.body.member)) { 
+            if (team.members.includes(req.body.member.toLowerCase()) || team.members.includes(req.body.member.toUpperCase())) { 
                 res.status(400).send({ message: 'joinTeamFailedAlreadyAMember'});
                 return;
             }
@@ -287,7 +287,7 @@ exports.update = function(req, res) {
                 return;
             }
 
-            team.members.push(req.body.member);
+            team.members.push(req.body.member.toLowerCase());
             team.markModified('members');
                 
             team.save(function(err) {
@@ -298,14 +298,16 @@ exports.update = function(req, res) {
                     emailTeamMember(user, team);
 
                     User.findOne({
-                        username: team.captain
+                        username: team.captain.toLowerCase()
                     }).exec(function(err, captain) {
-                        let emailText = "Hello " + captain.name + ",\n\r" + user.name + " has joined your team: " + team.name + 
-                        "\n\r Good Luck with the Challenge \n\r Capco Health & Wellbeing";
+                        if (captain && captain.name) {
+                            let emailText = "Hello " + captain.name + ",\n\r" + user.name + " has joined your team: " + team.name + 
+                            "\n\r Good Luck with the Challenge \n\r Capco Health & Wellbeing";
 
-                        mailer.sendMail(captain.email, "New Capco Challenge Team Member", emailText, function() {
-                            console.log("email sent to " + captain.email);
-                        });
+                            mailer.sendMail(captain.email, "New Capco Challenge Team Member", emailText, function() {
+                                console.log("email sent to " + captain.email);
+                            });
+                        }
                     });
 
                     res.jsonp(team);
@@ -449,7 +451,7 @@ function updateEveryInterval(minutes) {
 
                 let userMap = [];
                 users.forEach(function(user) {
-                    userMap[user.username] = user;
+                    userMap[user.username.toLowerCase()] = user;
                 });
 
                 Team.find().exec(function(err, teams) {
@@ -470,16 +472,17 @@ function updateEveryInterval(minutes) {
                         team.totalDistanceConverted = 0;
 
                         team.members.forEach(function(member) {
-                            if (userMap[member]) {
-                                team.activities.Walk += userMap[member].totalWalk;
-                                team.activities.Run += userMap[member].totalRun;
-                                team.activities.Swim += userMap[member].totalSwim;
-                                team.activities.Cycling += userMap[member].totalCycling;
-                                team.activities.CyclingConverted += userMap[member].totalCyclingConverted;
-                                team.activities.Rowing += userMap[member].totalRowing;
+                            if (userMap[member.toLowerCase()]) {
+                                let teamMember = userMap[member.toLowerCase()];
+                                team.activities.Walk += teamMember.totalWalk;
+                                team.activities.Run += teamMember.totalRun;
+                                team.activities.Swim += teamMember.totalSwim;
+                                team.activities.Cycling += teamMember.totalCycling;
+                                team.activities.CyclingConverted += teamMember.totalCyclingConverted;
+                                team.activities.Rowing += teamMember.totalRowing;
 
-                                team.totalDistance += userMap[member].totalDistance;
-                                team.totalDistanceConverted += Math.round(userMap[member].totalDistanceConverted);
+                                team.totalDistance += teamMember.totalDistance;
+                                team.totalDistanceConverted += Math.round(teamMember.totalDistanceConverted);
                             }
                         });
 
