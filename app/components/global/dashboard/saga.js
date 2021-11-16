@@ -18,9 +18,11 @@ import {
   fetchTeamsApi,
   fetchLevelsApi,
   fetchLocationsApi,
+  fetchPersonalApi,
   FETCH_TEAMS_REQUEST,
   levelsRecieved,
-  locationsRecieved
+  locationsRecieved,
+  personalRecieved
 } from './actions';
 import { getActivies } from './reducer';
 
@@ -51,15 +53,17 @@ export function* fetchActivitiesSaga() {
 
 export function* fetchTeamsSaga() {
   try {
-    const [teamsList, locations, levels] = yield all([
+    const [teamsList, locations, levels, personalList] = yield all([
       call(fetchTeamsApi),
       call(fetchLocationsApi),
-      call(fetchLevelsApi)
+      call(fetchLevelsApi),
+      call(fetchPersonalApi)
     ])
     yield all([
       put(teamsRecieved(teamsList)),
       put(locationsRecieved(locations)),
-      put(levelsRecieved(levels))
+      put(levelsRecieved(levels)),
+      put(personalRecieved(personalList))
     ])
   } catch (error) {
     yield put(teamsFailed(error));

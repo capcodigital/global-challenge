@@ -11,11 +11,11 @@ const SERVER_URL = process.env.SERVER_URL
 
 const FITBIT_CLIENT_ID = process.env.FITBIT_CLIENT_ID
 ? `${process.env.FITBIT_CLIENT_ID}`
-: "23BBKM";
+: "23BBBM";
 
 const STRAVA_CLIENT_ID = process.env.STRAVA_CLIENT_ID
 ? `${process.env.STRAVA_CLIENT_ID}`
-: "72068";
+: "7291";
 
 const CHALLENGE_NAME = process.env.CHALLENGE_NAME
   ? `${process.env.CHALLENGE_NAME}`
@@ -53,7 +53,7 @@ const RegistrationForm = () => (
         placeholder="Capco ID"
         name="state"
         id="capco"
-        pattern="[A-Za-z]{4}"
+        pattern="[A-Za-z0-9]{4}"
         title="Please enter your 4 letter Capco ID"
         required
       />
@@ -92,7 +92,7 @@ const RegistrationForm = () => (
         placeholder="Capco ID"
         name="state"
         id="capco"
-        pattern="[A-Za-z]{4}"
+        pattern="[A-Za-z0-9]{4}"
         title="Please enter your 4 letter Capco ID"
         required
       />
