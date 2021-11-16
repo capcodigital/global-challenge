@@ -145,7 +145,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
 
                 {isMainDashboard && (
                   <div className="distance">
-                    {item.totalDistanceConverted.toFixed(2)}
+                    {item.totalDistanceConverted ? item.totalDistanceConverted.toFixed(2) : item.totalDistanceConverted}
                     km
                   </div>
                 )}

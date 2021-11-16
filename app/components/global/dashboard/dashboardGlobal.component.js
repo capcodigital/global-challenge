@@ -245,11 +245,12 @@ class DashboardGlobal extends React.Component {
       value,
       activeTab,
       teams,
+      personal,
     } = this.state;
     const { isLoading, distance, error } = this.props;
 
-    let totalTeamsDistance = teams
-      .map((team) => team.totalDistanceConverted)
+    let totalOverallDistance = personal
+      .map((team) => team.totalDistance)
       .reduce((a, b) => a + b, 0);
 
     return (
@@ -258,7 +259,7 @@ class DashboardGlobal extends React.Component {
           <Segment loading={isLoading} className="secondary segment-padding">
             <Grid container stackable columns={1}>
               <Grid.Row>
-                <CountDown totalDistance={totalTeamsDistance} />
+                <CountDown totalDistance={totalOverallDistance} />
               </Grid.Row>
               <Grid.Row>
                 <div ref={this.saveRef}>
@@ -266,7 +267,7 @@ class DashboardGlobal extends React.Component {
                     worldData={worldData}
                     statistics={statistics}
                     cities={cities}
-                    distance={totalTeamsDistance}
+                    distance={totalOverallDistance}
                     width={width}
                     scale={width < 400 ? 70 : 150}
                     geoCenter={[0, 10]}
@@ -291,7 +292,7 @@ class DashboardGlobal extends React.Component {
                       loading={isSearchLoading}
                       onSearchChange={this.handleSearchChange}
                       value={value}
-                      placeholder={"Search Team Name"}
+                      placeholder={"Search Name"}
                     />
                   </div>
                   <TeamLeaderboardTable

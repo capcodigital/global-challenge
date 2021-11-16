@@ -19,11 +19,9 @@ var apiKey = process.env.STRAVA_API_KEY;
 var secret = process.env.STRAVA_SECRET;
 var client_id = process.env.STRAVA_CLIENT_ID;
 
-if (!apiKey || !secret || !client_id) {
-    apiKey = fs.readFileSync('./config/keys/strava_key.txt', 'utf8');
-    secret = fs.readFileSync('./config/keys/strava_secret.txt', 'utf8');
-    client_id = fs.readFileSync('./config/keys/strava_client.txt', 'utf8');
-}
+if (!apiKey) apiKey = fs.readFileSync('./config/keys/strava_key.txt', 'utf8');
+if (!secret) secret = fs.readFileSync('./config/keys/strava_secret.txt', 'utf8');
+if (!client_id) client_id = fs.readFileSync('./config/keys/strava_client.txt', 'utf8');
 
 var challengeDates = []; 
 challenges.getCurrentChallengeDates(function(dates) {
@@ -72,10 +70,11 @@ exports.authorize = function(req, res) {
                 console.log("Request Error: " + err);
                 res.redirect(callbackUrl + 'register?success=stravaError');
             } else if (result.errors && result.errors.length > 0) {
-                console.log("Strava Error: " + Json.stringify(result.errors));
+                console.log("Strava Error: " + JSON.stringify(result));
+                console.log("Strava Errors: " + JSON.stringify(result.errors));
                 res.redirect(callbackUrl + 'register?success=stravaError');
             } else {
-                console.log("Strava Result: " + result);
+                
                 Capco.findOne({username: username.toUpperCase()}).exec(function(err, profile) {
                     if (err || !profile) {
                         res.json({error: "Could not find your Capco ID"});
@@ -139,9 +138,11 @@ exports.authorize = function(req, res) {
                             if (err) {
                                 console.log(err.message);
                                 if (err.code == 11000) {
-                                    if (user.app == "FitBit") {
+                                    if (user.app === "FitBit") {
                                         res.redirect(callbackUrl + 'register?success=fitBitRegistered');
                                     } else {
+                                        // Already registered but update the users access tokens anyway so we have the latest expiry
+                                        updateAccessTokens(user);
                                         res.redirect(callbackUrl + 'register?success=stravaRegistered');
                                     }
                                 } else {
@@ -168,6 +169,41 @@ exports.authorize = function(req, res) {
         newReq.end();
     }
 };
+
+function updateAccessTokens(user) {
+    User.findOne({
+        username: user.username.toLowerCase()
+    }).exec(function(err, existingUser) {
+        if (err || !existingUser) {
+            console.log("Error updating existing useer access tokens during re-registration");
+        } else {
+            var date = new Date();
+            var datemillis = date.getTime();
+
+            var expiresTime = new Date(user.expires_in*1000);
+            var expiresTimeMillis = expiresTime.getTime();
+
+            var expiration = new Date();
+            expiration.setTime(datemillis + expiresTimeMillis);
+
+            existingUser.access_token = user.access_token;
+            existingUser.refresh_token = user.refresh_token;
+            existingUser.expires_in = expiration;
+            user.expires_at = user.expires_at;
+
+            existingUser.markModified('access_token');
+            existingUser.markModified('refresh_token');
+            existingUser.markModified('expires_in');
+            existingUser.markModified('expires_at');
+
+            existingUser.save(function(err, updatedUser) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        }
+    });
+}
 
 /**
  * Loop through all users and update their stats from Strava
@@ -201,6 +237,8 @@ function buildRequest(options, callback) {
         res.on('end', function() {
             var result = JSON.parse(res.body);
             if (result.code) {
+                console.log(res.statusCode);
+                console.log("result.code: " + result.code);
                 callback(result, null);
             } else {
                 callback(null, result);
@@ -216,15 +254,14 @@ function buildRequest(options, callback) {
 
 function getStats(user) {
     // Month is an index
-    var integerTime = Number(challengeDates[0]) / 1000;
+    var integerTime = ((new Date(challengeDates[0])).getTime())/1000;
     strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime }, function(err, result) {
         if (err) {
             console.log("Error Accessing Strava activities for " + user.name);
             if (err.toString().includes("Authorization Error")){
                 console.log(user.name + " - User authentication error with Strava");
-            } else {
-                console.log(err);
-            }
+            } 
+            console.log(err);
         } else {
             console.log("Updating Strava Stats for: " + user.name);
             user.activities = result;
@@ -243,42 +280,60 @@ function getStats(user) {
             user.totalRowing = 0;
 
             var activityCount = user.activities.length;
+            if (activityCount === 0) {
+                console.log("No activity data returned for: " + user.name);
+            }
+
             for (var i = 0; i < activityCount; i++) {
                 if (challengeDates.includes(user.activities[i].start_date.substring(0,10))) {
 
-                    switch (user.activities[i].type) {
-                        case 'Run':
-                            user.totalRun = user.totalRun + (user.activities[i].distance/1000);
-                            break;
-                        case 'Swim':
-                            user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
-                            break;
-                        case 'Ride':
-                            user.totalCycling = user.totalCycling + (user.activities[i].distance/1000);
-                            user.totalCyclingConverted = user.totalCyclingConverted + ((user.activities[i].distance/1000)/CYCLING_CONVERSION);
-                            break;
-                        case 'Rowing':
-                            user.totalRowing = user.totalRowing + (user.activities[i].distance/1000);
-                            break;
-                        case 'Walk':
-                            user.totalWalk = user.totalWalk + (user.activities[i].distance/1000);
-                            break;
-                        case 'Yoga':
-                            user.totalWalk = user.totalWalk + (((user.activities[i].moving_time/60)*20)/1000);
-                            break;
-                        case 'Workout':
-                            user.totalRun = user.totalRun + (((user.activities[i].moving_time/60)*160)/1000);
-                            break;
-                        default:
-                            console.log("Unexpected activity type: " + user.activities[i].type + " - User: " + user.name);
-                            break;
-                    }
+                    try {
+                        switch (user.activities[i].type) {
+                            case 'Run':
+                            case 'VirtualRun':
+                            case 'Elliptical':
+                                user.totalRun = user.totalRun + (user.activities[i].distance/1000);
+                                break;
+                            case 'Swim':
+                                user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
+                                break;
+                            case 'Ride':
+                            case 'VirtualRide':
+                            case 'EBikeRide':
+                            case 'Handcycle':
+                                user.totalCycling = user.totalCycling + (user.activities[i].distance/1000);
+                                user.totalCyclingConverted = user.totalCyclingConverted + ((user.activities[i].distance/1000)/CYCLING_CONVERSION);
+                                break;
+                            case 'Rowing':
+                            case 'Canoe':
+                            case 'Kayak':
+                            case 'Stand Up Paddle':
+                                user.totalRowing = user.totalRowing + (user.activities[i].distance/1000);
+                                break;
+                            case 'Walk':
+                            case 'Hike':
+                            case 'Stair Stepper':
+                            case 'Wheelchair':
+                                user.totalWalk = user.totalWalk + (user.activities[i].distance/1000);
+                                break;
+                            case 'Yoga':
+                                user.totalWalk = user.totalWalk + (((user.activities[i].moving_time/60)*20)/1000);
+                                break;
+                            case 'Workout':
+                            case 'WeightTraining':
+                            case 'Crossfit':
+                                user.totalRun = user.totalRun + (((user.activities[i].moving_time/60)*160)/1000);
+                                break;
+                            default:
+                                console.log("Unexpected activity type: " + user.activities[i].type + " - User: " + user.name);
+                                break;
+                        }
 
-                    // Only add valid activities to the total
-                    if (['Run','Swim','Ride','Walk','Rowing','Yoga','Workout'].includes(user.activities[i].type)) {
+                        // Only add valid activities to the total
                         user.totalDuration = user.totalDuration + user.activities[i].moving_time/60;
 
-                        if (user.activities[i].type === 'Ride') {
+                        if (user.activities[i].type === 'Ride' || user.activities[i].type === 'VirtualRide' || 
+                                user.activities[i].type === 'EBikeRide' || user.activities[i].type === 'Handcycle') {
                             user.totalDistanceConverted = user.totalDistanceConverted + ((user.activities[i].distance/1000)/CYCLING_CONVERSION);
                             user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
 
@@ -286,14 +341,16 @@ function getStats(user) {
                             user.totalDistanceConverted = user.totalDistanceConverted + (((user.activities[i].moving_time/60)*20)/1000);
                             user.totalDistance = user.totalDistance + (((user.activities[i].moving_time/60)*20)/1000);
 
-                        } else if (user.activities[i].type === 'Workout') {
+                        } else if (user.activities[i].type === 'Workout' || user.activities[i].type === 'WeightTraining' || user.activities[i].type === 'Crossfit') {
                             user.totalDistanceConverted = user.totalDistanceConverted + (((user.activities[i].moving_time/60)*160)/1000);
                             user.totalDistance = user.totalDistance + (((user.activities[i].moving_time/60)*160)/1000);
 
-                        } else {
+                        } else if (['Run','VirtualRun','Elliptical','Swim','Walk','Hike','Stair Stepper','Wheelchair','Rowing','Canoe','Kayak','Stand Up Paddle'].includes(user.activities[i].type)) {
                             user.totalDistanceConverted = user.totalDistanceConverted + (user.activities[i].distance/1000);
                             user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
                         }
+                    } catch (err) {
+                        console.log("Unable to process activity: " + user.activities[i] + " - for User: " + user.name);
                     }
                 }
             }
@@ -348,6 +405,13 @@ function updateUser(user) {
 
                 user.expires_in = expiration;
                 user.expires_at = result.expires_at;
+
+                user.markModified('access_token');
+                user.markModified('refresh_token');
+                user.markModified('expires_in');
+                user.markModified('expires_at');
+
+                console.log("Successfully obtained new Strava Token for:" + user.name);
 
                 getStats(user);
             }

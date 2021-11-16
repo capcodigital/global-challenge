@@ -15,19 +15,22 @@ const filteredActivitiesSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("filteredActivities")
 );
 
+// Personal selectors
+const personalListSelector = createSelector(getState, (state) =>
+  state.get("dashboard").get("personalList")
+);
+
 // Team selectors
 const teamsListSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("teamsList")
 );
 
 // Locations selectors
-
 const locationsListSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("locations")
 );
 
 // Levels selectors
-
 const levelsListSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("levels")
 );
@@ -39,8 +42,7 @@ const getPositionByActivity = (teamData, activity) =>
       ...team,
       activities: {
         ...team.activities,
-        [`${activity.charAt(0).toLowerCase() + activity.slice(1)}Position`]:
-          idx + 1,
+        [`${activity.charAt(0).toLowerCase() + activity.slice(1)}Position`]: idx + 1,
       },
     }));
 
@@ -53,9 +55,7 @@ const getPositionByMemberActivity = (memberData, activity) => {
       activities: {
         ...member.activities,
         [activityName]: member[activity],
-        [`${
-          activityName.charAt(0).toLowerCase() + activityName.slice(1)
-        }Position`]: idx + 1,
+        [`${activityName.charAt(0).toLowerCase() + activityName.slice(1)}Position`]: idx + 1,
       },
     }));
 };
@@ -74,9 +74,7 @@ const teamsSelector = createSelector([teamsListSelector], (teamsList) => {
   } else [];
 });
 
-const locationsSelector = createSelector(
-  [locationsListSelector],
-  (locations) => {
+const locationsSelector = createSelector([locationsListSelector], (locations) => {
     if (locations) {
       let locationsData = locations.toJS();
 
@@ -106,27 +104,13 @@ const levelsSelector = createSelector([levelsListSelector], (levels) => {
   } else [];
 });
 
-const removeDuplicates = (membersList) =>
-  membersList.filter(
-    (member, index, self) =>
-      index === self.findIndex((m) => m.name === member.name)
-  );
+const personalSelector = createSelector([personalListSelector], (personalList) => {
+  if (personalList) {
+    let membersData = personalList.toJS();
 
-const personalSelector = createSelector([teamsListSelector], (teamsList) => {
-  if (teamsList) {
-    let membersData = removeDuplicates(
-      teamsList.toJS().flatMap((team) => team.members)
+    ["totalRun", "totalSwim", "totalWalk", "totalRowing", "totalCyclingConverted"].map(
+      (activity) => (membersData = getPositionByMemberActivity(membersData, activity))
     );
-
-    [
-      "totalRun",
-      "totalSwim",
-      "totalWalk",
-      "totalRowing",
-      "totalCyclingConverted",
-    ].map((activity) => {
-      return (membersData = getPositionByMemberActivity(membersData, activity));
-    });
 
     return membersData
       .sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)

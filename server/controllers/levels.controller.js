@@ -7,7 +7,7 @@ var User = mongoose.model('User');
 var Level = mongoose.model('Level');
 var config = require("../config/config");
 
-const levelStatsDelay = 300000; // Wait 5 minutes to ensure individual FitBit and Strava updates are compelete
+const levelStatsDelay = 600000; // Wait 10 minutes to ensure individual FitBit and Strava updates are compelete
 
 const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 
@@ -45,14 +45,14 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').exec(function(err, users) {
+    User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
 
             let userMap = [];
             users.forEach(function(user) {
-                userMap[user.username] = user;
+                userMap[user.username.toLowerCase()] = user;
             });
 
             Level.find({}).exec(function(err, levels) {
@@ -66,8 +66,8 @@ exports.all = function(req, res, next) {
                         let updatedMembers = [];
 
                         level.members.forEach(function(member) {
-                            if (userMap[member]) {
-                                updatedMembers.push(userMap[member]);
+                            if (userMap[member.toLowerCase()]) {
+                                updatedMembers.push(userMap[member.toLowerCase()]);
                             }
                         });
 
@@ -98,7 +98,7 @@ function updateEveryInterval(minutes) {
 
                 let userMap = [];
                 users.forEach(function(user) {
-                    userMap[user.username] = user;
+                    userMap[user.username.toLowerCase()] = user;
                 });
 
                 Level.find().exec(function(err, levels) {
@@ -120,16 +120,17 @@ function updateEveryInterval(minutes) {
 
                         level.members.forEach(function(member) {
 
-                            if (userMap[member]) {
-                                level.activities.Walk += userMap[member].totalWalk;
-                                level.activities.Run += userMap[member].totalRun;
-                                level.activities.Swim += userMap[member].totalSwim;
-                                level.activities.Cycling += userMap[member].totalCycling;
-                                level.activities.CyclingConverted += userMap[member].totalCyclingConverted;
-                                level.activities.Rowing += userMap[member].totalRowing;
+                            if (userMap[member.toLowerCase()]) {
+                                let teamMember = userMap[member.toLowerCase()];
+                                level.activities.Walk += teamMember.totalWalk;
+                                level.activities.Run += teamMember.totalRun;
+                                level.activities.Swim += teamMember.totalSwim;
+                                level.activities.Cycling += teamMember.totalCycling;
+                                level.activities.CyclingConverted += teamMember.totalCyclingConverted;
+                                level.activities.Rowing += teamMember.totalRowing;
 
-                                level.totalDistance += userMap[member].totalDistance;
-                                level.totalDistanceConverted += Math.round(userMap[member].totalDistanceConverted);
+                                level.totalDistance += teamMember.totalDistance;
+                                level.totalDistanceConverted += Math.round(teamMember.totalDistanceConverted);
                             }
                         });
 

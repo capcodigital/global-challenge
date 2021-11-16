@@ -210,6 +210,8 @@ function buildRequest(options, callback) {
         res.on('end', function() {
             var result = JSON.parse(res.body);
             if (result.code) {
+                console.log(res.statusCode);
+                console.log("result.code: " + result.code);
                 callback(result, null);
             } else {
                 callback(null, result);
@@ -250,6 +252,12 @@ function updateUser(user) {
                 user.refresh_token = result.refresh_token;
                 user.expires_in = expiration;
 
+                user.markModified('access_token');
+                user.markModified('refresh_token');
+                user.markModified('expires_in');
+
+                console.log("Successfully obtained new FitBit Token for:" + user.name);
+
                 getStats(user);
             }
         });
@@ -267,6 +275,7 @@ function getStats(user, date) {
         date = today.toISOString().split('T')[0];
     }
     getOptions.path = "/1/user/" + user.user_id + "/activities/date/" + date + ".json";
+    // getOptions.path = "/1/user/" + user.user_id + "/activities/list.json&afterDate=" + date;
     getOptions.headers.Authorization = "Bearer " + user.access_token;
 
     var statsReq = buildRequest(getOptions, function(err, result) {
@@ -300,56 +309,87 @@ function getStats(user, date) {
 
             var activityCount = challengeDates.length;
             for (var i = 0; i < activityCount; i++) {
-                if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].activities) {
 
-                    user.activities[challengeDates[i]].activities.forEach (function(activityEntry) {
-                        switch (activityEntry.name) {
-                            case 'Run':
-                                user.totalRun = user.totalRun + activityEntry.distance;
-                                break;
-                            case 'Swim':
-                                user.totalSwim = user.totalSwim + activityEntry.distance;
-                                break;
-                            case 'Bike':
-                                user.totalCycling = user.totalCycling + activityEntry.distance;
-                                user.totalCyclingConverted = user.totalCyclingConverted + (activityEntry.distance/CYCLING_CONVERSION);
-                                break;
-                            case 'Walk':
-                                user.totalWalk = user.totalWalk + activityEntry.distance;
-                                break;
-                            case 'Yoga':
-                                user.totalWalk = user.totalWalk + (((activityEntry.duration/60000)*20)/1000);
-                                break;
-                            case 'Circuit Training':
-                                user.totalRun = user.totalRun + (((activityEntry.duration/60000)*160)/1000);
-                                break;
-                            default:
-                                console.log("Unexpected activity type: " + activityEntry.activity + " - User: " + user.name);
-                                break;
-                        }
+                try {
+                    if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].activities) {
 
-                        // Only add valid activities to the total
-                        if (['Run','Swim','Bike','Walk','Yoga','Circuit Training'].includes(activityEntry.name)) {
-                            user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
-
-                            if (activityEntry.name === 'Bike' && activityEntry.distance > 0) {
-                                user.totalDistanceConverted = user.totalDistanceConverted + (activityEntry.distance/CYCLING_CONVERSION);
-                                user.totalDistance = user.totalDistance + activityEntry.distance;
-
-                            } else if (activityEntry.name === 'Yoga') {
-                                user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*20)/1000);
-                                user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*20)/1000);
-
-                            } else if (activityEntry.name === 'Circuit Training') {
-                                user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*160)/1000);
-                                user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*160)/1000);
-
-                            } else {
-                                user.totalDistanceConverted = user.totalDistanceConverted + activityEntry.distance;
-                                user.totalDistance = user.totalDistance + activityEntry.distance;
+                        user.activities[challengeDates[i]].activities.forEach (function(activityEntry) {
+                            switch (activityEntry.name) {
+                                case 'Run':
+                                case 'Swim':
+                                case 'Bike':
+                                case 'Walk':
+                                    // Ignore as handled later
+                                    break;
+                                case 'Treadmill':
+                                case 'Elliptical':
+                                    user.totalRun = user.totalRun + activityEntry.distance;
+                                    user.totalDistanceConverted = user.totalDistanceConverted + activityEntry.distance;
+                                    user.totalDistance = user.totalDistance + activityEntry.distance;
+                                    user.totalDuration = user.totalDuration + activityEntry.duration;
+                                    break;
+                                case 'Yoga':
+                                    user.totalWalk = user.totalWalk + (((activityEntry.duration/60000)*20)/1000);
+                                    user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*20)/1000);
+                                    user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*20)/1000);
+                                    user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
+                                    break;
+                                case 'Circuit Training':
+                                case 'Aerobic Workout':
+                                case 'Sport':
+                                case 'Workout':
+                                case 'Outdoor Bike':
+                                    user.totalRun = user.totalRun + (((activityEntry.duration/60000)*160)/1000);
+                                    user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*160)/1000);
+                                    user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*160)/1000);
+                                    user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
+                                    break;
+                                default:
+                                    console.log("Unexpected activity type: " + JSON.stringify(activityEntry) + " - User: " + user.name);
+                                    break;
                             }
-                        }
-                    });
+                        });
+                    }
+
+                    if (user.activities[challengeDates[i]] && user.activities[challengeDates[i]].summary && user.activities[challengeDates[i]].summary.distances) {
+
+                        user.activities[challengeDates[i]].summary.distances.forEach (function(activityEntry) {
+                            switch (activityEntry.activity) {
+                                case 'Run':
+                                    user.totalRun = user.totalRun + activityEntry.distance;
+                                    break;
+                                case 'Swim':
+                                    user.totalSwim = user.totalSwim + activityEntry.distance;
+                                    break;
+                                case 'Bike':
+                                    user.totalCycling = user.totalCycling + activityEntry.distance;
+                                    user.totalCyclingConverted = user.totalCyclingConverted + (activityEntry.distance/CYCLING_CONVERSION);
+                                    break;
+                                case 'Walk':
+                                case 'tracker':
+                                    user.totalWalk = user.totalWalk + activityEntry.distance;
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            // Only add valid activities to the total
+                            if (['Run','Swim','Bike','Walk','tracker'].includes(activityEntry.activity)) {
+                                // user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
+
+                                if (activityEntry.name === 'Bike' && activityEntry.distance > 0) {
+                                    user.totalDistanceConverted = user.totalDistanceConverted + (activityEntry.distance/CYCLING_CONVERSION);
+                                    user.totalDistance = user.totalDistance + activityEntry.distance;
+                                } else {
+                                    user.totalDistanceConverted = user.totalDistanceConverted + activityEntry.distance;
+                                    user.totalDistance = user.totalDistance + activityEntry.distance;
+                                }
+                            }
+                        });
+                    }
+
+                } catch (err) {
+                    console.log("Unable to process activity: " + user.activities[challengeDates[i]] + " - for User: " + user.name);
                 }
             }
 
@@ -379,9 +419,11 @@ function save(user, res) {
         if (err) {
             console.log(err.message);
             if (err.code == 11000) {
-                if (user.app == "Strava") {
+                if (user.app === "Strava") {
                     res.redirect(callbackUrl + 'register?success=stravaRegistered');
                 } else {
+                    // Already registered but update the users access tokens anyway so we have the latest expiry
+                    updateAccessTokens(user);
                     res.redirect(callbackUrl + 'register?success=fitbitRegistered');
                 }
             } else {
@@ -403,6 +445,43 @@ function save(user, res) {
             });
 
             res.redirect(callbackUrl + 'register?success=fitBitSuccess');
+        }
+    });
+}
+
+function updateAccessTokens(user) {
+    User.findOne({
+        username: user.username.toLowerCase()
+    }).exec(function(err, existingUser) {
+        if (err || !existingUser) {
+            console.log("Error updating existing useer access tokens during re-registration");
+        } else {
+            var date = new Date();
+            var datemillis = date.getTime();
+
+            var expiresTime = new Date(user.expires_in*1000);
+            var expiresTimeMillis = expiresTime.getTime();
+
+            var expiration = new Date();
+            expiration.setTime(datemillis + expiresTimeMillis);
+
+            existingUser.access_token = user.access_token;
+            existingUser.refresh_token = user.refresh_token;
+            existingUser.expires_in = expiration;
+
+            existingUser.markModified('access_token');
+            existingUser.markModified('refresh_token');
+            existingUser.markModified('expires_in');
+
+            existingUser.save(function(err, updatedUser) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    challengeDates.forEach(function(date) {
+                        getStats(updatedUser, date);
+                    });
+                }
+            });
         }
     });
 }
