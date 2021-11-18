@@ -3,15 +3,18 @@ import PropTypes from "prop-types";
 import worldmap from "./worldmap.svg";
 
 const challengeStartDate = new Date(2021, 10, 8, 0, 0, 0, 0); // 8th November 
-const challengeEndDate = new Date(2021, 10, 21, 0, 0, 0, 0); // 21st November Midnight
+const challengeEndDate = new Date(2021, 10, 22, 0, 0, 0, 0); // 22nd November Midnight
 
 function getTimeRemaining() {
   let total = new Date();
+  // countdown to the start of the challenge
   if (new Date() <= challengeStartDate)
     total = Date.parse(challengeStartDate) - Date.parse(new Date());
-  else if (new Date() > challengeStartDate || new Date() < challengeEndDate)
+  // countdown during the challenge
+  else if (new Date() > challengeStartDate && new Date() < challengeEndDate)
     total = Date.parse(challengeEndDate) - Date.parse(new Date());
-  else if (new Date() > challengeEndDate) total = Date.parse(new Date(0, 0, 0));
+  // countdown after the challenge ends
+  else if (new Date() > challengeEndDate) total = new Date() - challengeEndDate
   const seconds = Math.floor((total / 1000) % 60);
   const minutes = Math.floor((total / 1000 / 60) % 60);
   const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
