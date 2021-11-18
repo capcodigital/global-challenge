@@ -78,7 +78,7 @@ const TeamsDashboardGlobal = ({ getTeamsList, teams }) => {
                     </Header>
                     <TeamSportsLeaderboardTable
                       height={170}
-                      data={team.members.mgit ap((member) => ({
+                      data={team.members.map((member) => ({
                         name: member.name,
                         distance: member.totalRun,
                       }))}
