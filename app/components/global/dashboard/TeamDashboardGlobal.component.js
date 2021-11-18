@@ -82,7 +82,7 @@ const TeamsDashboardGlobal = ({ getTeamsList, teams }) => {
                         name: member.name,
                         distance: member.totalRun,
                       }))}
-                    />
+                   />
                   </div>
                 </Grid.Row>
                 <Grid.Row>
@@ -110,8 +110,8 @@ const TeamsDashboardGlobal = ({ getTeamsList, teams }) => {
                       height={170}
                       data={team.members.map((member) => ({
                         name: member.name,
-                        distance: member.totalCycling,
-                        actualDistance: member.totalCyclingConverted,
+                        distance: member.totalCyclingConverted,
+                        actualDistance: member.totalCycling,
                       }))}
                       showActualDistance={true}
                     />
