@@ -82,7 +82,7 @@ const TeamsDashboardGlobal = ({ getTeamsList, teams }) => {
                         name: member.name,
                         distance: member.totalRun,
                       }))}
-                    />
+                   />
                   </div>
                 </Grid.Row>
                 <Grid.Row>
