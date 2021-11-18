@@ -78,7 +78,7 @@ const TeamsDashboardGlobal = ({ getTeamsList, teams }) => {
                     </Header>
                     <TeamSportsLeaderboardTable
                       height={170}
-                      data={team.members.map((member) => ({
+                      data={team.members.mgit ap((member) => ({
                         name: member.name,
                         distance: member.totalRun,
                       }))}
@@ -110,10 +110,10 @@ const TeamsDashboardGlobal = ({ getTeamsList, teams }) => {
                       height={170}
                       data={team.members.map((member) => ({
                         name: member.name,
-                        distance: member.totalCyclingConverted,
+                        distance: member.totalCycling,
                         actualDistance: member.totalCyclingConverted,
                       }))}
-                      showActualDistance={false}
+                      showActualDistance={true}
                     />
                   </div>
                 </Grid.Row>
