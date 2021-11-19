@@ -20,19 +20,108 @@
 
 * Sample saga
 
-## Setup
+## Development Setup
+
+ In order to run the app on your local machine follow these steps. 
+
+ ### Database Setup
+
+ - Need to install MongoDB which can be done with Homebrew ($ brew install mongodb-community). 
+ - Run ($ mongosh).
+ - Create database by running 
+ ```
+ $ use step-challenge
+ ```
+ - Create collection by running 
+ ```
+ $ db.createCollection("challenges")
+ ```
+Confirm by ($ show collections).
+
+ - Make entry in the collection e.g.:
+  ```
+ $ db.challenges.insertOne({"name" : "Global Challenge 2021","minTeamSize" : 4,"maxTeamSize" : 4,"startDate" : ISODate("2021-11-08T00:00:00Z"),"endDate" : ISODate("2021-11-21T00:00:00Z"),"status" : "In Progress","challengeName" : "dev"})
+```
+
+ Additionally [TablePlus](https://tableplus.com) interface might be used to interact with the database 
+
+### Set up on local machine
+ 
+1.	Check if these files exist in the  ‘./config/keys/’
+
+    Files needed: 
+    -	cit.txt
+    -   emailPassword.txt
+    -	emailUser.txt
+    -	fitbit_client.txt
+    -   fitbit_secret.txt
+    -	strava_client.txt
+    -	strava_secret.txt
+    -	strava_key.txt
+
+2.	Check your version of Node ($ node -v). If it is not 14.17.5 then follow the guide:
+
+- Confirm that nvm (Node Version Manager) is installed ($ nvm -v). It should output file location. 
+
+- Install correct version of Node with nvm. Can be installed with curl or wget. (https://github.com/nvm-sh/nvm).  
+
+- It is important to run 
+
+```
+$ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+```
+- Confirm the correct version of node 
+```
+$ nvm install 14.17.5
+```
+- You can also verify by running ($ node -v).
+
+
+
 
 ### Installation
 
-* Install with yarn (not npm). Npm will break the documentation plugin and styleguide when it sets up react-docgen
+* Installing yarn ($ yarn install)
+* Running the app ($ npm start run)
 
-### Doc and styleguide
+#### Access on http://localhost
+
+
+### Troublshooting
+
+If server is not running you might need to follow these additional steps: 
+
+* Troubleshooting with node-sass: run 
+```
+$ npm install --save-dev rebuild-node-sass node-sass
+```
+
+Then follow installations steps again.
+
+* Setting up environment variables for correct UI, run the following: 
+```
+$ export GOOGLE_MAPS_API_KEY=AIzaSyDj6Xw-eqeq8cHxo4LB6Sn3wqLqiM7E_k8and
+```
+and
 
 ```
-npm run styleguide
+$ export CHALLENGE_NAME=global
 ```
 
-Access on http://localhost:6060
+Try ($ npm run start) again.
+ 
+* Troubleshooting if the port 80 is already used you can kill the service listening on it: 
+
+```
+$sudo lsof -i :80
+```
+Then 
+```
+$ kill -9 {PID number}
+```
+with the PID where Node is running.
+
 
 ### Run cypress (ui tests)
 
