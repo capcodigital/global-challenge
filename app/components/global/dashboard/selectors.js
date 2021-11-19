@@ -64,7 +64,7 @@ const teamsSelector = createSelector([teamsListSelector], (teamsList) => {
   if (teamsList) {
     let teamsData = teamsList.toJS();
 
-    ["Run", "Swim", "Walk", "Rowing", "CyclingConverted"].map(
+    ["Run", "Swim", "Walk", "Rowing", "Cycling"].map(
       (activity) => (teamsData = getPositionByActivity(teamsData, activity))
     );
 
@@ -78,7 +78,7 @@ const locationsSelector = createSelector([locationsListSelector], (locations) =>
     if (locations) {
       let locationsData = locations.toJS();
 
-      ["Run", "Swim", "Walk", "Rowing", "CyclingConverted"].map(
+      ["Run", "Swim", "Walk", "Rowing", "Cycling"].map(
         (activity) =>
           (locationsData = getPositionByActivity(locationsData, activity))
       );
@@ -94,7 +94,7 @@ const levelsSelector = createSelector([levelsListSelector], (levels) => {
   if (levels) {
     let levelsData = levels.toJS();
 
-    ["Run", "Swim", "Walk", "Rowing", "CyclingConverted"].map(
+    ["Run", "Swim", "Walk", "Rowing", "Cycling"].map(
       (activity) => (levelsData = getPositionByActivity(levelsData, activity))
     );
 
@@ -108,9 +108,9 @@ const personalSelector = createSelector([personalListSelector], (personalList) =
   if (personalList) {
     let membersData = personalList.toJS();
 
-    ["totalRun", "totalSwim", "totalWalk", "totalRowing", "totalCyclingConverted"].map(
+    ["totalRun", "totalSwim", "totalWalk", "totalRowing", "totalCycling"].map(
       (activity) => (membersData = getPositionByMemberActivity(membersData, activity))
-    );
+    ); 
 
     return membersData
       .sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)
