@@ -64,7 +64,7 @@ const teamsSelector = createSelector([teamsListSelector], (teamsList) => {
   if (teamsList) {
     let teamsData = teamsList.toJS();
 
-    ["Run", "Swim", "Walk", "Rowing", "Cycling"].map(
+    ["Run", "Swim", "Walk", "Rowing", "CyclingConverted"].map(
       (activity) => (teamsData = getPositionByActivity(teamsData, activity))
     );
 
