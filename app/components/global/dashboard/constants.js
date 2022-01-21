@@ -187,7 +187,7 @@ export const offices = [
 ];
 
 // Use to allow distances to be "stretched" to meet a certain target, larger or smaller than actual total distance
-const conversion_factor = 1.350876719
+const conversion_factor = 1.350876719;
 
 export const allCities = [
   {
@@ -221,13 +221,13 @@ export const allCities = [
     name: 'Hartford', country: 'USA', region: 'North America', coordinates: [-72.673728, 41.768609], distance: conversion_factor * 13530
   },
   {
-    name: 'Toronto', country: 'Canada', region: 'North America', coordinates: [-79.4000, 43.7000], distance: conversion_factor * 18871
+    name: 'Toronto', country: 'Canada', region: 'North America', coordinates: [-79.4000, 43.7000], distance: conversion_factor * 14120
   },
   {
     name: 'Edinburgh', country: 'United Kingdom', region: 'Europe', coordinates: [-3.1883, 55.9533], distance: conversion_factor * 19404
   },
   {
-    name: 'London', country: 'United Kingdom', region: 'Europe', coordinates: [0.1275, 51.5072], distance: conversion_factor * 19744
+    name: 'London', country: 'United Kingdom', region: 'Europe', coordinates: [0.1275, 51.5072], distance: conversion_factor * 19814
   },
   {
     name: 'Paris', country: 'France', region: 'Europe', coordinates: [2.3508, 48.8567], distance: conversion_factor * 20158
@@ -284,7 +284,7 @@ export const allCities = [
     name: 'Singapore', country: 'Singapore', region: 'Asia', coordinates: [103.8000, 1.3000], distance: conversion_factor * 37013
   },
   {
-    name: 'Hong Kong', country: 'Hong Kong', region: 'Asia', coordinates: [114.1589, 22.2783], distance: conversion_factor * 37013
+    name: 'Hong Kong', country: 'Hong Kong', region: 'Asia', coordinates: [114.1589, 22.2783], distance: conversion_factor * 39285
   }
 ];
 
