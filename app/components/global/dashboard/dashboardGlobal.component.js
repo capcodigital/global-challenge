@@ -348,8 +348,8 @@ class DashboardGlobal extends React.Component {
                           height={170}
                           data={filteredData.map((team) => ({
                             name: team.name,
-                            distance: team.activities["CyclingConverted"],
-                            position: team.activities.cyclingConvertedPosition,
+                            distance: team.activities["Cycling"],
+                            position: team.activities.cyclingPosition,
                           }))}
                         />
                       </div>
