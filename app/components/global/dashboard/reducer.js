@@ -24,8 +24,6 @@ const initialState = fromJS({
   personalList: []
 });
 
-export const getActivies = (state) => state.get("dashboard").get("activities");
-
 export const getTeams = (state) => state.get("dashboard").get("teamsList");
 
 export default (state = initialState, action) => {

@@ -11,6 +11,7 @@ var config = require("../config/config");
 const maxMembers = config.maxTeamSize;
 const minMembers = config.minTeamSize;
 const teamStatsDelay = 600000; // Wait 10 minutes to ensure individual FitBit and Strava updates are compelete
+const TEAM_CHALLENGE_TARGET = process.env.TEAM_CHALLENGE_TARGET ? process.env.TEAM_CHALLENGE_TARGET : 166; // Mount Fuji
 
 const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 
@@ -18,11 +19,11 @@ const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/
 // the child nodes will automatically pick up the changes
 if (cluster.isMaster) {
     setTimeout(function(){
-        if (process.env.SERVER_URL) {
-            updateEveryInterval(60);
+        if (process.env.UPDATE_INTERVAL) {
+            updateEveryInterval(process.env.UPDATE_INTERVAL);
         }
         else {
-            updateEveryInterval(5);
+            updateEveryInterval(60);
         }
     }, teamStatsDelay);
 }
@@ -489,6 +490,11 @@ function updateEveryInterval(minutes) {
                         team.markModified('activities');
                         team.markModified('totalDistance');
                         team.markModified('totalDistanceConverted');
+
+                        if (team.totalDistanceConverted >= TEAM_CHALLENGE_TARGET && (!team.completionDate || team.completionDate == null)) {
+                            team.completionDate = new Date();
+                            team.markModified('completionDate');
+                        }
 
                         team.save(function(err) {
                             if (err) {

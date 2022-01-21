@@ -121,7 +121,7 @@ class Header extends React.Component {
                     </Button>
                   </Menu.Item>
                   <Menu.Item>
-                    <Button
+                    {/*<Button
                       secondary
                       fluid
                       as="a"
@@ -130,7 +130,7 @@ class Header extends React.Component {
                       className={`button-header ${challenge_name}`}
                     >
                       Donate
-                    </Button>
+                    </Button>*/}
                   </Menu.Item>
                 </>
               )}
