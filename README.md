@@ -100,6 +100,7 @@ $ npm install --save-dev rebuild-node-sass node-sass
 Then follow installations steps again.
 
 * Setting up environment variables for correct UI, run the following: 
+for the global challenge: 
 ```
 $ export GOOGLE_MAPS_API_KEY=AIzaSyDj6Xw-eqeq8cHxo4LB6Sn3wqLqiM7E_k8and
 ```
@@ -108,8 +109,15 @@ and
 ```
 $ export CHALLENGE_NAME=global
 ```
+For the UK version please set up the variables: 
 
-Try ($ npm run start) again.
+$ export  s_MAPS_API_KEY=AIzaSyCYHOtisPconp4HQSmnmdHV3c1i73s3y2s
+and 
+```
+$ export CHALLENGE_NAME=uk
+```
+
+Try ($ npm run start) again
  
 * Troubleshooting if the port 80 is already used you can kill the service listening on it: 
 
