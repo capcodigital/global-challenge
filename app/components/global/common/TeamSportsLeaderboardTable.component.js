@@ -49,7 +49,7 @@ const TeamSportsLeaderboardTable = ({
                     <div>
                       <div>{item.name}</div>
                       {showActualDistance && (
-                        <div>Actual distance: {item.actualDistance ? item.actualDistance.toFixed(2) : item.actualDistance}km</div>
+                        <div>Actual distance: {item.actualDistance ? item.actualDistance.toFixed(2) : item.actualDistance.toFixed(2)}km</div>
                       )}
                     </div>
                   }
@@ -64,7 +64,7 @@ const TeamSportsLeaderboardTable = ({
                         <Avatar name={item.name} color={'#FDC437'} size={30} />
                       </Table.Cell>
                       <Table.Cell className="distance">
-                        {item.distance ? item.distance.toFixed(2) : item.distance}km
+                        {item.distance ? item.distance.toFixed(2) : item.distance.toFixed(2)}km
                       </Table.Cell>
                       <Table.Cell>
                         <svg
@@ -99,7 +99,7 @@ const TeamSportsLeaderboardTable = ({
               <div>
                 <div>{item.name}</div>
                 {showActualDistance && (
-                  <div>Actual distance: {item.actualDistance ? item.actualDistance.toFixed(2) : item.actualDistance}km</div>
+                  <div>Actual distance: {item.actualDistance ? item.actualDistance.toFixed(2) : item.actualDistance.toFixed(2)}km</div>
                 )}
               </div>
             }
@@ -113,7 +113,7 @@ const TeamSportsLeaderboardTable = ({
                 <span>
                   <Avatar name={item.name} color={'#FDC437'} size={30} />
                 </span>
-                <span className="distance">{item.distance ? item.distance.toFixed(2) : item.distance}km</span>
+                <span className="distance">{item.distance ? item.distance.toFixed(2) : item.distance.toFixed(2)}km</span>
                 <span>
                   <svg width={180} height="16" viewBox="0 0 210 16">
                     <rect

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Icon } from "semantic-ui-react";
 
-const challengeStartDate = new Date(2021, 8, 1, 0, 0, 0, 0); // 1th September
-const challengeEndDate = new Date(2021, 9, 1, 0, 0, 0, 0); // 31th September Midnight
+const challengeStartDate = new Date(2022, 3, 1, 0, 0, 0, 0); // 1th March
+const challengeEndDate = new Date(2022, 3, 31, 23, 59, 59, 0); // 31th March Midnight
 
 function getTimeRemaining() {
   let total = new Date();

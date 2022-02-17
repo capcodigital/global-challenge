@@ -99,7 +99,7 @@ class DashboardUK extends React.Component {
                           height={170}
                           data={teams.map((team) => ({
                             name: team.name,
-                            distance: team.activities["Run"],
+                            distance: team.activities["Run"].toFixed(2),
                             position: team.activities.runPosition,
                           }))}
                         />
@@ -115,7 +115,7 @@ class DashboardUK extends React.Component {
                           height={170}
                           data={teams.map((team) => ({
                             name: team.name,
-                            distance: team.activities["Cycling"],
+                            distance: team.activities["Cycling"].toFixed(2),
                             position: team.activities.cyclingPosition,
                           }))}
                         />
@@ -132,7 +132,7 @@ class DashboardUK extends React.Component {
                           height={170}
                           data={teams.map((team) => ({
                             name: team.name,
-                            distance: team.activities["Walk"],
+                            distance: team.activities["Walk"].toFixed(2),
                             position: team.activities.walkPosition,
                           }))}
                         />
@@ -149,7 +149,7 @@ class DashboardUK extends React.Component {
                           height={90}
                           data={teams.map((team) => ({
                             name: team.name,
-                            distance: team.activities["Swim"],
+                            distance: team.activities["Swim"].toFixed(2),
                             position: team.activities.swimPosition,
                           }))}
                         />{" "}
@@ -165,7 +165,7 @@ class DashboardUK extends React.Component {
                           height={90}
                           data={teams.map((team) => ({
                             name: team.name,
-                            distance: team.activities["Rowing"],
+                            distance: team.activities["Rowing"].toFixed(2),
                             position: team.activities.rowingPosition,
                           }))}
                         />

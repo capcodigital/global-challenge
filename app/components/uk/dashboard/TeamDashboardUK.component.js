@@ -54,7 +54,7 @@ const TeamDashboardUK = ({ getTeamsList, teams }) => {
               </Link>
               <Header size="large">{team.name}</Header>
               <div className="team-distance">
-                Team Distance: {team.totalDistanceConverted}km
+                Team Distance: {team.totalDistanceConverted.toFixed(2)}km
               </div>
               <TeamLeaderboardTable
                 data={team.members.sort(
@@ -76,7 +76,7 @@ const TeamDashboardUK = ({ getTeamsList, teams }) => {
                       height={170}
                       data={team.members.map((member) => ({
                         name: member.name,
-                        distance: member.totalRun,
+                        distance: member.totalRun.toFixed(2),
                       }))}
                     />
                   </div>
@@ -91,8 +91,8 @@ const TeamDashboardUK = ({ getTeamsList, teams }) => {
                       height={170}
                       data={team.members.map((member) => ({
                         name: member.name,
-                        distance: member.totalCyclingConverted,
-                        actualDistance: member.totalCycling,
+                        distance: member.totalCyclingConverted.toFixed(2),
+                        actualDistance: member.totalCycling.toFixed(2),
                       }))}
                       showActualDistance={true}
                     />
@@ -109,7 +109,7 @@ const TeamDashboardUK = ({ getTeamsList, teams }) => {
                       height={170}
                       data={team.members.map((member) => ({
                         name: member.name,
-                        distance: member.totalWalk,
+                        distance: member.totalWalk.toFixed(2),
                       }))}
                     />
                   </div>
@@ -124,7 +124,7 @@ const TeamDashboardUK = ({ getTeamsList, teams }) => {
                       height={90}
                       data={team.members.map((member) => ({
                         name: member.name,
-                        distance: member.totalSwim,
+                        distance: member.totalSwim.toFixed(2),
                       }))}
                     />
                   </div>
@@ -139,7 +139,7 @@ const TeamDashboardUK = ({ getTeamsList, teams }) => {
                       height={90}
                       data={team.members.map((member) => ({
                         name: member.name,
-                        distance: member.totalRowing,
+                        distance: member.totalRowing.toFixed(2),
                       }))}
                     />
                   </div>

@@ -85,7 +85,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
 
                       {isMainDashboard && (
                         <div className="distance">
-                          {item.totalDistanceConverted}
+                          {item.totalDistanceConverted.toFixed(2)}
                           km
                         </div>
                       )}
@@ -98,7 +98,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
                       </Table.Cell>
                     ) : (
                       <Table.Cell className={`main distance`}>
-                        {item.totalDistanceConverted}km
+                        {item.totalDistanceConverted.toFixed(2)}km
                       </Table.Cell>
                     )}
                   </Table.Row>
@@ -138,7 +138,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
 
                 {isMainDashboard && (
                   <div className="distance">
-                    {item.totalDistanceConverted}
+                    {item.totalDistanceConverted.toFixed(2)}
                     km
                   </div>
                 )}
