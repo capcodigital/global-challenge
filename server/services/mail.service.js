@@ -30,37 +30,43 @@ var emailConnectionDetails = {
 };
 
 exports.sendMail = function(to, subject, text, callback) {
-    var transporter = nodemailer.createTransport(emailConnectionDetails);
-    var from_address = DEFAULT_FROM_ADDRESS;
+    
+    if (process.env.NODE_ENV === 'production') {
+        var transporter = nodemailer.createTransport(emailConnectionDetails);
+        var from_address = DEFAULT_FROM_ADDRESS;
 
-    transporter.sendMail({
-        from: from_address,
-        to: to,
-        subject: subject,
-        text: text
-    }, function(err, info) {
-        if (err) {
-            console.error(err);
-        }
-    });
+        transporter.sendMail({
+            from: from_address,
+            to: to,
+            subject: subject,
+            text: text
+        }, function(err, info) {
+            if (err) {
+                console.error(err);
+            }
+        });
+    }
 
     callback(null, true);
 };
 
 exports.sendMailFromTemplate = function(to, subject, templateFunction, locals, callback) {
-    var transporter = nodemailer.createTransport(emailConnectionDetails);
-    var from_address = DEFAULT_FROM_ADDRESS;
 
-    transporter.sendMail({
-        from: from_address,
-        to: to,
-        subject: subject,
-        html: templateFunction(locals)
-    }, function(err, info) {
-        if (err) {
-            console.error(err);
-        }
-    });
+    if (process.env.NODE_ENV === 'production') {
+        var transporter = nodemailer.createTransport(emailConnectionDetails);
+        var from_address = DEFAULT_FROM_ADDRESS;
+
+        transporter.sendMail({
+            from: from_address,
+            to: to,
+            subject: subject,
+            html: templateFunction(locals)
+        }, function(err, info) {
+            if (err) {
+                console.error(err);
+            }
+        });
+    }
     
     callback(null, true);
 };
