@@ -76,7 +76,7 @@ exports.getCurrentChallengeDates = function(cb) {
 exports.create = function(req, res) {
 
     User.findOne({
-        username: req.body.owner
+        _id: mongoose.Types.ObjectId(req.body.owner)
     }).exec(function(err, user) {
         if (err) return res.send(401, 'Error creating challenge');
         if (!user) return res.send(401, 'Owner not reqcognised');

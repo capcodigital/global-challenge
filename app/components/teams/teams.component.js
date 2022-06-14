@@ -49,9 +49,9 @@ class TeamsPage extends React.Component {
 
     if (users && users.length > 0) {
       const membersList = _.map(users, (member, index) => ({
-        key: member.username,
+        key: member._id,
         text: member.name,
-        value: member.username,
+        value: member._id,
       }));
 
       this.setState({ membersList });

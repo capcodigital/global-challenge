@@ -72,7 +72,7 @@ const Countdown = ({ overallDistance }) => {
       </div>
         */}
       <div>
-        <Button
+        {/*<Button
           secondary
           fluid
           as="a"
@@ -84,7 +84,7 @@ const Countdown = ({ overallDistance }) => {
         </Button>
         <Button secondary fluid as="a" href="/register" className="count-btn">
           Register
-        </Button>
+        </Button>*/}
       </div>
     </div>
   );

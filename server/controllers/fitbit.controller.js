@@ -18,10 +18,8 @@ var fs = require('fs');
 var secret = process.env.FITBIT_SECRET;
 var client_id = process.env.FITBIT_CLIENT_ID;
 
-if (!secret || !client_id) {
-    secret = fs.readFileSync('./config/keys/fitbit_secret.txt', 'utf8');
-    client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
-}
+if (!secret) secret = fs.readFileSync('./config/keys/fitbit_secret.txt', 'utf8');
+if (!client_id) client_id = fs.readFileSync('./config/keys/fitbit_client.txt', 'utf8');
 
 const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/` : 'http://localhost/';
 const challengeName = process.env.CHALLENGE_NAME;
@@ -60,11 +58,11 @@ var getOptions = {
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
 if (cluster.isMaster) {
-    if (process.env.SERVER_URL) {
-        updateEveryInterval(60);
+    if (process.env.UPDATE_INTERVAL) {
+        updateEveryInterval(process.env.UPDATE_INTERVAL);
     }
     else {
-        updateEveryInterval(5);
+        updateEveryInterval(60);
     }
 }
 
@@ -140,9 +138,6 @@ exports.authorize = function(req, res) {
                         user.totalCycling = 0;
                         user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
-
-                        locations.AddOrUpdate(user.location, username.toLowerCase());
-                        levels.AddOrUpdate(user.level, username.toLowerCase());
 
                         save(user, res);
                     }
@@ -227,7 +222,8 @@ function buildRequest(options, callback) {
 
 function updateUser(user) {
     var today = new Date();
-    if (user.expires_in && user.expires_in.getTime() < today.getTime()) {
+    // Temporary fix for strange date issue
+    if (user.expires_in && (user.expires_in.getTime() < today.getTime() || user.expires_in.getFullYear() > today.getFullYear())) {
         console.log("FitBit Token Expired:" + user.name);
         options.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
@@ -275,7 +271,6 @@ function getStats(user, date) {
         date = today.toISOString().split('T')[0];
     }
     getOptions.path = "/1/user/" + user.user_id + "/activities/date/" + date + ".json";
-    // getOptions.path = "/1/user/" + user.user_id + "/activities/list.json&afterDate=" + date;
     getOptions.headers.Authorization = "Bearer " + user.access_token;
 
     var statsReq = buildRequest(getOptions, function(err, result) {
@@ -430,6 +425,9 @@ function save(user, res) {
                 res.redirect(callbackUrl + 'register?success=serverError');
             }
         } else {
+            locations.AddOrUpdate(newUser.location, newUser._id);
+            levels.AddOrUpdate(newUser.level, newUser._id);
+
             // If User has joined part way through the competition. Retrieve previous days stats in the background
             challengeDates.forEach(function(date) {
                 getStats(newUser, date);
@@ -456,18 +454,9 @@ function updateAccessTokens(user) {
         if (err || !existingUser) {
             console.log("Error updating existing useer access tokens during re-registration");
         } else {
-            var date = new Date();
-            var datemillis = date.getTime();
-
-            var expiresTime = new Date(user.expires_in*1000);
-            var expiresTimeMillis = expiresTime.getTime();
-
-            var expiration = new Date();
-            expiration.setTime(datemillis + expiresTimeMillis);
-
             existingUser.access_token = user.access_token;
             existingUser.refresh_token = user.refresh_token;
-            existingUser.expires_in = expiration;
+            existingUser.expires_in = user.expires_in;
 
             existingUser.markModified('access_token');
             existingUser.markModified('refresh_token');

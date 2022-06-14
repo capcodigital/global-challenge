@@ -47,11 +47,11 @@ const CYCLING_CONVERSION = config.cyclingConversion || 3;
 // The master node should update the stats in the database at set intervals and then
 // the child nodes will automatically pick up the changes
 if (cluster.isMaster) {
-    if (process.env.SERVER_URL) {
-        updateEveryInterval(60);
+    if (process.env.UPDATE_INTERVAL) {
+        updateEveryInterval(process.env.UPDATE_INTERVAL);
     }
     else {
-        updateEveryInterval(5);
+        updateEveryInterval(60);
     }
 }
 
@@ -131,9 +131,6 @@ exports.authorize = function(req, res) {
                         user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
 
-                        locations.AddOrUpdate(user.location, username.toLowerCase());
-                        levels.AddOrUpdate(user.level, username.toLowerCase());
-
                         user.save(function(err, newUser) {
                             if (err) {
                                 console.log(err.message);
@@ -149,6 +146,9 @@ exports.authorize = function(req, res) {
                                     res.redirect(callbackUrl + 'register?success=serverError');
                                 }
                             } else {
+                                locations.AddOrUpdate(newUser.location, newUser._id);
+                                levels.AddOrUpdate(newUser.level, newUser._id);
+
                                 let emailText = "Hello " + user.name + ",\n\r You have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
                                 "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
                                 "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
@@ -177,18 +177,9 @@ function updateAccessTokens(user) {
         if (err || !existingUser) {
             console.log("Error updating existing useer access tokens during re-registration");
         } else {
-            var date = new Date();
-            var datemillis = date.getTime();
-
-            var expiresTime = new Date(user.expires_in*1000);
-            var expiresTimeMillis = expiresTime.getTime();
-
-            var expiration = new Date();
-            expiration.setTime(datemillis + expiresTimeMillis);
-
             existingUser.access_token = user.access_token;
             existingUser.refresh_token = user.refresh_token;
-            existingUser.expires_in = expiration;
+            existingUser.expires_in = user.expires_in;
             user.expires_at = user.expires_at;
 
             existingUser.markModified('access_token');
@@ -378,7 +369,8 @@ function getStats(user) {
 function updateUser(user) {
 
     var today = new Date();
-    if (user.expires_in && user.expires_in.getTime() < today.getTime()) {
+    // Temporary fix for strange date issue
+    if (user.expires_in && (user.expires_in.getTime() < today.getTime() || user.expires_in.getFullYear() > today.getFullYear())) {
         console.log("Strava Token Expired:" + user.name);
         var userOptions = authOptions;
         userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "&grant_type=refresh_token&refresh_token=" + user.refresh_token;
