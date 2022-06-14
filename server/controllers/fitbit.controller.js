@@ -326,22 +326,22 @@ function getStats(user, date) {
                                     user.totalDistance = user.totalDistance + activityEntry.distance;
                                     user.totalDuration = user.totalDuration + activityEntry.duration;
                                     break;
-                                case 'Yoga':
-                                    user.totalWalk = user.totalWalk + (((activityEntry.duration/60000)*20)/1000);
-                                    user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*20)/1000);
-                                    user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*20)/1000);
-                                    user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
-                                    break;
-                                case 'Circuit Training':
-                                case 'Aerobic Workout':
-                                case 'Sport':
-                                case 'Workout':
-                                case 'Outdoor Bike':
-                                    user.totalRun = user.totalRun + (((activityEntry.duration/60000)*160)/1000);
-                                    user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*160)/1000);
-                                    user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*160)/1000);
-                                    user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
-                                    break;
+                                // case 'Yoga':
+                                //     user.totalWalk = user.totalWalk + (((activityEntry.duration/60000)*20)/1000);
+                                //     user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*20)/1000);
+                                //     user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*20)/1000);
+                                //     user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
+                                //     break;
+                                // case 'Circuit Training':
+                                // case 'Aerobic Workout':
+                                // case 'Sport':
+                                // case 'Workout':
+                                // case 'Outdoor Bike':
+                                //     user.totalRun = user.totalRun + (((activityEntry.duration/60000)*160)/1000);
+                                //     user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*160)/1000);
+                                //     user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*160)/1000);
+                                //     user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
+                                //     break;
                                 default:
                                     console.log("Unexpected activity type: " + JSON.stringify(activityEntry) + " - User: " + user.name);
                                     break;
@@ -356,9 +356,9 @@ function getStats(user, date) {
                                 case 'Run':
                                     user.totalRun = user.totalRun + activityEntry.distance;
                                     break;
-                                case 'Swim':
-                                    user.totalSwim = user.totalSwim + activityEntry.distance;
-                                    break;
+                                // case 'Swim':
+                                //     user.totalSwim = user.totalSwim + activityEntry.distance;
+                                //     break;
                                 case 'Bike':
                                     user.totalCycling = user.totalCycling + activityEntry.distance;
                                     user.totalCyclingConverted = user.totalCyclingConverted + (activityEntry.distance/CYCLING_CONVERSION);

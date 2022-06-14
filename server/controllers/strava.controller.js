@@ -285,36 +285,36 @@ function getStats(user) {
                             case 'Elliptical':
                                 user.totalRun = user.totalRun + (user.activities[i].distance/1000);
                                 break;
-                            case 'Swim':
-                                user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
-                                break;
+                            // case 'Swim':
+                            //     user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
+                            //     break;
                             case 'Ride':
-                            case 'VirtualRide':
+                            // case 'VirtualRide':
                             case 'EBikeRide':
                             case 'Handcycle':
                                 user.totalCycling = user.totalCycling + (user.activities[i].distance/1000);
                                 user.totalCyclingConverted = user.totalCyclingConverted + ((user.activities[i].distance/1000)/CYCLING_CONVERSION);
                                 break;
-                            case 'Rowing':
-                            case 'Canoe':
-                            case 'Kayak':
-                            case 'Stand Up Paddle':
-                                user.totalRowing = user.totalRowing + (user.activities[i].distance/1000);
-                                break;
+                            // case 'Rowing':
+                            // case 'Canoe':
+                            // case 'Kayak':
+                            // case 'Stand Up Paddle':
+                            //     user.totalRowing = user.totalRowing + (user.activities[i].distance/1000);
+                            //     break;
                             case 'Walk':
                             case 'Hike':
                             case 'Stair Stepper':
                             case 'Wheelchair':
                                 user.totalWalk = user.totalWalk + (user.activities[i].distance/1000);
                                 break;
-                            case 'Yoga':
-                                user.totalWalk = user.totalWalk + (((user.activities[i].moving_time/60)*20)/1000);
-                                break;
-                            case 'Workout':
-                            case 'WeightTraining':
-                            case 'Crossfit':
-                                user.totalRun = user.totalRun + (((user.activities[i].moving_time/60)*160)/1000);
-                                break;
+                            // case 'Yoga':
+                            //     user.totalWalk = user.totalWalk + (((user.activities[i].moving_time/60)*20)/1000);
+                            //     break;
+                            // case 'Workout':
+                            // case 'WeightTraining':
+                            // case 'Crossfit':
+                            //     user.totalRun = user.totalRun + (((user.activities[i].moving_time/60)*160)/1000);
+                            //     break;
                             default:
                                 console.log("Unexpected activity type: " + user.activities[i].type + " - User: " + user.name);
                                 break;
