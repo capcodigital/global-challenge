@@ -9,16 +9,20 @@ const challenge_name = process.env.CHALLENGE_NAME
   : "global";
 
 const HowTo = () => (
+  <div className={challenge_name}>
   <Container>
   <Segment vertical>
-    <Grid className={`how-to-container ${challenge_name}`} stackable centered>
+    <Grid className={`how-to-container ${challenge_name}`} 
+    stackable 
+    centered 
+    columns="equal">
       <Grid.Column className={`how-to-section ${challenge_name}`}
         style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
         width={16}
       >
         
         <Grid stackable>
-          <Grid.Column width={8}>
+          <Grid.Column className="column-b" >
             <Header className="how-to-title smaller">How to Videos</Header>
             <List bulleted>
               <List.Item
@@ -44,7 +48,7 @@ const HowTo = () => (
               </List.Item>
             </List>
           </Grid.Column>
-          <Grid.Column width={8}>
+          <Grid.Column className="column-b" >
             <Header className="how-to-title smaller">How to Guides</Header>
             <List bulleted>
               <List.Item href="#set-up-instructions">
@@ -65,7 +69,7 @@ const HowTo = () => (
               </List.Item>
             </List>
           </Grid.Column>
-          <Grid.Column width={12} className="how-to-section">
+          <Grid.Column className="how-to-section column-b">
             <SetupInstructions />
             <StravaSetupInstructions />
           </Grid.Column>
@@ -74,6 +78,7 @@ const HowTo = () => (
     </Grid>
   </Segment>
  </Container>
+ </div>
 );
 
 export default HowTo;

@@ -65,7 +65,7 @@ const StravaSetupInstructions = () => (
         <List>
           <List.Item>
             5. On the Strava dashboard page, you will be asked to select your
-            sport – for the Capco Global Challenge please select running (you
+            sport – for the Capco UK Challenge please select running (you
             will still have the option to walk, swim, cycle or row).{" "}
             <i>
               There is a range of other data that Strava will request from you

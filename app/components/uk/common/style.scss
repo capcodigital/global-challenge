@@ -9,8 +9,17 @@
     }
   }
 }
+
+.map {
+  margin-top: 30px;
+  @media screen and (max-width: 600px) {
+    margin-top: -60px;
+  }
+}
+
 .ui.header {
   display: block;
+  
 }
 
 .sports-mobile {
@@ -57,7 +66,7 @@
   }
   .leaderboard-item {
     display: flex !important;
-    background: rgba(250, 69, 27, 0.2);
+    background: #0f2046;
     margin: 5px 0;
     span {
       padding: 10px;
@@ -73,6 +82,7 @@
       padding-top: 10px;
       font-weight: 300;
       font-size: 18px;
+      
     }
   }
 }
@@ -95,6 +105,12 @@
       display: none;
     }
   }
+  &::-webkit-scrollbar {
+    background-color: #0f2046;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #4f6d94;
+  }
 
   .ui.very.basic.table {
     width: 100%;
@@ -107,7 +123,7 @@
 
     th {
       border: none;
-      color: #717171;
+      color: #e6eaf0;
       font-weight: 400;
       padding-left: 0;
     }
@@ -116,23 +132,24 @@
       border: none;
       padding-left: 0;
       padding-bottom: 0rem;
+     // background: rgba(209, 153, 11, 0.943) !important;
     }
 
     tbody.main-table {
       cursor: pointer;
       .finish {
         td {
-          background: #dbfaec;
+          background: #1d4475;
         }
       }
       :hover {
         td {
-          background: rgba(250, 69, 27, 0.5);
+          background: #4f6d94;
         }
       }
       &.loading {
         td {
-          background: linear-gradient(90deg, #d9d9d9, #ffffff);
+          background: #4f6d94;
           background-size: 200% 200%;
           animation: Animation 1s ease infinite;
 
@@ -148,7 +165,7 @@
       }
     }
 
-    color: #0f2046;
+    color: #e6eaf0;
     .team-name {
       font-weight: bold;
     }
@@ -162,7 +179,7 @@
     }
 
     .pending.date {
-      color: #717171;
+      color: #042f66;
     }
 
     &.main {
@@ -203,7 +220,7 @@
 
       tr td {
         padding: 10px 0 10px 0;
-        background: rgba(250, 69, 27, 0.1);
+        background: #365985;
         height: 82px;
         &.loading {
           height: 52px;
@@ -260,6 +277,7 @@
 *:focus {
   outline: none;
 }
+
 
 .countdown {
   &.closed {

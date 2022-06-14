@@ -13,7 +13,7 @@ class Header extends React.Component {
       : "global";
     return (
       <>
-        <div className={`mobile-header white-button ${challenge_name}`}>
+        <div className={`mobile-header white-button`}>
           <Menu borderless secondary size="small">
             <Container className="mobile-container">
               <Menu.Item>
@@ -39,7 +39,7 @@ class Header extends React.Component {
                   fluid
                   as="a"
                   href="/register"
-                  className={`mobile-button-header white-button ${challenge_name}`}
+                  className={`mobile-button-header white-button`}
                 >
                   Register
                 </Button>
@@ -55,7 +55,7 @@ class Header extends React.Component {
             )}
           </div>
         </div>
-        <div className={`header ${challenge_name}`}>
+        <div className="header">
           <Menu borderless secondary size="small">
             <Container>
               <Menu.Item>
@@ -89,7 +89,7 @@ class Header extends React.Component {
                       size="large"
                       as="a"
                       href="/teams/register"
-                      className={`button-header ${challenge_name}`}
+                      className={`button-header white-button`}
                     >
                       Teams
                     </Button>
@@ -101,7 +101,7 @@ class Header extends React.Component {
                       size="large"
                       as="a"
                       href="/"
-                      className={`button-header ${challenge_name}`}
+                      className={`button-header white-button`}
                     >
                       View Progress
                     </Button>
@@ -115,7 +115,7 @@ class Header extends React.Component {
                       fluid
                       as="a"
                       href="/register"
-                      className={`button-header white-button ${challenge_name}`}
+                      className={`button-header white-button`}
                     >
                       Register
                     </Button>
@@ -127,7 +127,7 @@ class Header extends React.Component {
                       as="a"
                       href="https://fundraise.unfoundation.org/fundraiser/3140126"
                       target="_blank"
-                      className={`button-header ${challenge_name}`}
+                      className={`button-header white-button`}
                     >
                       Donate
                     </Button>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { geoMercator, geoPath } from 'd3-geo';
+import { scaleLinear } from 'd3-scale';
 import {
   Marker,
   GoogleMap,
@@ -8,11 +10,14 @@ import {
 } from "@react-google-maps/api";
 import mapUKStyles from "./mapUKStyles";
 import { getInitials } from "../../common/Avatar.component";
+import "./style.scss";
+
 
 const containerStyle = {
   width: "100%",
   height: "80vh",
   minHeight: "600px",
+  maxHeight: "900px"
 };
 
 const center = {
@@ -127,7 +132,7 @@ const MapUK = ({ teams, team }) => {
           options={{
             suppressMarkers: true,
             preserveViewport: true,
-            polylineOptions: { strokeColor: "orange" },
+            polylineOptions: { strokeColor: "rgb(255,106,77)" },
           }}
         />
       )}
@@ -137,6 +142,15 @@ const MapUK = ({ teams, team }) => {
         icon={{
           scaledSize: new window.google.maps.Size(100, 100),
           url: "https://findicons.com/files/icons/2061/f1/128/checkered_flag.png",
+          anchor: new window.google.maps.Point(2, 95),
+        }}
+      />
+       <Marker
+        className="marker"
+        position={londonOffice}
+        icon={{
+          scaledSize: new window.google.maps.Size(100, 100),
+          url: "https://png2.cleanpng.com/sh/ad0dfdb2cc58c803dc30dd78090fb241/L0KzQYm3V8AzN6p0kpH0aYP2gLBuTfNwdaF6jNd7LXnmf7B6TgBmaZRqRdh1YXewg8r0gv9tNWZnS9NsMkTodLO5WcM5Nmo9UKoBN0i7QYa6UMU4P2U9TqoEN0exgLBu/kisspng-computer-icons-peace-flag-symbol-5b3ac24edb2938.9888678815305774868977.png",
           anchor: new window.google.maps.Point(2, 95),
         }}
       />
@@ -152,7 +166,7 @@ const MapUK = ({ teams, team }) => {
             setSelectedInfo(null);
           }}
           icon={{
-            url: `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><circle fill='rgb(255,69,27)' cx='15' cy='15' r='15'/><text text-anchor='middle' x='15' y='20' fill='white' font-size='15' font-family='Helvetica'>${getInitials(
+            url: `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><circle fill='rgb(255,106,77)' cx='15' cy='15' r='15'/><text text-anchor='middle' x='15' y='20' fill='white' font-size='15' font-family='Helvetica'>${getInitials(
               marker.name
             )}</text></svg>`,
             anchor: new window.google.maps.Point(15, 30),
@@ -171,7 +185,7 @@ const MapUK = ({ teams, team }) => {
         >
           <div className="map-pop-up">
             <svg width={50} height={50}>
-              <circle fill="rgb(255,69,27)" cx="25" cy="25" r="25" />
+              <circle fill="#00AABB" cx="25" cy="25" r="25" />
               <text
                 textAnchor="middle"
                 x="25"

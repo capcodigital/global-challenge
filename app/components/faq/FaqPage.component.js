@@ -12,11 +12,12 @@ const challenge_name = process.env.CHALLENGE_NAME
 
 function FaqPage() {
   return (
+    <div className={challenge_name}>
     <Container>
     <Segment vertical>
       <Grid className={`faq-container ${challenge_name}`} stackable
             centered>
-        <Grid.Column className={`faq-section ${challenge_name}`} style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
+        <Grid.Column className={`faq-section ${challenge_name} column-b`} style={{ paddingBottom: "2rem", paddingTop: "2rem" }}
             width={16}>
           {challenge_name === "global" && (
             <>
@@ -67,6 +68,7 @@ function FaqPage() {
       </Grid>
     </Segment>
     </Container>
+    </div>
   );
 }
 

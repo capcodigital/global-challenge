@@ -15,8 +15,9 @@
 }
 
 .header {
+  
   &.global {
-    background-color: #000000;
+    background-color: #0f2046;
     padding-top: 2rem !important;
 
     .global-challenge-logo {
@@ -26,6 +27,7 @@
   }
 
   &.uk {
+    background-color: white;
     padding-top: 2rem;
     padding-bottom: 1rem;
   }

@@ -32,9 +32,11 @@ const formatCompletionDate = (compDate) => {
 const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
   const history = useHistory();
 
-  const handleClick = (teamName) => {
+  const handleClick = (teamName, event) => {
     history.push(`/team/${teamName.toLowerCase().replace(/\s/g, "-")}`);
+    console.log(event)
   };
+  
 
   return (
     <>
@@ -69,7 +71,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
                     key={item.name}
                     className={dateCompletion}
                     onClick={
-                      isMainDashboard ? () => handleClick(item.name) : undefined
+                      isMainDashboard ? (e) => handleClick(item.name,e) : undefined
                     }
                   >
                     <Table.Cell className={"main position"}>

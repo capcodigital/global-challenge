@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Icon } from "semantic-ui-react";
 
-const challengeStartDate = new Date(2022, 3, 1, 0, 0, 0, 0); // 1th March
-const challengeEndDate = new Date(2022, 3, 31, 23, 59, 59, 0); // 31th March Midnight
+const challengeStartDate = new Date(2022, 6, 27, 0, 0, 0, 0); // 27th June
+const challengeEndDate = new Date(2022, 7, 9, 23, 59, 59, 0); // 9th July
 
 function getTimeRemaining() {
   let total = new Date();
@@ -64,11 +64,13 @@ const Countdown = ({ overallDistance }) => {
           <div className="small-text">SEC</div>
         </div>
       </div>
+      {/*
       <div className="distance-label">Overall distance</div>
       <div className="distance">
         {overallDistance.toFixed(0)}
         <div>km</div>
       </div>
+        */}
       <div>
         <Button
           secondary

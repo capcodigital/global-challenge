@@ -5,6 +5,8 @@
 }
 
 .tabs {
+    justify-content: space-between;
+    background-color: white;
   .tab {
     padding: 1rem 0px !important;
     font-size: 16px;
@@ -20,5 +22,6 @@
   
   &.ui.menu > .item:not(.active) {
     color:#FF6A4C !important;
+    background-color: white;
   }
 }
