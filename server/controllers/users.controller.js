@@ -46,48 +46,13 @@ exports.stats = function(req, res, next) {
 exports.all = function(req, res, next) {
 
    // Get all the users first so we can include their real names etc.
-   User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
+   User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
        if (err) {
            console.log("Data error please try again later");
        } else {
             res.jsonp(users);
        }
    });
-};
-
-exports.citUpdate = function(req, res) {
-    User.find().exec(function(err, users) {
-        if (err) {
-            res.json({error: "Server error please try again later" });
-        } else {
-            var userCount = users.length;
-            for (var i = 0; i < userCount; i++) {
-                if (users[i].username.length == 4) {
-                    updateUser(users[i]);
-                }
-            }
-            res.end();
-        }
-    });
-};
-
-function updateUser(user) {
-    Capco.find({username: username.toLowerCase()}).exec(function(err, profile) {
-        if (err) {
-            console.log("Could not update: " + user.username);
-        } else {
-            user.name = profile.name;
-            user.location = profile.location;
-            user.level = profile.level;
-            user.email = profile.email;
-
-            user.save(function(err, newUser) {
-                if (err) {
-                    console.log(err);
-                }
-            });
-        }
-    });
 };
 
 /**
@@ -134,7 +99,7 @@ exports.addManual = function(req, res) {
  * List of Users
  */
 exports.list = function(req, res, next) {
-    User.find({}).select('name username').sort('name').exec(function(err, users) {
+    User.find({}).select('name _id').sort('name').exec(function(err, users) {
         if (err) {
             res.render('error', {
                 status: 500
@@ -149,7 +114,7 @@ exports.list = function(req, res, next) {
  * Inactive Users
  */
 exports.inactiveUsers = function(req, res, next) {
-    User.find({totalDistance: 0}).select('name username email app location level expires_in').exec(function(err, users) {
+    User.find({totalDistance: 0}).select('name email app location level expires_in').exec(function(err, users) {
         if (err) {
           console.log(err);
             res.json({error: "Server error please try again later" });

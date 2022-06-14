@@ -45,14 +45,14 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
+    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
 
             let userMap = [];
             users.forEach(function(user) {
-                userMap[user.username.toLowerCase()] = user;
+                userMap[user._id] = user;
             });
 
             Location.find({}).exec(function(err, locations) {
@@ -66,8 +66,8 @@ exports.all = function(req, res, next) {
                         let updatedMembers = [];
 
                         location.members.forEach(function(member) {
-                            if (userMap[member.toLowerCase()]) {
-                                updatedMembers.push(userMap[member.toLowerCase()]);
+                            if (userMap[member]) {
+                                updatedMembers.push(userMap[member]);
                             }
                         });
 
@@ -98,7 +98,7 @@ function updateEveryInterval(minutes) {
 
                 let userMap = [];
                 users.forEach(function(user) {
-                    userMap[user.username.toLowerCase()] = user;
+                    userMap[user._id] = user;
                 });
 
                 Location.find().exec(function(err, locations) {
@@ -120,8 +120,8 @@ function updateEveryInterval(minutes) {
 
                         location.members.forEach(function(member) {
 
-                            if (userMap[member.toLowerCase()]) {
-                                let teamMember = userMap[member.toLowerCase()];
+                            if (userMap[member]) {
+                                let teamMember = userMap[member];
                                 location.activities.Walk += teamMember.totalWalk;
                                 location.activities.Run += teamMember.totalRun;
                                 location.activities.Swim += teamMember.totalSwim;
@@ -155,14 +155,14 @@ function updateEveryInterval(minutes) {
 /**
  * Add user to Location or create if it doesn't exist already
  */
- exports.AddOrUpdate = function(name, userName) {
+ exports.AddOrUpdate = function(name, id) {
 
     if (!name) {
         console.log("Error adding unspecified location name");
         return;
     }
 
-    if (!userName) {
+    if (!id) {
         console.log("Error adding unspecified user to location");
         return;
     }
@@ -173,8 +173,8 @@ function updateEveryInterval(minutes) {
 
         if (location && location.name) {
             console.log("Updating location: " + name);
-            if (!location.members.includes(userName)) {
-                location.members.push(userName);
+            if (!location.members.includes(id)) {
+                location.members.push(id);
                 location.markModified('members');
             }
         } else {
@@ -183,7 +183,7 @@ function updateEveryInterval(minutes) {
 
             location.name = name;
             location.members = [];
-            location.members.push(userName);
+            location.members.push(id);
 
             location.activities = {};
 
@@ -215,13 +215,13 @@ exports.remove = function(user) {
         name: user.location
     }).exec(function(err, location) {
         if (err || !location || locaion == null) {
-            console.log("Error removing user from location: " + user.username + " - " + user.location);
+            console.log("Error removing user from location: " + user.name + " - " + user.location);
         }
 
-        const index = location.members.indexOf(user.username);
+        const index = location.members.indexOf(user.name);
 
         if (index < 0) {
-            console.log("Error removing user from location: " + user.username + " - " + user.location);
+            console.log("Error removing user from location: " + user.name + " - " + user.location);
             return;
         }
 
@@ -230,7 +230,7 @@ exports.remove = function(user) {
             
         location.save(function(err) {
             if (err) {
-                console.log("Error removing user from location: " + user.username + " - " + user.location);
+                console.log("Error removing user from location: " + user.name + " - " + user.location);
             }
         });
     });

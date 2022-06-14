@@ -49,14 +49,14 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
+    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
 
             let userMap = [];
             users.forEach(function(user) {
-                userMap[user.username.toLowerCase()] = user;
+                userMap[user._id] = user;
             });
 
             Team.find({}).exec(function(err, teams) {
@@ -70,8 +70,8 @@ exports.all = function(req, res, next) {
                         let updatedMembers = [];
 
                         team.members.forEach(function(member) {
-                            if (userMap[member.toLowerCase()]) {
-                                updatedMembers.push(userMap[member.toLowerCase()]);
+                            if (userMap[member]) {
+                                updatedMembers.push(userMap[member]);
                             }
                         });
 
@@ -91,14 +91,14 @@ exports.all = function(req, res, next) {
 exports.teamMembers = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name username location level').exec(function(err, users) {
+    User.find({}).select('name _id location level').exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
 
             let userMap = [];
             users.forEach(function(user) {
-                userMap[user.username] = user;
+                userMap[user._id] = user;
             });
 
             Team.find({}).exec(function(err, teams) {
@@ -133,7 +133,7 @@ exports.teamMembers = function(req, res, next) {
 exports.notInATeam = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name username location level').exec(function(err, users) {
+    User.find({}).select('name _id location level').exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
@@ -186,8 +186,8 @@ exports.create = function(req, res) {
         }
 
         var team = new Team(req.body);
-        if (!team.members.includes(team.captain.toLowerCase()) && !team.members.includes(team.captain.toUpperCase())) {
-            team.members.push(team.captain.toLowerCase());
+        if (!team.members.includes(user._id)) {
+            team.members.push(user._id);
         }
 
         if (team.members.length < minMembers) {
@@ -224,8 +224,13 @@ exports.create = function(req, res) {
                     res.status(400).send({ message: 'createTeamFailed'});
                 }
             } else {
+                let memberIDs = [];
+                req.body.members.forEach(function(member) {
+                    memberIDs.push(mongoose.Types.ObjectId(member));
+                });
+
                 User.find({
-                    username: { $in: req.body.members }
+                    _id: { $in: memberIDs }
                 }).exec(function(err, users) {
                     let emailText = "Hello " + user.name + ",\n\r Your team - " + team.name + " has been successfully created with the following members: \n\r";
 
@@ -279,7 +284,7 @@ exports.update = function(req, res) {
                 return
             }
 
-            if (team.members.includes(req.body.member.toLowerCase()) || team.members.includes(req.body.member.toUpperCase())) { 
+            if (team.members.includes(user._id)) { 
                 res.status(400).send({ message: 'joinTeamFailedAlreadyAMember'});
                 return;
             }
@@ -288,7 +293,7 @@ exports.update = function(req, res) {
                 return;
             }
 
-            team.members.push(req.body.member.toLowerCase());
+            team.members.push(user._id);
             team.markModified('members');
                 
             team.save(function(err) {
@@ -299,7 +304,7 @@ exports.update = function(req, res) {
                     emailTeamMember(user, team);
 
                     User.findOne({
-                        username: team.captain.toLowerCase()
+                        _id: mongoose.Types.ObjectId(team.captain)
                     }).exec(function(err, captain) {
                         if (captain && captain.name) {
                             let emailText = "Hello " + captain.name + ",\n\r" + user.name + " has joined your team: " + team.name + 
@@ -350,7 +355,7 @@ function emailTeamMember(user, team) {
             return;
         }
 
-        const index = team.members.indexOf(req.body.member);
+        const index = team.members.indexOf(mongoose.Types.ObjectId(req.body.member));
 
         if (index < 0) {
             res.send(400, { message: 'removeFromTeamFailedNotAMember'});
@@ -411,7 +416,7 @@ exports.removeById = function(req, res) {
                 return;
             }
 
-            const index = team.members.indexOf(user.username);
+            const index = team.members.indexOf(user._id);
             errorMessage = "Unable to remove " + user.name + " from team " + team.name;
 
             if (index < 0) {
@@ -452,7 +457,7 @@ function updateEveryInterval(minutes) {
 
                 let userMap = [];
                 users.forEach(function(user) {
-                    userMap[user.username.toLowerCase()] = user;
+                    userMap[user._id] = user;
                 });
 
                 Team.find().exec(function(err, teams) {
@@ -473,8 +478,8 @@ function updateEveryInterval(minutes) {
                         team.totalDistanceConverted = 0;
 
                         team.members.forEach(function(member) {
-                            if (userMap[member.toLowerCase()]) {
-                                let teamMember = userMap[member.toLowerCase()];
+                            if (userMap[member]) {
+                                let teamMember = userMap[member];
                                 team.activities.Walk += teamMember.totalWalk;
                                 team.activities.Run += teamMember.totalRun;
                                 team.activities.Swim += teamMember.totalSwim;

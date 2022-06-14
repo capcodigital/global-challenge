@@ -45,14 +45,14 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name username location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
+    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
 
             let userMap = [];
             users.forEach(function(user) {
-                userMap[user.username.toLowerCase()] = user;
+                userMap[user._id] = user;
             });
 
             Level.find({}).exec(function(err, levels) {
@@ -66,8 +66,8 @@ exports.all = function(req, res, next) {
                         let updatedMembers = [];
 
                         level.members.forEach(function(member) {
-                            if (userMap[member.toLowerCase()]) {
-                                updatedMembers.push(userMap[member.toLowerCase()]);
+                            if (userMap[member]) {
+                                updatedMembers.push(userMap[member]);
                             }
                         });
 
@@ -98,7 +98,7 @@ function updateEveryInterval(minutes) {
 
                 let userMap = [];
                 users.forEach(function(user) {
-                    userMap[user.username.toLowerCase()] = user;
+                    userMap[user._id] = user;
                 });
 
                 Level.find().exec(function(err, levels) {
@@ -120,8 +120,8 @@ function updateEveryInterval(minutes) {
 
                         level.members.forEach(function(member) {
 
-                            if (userMap[member.toLowerCase()]) {
-                                let teamMember = userMap[member.toLowerCase()];
+                            if (userMap[member]) {
+                                let teamMember = userMap[member];
                                 level.activities.Walk += teamMember.totalWalk;
                                 level.activities.Run += teamMember.totalRun;
                                 level.activities.Swim += teamMember.totalSwim;
@@ -155,14 +155,14 @@ function updateEveryInterval(minutes) {
 /**
  * Add user to Level or create if it doesn't exist already
  */
- exports.AddOrUpdate = function(name, userName) {
+ exports.AddOrUpdate = function(name, id) {
 
     if (!name) {
         console.log("Error adding unspecified level name");
         return;
     }
 
-    if (!userName) {
+    if (!id) {
         console.log("Error adding unspecified user to level");
         return;
     }
@@ -173,8 +173,8 @@ function updateEveryInterval(minutes) {
 
         if (level && level.name) {
             console.log("Updating level: " + name);
-            if (!level.members.includes(userName)) {
-                level.members.push(userName);
+            if (!level.members.includes(id)) {
+                level.members.push(id);
                 level.markModified('members');
             }
         } else {
@@ -183,7 +183,7 @@ function updateEveryInterval(minutes) {
 
             level.name = name;
             level.members = [];
-            level.members.push(userName);
+            level.members.push(id);
 
             level.activities = {};
 
@@ -215,13 +215,13 @@ exports.remove = function(user) {
         name: user.level
     }).exec(function(err, level) {
         if (err || !level || level == null) {
-            console.log("Error removing user from level: " + user.username + " - " + user.level);
+            console.log("Error removing user from level: " + user.name + " - " + user.level);
         }
 
-        const index = level.members.indexOf(user.username);
+        const index = level.members.indexOf(user.name);
 
         if (index < 0) {
-            console.log("Error removing user from level: " + user.username + " - " + user.level);
+            console.log("Error removing user from level: " + user.name + " - " + user.level);
             return;
         }
 
@@ -230,7 +230,7 @@ exports.remove = function(user) {
             
         level.save(function(err) {
             if (err) {
-                console.log("Error removing user from level: " + user.username + " - " + user.level);
+                console.log("Error removing user from level: " + user.name + " - " + user.level);
             }
         });
     });

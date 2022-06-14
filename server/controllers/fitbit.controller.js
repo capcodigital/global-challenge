@@ -139,9 +139,6 @@ exports.authorize = function(req, res) {
                         user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
 
-                        locations.AddOrUpdate(user.location, username.toLowerCase());
-                        levels.AddOrUpdate(user.level, username.toLowerCase());
-
                         save(user, res);
                     }
                 });
@@ -428,6 +425,9 @@ function save(user, res) {
                 res.redirect(callbackUrl + 'register?success=serverError');
             }
         } else {
+            locations.AddOrUpdate(newUser.location, newUser._id);
+            levels.AddOrUpdate(newUser.level, newUser._id);
+
             // If User has joined part way through the competition. Retrieve previous days stats in the background
             challengeDates.forEach(function(date) {
                 getStats(newUser, date);
