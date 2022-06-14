@@ -69,7 +69,7 @@ class TeamsPage extends React.Component {
   }
 
   memberListChange = (event, { value }) => {
-    if (value.length > 3 || value.length < 3) {
+    if (value.length > 5 || value.length < 5) {
       this.setState({ allowCreate: false });
     } else {
       this.state.selectedMembers = value;

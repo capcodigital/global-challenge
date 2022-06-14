@@ -7,6 +7,7 @@ const challenge_name = process.env.CHALLENGE_NAME
   : "global";
 
 const EventRules = () => (
+  <div className={challenge_name}>
   <Container>
     <Segment vertical>
       {challenge_name === "global" && (
@@ -78,6 +79,7 @@ const EventRules = () => (
       )}
     </Segment>
   </Container>
+    </div>
 );
 
 export default EventRules;

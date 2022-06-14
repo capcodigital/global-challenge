@@ -2,7 +2,7 @@ export const questionData = {
   general: [
     {
       questionId: "view-list-participants",
-      questionText: "Can I view a list of Capco Global Challenge participants?",
+      questionText: "Can I view a list of all Easier Said Than Run participants?",
       answerText:
         "You can view a list of Challenge participants, and the teams that have been created <a href='/'>here</a>.",
     },
@@ -37,7 +37,7 @@ export const questionData = {
       questionId: "do-i-need-a-wearable",
       questionText: "Do I need to use a wearable device?",
       answerText:
-        'If you do not have a wearable device, then you can enter your manually tracked data into the Strava or Fitbit app or on your desktop and link to the Capco Global Challenge app.',
+        'If you do not have a wearable device, then you can enter your manually tracked data into the Strava or Fitbit app or on your desktop and link to the Capco UK Challenge app.',
     },
     {
       questionId: "upload-data-to-challenge",
@@ -49,7 +49,7 @@ export const questionData = {
       questionId: "cycling-distance-conversion",
       questionText: "How will cycling distances be recorded?",
       answerText:
-        'Cycling distances will be converted using a ratio of 3:1 throughout the Challenge to allow comparable participation across walkers, runners, rowers and cyclists. This is one of the broadly accepted conversion ratios.',
+        'Cycling distances will be converted using a ratio of 3:1 throughout the Challenge to allow comparable participation across walkers, runners and cyclists. This is one of the broadly accepted conversion ratios.',
     },
   ],
   team: [
@@ -63,7 +63,7 @@ export const questionData = {
       questionId: "how-to-leave-a-team",
       questionText: "How do I leave a team?",
       answerText:
-        "Use the unique link which you will have received in your email from the Challenge Team Support when you were registered for the team. You can then join another team if you wish.",
+        "Use the unique link which you will have received in your email from the Challenge Team Support when you were registered for the team. You can then join another team if you wish",
     },
   ],
   data: [
@@ -76,7 +76,7 @@ export const questionData = {
     {
       questionId: "why-is-my-data-not-syncing",
       questionText:
-        "Why is my data not syncing with the Capco Global Challenge application?",
+        "Why is my data not syncing with the Capco UK Challenge application?",
       answerText:
         "Please confirm that you have registered correctly by trying to register again. If this does not work, please open and refresh your app (Strava/Fitbit) and allow one hour for the data to sync. We also recommend opening your app daily throughout the Challenge to allow the data to sync. If this still does not work, please contact <a href='mailto:3cd19d49.capco.com@apac.teams.ms'>Challenge Team Support</a> for further assistance.",
     },
@@ -95,7 +95,7 @@ export const questionData = {
       questionId: "how-will-you-store-my-data",
       questionText: "How long will you store my data?",
       answerText:
-        "Your data will be stored for the duration of the Capco Global Challenge, plus a further 30 days. Following this date all personally identifying data will be deleted.",
+        "Your data will be stored for the duration of the Capco UK Challenge, plus a further 30 days. Following this date all personally identifying data will be deleted.",
     },
   ],
 };

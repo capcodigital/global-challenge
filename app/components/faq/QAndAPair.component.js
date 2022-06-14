@@ -10,7 +10,7 @@ const QAndAPair = ({ question }) => (
         {question.questionText}
       </Grid.Column>
     </Grid>
-    <Grid stackable centered className="answer-section">
+    <Grid stackable centered className="answer-section column-b ">
       <Grid.Column
         className="answer-text"
         dangerouslySetInnerHTML={{ __html: `${question.answerText}` }}

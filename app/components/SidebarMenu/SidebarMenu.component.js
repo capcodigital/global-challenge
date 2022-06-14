@@ -75,7 +75,7 @@ const SidebarMenu = ({ children, sidebarVisible, setSidebarVisible }) => {
           }
         </div>
       </Sidebar>
-      <Sidebar.Pusher dimmed={sidebarVisible} className={`${challenge_name}`}>
+      <Sidebar.Pusher dimmed={sidebarVisible} >
         <div>{children}</div>
       </Sidebar.Pusher>
     </Sidebar.Pushable>

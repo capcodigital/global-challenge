@@ -8,7 +8,7 @@ import {
 } from "@react-google-maps/api";
 import mapGlobalStyles from "./mapGlobalStyles";
 import { getInitials } from "../../common/Avatar.component";
-import GreenFlag from "./images/green-flag-icon.png"
+//import GreenFlag from "./images/green-flag-icon.png"
 
 const containerStyle = {
   width: "100%",

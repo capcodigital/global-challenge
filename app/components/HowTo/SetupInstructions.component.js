@@ -12,8 +12,8 @@ const SetupInstructions = () => (
       <Grid.Column textAlign="left" verticalAlign="middle" width={12}>
         <List>
           <List.Item>
-            1. Connect your Strava or Fitbit account to the Global Challenge app
-            by opening the Global Challenge app.
+            1. Connect your Strava or Fitbit account to the UK Challenge app
+            by opening the UK Challenge app.
           </List.Item>
           <List.Item>
             2. Enter your Capco 4-letter ID on the{" "}
@@ -38,7 +38,7 @@ const SetupInstructions = () => (
       >
         <List>
           <List.Item>
-            1. Link the Capco Global Challenge app with your Strava account, by
+            1. Link the Capco UK Challenge app with your Strava account, by
             entering your Strava credentials.
           </List.Item>
           <List.Item>
@@ -66,14 +66,14 @@ const SetupInstructions = () => (
         <List>
           <List.Item>
             3. Click on ‘Authorize’ to share your Strava activity information
-            with the Capco Global Challenge app.
+            with the Capco UK Challenge app.
           </List.Item>
           <List.Item>
             4. The Strava app will ask you if you wish to share private activity
             – this is up to you – only activity shared will be counted.
           </List.Item>
           <List.Item>
-            5. Your Capco Global Challenge registration is now complete!
+            5. Your Capco UK Challenge registration is now complete!
           </List.Item>
         </List>
       </Grid.Column>
@@ -93,7 +93,7 @@ const SetupInstructions = () => (
       >
         <List>
           <List.Item>
-            1. Link the Capco Global Step Challenge platform with your Fitbit
+            1. Link the Capco UK  Challenge platform with your Fitbit
             account, by entering your Fitbit credentials.
           </List.Item>
           <List.Item>
@@ -124,10 +124,10 @@ const SetupInstructions = () => (
         <List>
           <List.Item>
             3. Click on “Accept” to share your Fitbit activity information with
-            the Capco Global Challenge app{" "}
+            the Capco UK Challenge app{" "}
           </List.Item>
           <List.Item>
-            4. Your Capco Global Challenge registration is now complete!
+            4. Your Capco UK Challenge registration is now complete!
           </List.Item>
         </List>
       </Grid.Column>

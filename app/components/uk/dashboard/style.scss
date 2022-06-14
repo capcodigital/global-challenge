@@ -10,6 +10,10 @@ div.row {
 
 .dashboard {
   margin: 0px;
+  .ui.segment.secondary {
+    background-color: #0F2046 !important
+  }
+  
   .sign-wrapper {
     width: 100%;
     margin-bottom: 2rem;
@@ -28,6 +32,7 @@ div.row {
 
         .logo-container {
           margin-bottom: 20px;
+          
         }
       }
 
@@ -80,7 +85,7 @@ div.row {
 
   .back-link {
     font-size: 18px;
-    color: #fa451b;
+    color: ff6a4d;
   }
 
   .team-distance {
@@ -127,7 +132,7 @@ div.row {
   .content-container-dashboard {
     width: 450px;
     .container-header {
-      color: black;
+      color: #f3ecec;
     }
   }
 

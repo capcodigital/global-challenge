@@ -84,7 +84,6 @@ $ nvm install 14.17.5
 
 * Installing yarn ($ yarn install)
 * Running the app ($ npm start run)
-
 #### Access on http://localhost
 
 
@@ -102,17 +101,15 @@ Then follow installations steps again.
 * Setting up environment variables for correct UI, run the following: 
 for the global challenge: 
 ```
-$ export GOOGLE_MAPS_API_KEY=AIzaSyDj6Xw-eqeq8cHxo4LB6Sn3wqLqiM7E_k8and
+$ export GOOGLE_MAPS_API_KEY=AIzaSyDj6Xw-eqeq8cHxo4LB6Sn3wqLqiM7E_k8
 ```
 and
 
 ```
 $ export CHALLENGE_NAME=global
 ```
-For the UK version please set up the variables: 
-
-$ export  s_MAPS_API_KEY=AIzaSyCYHOtisPconp4HQSmnmdHV3c1i73s3y2s
-and 
+For the UK version please set up the variable: 
+ 
 ```
 $ export CHALLENGE_NAME=uk
 ```

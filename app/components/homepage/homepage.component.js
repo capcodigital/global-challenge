@@ -22,7 +22,7 @@ const HomePage = () => (
               <img src={landingGlobal} width="650px" alt="Global Challenge" />
             )}
             {challenge_name == "uk" && (
-              <img rc={landing} alt="ESTR UK Challenge" />
+              <img src={landing} alt="ESTR UK Challenge" />
             )}
           </Grid.Column>
           <Grid.Column width={6} className="registration">
@@ -56,11 +56,10 @@ const HomePage = () => (
             <p>
               Once you have registered, if you would like to create or sign up
               for a team, you can do so using the <a href="/teams/register" >‘Teams’</a> button in the top
-              right-hand corner (or using the left side menu on mobile). Each team will need to have four team members
-              and will complete a virtual Mount Fiji Ultra Marathon – a distance
-              of 166 KM! Team members will be able to view their progress on a
+              right-hand corner (or using the left side menu on mobile). Each team will need to have six team member.
+               Team members will be able to view their progress on a
               map alongside other teams and all kilometers will be added to our
-              global total.
+              challenge total.
             </p>
           </Grid.Column>
         </Grid>

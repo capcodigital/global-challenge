@@ -138,7 +138,7 @@ class DashboardUK extends React.Component {
                         />
                       </div>
                     </Grid.Row>
-
+                      {/*
                     <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
@@ -171,6 +171,7 @@ class DashboardUK extends React.Component {
                         />
                       </div>
                     </Grid.Row>
+                    */}
                   </Grid>
                 </Grid.Column>
               </Grid.Row>

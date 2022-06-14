@@ -1,14 +1,18 @@
 @import "../../styles/variables.scss";
 
 .homepage {
+  
   .banner {
     margin-top: 1rem;
     margin-bottom: 1rem;
+    
   }
 
   .header {
     font-size: 1.5rem !important;
     text-transform: uppercase !important;
+    color: white;
+    
   }
   .registration {
     .button.ui.secondary.donate {

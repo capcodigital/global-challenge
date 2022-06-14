@@ -7,6 +7,7 @@ const challenge_name = process.env.CHALLENGE_NAME
   : "global";
 
 const AboutPage = () => (
+  <div className={challenge_name}>
   <Container>
     <Segment vertical>
       {challenge_name === "global" && (
@@ -107,15 +108,23 @@ const AboutPage = () => (
         </>
       )}
       {challenge_name === "uk" && (
-        <Grid className="about-container">
+        <Grid 
+        columns="equal"
+        stackable
+        centered
+        className="about-container">
           <Grid.Column className="about-section column-b">
             <Header className="about-title">About</Header>
             <p>
-              We challenge you to walk, run, cycle, row or swim throughout
-              August - all at your own pace, whenever and wherever – with a view
-              to completing 700kms as a team of 5 by the end of the challenge –
-              the distance from London to Edinburgh Capco Offices.
+            Summer 2022 sees the return of <b>Easier Said That Run (ESTR) </b>!  
+            Some of you may have taken part previously, but for any new joins since the last event, 
+            ESTR is a multi-sport team event where you’ll work together in teams to cover a set distance.
             </p>
+            <p>
+            The summer event will take place over a 2-week period between June 27th – July 9th 2022, 
+            and you’ll be racing from Capco London office to Capco Edinburgh office*.
+            </p>
+           {/*
             <p>
               This is about staying active and being involved in the Capco
               community. Further, we will be{" "}
@@ -128,27 +137,54 @@ const AboutPage = () => (
               , to thank all of those heroes who have gone above and beyond
               during the crisis this year.
             </p>
+      */}
             <p>
-              If you hate running, join us on your bike! Your counted distance
-              will be 1/3 of that covered on foot, to try and keep things fair.
+            All distances will be tracked via the {" "}
+                <a href="/">
+                Capco Easier Said Than Run UK Challenge website/app
+                </a>{" "}
+            and will help us to achieve our collective target of ~400 miles*.
             </p>
             <p>
-              If that’s not your thing you can even row or swim! No conversion
-              factors will be applied here though; so you’ll need to get a
-              splash on!
+          <b>Registration:</b> <br />
+Register as an individual participant or team (see below) using the buttons in the top right-hand corner.
+            </p>
+            <p>
+            <b>Team Challenge:</b> <br />
+            Participants are invited to form a team of four to race the distance between Capco’s Great Eastern Street and
+            Rose Street offices – if you don’t have a team, you can be allocated to one that isn’t full. 
+            All miles will be added to our global total, with the bonus of being able to compete against other teams.
+            </p>
+            <p>
+            <b>COVID-19 Restrictions:</b> <br />
+            If you are unable to take part in outdoor exercise due to local Covid-19 restrictions, you can still participate. 
+            Please see the FAQs page.
+            </p>
+            <p>
+            We challenge you to walk, run and/or cycle over these 2 weeks – all at your own pace, whenever and wherever – with a view to completing the ~400 mile (~700km) distance as a team by the end of the challenge – 
+            the distance from our London to Edinburgh Capco Offices. This is about staying active and being involved in the Capco community. Further, we will be fundraising for the NHS. 
+            </p>
+            <p>
+If you hate running, join us on your bike! Your counted distance will be 1/3 of that covered on foot, to try and keep things fair.
             </p>
             <p>
               <b>Event Details</b> <br />
               Register By: 
-              <p className="red">31st August</p>
+              <p className="red">26th June</p>
               <br />
-              Challenge Date Range: <p className="red">1st - 30th September</p>
+              Challenge Date Range: <p className="red">27th June - 9th July</p>
             </p>
+            <p>
+                <b><a href='/register'>Sign up for the Challenge today!</a></b>
+              </p>
+            <i> *Distance is approximate and can vary by route</i>
           </Grid.Column>
         </Grid>
       )}
     </Segment>
+   
   </Container>
+  </div>
 );
 
 export default AboutPage;

@@ -11,6 +11,8 @@
 }
 .ui.header {
   display: block;
+  color: white !important;
+  
 }
 
 .sports-mobile {
@@ -57,7 +59,7 @@
   }
   .leaderboard-item {
     display: flex !important;
-    background: rgba(250, 69, 27, 0.2);
+    background: #939393;
     margin: 5px 0;
     span {
       padding: 10px;
@@ -203,7 +205,7 @@
 
       tr td {
         padding: 10px 0 10px 0;
-        background: rgba(250, 69, 27, 0.1);
+        background: #0f2046;
         height: 82px;
         &.loading {
           height: 52px;
