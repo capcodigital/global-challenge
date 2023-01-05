@@ -92,7 +92,7 @@ module.exports = (options) => ({
   target: 'web', // Make web variables accessible to webpack, e.g. window
   performance: options.performance || {},
   optimization: {
-    namedModules: true,
+    moduleIds: 'named',
     splitChunks: {
       name: 'vendor',
       minChunks: 2
