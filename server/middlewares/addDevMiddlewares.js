@@ -13,9 +13,9 @@ var locations = require('../controllers/locations.controller');
 
 function createWebpackMiddleware(compiler, publicPath) {
   return webpackDevMiddleware(compiler, {
-    noInfo: true,
+    // noInfo: true,
     publicPath,
-    silent: true,
+    // silent: true,
     stats: 'errors-only'
   });
 }
