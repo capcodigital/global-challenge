@@ -59,6 +59,8 @@ Confirm by ($ show collections).
     -	strava_secret.txt
     -	strava_key.txt
 
+    Please check for the files with the product owner.
+
 2.	Check your version of Node ($ node -v). If it is not 14.17.5 then follow the guide:
 
 - Confirm that nvm (Node Version Manager) is installed ($ nvm -v). It should output file location. 
@@ -101,9 +103,10 @@ Then follow installations steps again.
 * Setting up environment variables for correct UI, run the following: 
 for the global challenge: 
 ```
-$ export GOOGLE_MAPS_API_KEY=AIzaSyDj6Xw-eqeq8cHxo4LB6Sn3wqLqiM7E_k8
+$ export GOOGLE_MAPS_API_KEY={key}
 ```
-and
+
+Please check for the key with the product owner.
 
 ```
 $ export CHALLENGE_NAME=global
@@ -113,6 +116,7 @@ For the UK version please set up the variable:
 ```
 $ export CHALLENGE_NAME=uk
 ```
+and the same API key as above.
 
 Try ($ npm run start) again
  
