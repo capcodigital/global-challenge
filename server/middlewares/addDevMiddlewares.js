@@ -1,7 +1,9 @@
 const path = require('path');
+const util = require("util");
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+const { createFsFromVolume, Volume } = require("memfs");
 
 var users = require('../controllers/users.controller');
 var teams = require('../controllers/teams.controller');
@@ -11,25 +13,19 @@ var strava = require('../controllers/strava.controller');
 var levels = require('../controllers/levels.controller');
 var locations = require('../controllers/locations.controller');
 
-function createWebpackMiddleware(compiler, publicPath) {
-  return webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath,
-    silent: true,
-    stats: 'errors-only'
-  });
-}
-
 module.exports = function addDevMiddlewares(app, webpackConfig) {
   const compiler = webpack(webpackConfig);
-  const middleware = createWebpackMiddleware(compiler, webpackConfig.output.publicPath);
+  const fs = createFsFromVolume(new Volume());
+  fs.join = path.join.bind(path);
+  const readFile = util.promisify(fs.readFile);
 
+  const middleware = webpackDevMiddleware(compiler, {
+    publicPath: webpackConfig.output.publicPath,
+    stats: "errors-only",
+    outputFileSystem: fs,
+  });
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
-
-  // Since webpackDevMiddleware uses memory-fs internally to store build
-  // artifacts, we use it instead
-  const fs = middleware.fileSystem;
 
   app.get('/users/userStats', users.stats);
   app.get('/users/list', users.list);
@@ -67,13 +63,12 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   app.get('/locations/list', locations.list);
   app.get('/locations', locations.all);
 
-  app.get('*', (req, res) => {
-    fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
-      if (err) {
-        res.sendStatus(404);
-      } else {
-        res.send(file.toString());
-      }
-    });
+  app.get("*", async (req, res) => {
+    try {
+      const file = await readFile(path.join(compiler.outputPath, "index.html"));
+      res.send(file.toString());
+    } catch (error) {
+      res.sendStatus(404);
+    }
   });
 };

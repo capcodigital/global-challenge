@@ -64,15 +64,6 @@ const render = () => {
   );
 };
 
-if (module.hot) {
-  // Find there is issues with this
-
-  // module.hot.accept(['components'], () => {
-  //   ReactDOM.unmountComponentAtNode(MOUNT_NODE);
-  //   render();
-  // });
-}
-
 render();
 
 // Refresh every hour to pick up the latest updates
