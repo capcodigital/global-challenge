@@ -82,7 +82,7 @@
     "ssri": "6.0.2",
     "strava-v3": "^2.1.0",
     "topojson-client": "^3.0.0",
-    "underscore": "^1.12.1",
+    "underscore": "^1.13.6",
     "warning": "^4.0.1",
     "whatwg-fetch": "2.0.4",
     "y18n": "4.0.1",
