@@ -75,7 +75,7 @@
     "react-router-redux": "5.0.0-alpha.6",
     "redux": "3.7.2",
     "redux-immutable": "4.0.0",
-    "reselect": "4.0.0",
+    "reselect": "4.1.7",
     "sanitize.css": "8.0.0",
     "sass": "^1.57.1",
     "simple-oauth2": "^2.2.1",
