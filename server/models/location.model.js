@@ -20,7 +20,8 @@ var LocationSchema = new Schema({
         Swim: Number, 
         Cycling: Number,
         CyclingConverted: Number,
-        Rowing: Number
+        Rowing: Number,
+        Yoga: Number
     },
     members: [],
     avatar: String,

@@ -49,7 +49,7 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
+    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalYoga totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
@@ -209,6 +209,7 @@ exports.create = function(req, res) {
         team.activities.Cycling = 0;
         team.activities.CyclingConverted = 0;
         team.activities.Rowing = 0;
+        team.activities.Yoga = 0;
         team.totalDistance = 0;
         team.totalDistanceConverted = 0;
 
@@ -474,6 +475,7 @@ function updateEveryInterval(minutes) {
                         team.activities.Cycling = 0;
                         team.activities.CyclingConverted = 0;
                         team.activities.Rowing = 0;
+                        team.activities.Yoga = 0;
                         team.totalDistance = 0;
                         team.totalDistanceConverted = 0;
 
@@ -486,6 +488,7 @@ function updateEveryInterval(minutes) {
                                 team.activities.Cycling += teamMember.totalCycling;
                                 team.activities.CyclingConverted += teamMember.totalCyclingConverted;
                                 team.activities.Rowing += teamMember.totalRowing;
+                                team.activities.Yoga += teamMember.totalYoga;
 
                                 team.totalDistance += teamMember.totalDistance;
                                 team.totalDistanceConverted += Math.round(teamMember.totalDistanceConverted);

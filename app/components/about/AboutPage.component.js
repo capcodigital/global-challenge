@@ -116,63 +116,44 @@ const AboutPage = () => (
           <Grid.Column className="about-section column-b">
             <Header className="about-title">About</Header>
             <p>
-            Summer 2022 sees the return of <b>Easier Said That Run (ESTR) </b>!  
+            Spring 2023 sees the return of  <b>Easier Said That Run (ESTR)  </b> ! 
             Some of you may have taken part previously, but for any new joins since the last event, 
-            ESTR is a multi-sport team event where you’ll work together in teams to cover a set distance.
-            </p>
+            ESTR is a team event where you’ll work together in teams to cover a set distance.
             <p>
-            The summer event will take place over a 2-week period between June 27th – July 9th 2022, 
-            and you’ll be racing from Capco London office to Capco Edinburgh office*.
+            The spring event will take place over 1 month between 01 – 31 March, 
+            and you’ll be racing from Capco London office to Capco Manchester office*. 
+            All distances will be tracked via the Capco Easier Said Than Run UK Challenge website/app
             </p>
-           {/*
-            <p>
-              This is about staying active and being involved in the Capco
-              community. Further, we will be{" "}
-              <a
-                href="https://fundraise.unfoundation.org/fundraiser/3140126"
-                taget="_blank"
-              >
-                fundraising for the NHS
-              </a>
-              , to thank all of those heroes who have gone above and beyond
-              during the crisis this year.
             </p>
-      */}
             <p>
             All distances will be tracked via the {" "}
                 <a href="/">
                 Capco Easier Said Than Run UK Challenge website/app
-                </a>{" "}
-            and will help us to achieve our collective target of ~400 miles*.
+                </a>{" "}.
             </p>
             <p>
           <b>Registration:</b> <br />
-Register as an individual participant or team (see below) using the buttons in the top right-hand corner.
+          Register as an individual participant first and then create or join a team (see below) using the buttons in the top right-hand corner.
             </p>
             <p>
             <b>Team Challenge:</b> <br />
-            Participants are invited to form a team of four to race the distance between Capco’s Great Eastern Street and
-            Rose Street offices – if you don’t have a team, you can be allocated to one that isn’t full. 
-            All miles will be added to our global total, with the bonus of being able to compete against other teams.
+            Participants are invited to form a team of four to race the distance between Capco’s Great Eastern Street and Manchester offices – if you don’t have a team, you can be allocated to one that isn’t full.
             </p>
             <p>
             <b>COVID-19 Restrictions:</b> <br />
-            If you are unable to take part in outdoor exercise due to local Covid-19 restrictions, you can still participate. 
-            Please see the FAQs page.
+            <p>
+            If you are unable to take part in outdoor exercise due to local Covid-19 restrictions, you can still participate. Please see the FAQs page.
             </p>
             <p>
-            We challenge you to walk, run and/or cycle over these 2 weeks – all at your own pace, whenever and wherever – with a view to completing the ~400 mile (~700km) distance as a team by the end of the challenge – 
-            the distance from our London to Edinburgh Capco Offices. This is about staying active and being involved in the Capco community. Further, we will be fundraising for the NHS. 
+        We challenge you to walk, run or jog over the coming month – all at your own pace, whenever and wherever – with a view to completing the ~280Km distance as a team by the end of the challenge – the distance from our London to Manchester Capco Offices. This is about staying active and being involved in the Capco community.
             </p>
-            <p>
-If you hate running, join us on your bike! Your counted distance will be 1/3 of that covered on foot, to try and keep things fair.
             </p>
             <p>
               <b>Event Details</b> <br />
               Register By: 
-              <p className="red">26th June</p>
+              <p className="red">28th Feb</p>
               <br />
-              Challenge Date Range: <p className="red">27th June - 9th July</p>
+              Challenge Date Range: <p className="red">1st March - 31st March</p>
             </p>
             <p>
                 <b><a href='/register'>Sign up for the Challenge today!</a></b>

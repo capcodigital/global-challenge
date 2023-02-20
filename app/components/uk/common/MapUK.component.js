@@ -43,17 +43,19 @@ const options = {
 };
 
 const waypts = [
-  "Epping, England",
-  "Caistor, England",
-  "Market Weighton, England",
-  "Middleton Tyas, England",
-  "Alston, England",
-  "Moffat, Scotland",
+  "Watford, England",
+  "Buckingham, England",
+  "Royal Leamington Spa, England",
+  "Banbury, England",
+  "Shirley, England",
+  "Birmingham, England",
+  "Stoke-on-Trent, England",
+  "Manchester, England",
 ].map((address) => ({ location: address, stopover: true }));
 
 const MapUK = ({ teams, team }) => {
   const londonOffice = { lat: 51.5255401, lng: -0.0827686 };
-  const edinburghOffice = { lat: 55.953222, lng: -3.194448 };
+  const edinburghOffice = { lat: 53.480822, lng: -2.242648 };
   
   const [selectedInfo, setSelectedInfo] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);

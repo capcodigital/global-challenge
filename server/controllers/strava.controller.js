@@ -130,6 +130,7 @@ exports.authorize = function(req, res) {
                         user.totalCycling = 0;
                         user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
+                        user.totalYoga = 0;
 
                         user.save(function(err, newUser) {
                             if (err) {
@@ -269,6 +270,7 @@ function getStats(user) {
             user.totalCycling = 0;
             user.totalCyclingConverted = 0;
             user.totalRowing = 0;
+            user.totalYoga = 0;
 
             var activityCount = user.activities.length;
             if (activityCount === 0) {
@@ -307,9 +309,9 @@ function getStats(user) {
                             case 'Wheelchair':
                                 user.totalWalk = user.totalWalk + (user.activities[i].distance/1000);
                                 break;
-                            // case 'Yoga':
-                            //     user.totalWalk = user.totalWalk + (((user.activities[i].moving_time/60)*20)/1000);
-                            //     break;
+                            case 'Yoga':
+                                user.totalWalk = user.totalWalk + (((user.activities[i].moving_time/60)*20)/1000);
+                                break;
                             // case 'Workout':
                             // case 'WeightTraining':
                             // case 'Crossfit':
@@ -352,6 +354,7 @@ function getStats(user) {
             user.totalCycling = Math.floor(user.totalCycling*100)/100;
             user.totalCyclingConverted = Math.floor(user.totalCyclingConverted*100)/100;
             user.totalWalk = Math.floor(user.totalWalk*100)/100;
+            user.totalYoga = Math.floor(user.totalYoga*100)/100;
             
             user.totalDistanceConverted = Math.floor(user.totalDistanceConverted*100)/100;
             user.totalDistance = Math.floor(user.totalDistance*100)/100;
