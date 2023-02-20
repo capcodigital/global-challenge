@@ -15,7 +15,7 @@ import "./style.scss";
 
 const containerStyle = {
   width: "100%",
-  height: "80vh",
+  height: "50vh",
   minHeight: "600px",
   maxHeight: "900px"
 };
