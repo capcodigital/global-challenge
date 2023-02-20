@@ -1,0 +1,46 @@
+name: Build, Push and Deploy Global Challenge Project
+on:
+  push:
+    branches:
+      - 'master'
+
+env:
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  RUN_SERVICE: ${{ secrets.RUN_SERVICE_NAME }}
+  REGION: ${{ secrets.REGION}}
+  GIT_ACTIONS_SA: ${{ secrets.GIT_ACTIONS_SA }}
+  IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+
+jobs:
+  build_push_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      #Authentication via credentials json
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ env.GIT_ACTIONS_SA }}'
+      
+      #Setup gcloud CLI
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Authorize Docker push
+        run: gcloud auth configure-docker
+
+      - name: Build and Push Container
+        run: |-
+          docker build -t eu.gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest .
+          docker push eu.gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Deploy to Cloud Run
+        run: |-
+          gcloud run deploy ${{ env.RUN_SERVICE }} \
+            --region ${{ env.REGION }} \
+            --image eu.gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest \
+            --platform "managed" \
+            --quiet
