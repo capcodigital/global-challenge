@@ -25,7 +25,7 @@ var ChallengeSchema = new Schema({
     },
     activities: {
         type: [String],
-        enum: ['Walk', 'Run', 'Ride', 'Swim', 'Rowing'],
+        enum: ['Walk', 'Run', 'Ride', 'Swim', 'Rowing', 'Yoga'],
         default: 'Walk',
     },
     minTeamSize: Number,

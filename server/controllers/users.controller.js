@@ -46,7 +46,7 @@ exports.stats = function(req, res, next) {
 exports.all = function(req, res, next) {
 
    // Get all the users first so we can include their real names etc.
-   User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
+   User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalYoga totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
        if (err) {
            console.log("Data error please try again later");
        } else {

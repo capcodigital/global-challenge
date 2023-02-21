@@ -26,7 +26,7 @@ const HomePage = () => (
             )}
           </Grid.Column>
           <Grid.Column width={6} className="registration">
-            <FormattedHTMLMessage id="homepage.instructionsESTR" />
+            {/* <FormattedHTMLMessage id="homepage.instructionsESTR" />
             <Button
               secondary
               fluid
@@ -37,7 +37,7 @@ const HomePage = () => (
               className="donate"
             >
               <FormattedMessage id="homepage.donate" />
-            </Button>
+            </Button> */}
 
             <h2>Register</h2>
             <p>

@@ -81,7 +81,7 @@ const TeamDashboardUK = ({ getTeamsList, teams }) => {
                     />
                   </div>
                 </Grid.Row>
-                <Grid.Row>
+                {/* <Grid.Row>
                   <div className="content-container-dashboard">
                     <Header size="medium" className="container-header">
                       <img src={cycleIcon} alt="Walk Logo" />
@@ -97,7 +97,7 @@ const TeamDashboardUK = ({ getTeamsList, teams }) => {
                       showActualDistance={true}
                     />
                   </div>
-                </Grid.Row>
+                </Grid.Row> */}
 
                 <Grid.Row>
                   <div className="content-container-dashboard">
@@ -114,6 +114,21 @@ const TeamDashboardUK = ({ getTeamsList, teams }) => {
                     />
                   </div>
                 </Grid.Row>
+                {/* <Grid.Row>
+                  <div className="content-container-dashboard">
+                    <Header size="medium" className="container-header">
+                      <img src={walkIcon} alt="Walk Logo" />
+                      Yoga
+                    </Header>
+                    <TeamSportsLeaderboardTable
+                      height={170}
+                      data={team.members.map((member) => ({
+                        name: member.name,
+                        distance: member.totalYoga.toFixed(2),
+                      }))}
+                    />
+                  </div>
+                </Grid.Row> */}
                 {/*
                 <Grid.Row style={{ paddingBottom: 20 }}>
                   <div className="content-container-dashboard">

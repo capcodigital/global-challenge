@@ -55,19 +55,15 @@ const EventRules = () => (
                 completed if entering data manually.
               </p>
               <p>
-                <b>Do not alter distance completed by bike</b> – the application
-                will adjust this for you.
-              </p>
-              <p>
                 <b>Try and go further together</b> – but do not push yourself
                 beyond your own physical capabilities – it’s just for fun!
               </p>
               <p>
-                <b>All teams should be a total of 5.</b>
+                <b>All teams should be a total of 4.</b>
               </p>
               <p>
                 <b>A minimum 3 members are required to form a team</b> – but you
-                will be disadvantaged against those teams with 5 – so seek more
+                will be disadvantaged against those teams with 4 – so seek more
                 teammates!
               </p>
               <p>

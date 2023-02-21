@@ -138,6 +138,7 @@ exports.authorize = function(req, res) {
                         user.totalCycling = 0;
                         user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
+                        user.totalYoga = 0;
 
                         save(user, res);
                     }
@@ -301,6 +302,7 @@ function getStats(user, date) {
             user.totalCycling = 0;
             user.totalCyclingConverted = 0;
             user.totalRowing = 0;
+            user.totalYoga = 0;
 
             var activityCount = challengeDates.length;
             for (var i = 0; i < activityCount; i++) {
@@ -323,12 +325,12 @@ function getStats(user, date) {
                                     user.totalDistance = user.totalDistance + activityEntry.distance;
                                     user.totalDuration = user.totalDuration + activityEntry.duration;
                                     break;
-                                // case 'Yoga':
-                                //     user.totalWalk = user.totalWalk + (((activityEntry.duration/60000)*20)/1000);
-                                //     user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*20)/1000);
-                                //     user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*20)/1000);
-                                //     user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
-                                //     break;
+                                case 'Yoga':
+                                    user.totalWalk = user.totalWalk + (((activityEntry.duration/60000)*20)/1000);
+                                    user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*20)/1000);
+                                    user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*20)/1000);
+                                    user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
+                                    break;
                                 // case 'Circuit Training':
                                 // case 'Aerobic Workout':
                                 // case 'Sport':
@@ -393,7 +395,7 @@ function getStats(user, date) {
             user.totalCycling = Math.floor(user.totalCycling*100)/100;
             user.totalCyclingConverted = Math.floor(user.totalCyclingConverted*100)/100;
             user.totalWalk = Math.floor(user.totalWalk*100)/100;
-            
+            user.totalYoga = Math.floor(user.totalYoga*100)/100;
             user.totalDistanceConverted = Math.floor(user.totalDistanceConverted*100)/100;
             user.totalDistance = Math.floor(user.totalDistance*100)/100;
 

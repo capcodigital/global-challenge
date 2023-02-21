@@ -105,23 +105,22 @@ class DashboardUK extends React.Component {
                         />
                       </div>
                     </Grid.Row>
-                    <Grid.Row>
+                    {/* <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
-                          <img src={cycleIcon} alt="Walk Logo" />
-                          Bike
+                          <img src={runIcon} alt="Walk Logo" />
+                          Yoga
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
                           data={teams.map((team) => ({
                             name: team.name,
-                            distance: team.activities["Cycling"].toFixed(2),
-                            position: team.activities.cyclingPosition,
+                            distance: team.activities["Yoga"].toFixed(2),
+                            position: team.activities.runPosition,
                           }))}
                         />
                       </div>
-                    </Grid.Row>
-
+                    </Grid.Row> */}
                     <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
@@ -138,8 +137,8 @@ class DashboardUK extends React.Component {
                         />
                       </div>
                     </Grid.Row>
-                      {/*
-                    <Grid.Row>
+                      
+                    {/* <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
                           <img src={swimIcon} alt="Swim Logo" />
@@ -154,8 +153,8 @@ class DashboardUK extends React.Component {
                           }))}
                         />{" "}
                       </div>
-                    </Grid.Row>
-                    <Grid.Row>
+                    </Grid.Row> */}
+                    {/* <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
                           <img src={rowIcon} alt="Row Logo" />
@@ -170,8 +169,8 @@ class DashboardUK extends React.Component {
                           }))}
                         />
                       </div>
-                    </Grid.Row>
-                    */}
+                    </Grid.Row> */}
+                   
                   </Grid>
                 </Grid.Column>
               </Grid.Row>

@@ -30,6 +30,7 @@ var UserSchema = new Schema({
     totalSteps: Number,
     totalWalk: Number,
     totalRun: Number,
+    totalYoga: Number,
     totalSwim: Number,
     totalCycling: Number,
     totalCyclingConverted: Number,

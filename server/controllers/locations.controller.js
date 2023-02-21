@@ -115,6 +115,7 @@ function updateEveryInterval(minutes) {
                         location.activities.Cycling = 0;
                         location.activities.CyclingConverted = 0;
                         location.activities.Rowing = 0;
+                        location.activities.Yoga = 0;
                         location.totalDistance = 0;
                         location.totalDistanceConverted = 0;
 
@@ -128,6 +129,7 @@ function updateEveryInterval(minutes) {
                                 location.activities.Cycling += teamMember.totalCycling;
                                 location.activities.CyclingConverted += teamMember.totalCyclingConverted;
                                 location.activities.Rowing += teamMember.totalRowing;
+                                location.activities.Yoga += teamMember.totalYoga;
 
                                 location.totalDistance += teamMember.totalDistance;
                                 location.totalDistanceConverted += Math.round(teamMember.totalDistanceConverted);
@@ -193,6 +195,7 @@ function updateEveryInterval(minutes) {
             location.activities.Cycling = 0;
             location.activities.CyclingConverted = 0;
             location.activities.Rowing = 0;
+            location.activities.Yoga = 0;
             location.totalDistance = 0;
             location.totalDistanceConverted = 0; 
         }
