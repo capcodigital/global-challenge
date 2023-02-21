@@ -114,7 +114,7 @@ const TeamDashboardUK = ({ getTeamsList, teams }) => {
                     />
                   </div>
                 </Grid.Row>
-                <Grid.Row>
+                {/* <Grid.Row>
                   <div className="content-container-dashboard">
                     <Header size="medium" className="container-header">
                       <img src={walkIcon} alt="Walk Logo" />
@@ -128,7 +128,7 @@ const TeamDashboardUK = ({ getTeamsList, teams }) => {
                       }))}
                     />
                   </div>
-                </Grid.Row>
+                </Grid.Row> */}
                 {/*
                 <Grid.Row style={{ paddingBottom: 20 }}>
                   <div className="content-container-dashboard">

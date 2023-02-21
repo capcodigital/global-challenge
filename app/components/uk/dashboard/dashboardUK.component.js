@@ -105,7 +105,7 @@ class DashboardUK extends React.Component {
                         />
                       </div>
                     </Grid.Row>
-                    <Grid.Row>
+                    {/* <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
                           <img src={runIcon} alt="Walk Logo" />
@@ -115,12 +115,12 @@ class DashboardUK extends React.Component {
                           height={170}
                           data={teams.map((team) => ({
                             name: team.name,
-                            distance: team.activities["Run"].toFixed(2),
+                            distance: team.activities["Yoga"].toFixed(2),
                             position: team.activities.runPosition,
                           }))}
                         />
                       </div>
-                    </Grid.Row>
+                    </Grid.Row> */}
                     <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
