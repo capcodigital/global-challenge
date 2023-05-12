@@ -174,7 +174,7 @@ exports.notInATeam = function(req, res, next) {
 exports.create = function(req, res) {
 
     User.findOne({
-        username: req.body.captain.toLowerCase()
+        email: req.body.captain.toLowerCase()
     }).exec(function(err, user) {
         if (err) {
             res.status(400).send({ message: 'createTeamFailed'});
@@ -258,7 +258,7 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
 
     User.findOne({
-        username: req.body.member.toLowerCase()
+        email: req.body.member.toLowerCase()
     }).exec(function(err, user) {
         if (err) {
             res.status(400).send({ message: 'joinTeamFailed'});

@@ -49,12 +49,11 @@ const RegistrationForm = () => (
 
       <Form.Input
         fluid
-        maxLength="4"
-        placeholder="Capco ID"
+        placeholder="Capco Email"
         name="state"
         id="capco"
-        pattern="[A-Za-z0-9]{4}"
-        title="Please enter your 4 letter Capco ID"
+        pattern="^[A-Za-z0-9._%+-]+@capco\.com$"
+        title="Please enter your Capco Email"
         required
       />
       <Button className="strava" fluid size="large">
@@ -88,12 +87,11 @@ const RegistrationForm = () => (
 
       <Form.Input
         fluid
-        maxLength="4"
-        placeholder="Capco ID"
+        placeholder="Capco Email"
         name="state"
         id="capco"
-        pattern="[A-Za-z0-9]{4}"
-        title="Please enter your 4 letter Capco ID"
+        pattern="^[A-Za-z0-9._%+-]+@capco\.com$"
+        title="Please enter your Capco Email"
         required
       />
       <Button className="fitbit" fluid size="large">

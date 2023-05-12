@@ -42,7 +42,7 @@
     "cors": "^2.8.5",
     "cross-env": "5.2.0",
     "d3": "^7.8.0",
-    "d3-array": "^2.0.3",
+    "d3-array": "^2.12.1",
     "d3-ease": "^1.0.5",
     "d3-geo": "^1.11.3",
     "d3-scale": "^4.0.2",
@@ -65,7 +65,7 @@
     "nodemailer": "^6.9.0",
     "prismjs": "^1.29.0",
     "prop-types": "^15.6.2",
-    "query-string": "^6.5.0",
+    "query-string": "^6.14.1",
     "react": "^16.8",
     "react-dom": "^16.8",
     "react-helmet": "^5.2.0",
@@ -86,7 +86,7 @@
     "warning": "^4.0.1",
     "whatwg-fetch": "2.0.4",
     "y18n": "4.0.1",
-    "yarn": "^1.22.10"
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@babel/cli": "7.1.2",
