@@ -74,7 +74,7 @@ exports.authorize = function(req, res) {
         console.log("Could not authenticate with your Fitbit account");
         res.redirect(callbackUrl + 'register?success=fitBitError');
     } else {
-        var username = req.query.state;
+        var email = req.query.state;
         options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=" + callbackUrl + "fitbit/auth";
 
         var newReq = buildRequest(options, function(err, result) {
@@ -85,7 +85,7 @@ exports.authorize = function(req, res) {
                 console.log(result.errors[0].message);
             } else {
 
-                Capco.findOne({username: username.toUpperCase()}).exec(function(err, profile) {
+                Capco.findOne({email: email.toLowerCase()}).exec(function(err, profile) {
                     if (err || !profile) {
                         res.json({error: "Could not find your Capco ID"});
                     } else {
@@ -100,7 +100,7 @@ exports.authorize = function(req, res) {
                         var expiration = new Date();
                         expiration.setTime(datemillis + expiresTimeMillis);
 
-                        user.username = username.toLowerCase();
+                        user.email = email.toLowerCase();
                         user.app = "FitBit";
                         user.user_id = result.user_id;
                         user.token_type = result.token_type;
@@ -110,7 +110,6 @@ exports.authorize = function(req, res) {
 
                         user.level = profile.level;
                         user.name = profile.name;
-                        user.email = profile.email;
 
                         if (profile.location === "New York RISC") {
                             user.location = "New York";
@@ -173,7 +172,7 @@ exports.update = function(req, res) {
 * Update specified user's stats from fitbit
 */
 exports.updateIndividualUser = function(req, res) {
-    User.find({username: req.params.user}).exec(function(err, users) {
+    User.find({email: req.params.user}).exec(function(err, users) {
         if (err) {
             res.json({error: "Server error please try again later"});
         } else if (!users || users.length == 0) {
@@ -185,7 +184,7 @@ exports.updateIndividualUser = function(req, res) {
             });
             res.json({
                 name: users[0].name,
-                username: users[0].username,
+                email: users[0].email,
                 location: users[0].location,
                 level: users[0].level,
                 totalDistance: users[0].totalDistance
@@ -331,16 +330,16 @@ function getStats(user, date) {
                                     user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*20)/1000);
                                     user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
                                     break;
-                                // case 'Circuit Training':
-                                // case 'Aerobic Workout':
-                                // case 'Sport':
-                                // case 'Workout':
-                                // case 'Outdoor Bike':
-                                //     user.totalRun = user.totalRun + (((activityEntry.duration/60000)*160)/1000);
-                                //     user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*160)/1000);
-                                //     user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*160)/1000);
-                                //     user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
-                                //     break;
+                                case 'Circuit Training':
+                                case 'Aerobic Workout':
+                                case 'Sport':
+                                case 'Workout':
+                                case 'Outdoor Bike':
+                                    user.totalRun = user.totalRun + (((activityEntry.duration/60000)*160)/1000);
+                                    user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*160)/1000);
+                                    user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*160)/1000);
+                                    user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
+                                    break;
                                 default:
                                     console.log("Unexpected activity type: " + JSON.stringify(activityEntry) + " - User: " + user.name);
                                     break;
@@ -355,9 +354,9 @@ function getStats(user, date) {
                                 case 'Run':
                                     user.totalRun = user.totalRun + activityEntry.distance;
                                     break;
-                                // case 'Swim':
-                                //     user.totalSwim = user.totalSwim + activityEntry.distance;
-                                //     break;
+                                case 'Swim':
+                                    user.totalSwim = user.totalSwim + activityEntry.distance;
+                                    break;
                                 case 'Bike':
                                     user.totalCycling = user.totalCycling + activityEntry.distance;
                                     user.totalCyclingConverted = user.totalCyclingConverted + (activityEntry.distance/CYCLING_CONVERSION);
@@ -451,7 +450,7 @@ function save(user, res) {
 
 function updateAccessTokens(user) {
     User.findOne({
-        username: user.username.toLowerCase()
+        email: user.email.toLowerCase()
     }).exec(function(err, existingUser) {
         if (err || !existingUser) {
             console.log("Error updating existing useer access tokens during re-registration");

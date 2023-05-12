@@ -61,7 +61,7 @@ exports.authorize = function(req, res) {
         console.log("Could not authenticate with your Strava account");
         res.redirect(callbackUrl + 'register?success=stravaError');
     } else {
-        var username = req.query.state;
+        var email = req.query.state;
         var userOptions = authOptions;
         userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "&code=" + req.query.code;
 
@@ -75,13 +75,13 @@ exports.authorize = function(req, res) {
                 res.redirect(callbackUrl + 'register?success=stravaError');
             } else {
                 
-                Capco.findOne({username: username.toUpperCase()}).exec(function(err, profile) {
+                Capco.findOne({email: email.toLowerCase()}).exec(function(err, profile) {
                     if (err || !profile) {
                         res.json({error: "Could not find your Capco ID"});
                     } else {
                         var user = new User();
 
-                        user.username = username.toLowerCase();
+                        user.email = email.toLowerCase();
                         user.app = "Strava";
                         user.access_token = result.access_token;
                         user.refresh_token = result.refresh_token;
@@ -100,7 +100,6 @@ exports.authorize = function(req, res) {
                         user.user_id = result.athlete.id;
 
                         user.name = profile.name;
-                        user.email = profile.email;
                         user.location = profile.location;
                         user.level = profile.level;
 
@@ -129,7 +128,7 @@ exports.authorize = function(req, res) {
                         user.totalSwim = 0;
                         user.totalCycling = 0;
                         user.totalCyclingConverted = 0;
-                        user.totalRowing = 0;
+                        // user.totalRowing = 0;
                         user.totalYoga = 0;
 
                         user.save(function(err, newUser) {
@@ -173,7 +172,7 @@ exports.authorize = function(req, res) {
 
 function updateAccessTokens(user) {
     User.findOne({
-        username: user.username.toLowerCase()
+        email: user.email.toLowerCase()
     }).exec(function(err, existingUser) {
         if (err || !existingUser) {
             console.log("Error updating existing useer access tokens during re-registration");
@@ -269,7 +268,7 @@ function getStats(user) {
             user.totalSwim = 0;
             user.totalCycling = 0;
             user.totalCyclingConverted = 0;
-            user.totalRowing = 0;
+            // user.totalRowing = 0;
             user.totalYoga = 0;
 
             var activityCount = user.activities.length;
@@ -287,11 +286,11 @@ function getStats(user) {
                             case 'Elliptical':
                                 user.totalRun = user.totalRun + (user.activities[i].distance/1000);
                                 break;
-                            // case 'Swim':
-                            //     user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
-                            //     break;
+                            case 'Swim':
+                                user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
+                                break;
                             case 'Ride':
-                            // case 'VirtualRide':
+                            case 'VirtualRide':
                             case 'EBikeRide':
                             case 'Handcycle':
                                 user.totalCycling = user.totalCycling + (user.activities[i].distance/1000);
@@ -312,11 +311,11 @@ function getStats(user) {
                             case 'Yoga':
                                 user.totalWalk = user.totalWalk + (((user.activities[i].moving_time/60)*20)/1000);
                                 break;
-                            // case 'Workout':
-                            // case 'WeightTraining':
-                            // case 'Crossfit':
-                            //     user.totalRun = user.totalRun + (((user.activities[i].moving_time/60)*160)/1000);
-                            //     break;
+                            case 'Workout':
+                            case 'WeightTraining':
+                            case 'Crossfit':
+                                user.totalRun = user.totalRun + (((user.activities[i].moving_time/60)*160)/1000);
+                                break;
                             default:
                                 console.log("Unexpected activity type: " + user.activities[i].type + " - User: " + user.name);
                                 break;
@@ -338,7 +337,7 @@ function getStats(user) {
                             user.totalDistanceConverted = user.totalDistanceConverted + (((user.activities[i].moving_time/60)*160)/1000);
                             user.totalDistance = user.totalDistance + (((user.activities[i].moving_time/60)*160)/1000);
 
-                        } else if (['Run','VirtualRun','Elliptical','Swim','Walk','Hike','Stair Stepper','Wheelchair','Rowing','Canoe','Kayak','Stand Up Paddle'].includes(user.activities[i].type)) {
+                        } else if (['Run','VirtualRun','Elliptical','Swim','Walk','Hike','Stair Stepper','Wheelchair'/*,'Rowing','Canoe','Kayak','Stand Up Paddle'*/].includes(user.activities[i].type)) {
                             user.totalDistanceConverted = user.totalDistanceConverted + (user.activities[i].distance/1000);
                             user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
                         }
@@ -350,7 +349,7 @@ function getStats(user) {
 
             user.totalRun = Math.floor(user.totalRun*100)/100;
             user.totalSwim = Math.floor(user.totalSwim*100)/100;
-            user.totalRowing = Math.floor(user.totalRowing*100)/100;
+            // user.totalRowing = Math.floor(user.totalRowing*100)/100;
             user.totalCycling = Math.floor(user.totalCycling*100)/100;
             user.totalCyclingConverted = Math.floor(user.totalCyclingConverted*100)/100;
             user.totalWalk = Math.floor(user.totalWalk*100)/100;

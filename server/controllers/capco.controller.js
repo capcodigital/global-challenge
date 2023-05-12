@@ -27,7 +27,6 @@ var Capco = mongoose.model('Capco');
         let capcoite = new Capco();
 
         capcoite.name = employee.name;
-        capcoite.username = employee.username;
         capcoite.email = employee.email;
         capcoite.location = employee.location;
         capcoite.level = employee.level;
