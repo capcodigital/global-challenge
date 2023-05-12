@@ -86,7 +86,7 @@
     "warning": "^4.0.1",
     "whatwg-fetch": "2.0.4",
     "y18n": "4.0.1",
-    "yarn": "^1.22.10"
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@babel/cli": "7.1.2",
