@@ -17,12 +17,12 @@
   }
   
   &.ui.menu > .item.active {
-    background-color: #000 !important;
+    background-color: black !important;
     color:#FDC437 !important;
   }
 
   &.ui.menu > .item:not(.active) {
-    color:white !important;
+    color: black!important;
     background-color: #000 !important;
   }
 }
@@ -30,7 +30,7 @@
 
 .tabs {
   justify-content: space-between;
-  background-color: white;
+  background-color: black;
 .tab {
   padding: 1rem 0px !important;
   font-size: 16px;
@@ -40,13 +40,13 @@
 }
 
 &.ui.menu > .item.active {
-  background-color: #00aabb !important;
-  color:white !important;
+  background-color: black;
+  color:#FDC437 !important;
 }
 
 &.ui.menu > .item:not(.active) {
-  color:#FF6A4C !important;
-  background-color: white;
+  color: white !important;
+  background-color: black;
 }
 }
 

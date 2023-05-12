@@ -208,13 +208,13 @@ class DashboardGlobal extends React.Component {
           activeTab: "personal",
         });
         return this.forceUpdate();
-      case "team":
-        this.setState({
-          currentData: teams,
-          filteredData: teams,
-          activeTab: "team",
-        });
-        return this.forceUpdate();
+      // case "team":
+      //   this.setState({
+      //     currentData: teams,
+      //     filteredData: teams,
+      //     activeTab: "team",
+      //   });
+      //   return this.forceUpdate();
       case "office":
         this.setState({
           currentData: locations,
@@ -370,7 +370,7 @@ class DashboardGlobal extends React.Component {
                         />{" "}
                       </div>
                     </Grid.Row>
-                    <Grid.Row>
+                    {/* <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
                           <img src={rowIcon} alt="Row Logo" />
@@ -385,7 +385,7 @@ class DashboardGlobal extends React.Component {
                           }))}
                         />
                       </div>
-                    </Grid.Row>
+                    </Grid.Row> */}
                   </Grid>
                 </Grid.Column>
               </Grid.Row>
