@@ -9,11 +9,11 @@ div.row {
 }
 
 .dashboard {
+  background-color: black; 
   margin: 0px;
   .ui.segment.secondary {
-    //background-color: black; global
-    background-color: #0F2046 !important
-
+    background-color: black; // global
+    // background-color: #0F2046 !important
   }
   .sign-wrapper {
     width: 100%;
