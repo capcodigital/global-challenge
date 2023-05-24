@@ -38,9 +38,9 @@ class DashboardGlobal extends React.Component {
       locations: props.locations,
       levels: props.levels,
       personal: props.personal,
-      activeTab: "personal",
-      currentData: props.personal,
-      filteredData: props.personal,
+      activeTab: "office",
+      currentData: props.locations,
+      filteredData: props.locations,
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleClickTab = this.handleClickTab.bind(this);
