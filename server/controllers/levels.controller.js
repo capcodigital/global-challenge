@@ -142,7 +142,8 @@ function updateEveryInterval(minutes) {
 
                         level.save(function(err) {
                             if (err) {
-                                console.log("Error updating level stats: " + level.name);
+                                console.log("Error updating level stats: " + level.name + ", err: " + err);
+                                
                             }
                         });
                     });
