@@ -61,7 +61,7 @@ exports.authorize = function(req, res) {
         console.log("Could not authenticate with your Strava account");
         res.redirect(callbackUrl + 'register?success=stravaError');
     } else {
-        var email = req.query.state;
+        var email = req.query.state.toLowerCase();
         var userOptions = authOptions;
         userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "&code=" + req.query.code;
 

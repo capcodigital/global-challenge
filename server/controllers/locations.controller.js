@@ -45,7 +45,7 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
+    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted').sort({totalDistanceConverted: -1}).exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
@@ -114,7 +114,7 @@ function updateEveryInterval(minutes) {
                         location.activities.Swim = 0;
                         location.activities.Cycling = 0;
                         location.activities.CyclingConverted = 0;
-                        location.activities.Rowing = 0;
+                        // location.activities.Rowing = 0;
                         location.activities.Yoga = 0;
                         location.totalDistance = 0;
                         location.totalDistanceConverted = 0;
@@ -128,7 +128,7 @@ function updateEveryInterval(minutes) {
                                 location.activities.Swim += teamMember.totalSwim;
                                 location.activities.Cycling += teamMember.totalCycling;
                                 location.activities.CyclingConverted += teamMember.totalCyclingConverted;
-                                location.activities.Rowing += teamMember.totalRowing;
+                                // location.activities.Rowing += teamMember.totalRowing;
                                 location.activities.Yoga += teamMember.totalYoga;
 
                                 location.totalDistance += teamMember.totalDistance;
@@ -194,7 +194,7 @@ function updateEveryInterval(minutes) {
             location.activities.Swim = 0;
             location.activities.Cycling = 0;
             location.activities.CyclingConverted = 0;
-            location.activities.Rowing = 0;
+            // location.activities.Rowing = 0;
             location.activities.Yoga = 0;
             location.totalDistance = 0;
             location.totalDistanceConverted = 0; 

@@ -45,7 +45,7 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted totalRowing').sort({totalDistanceConverted: -1}).exec(function(err, users) {
+    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted').sort({totalDistanceConverted: -1}).exec(function(err, users) {
         if (err) {
             console.log("Data update error please try again later");
         } else {
@@ -114,7 +114,7 @@ function updateEveryInterval(minutes) {
                         level.activities.Swim = 0;
                         level.activities.Cycling = 0;
                         level.activities.CyclingConverted = 0;
-                        level.activities.Rowing = 0;
+                        // level.activities.Rowing = 0;
                         level.activities.Yoga = 0;
                         level.totalDistance = 0;
                         level.totalDistanceConverted = 0;
@@ -128,7 +128,7 @@ function updateEveryInterval(minutes) {
                                 level.activities.Swim += teamMember.totalSwim;
                                 level.activities.Cycling += teamMember.totalCycling;
                                 level.activities.CyclingConverted += teamMember.totalCyclingConverted;
-                                level.activities.Rowing += teamMember.totalRowing;
+                                // level.activities.Rowing += teamMember.totalRowing;
                                 level.activities.Yoga += teamMember.totalYoga;
 
                                 level.totalDistance += teamMember.totalDistance;
@@ -195,7 +195,7 @@ function updateEveryInterval(minutes) {
             level.activities.Swim = 0;
             level.activities.Cycling = 0;
             level.activities.CyclingConverted = 0;
-            level.activities.Rowing = 0;
+            // level.activities.Rowing = 0;
             level.activities.Yoga = 0;
             level.totalDistance = 0;
             level.totalDistanceConverted = 0; 

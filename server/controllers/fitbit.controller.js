@@ -74,7 +74,7 @@ exports.authorize = function(req, res) {
         console.log("Could not authenticate with your Fitbit account");
         res.redirect(callbackUrl + 'register?success=fitBitError');
     } else {
-        var email = req.query.state;
+        var email = req.query.state.toLowerCase();
         options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=" + callbackUrl + "fitbit/auth";
 
         var newReq = buildRequest(options, function(err, result) {
