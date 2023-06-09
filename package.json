@@ -57,7 +57,7 @@
     "immutable": "3.8.2",
     "invariant": "2.2.4",
     "ip": "^1.1.5",
-    "jquery": "^3.5.0",
+    "jquery": "^3.7.0",
     "lodash": "^4.17.21",
     "minimist": "^1.2.7",
     "mongoose": "^6.10.5",
