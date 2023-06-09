@@ -16,7 +16,7 @@ const SetupInstructions = () => (
             by opening the UK Challenge app.
           </List.Item>
           <List.Item>
-            2. Enter your Capco 4-letter ID on the{" "}
+            2. Enter your Capco email address on the{" "}
             <a href="/register">Registration</a> page for either Strava or
             Fitbit.
           </List.Item>

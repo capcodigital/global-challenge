@@ -434,10 +434,16 @@ function save(user, res) {
                 getStats(newUser, date);
             });
 
+            /*
             let emailText = "Hello " + user.name + ",\n\r You have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
-                                "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
-                                "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
-                                "Good Luck \n\r Capco Health & Wellbeing";
+                            "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
+                            "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
+                            "Good Luck \n\r Capco Health & Wellbeing";
+            */
+
+            let emailText = "Hello " + user.name + ",\n\r You have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
+                            "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
+                            "Good Luck \n\r Capco Health & Wellbeing";
 
             mailer.sendMail(user.email, "Capco Challenge Registration Successfull", emailText, function() {
                 console.log("email sent to " + user.email);

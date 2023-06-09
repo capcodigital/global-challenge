@@ -38,25 +38,27 @@ const AboutPage = () => (
             >
               <p>The Capco Global Challenge is making a return this year!</p>
               <p>
-                Organized by the Wellbeing@Capco team in partnership with Capco
-                CSR, this annual event brings Capco colleagues together to
-                collaborate and compete while raising important funds for
-                charity.
-                <br />
-                <br /> Run, walk, bike, swim or row while raising funds for our
-                chosen charity, the{" "}
-                <a
-                  href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/donate"
-                  target="_blank"
-                >
-                  World Health Organization COVID-19 Solidarity Response Fund
-                </a>
+              Organized by the Wellbeing@Capco team in partnership with Capco CSR, 
+              this annual event brings Capco colleagues together to collaborate and 
+              compete while raising important funds for charity. 
+              <br />
+              <br />
+              Run, walk, bike or swim while raising funds for our chosen 
+              charity, Medicine sans Frontières.
+              {/*
+              <a
+                href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/donate"
+                target="_blank"
+              >
+                World Health Organization COVID-19 Solidarity Response Fund
+              </a>
                 .
+              */}
               </p>
               <p>
-                All distances will be tracked via the Capco Global Challenge app
-                and will help us to achieve our collective target of 50,000 Km
-                - the distance* between all our Capco offices.
+              All distances will be tracked via the Capco Global Challenge app and will 
+              help us to achieve our collective target of 50,000 Kms - the distance* 
+              between all our Capco offices.
               </p>
               <p>
                 <b><a href='/register'>Sign up for the Challenge today!</a></b>
@@ -73,24 +75,19 @@ const AboutPage = () => (
                 <b>Event Details</b> <br />
                 <br />
                 <b>Registration Deadline: </b>
-                <p className="red">November, 7th 2021</p>
+                <p className="red">June, 27th 2023</p>
                 <br />
-                <b>Challenge Dates: </b>
-                <p className="red">November 8, 2021 - November 21, 2021</p>
+                <b>Challenge Starts: </b>
+                <p className="red">June 28, 2023</p>
+                <br />
+                <b>Challenge Ends: </b>
+                <p className="red">July 12, 2021</p>
                 <br />
                 <br />
                 <p>
                   <b>Registration: </b>
-                  Donate $5 (or equivalent currency) or whatever you can spare to
-                  WHO COVID-19 Response Fund and register as an individual participant
-                  or team (see below) using the buttons in the top right-hand corner.
+                  Donate to MSF and register using the buttons in the top right-hand corner.
                 </p>
-                <b>Team Challenge: </b>
-                Participants are invited to form a team of four to complete a
-                virtual Mount Fiji Ultra Marathon – a distance of 166 Km! All
-                kilometers will be added to our global total, with the bonus of
-                being able to compete against other teams.
-                <br />
                 <br />
                 <b>COVID-19 Restrictions: </b>
                 If you are unable to take part in outdoor exercise due to local

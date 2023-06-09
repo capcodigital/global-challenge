@@ -42,7 +42,7 @@ const HomePage = () => (
             <h2>Register</h2>
             <p>
               If you have a Strava or Fitbit account, please enter your Capco
-              4-letter ID below to register. If you don't have a Strava or
+              email address below to register. If you don't have a Strava or
               Fitbit account, please create an account via your desktop or by
               downloading and installing an app to allow you to register. For
               more information on setting up an account and syncing your data,
@@ -52,6 +52,7 @@ const HomePage = () => (
             <div className="registration-form-container">
               <RegistrationForm />
             </div>
+            {/*
             <h2>How to join a Team?</h2>
             <p>
               Once you have registered, if you would like to create or sign up
@@ -61,6 +62,7 @@ const HomePage = () => (
               map alongside other teams and all kilometers will be added to our
               challenge total.
             </p>
+          */}
           </Grid.Column>
         </Grid>
       </Segment>

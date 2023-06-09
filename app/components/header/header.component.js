@@ -83,7 +83,7 @@ class Header extends React.Component {
               {window.location.pathname === "/register" ? (
                 <>
                   <Menu.Item>
-                    <Button
+                    {/*<Button
                       secondary
                       fluid
                       size="large"
@@ -92,7 +92,7 @@ class Header extends React.Component {
                       className={`button-header white-button`}
                     >
                       Teams
-                    </Button>
+                    </Button>*/}
                   </Menu.Item>
                   <Menu.Item>
                     <Button
