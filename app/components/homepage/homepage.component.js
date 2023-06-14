@@ -41,13 +41,20 @@ const HomePage = () => (
 
             <h2>Register</h2>
             <p>
-              If you have a Strava or Fitbit account, please enter your Capco
-              email address below to register. If you don't have a Strava or
-              Fitbit account, please create an account via your desktop or by
-              downloading and installing an app to allow you to register. For
-              more information on setting up an account and syncing your data,
-              please visit the <a href="/how-to">"Setup"</a> page.
+            To register for the Capco Global Challenge:
             </p>
+            <p>
+            1.	Make a donation to our chosen charity for this year’s Challenge, Medicine sans Frontières  using the 
+            button below. All money raised will be matched by Capco through our Corporate Matching Program 
+            (up to a value of $2000).
+            </p>
+            <p>
+              2.	If you have a Strava or Fitbit account, please enter your Capco email address below to register. 
+              If you don't have a Strava or Fitbit account, please create an account via your desktop or by downloading 
+              and installing an app to allow you to register. For more information on setting up an account and syncing 
+              your data, please visit the ‘Set-Up’ page <a href="/how-to">here</a>.
+            </p>
+            <br/>
 
             <div className="registration-form-container">
               <RegistrationForm />

@@ -32,11 +32,11 @@ function FaqPage() {
               {questionData.trackingActivity.map((question) => (
                 <QAndAPair key={question.questionId} question={question} />
               ))}
-              <Header className="section-header">Participating as a Team</Header>
+              {/*<Header className="section-header">Participating as a Team</Header>
               <Divider />
               {questionData.team.map((question) => (
                 <QAndAPair key={question.questionId} question={question} />
-              ))}
+              ))*/}
               <Header className="section-header">Data</Header>
               <Divider />
               {questionData.data.map((question) => (

@@ -43,8 +43,7 @@ const AboutPage = () => (
               compete while raising important funds for charity. 
               <br />
               <br />
-              Run, walk, bike or swim while raising funds for our chosen 
-              charity, Medicine sans Frontières.
+              Run, walk, or cycle while raising funds for our chosen charity, Medicine sans Frontières.
               {/*
               <a
                 href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/donate"
@@ -56,14 +55,14 @@ const AboutPage = () => (
               */}
               </p>
               <p>
-              All distances will be tracked via the Capco Global Challenge app and will 
-              help us to achieve our collective target of 50,000 Kms - the distance* 
-              between all our Capco offices.
+              All distances will be tracked via the Capco Global Challenge platform and will help us to achieve our collective target of 50,000 Kms - the distance* between all our Capco offices.
               </p>
               <p>
                 <b><a href='/register'>Sign up for the Challenge today!</a></b>
               </p>
               <i> *Distance is approximate and can vary by route</i>
+              <br />
+              <br />
             </Grid.Column>
 
             <Grid.Column
@@ -81,22 +80,13 @@ const AboutPage = () => (
                 <p className="red">June 28, 2023</p>
                 <br />
                 <b>Challenge Ends: </b>
-                <p className="red">July 12, 2021</p>
+                <p className="red">July 12, 2022</p>
                 <br />
                 <br />
                 <p>
                   <b>Registration: </b>
                   Donate to MSF and register using the buttons in the top right-hand corner.
                 </p>
-                <br />
-                <b>COVID-19 Restrictions: </b>
-                If you are unable to take part in outdoor exercise due to local
-                Covid-19 restrictions, you can still participate. Please see the
-                FAQs page{" "}
-                <a href="/faq">
-                  here
-                </a>{" "}
-                for more information.
                 <br />
                 <br />
               </p>

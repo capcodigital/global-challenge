@@ -21,24 +21,25 @@ const EventRules = () => (
             >
               <Header className="event-rules-title">Event Rules</Header>
               <p>Here are a few Global Challenge rules to get you started:</p>
+              <br />
               <p>
               <i class="angle double right icon"></i><b>Only input data into Strava / Fitbit</b> that you have
-                completed if entering data manually.
+                completed, if entering data manually.
               </p>
               <p>
-              <i class="angle double right icon"></i><b>Do not amend distances completed by bike</b> – the Global
-                Challenge app will do this for you.
-              </p>
-              <p>
-              <i class="angle double right icon"></i><b>All teams should have a total of four team members.</b>
+              <i class="angle double right icon"></i><b>Do not amend distances in the Strava/Fitbit app completed by bike</b> – the Global
+                Challenge platform will do this for you.
               </p>
               <p>
               <i class="angle double right icon"></i><b>Try and go further together</b> – but do not push yourself
                 beyond your own physical capabilities – it’s just for fun!
               </p>
+              <br />
               <p>
               …And most of all, enjoy the Challenge!
               </p>
+              <br />
+              <br />
             </Grid.Column>
           </Grid>
         </>
