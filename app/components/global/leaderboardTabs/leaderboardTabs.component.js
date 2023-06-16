@@ -3,7 +3,7 @@ import { Menu, Container } from "semantic-ui-react";
 import "./style.scss";
 
 export default function LeaderboardTabs({ changeTab }) {
-  const [activeItem, setActiveItem] = useState("office");
+  const [activeItem, setActiveItem] = useState("personal");
   const onClickTab = (tabName) => {
     changeTab(tabName);
     setActiveItem(tabName);

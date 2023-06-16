@@ -64,9 +64,8 @@ const StravaSetupInstructions = () => (
       <Grid.Column textAlign="left" verticalAlign="middle" width={12}>
         <List>
           <List.Item>
-            5. On the Strava dashboard page, you will be asked to select your
-            sport – for the Capco UK Challenge please select running (you
-            will still have the option to walk, swim, cycle or row).{" "}
+            5. On the Strava dashboard page, you will be asked to select your sport – 
+            for the Capco Global Challenge please select running (you will still have the option to walk, swim, or cycle).{" "}
             <i>
               There is a range of other data that Strava will request from you
               at this point, however you can select ‘skip’ if you do not want to
@@ -101,12 +100,12 @@ const StravaSetupInstructions = () => (
                 </a>
               </List.Item>
               <List.Item>
-                Link your current device to Strava -{" "}
+                Link your smart device to Strava - {" "}
                 <a
                   href="https://support.strava.com/hc/en-us/articles/223297187-How-to-get-your-Activities-to-Strava"
                   target="_blank"
                 >
-                  How to link your specific device to Strava
+                  see the How To guides above
                 </a>
               </List.Item>
               <List.Item>

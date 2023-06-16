@@ -2,16 +2,16 @@ export const questionData = {
   general: [
     {
       questionId: "view-list-participants",
-      questionText: "Can I view a list of all Easier Said Than Run participants?",
+      questionText: "Can I view a list of Capco Global Challenge participants?",
       answerText:
-        "You can view a list of Challenge participants, and the teams that have been created <a href='/'>here</a>.",
+        "You can view a list of Challenge participants <a href='/'>here</a>.",
     },
     {
       questionId: "participate-when-restricted-activity",
       questionText:
-        "Can I participate if I am restricted by COVID-19 rules on outdoor exercise?",
+        "Does my distance count if I use an indoor trainer or complete an indoor workout?",
       answerText:
-        "Yes, if you have any form of indoor trainer (bike, running machine, rower etc) you can use that and enter your activity on the app (Strava/Fitbit) manually. <br /><br /> Alternatively, if you do not have access to an indoor trainer then you can complete indoor workouts (circuits, yoga etc) and enter your activity on your selected app (Strava/Fitbit) manually – please select either Workout/Circuit/ Yoga as applicable. See the table below for a guide on the ‘distance’ that will be attributed to the selected exercise based on duration. <br /> <br /> <span style='color: #fc4c02;font-weight: bold'> Strava Activity Name </span>/<span style='color: #00b3bc;font-weight: bold'> Fitbit Activity Name </span> <br /> <table>  <tr>	<style>      table,      th,      td {        padding: 10px;        border: 1px solid white;        border-collapse: collapse;      }    </style>    <th>Time (Minutes)</th>    <th> <span style='color: #fc4c02'> Workout </span>/ <span style='color: #00b3bc'>Circuit </span>		(160 conversion factor)	</th>    <th><span style='color: #fc4c02'> Yoga </span> / <span style='color: #00b3bc'>Yoga </span>	(20 conversion factor)	</th>  </tr>  <tr>    <td>5</td>    <td>800 meters</td>    <td>100 meters</td>  </tr>	<tr>    <td>10</td>    <td>1600 meters</td>    <td>200 meters</td>  </tr><tr>    <td>15</td>    <td>2400 meters</td>    <td>300 meters</td>  </tr><tr>    <td>30</td>    <td>4800 meters</td>    <td>600 meters</td>  </tr><tr>    <td>45</td>    <td>7200 meters</td>    <td>900 meters</td>  </tr></table>",
+        "Yes, if you have an indoor trainer (stationary bike, running machine) you can use that and enter your activity on the app (Strava/Fitbit) manually. <br /><br /> Alternatively, if you do not have access to an indoor trainer then you can complete indoor workouts (circuits, yoga etc) and enter your activity on your selected app (Strava/Fitbit) manually – please select either Workout/Circuit/ Yoga as applicable. See the table below for a guide on the ‘distance’ that will be attributed to the selected exercise based on duration. <br /> <br /> <span style='color: #fc4c02;font-weight: bold'> Strava Activity Name </span>/<span style='color: #00b3bc;font-weight: bold'> Fitbit Activity Name </span> <br /> <table>  <tr>	<style>      table,      th,      td {        padding: 10px;        border: 1px solid white;        border-collapse: collapse;      }    </style>    <th>Time (Minutes)</th>    <th> <span style='color: #fc4c02'> Workout </span>/ <span style='color: #00b3bc'>Circuit </span>		(160 conversion factor)	</th>    <th><span style='color: #fc4c02'> Yoga </span> / <span style='color: #00b3bc'>Yoga </span>	(20 conversion factor)	</th>  </tr>  <tr>    <td>5</td>    <td>800 meters</td>    <td>100 meters</td>  </tr>	<tr>    <td>10</td>    <td>1600 meters</td>    <td>200 meters</td>  </tr><tr>    <td>15</td>    <td>2400 meters</td>    <td>300 meters</td>  </tr><tr>    <td>30</td>    <td>4800 meters</td>    <td>600 meters</td>  </tr><tr>    <td>45</td>    <td>7200 meters</td>    <td>900 meters</td>  </tr></table>",
     },
   ],
   trackingActivity: [
@@ -37,13 +37,13 @@ export const questionData = {
       questionId: "do-i-need-a-wearable",
       questionText: "Do I need to use a wearable device?",
       answerText:
-        'If you do not have a wearable device, then you can enter your manually tracked data into the Strava or Fitbit app or on your desktop and link to the Capco UK Challenge app.',
+        'If you do not have a wearable device, then you can enter your manually tracked data into the Strava or Fitbit app or on your desktop, and link to the Capco Global Challenge platform.',
     },
     {
       questionId: "upload-data-to-challenge",
-      questionText: "How do I upload my activity data to the Capco Global Challenge app?",
+      questionText: "How do I upload my activity data to the Capco Global Challenge platform?",
       answerText:
-        'You can upload your activity data from Strava or Fitbit by linking your account to the Capco Global Challenge app. Once you have linked your account you can either track your activity and sync your smart device or manually input activity into Strava/Fitbit. More information is available on the ‘Setup’ page <a href="/how-to">here</a>.',
+        'You can upload your activity data from Strava or Fitbit by linking your account to the Capco Global Challenge platform. Once you have linked your account you can either track your activity and sync your smart device or manually input activity into Strava/Fitbit. More information is available <a href="/how-to">here</a>.',
     },
     {
       questionId: "cycling-distance-conversion",
@@ -76,7 +76,7 @@ export const questionData = {
     {
       questionId: "why-is-my-data-not-syncing",
       questionText:
-        "Why is my data not syncing with the Capco UK Challenge application?",
+        "Why is my data not syncing with the Capco Global Challenge platform?",
       answerText:
         "Please confirm that you have registered correctly by trying to register again. If this does not work, please open and refresh your app (Strava/Fitbit) and allow one hour for the data to sync. We also recommend opening your app daily throughout the Challenge to allow the data to sync. If this still does not work, please contact <a href='mailto:3cd19d49.capco.com@apac.teams.ms'>Challenge Team Support</a> for further assistance.",
     },
@@ -95,7 +95,7 @@ export const questionData = {
       questionId: "how-will-you-store-my-data",
       questionText: "How long will you store my data?",
       answerText:
-        "Your data will be stored for the duration of the Capco UK Challenge, plus a further 30 days. Following this date all personally identifying data will be deleted.",
+        "Your data will be stored for the duration of the Capco Global Challenge, plus a further 30 days. Following this date all personally identifying data will be deleted.",
     },
   ],
 };

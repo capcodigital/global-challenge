@@ -149,8 +149,14 @@ exports.authorize = function(req, res) {
                                 locations.AddOrUpdate(newUser.location, newUser._id);
                                 levels.AddOrUpdate(newUser.level, newUser._id);
 
+                                /*
                                 let emailText = "Hello " + user.name + ",\n\r You have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
                                 "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
+                                "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
+                                "Good Luck \n\r Capco Health & Wellbeing";
+                                */
+
+                                let emailText = "Hello " + user.name + ",\n\r You have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
                                 "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
                                 "Good Luck \n\r Capco Health & Wellbeing";
 

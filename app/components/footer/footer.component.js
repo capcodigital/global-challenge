@@ -24,7 +24,7 @@ function Footer() {
       <Container className="footer-container">
         <div className="copyright-container">
           <p>
-            You can download the Fitbit app (<a href="https://apps.apple.com/us/app/fitbit-health-fitness/id462638897">iOS</a> or <a href="https://play.google.com/store/apps/details?id=com.fitbit.FitbitMobile&hl=en_GB&gl=US"> Android</a>) or Strava app (<a href="https://apps.apple.com/us/app/strava-run-ride-swim/id426826309">iOS</a> or <a href="https://play.google.com/store/apps/details?id=com.strava&hl=en_GB&gl=US"> Android</a>) | If you need support, please email the <a href="mailto:3cd19d49.capco.com@apac.teams.ms"> UK Challenge Team </a>
+            You can download the Fitbit app (<a href="https://apps.apple.com/us/app/fitbit-health-fitness/id462638897">iOS</a> or <a href="https://play.google.com/store/apps/details?id=com.fitbit.FitbitMobile&hl=en_GB&gl=US"> Android</a>) or Strava app (<a href="https://apps.apple.com/us/app/strava-run-ride-swim/id426826309">iOS</a> or <a href="https://play.google.com/store/apps/details?id=com.strava&hl=en_GB&gl=US"> Android</a>) | If you need support, please email the <a href="mailto:3cd19d49.capco.com@apac.teams.ms"> Challenge Team </a>
           </p>
         </div>
       </Container>
