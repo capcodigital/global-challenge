@@ -111,7 +111,7 @@ function updateEveryInterval(minutes) {
 
                         level.activities.Walk = 0;
                         level.activities.Run = 0;
-                        level.activities.Swim = 0;
+                        // level.activities.Swim = 0;
                         level.activities.Cycling = 0;
                         level.activities.CyclingConverted = 0;
                         // level.activities.Rowing = 0;
@@ -125,7 +125,7 @@ function updateEveryInterval(minutes) {
                                 let teamMember = userMap[member];
                                 level.activities.Walk += teamMember.totalWalk;
                                 level.activities.Run += teamMember.totalRun;
-                                level.activities.Swim += teamMember.totalSwim;
+                                // level.activities.Swim += teamMember.totalSwim;
                                 level.activities.Cycling += teamMember.totalCycling;
                                 level.activities.CyclingConverted += teamMember.totalCyclingConverted;
                                 // level.activities.Rowing += teamMember.totalRowing;
@@ -192,7 +192,7 @@ function updateEveryInterval(minutes) {
 
             level.activities.Walk = 0;
             level.activities.Run = 0;
-            level.activities.Swim = 0;
+            // level.activities.Swim = 0;
             level.activities.Cycling = 0;
             level.activities.CyclingConverted = 0;
             // level.activities.Rowing = 0;

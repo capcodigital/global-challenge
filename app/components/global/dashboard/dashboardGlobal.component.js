@@ -354,7 +354,7 @@ class DashboardGlobal extends React.Component {
                         />
                       </div>
                     </Grid.Row>
-                    <Grid.Row>
+                    {/* <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
                           <img src={swimIcon} alt="Swim Logo" />
@@ -370,7 +370,7 @@ class DashboardGlobal extends React.Component {
                         />{" "}
                       </div>
                     </Grid.Row>
-                    {/* <Grid.Row>
+                    <Grid.Row>
                       <div className="content-container-dashboard">
                         <Header size="medium" className="container-header">
                           <img src={rowIcon} alt="Row Logo" />

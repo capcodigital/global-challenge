@@ -77,7 +77,7 @@ exports.authorize = function(req, res) {
                 
                 Capco.findOne({email: email.toLowerCase()}).exec(function(err, profile) {
                     if (err || !profile) {
-                        res.json({error: "Could not find your Capco ID [" + email + "]"});
+                        res.json({error: "Could not find your Capco email [" + email + "]"});
                     } else {
                         var user = new User();
 
@@ -125,7 +125,7 @@ exports.authorize = function(req, res) {
                         user.totalDuration = 0;
                         user.totalWalk = 0;
                         user.totalRun = 0;
-                        user.totalSwim = 0;
+                        // user.totalSwim = 0;
                         user.totalCycling = 0;
                         user.totalCyclingConverted = 0;
                         // user.totalRowing = 0;
@@ -271,7 +271,7 @@ function getStats(user) {
             user.totalCalories = 0;
             user.totalWalk = 0;
             user.totalRun = 0;
-            user.totalSwim = 0;
+            // user.totalSwim = 0;
             user.totalCycling = 0;
             user.totalCyclingConverted = 0;
             // user.totalRowing = 0;
@@ -292,9 +292,9 @@ function getStats(user) {
                             case 'Elliptical':
                                 user.totalRun = user.totalRun + (user.activities[i].distance/1000);
                                 break;
-                            case 'Swim':
-                                user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
-                                break;
+                            // case 'Swim':
+                            //     user.totalSwim = user.totalSwim + (user.activities[i].distance/1000);
+                            //     break;
                             case 'Ride':
                             case 'VirtualRide':
                             case 'EBikeRide':
@@ -343,7 +343,7 @@ function getStats(user) {
                             user.totalDistanceConverted = user.totalDistanceConverted + (((user.activities[i].moving_time/60)*160)/1000);
                             user.totalDistance = user.totalDistance + (((user.activities[i].moving_time/60)*160)/1000);
 
-                        } else if (['Run','VirtualRun','Elliptical','Swim','Walk','Hike','Stair Stepper','Wheelchair'/*,'Rowing','Canoe','Kayak','Stand Up Paddle'*/].includes(user.activities[i].type)) {
+                        } else if (['Run','VirtualRun','Elliptical','Walk','Hike','Stair Stepper','Wheelchair'/*,'Swim','Rowing','Canoe','Kayak','Stand Up Paddle'*/].includes(user.activities[i].type)) {
                             user.totalDistanceConverted = user.totalDistanceConverted + (user.activities[i].distance/1000);
                             user.totalDistance = user.totalDistance + (user.activities[i].distance/1000);
                         }
@@ -354,7 +354,7 @@ function getStats(user) {
             }
 
             user.totalRun = Math.floor(user.totalRun*100)/100;
-            user.totalSwim = Math.floor(user.totalSwim*100)/100;
+            // user.totalSwim = Math.floor(user.totalSwim*100)/100;
             // user.totalRowing = Math.floor(user.totalRowing*100)/100;
             user.totalCycling = Math.floor(user.totalCycling*100)/100;
             user.totalCyclingConverted = Math.floor(user.totalCyclingConverted*100)/100;
