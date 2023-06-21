@@ -74,18 +74,18 @@ const AboutPage = () => (
                 <b>Event Details</b> <br />
                 <br />
                 <b>Registration Deadline: </b>
-                <p className="red">June, 27th 2023</p>
+                <p className="red">July, 9th 2023</p>
                 <br />
                 <b>Challenge Starts: </b>
-                <p className="red">June 28, 2023</p>
+                <p className="red">July 10th, 2023</p>
                 <br />
                 <b>Challenge Ends: </b>
-                <p className="red">July 12, 2022</p>
+                <p className="red">July 24th, 2022</p>
                 <br />
                 <br />
                 <p>
                   <b>Registration: </b>
-                  Donate to MSF and register using the buttons in the top right-hand corner.
+                  Register using the button in the top right-hand corner.
                 </p>
                 <br />
                 <br />

@@ -111,7 +111,7 @@ function updateEveryInterval(minutes) {
 
                         location.activities.Walk = 0;
                         location.activities.Run = 0;
-                        location.activities.Swim = 0;
+                        // location.activities.Swim = 0;
                         location.activities.Cycling = 0;
                         location.activities.CyclingConverted = 0;
                         // location.activities.Rowing = 0;
@@ -125,7 +125,7 @@ function updateEveryInterval(minutes) {
                                 let teamMember = userMap[member];
                                 location.activities.Walk += teamMember.totalWalk;
                                 location.activities.Run += teamMember.totalRun;
-                                location.activities.Swim += teamMember.totalSwim;
+                                // location.activities.Swim += teamMember.totalSwim;
                                 location.activities.Cycling += teamMember.totalCycling;
                                 location.activities.CyclingConverted += teamMember.totalCyclingConverted;
                                 // location.activities.Rowing += teamMember.totalRowing;
@@ -191,7 +191,7 @@ function updateEveryInterval(minutes) {
 
             location.activities.Walk = 0;
             location.activities.Run = 0;
-            location.activities.Swim = 0;
+            // location.activities.Swim = 0;
             location.activities.Cycling = 0;
             location.activities.CyclingConverted = 0;
             // location.activities.Rowing = 0;

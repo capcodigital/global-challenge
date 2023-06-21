@@ -87,7 +87,7 @@ exports.authorize = function(req, res) {
 
                 Capco.findOne({email: email.toLowerCase()}).exec(function(err, profile) {
                     if (err || !profile) {
-                        res.json({error: "Could not find your Capco ID"});
+                        res.json({error: "Could not find your Capco email [" + email + "]"});
                     } else {
                         var user = new User();
 
@@ -133,7 +133,7 @@ exports.authorize = function(req, res) {
                         user.totalDuration = 0;
                         user.totalWalk = 0;
                         user.totalRun = 0;
-                        user.totalSwim = 0;
+                        // user.totalSwim = 0;
                         user.totalCycling = 0;
                         user.totalCyclingConverted = 0;
                         user.totalRowing = 0;
@@ -297,7 +297,7 @@ function getStats(user, date) {
             user.totalCalories = 0;
             user.totalWalk = 0;
             user.totalRun = 0;
-            user.totalSwim = 0;
+            // user.totalSwim = 0;
             user.totalCycling = 0;
             user.totalCyclingConverted = 0;
             user.totalRowing = 0;
@@ -312,7 +312,7 @@ function getStats(user, date) {
                         user.activities[challengeDates[i]].activities.forEach (function(activityEntry) {
                             switch (activityEntry.name) {
                                 case 'Run':
-                                case 'Swim':
+                                // case 'Swim':
                                 case 'Bike':
                                 case 'Walk':
                                     // Ignore as handled later
@@ -354,9 +354,9 @@ function getStats(user, date) {
                                 case 'Run':
                                     user.totalRun = user.totalRun + activityEntry.distance;
                                     break;
-                                case 'Swim':
-                                    user.totalSwim = user.totalSwim + activityEntry.distance;
-                                    break;
+                                // case 'Swim':
+                                //     user.totalSwim = user.totalSwim + activityEntry.distance;
+                                //     break;
                                 case 'Bike':
                                     user.totalCycling = user.totalCycling + activityEntry.distance;
                                     user.totalCyclingConverted = user.totalCyclingConverted + (activityEntry.distance/CYCLING_CONVERSION);
@@ -370,7 +370,7 @@ function getStats(user, date) {
                             }
 
                             // Only add valid activities to the total
-                            if (['Run','Swim','Bike','Walk','tracker'].includes(activityEntry.activity)) {
+                            if (['Run',/*'Swim',*/'Bike','Walk','tracker'].includes(activityEntry.activity)) {
                                 // user.totalDuration = user.totalDuration + ((activityEntry.duration)/60000);
 
                                 if (activityEntry.name === 'Bike' && activityEntry.distance > 0) {
@@ -390,7 +390,7 @@ function getStats(user, date) {
             }
 
             user.totalRun = Math.floor(user.totalRun*100)/100;
-            user.totalSwim = Math.floor(user.totalSwim*100)/100;
+            // user.totalSwim = Math.floor(user.totalSwim*100)/100;
             user.totalCycling = Math.floor(user.totalCycling*100)/100;
             user.totalCyclingConverted = Math.floor(user.totalCyclingConverted*100)/100;
             user.totalWalk = Math.floor(user.totalWalk*100)/100;

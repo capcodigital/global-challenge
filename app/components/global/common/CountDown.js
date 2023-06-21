@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import worldmap from "./worldmap.svg";
 
-const challengeStartDate = new Date(2023, 4, 28, 0, 0, 0, 0);
-const challengeEndDate = new Date(2023, 5, 28, 23, 59, 59, 0);
+const challengeStartDate = new Date(2023, 6, 10, 0, 0, 0, 0);
+const challengeEndDate = new Date(2023, 6, 24, 23, 59, 59, 0);
 
 function getTimeRemaining() {
   let total = new Date();
