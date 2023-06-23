@@ -76,7 +76,7 @@ const StravaSetupInstructions = () => (
             6. To 
             <b>
               ensure your activity is syncing and that your distance is measured
-              in Kilometres
+              in Kilometers
             </b>
              select your avatar (image), then select settings from the drop-down
             menu > display preferences > update units and measurements and

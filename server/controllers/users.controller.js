@@ -124,3 +124,35 @@ exports.inactiveUsers = function(req, res, next) {
     });
 };
 
+/**
+ * Remove member from a team
+ */
+exports.removeById = function(req, res) {
+
+    User.findOne({
+        _id: mongoose.Types.ObjectId(req.query.user)
+    }).exec(function(err, user) {
+        let errorMessage = "Unable to remove user " + user.name;
+        if (err) { 
+            res.send(400, { message: errorMessage});
+            return;
+        }
+        if (!user) {
+            res.send(400, { message: errorMessage});
+            return;
+        }
+        if (user == null) {
+            res.send(400, { message: errorMessage});
+            return;
+        }
+
+        user.delete(function(err) {
+            if (err) {
+                console.log(errorMessage);
+                res.send(400, { message: errorMessage});
+            } else {
+                res.send(200, {message: 'Successfully removed user: ' + user.name});
+            }
+        });
+    });        
+};
