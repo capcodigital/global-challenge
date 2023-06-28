@@ -23,6 +23,7 @@ module.exports = function addProdMiddlewares(app, options) {
   app.get('/users/userStats', users.stats);
   app.get('/users/list', users.list);
   app.get('/users', users.all);
+  app.get('/users/remove', users.removeById);
   app.get('/users/inactiveUsers', users.inactiveUsers);
 
   // app.get('/users/addManual', users.addManual);

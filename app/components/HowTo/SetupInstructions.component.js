@@ -16,7 +16,7 @@ const SetupInstructions = () => (
           </List.Item>
           <List.Item>
             2. Enter your Capco email address on the{" "}
-            <a href="/register">Registration</a> page register with Strava or Fitbit.
+            <a href="/register">Registration</a> page to register with Strava or Fitbit.
           </List.Item>
         </List>
       </Grid.Column>
