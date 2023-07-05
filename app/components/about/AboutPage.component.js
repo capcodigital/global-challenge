@@ -44,15 +44,13 @@ const AboutPage = () => (
               <br />
               <br />
               Run, walk, or cycle while raising funds for our chosen charity, Medicine sans Frontières.
-              {/*
               <a
-                href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/donate"
+                href="https://www.justgiving.com/page/capco-global-csr-global-challenge"
                 target="_blank"
               >
                 World Health Organization COVID-19 Solidarity Response Fund
               </a>
                 .
-              */}
               </p>
               <p>
               All distances will be tracked via the Capco Global Challenge platform and will help us to achieve our collective target of 50,000 Kms - the distance* between all our Capco offices.

@@ -57,7 +57,7 @@ const TeamSportsLeaderboardTable = ({
                         {item.position ? item.position : idx + 1}
                       </Table.Cell>
                       <Table.Cell>
-                        <Avatar name={item.name} color={grey} size={30} />
+                        <Avatar name={item.name} location={item.location} color={grey} size={30} />
                       </Table.Cell>
                       <Table.Cell className="distance">
                         {item.distance}km
@@ -106,7 +106,7 @@ const TeamSportsLeaderboardTable = ({
                   {item.position ? item.position : idx + 1}
                 </span>
                 <span>
-                  <Avatar name={item.name} color={grey} size={30} />
+                  <Avatar name={item.name} location={item.location} color={grey} size={30} />
                 </span>
                 <span className="distance">{item.distance}km</span>
                 <span>

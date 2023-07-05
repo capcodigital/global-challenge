@@ -15,9 +15,26 @@ export const getInitials = (name) => {
     }`.toUpperCase();
 };
 
-const Avatar = ({ name, color, size }) => (
+const hasFlag = (location) => {
+
+  // if (!location) return false;
+
+  // const img = new Image();
+  // img.url = "./images/" + location + ".png";
+  // if (img.complete) {
+  //   return true;
+  // } else {
+    return false;
+  // }
+} 
+
+const Avatar = ({ name, location, color, size }) => (
   <svg className="avatar" width={size} height={size}>
     <circle fill={color} cx={size / 2} cy={size / 2} r={size / 2} />
+    {hasFlag(location) && (
+     <img src={"./images/" + location + ".png"} alt="Country Flag" />
+    )}
+    {!hasFlag(location) && (
     <text
       textAnchor="middle"
       x={size / 2}
@@ -28,11 +45,14 @@ const Avatar = ({ name, color, size }) => (
     >
       {getInitials(name)}
     </text>
+    )}
   </svg>
+
 );
 
 Avatar.propTypes = {
   name: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   size: PropTypes.number.isRequired,
 };

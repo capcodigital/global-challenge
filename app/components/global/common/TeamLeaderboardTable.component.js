@@ -83,7 +83,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
                       {item.position ? item.position : idx + 1}
                     </Table.Cell>
                     <Table.Cell className={"main avatar"}>
-                      <Avatar name={item.name} color={"#00AABB"} size={40} />
+                      <Avatar name={item.name} location={item.location} color={"#00AABB"} size={40} />
                     </Table.Cell>
                     <Table.Cell
                       className={`main team-name ${!isMainDashboard && "team"}`}
@@ -133,7 +133,7 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
                 {item.position ? item.position : idx + 1}
               </span>
               <span className={"avatar"}>
-                <Avatar name={item.name} color={"#00AABB"} size={40} />
+                <Avatar name={item.name} location={item.location} color={"#00AABB"} size={40} />
               </span>
               <span>
                 <div className={"date"}>

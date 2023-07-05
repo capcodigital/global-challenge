@@ -74,7 +74,7 @@ class Header extends React.Component {
                   {challenge_name == "uk" && (
                     <img
                       src={ESTRChallenge}
-                      alt="ESTR Challenge Logo"
+                      alt="Challenge Logo"
                       className="uk-challenge-logo"
                     />
                   )}

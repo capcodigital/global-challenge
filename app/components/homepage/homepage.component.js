@@ -26,27 +26,41 @@ const HomePage = () => (
             )}
           </Grid.Column>
           <Grid.Column width={6} className="registration">
-            {/* <FormattedHTMLMessage id="homepage.instructionsESTR" />
+            {/*<FormattedHTMLMessage id="homepage.instructions" />
             <Button
               secondary
               fluid
               size="large"
               as="a"
-              href="https://fundraise.unfoundation.org/fundraiser/3140126"
+              href="https://www.justgiving.com/page/capco-global-csr-global-challenge"
               target="_blank"
               className="donate"
             >
               <FormattedMessage id="homepage.donate" />
-            </Button> */}
+            </Button>
+            */}
 
             <h2>Register</h2>
             <p>
             To register for the Capco Global Challenge:
             </p>
             <p>
-            1.	Make a donation to our chosen charity for this year’s Challenge, Medicine sans Frontières  using the 
+            1.	Make a donation to our chosen charity for this year’s Challenge, Medicine sans Frontières using the 
             button below. All money raised will be matched by Capco through our Corporate Matching Program 
-            (up to a value of $2000).
+            (up to a value of $2500).
+            </p>
+            <p>
+            <Button
+              secondary
+              fluid
+              size="large"
+              as="a"
+              href="https://www.justgiving.com/page/capco-global-csr-global-challenge"
+              target="_blank"
+              className="donate"
+            >
+              <FormattedMessage id="homepage.donate" />
+            </Button>
             </p>
             <p>
               2.	If you have a Strava or Fitbit account, please enter your Capco email address below to register. 
