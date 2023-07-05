@@ -85,7 +85,7 @@
     "underscore": "^1.13.6",
     "warning": "^4.0.1",
     "whatwg-fetch": "2.0.4",
-    "y18n": "4.0.1",
+    "y18n": "4.0.3",
     "yarn": "^1.22.19"
   },
   "devDependencies": {
