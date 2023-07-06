@@ -67,6 +67,12 @@ const HowTo = () => (
               >
                 Link Apple Watch to Fitbit (Via Strava)
               </List.Item>
+              <List.Item
+                href="https://support.strava.com/hc/en-us/articles/216917527-Health-App-and-Strava"
+                target="_blank"
+              >
+                Link Strava and the Apple Health App
+              </List.Item>
             </List>
           </Grid.Column>
           <Grid.Column className="how-to-section column-b">

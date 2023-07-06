@@ -150,15 +150,17 @@ exports.authorize = function(req, res) {
                                 levels.AddOrUpdate(newUser.level, newUser._id);
 
                                 /*
-                                let emailText = "Hello " + user.name + ",\n\r You have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
+                                let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
                                 "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
                                 "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
-                                "Good Luck \n\r Capco Health & Wellbeing";
+                                "Good Luck \n\rCapco Health & Wellbeing";
                                 */
 
-                                let emailText = "Hello " + user.name + ",\n\r You have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
+                                let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
                                 "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
-                                "Good Luck \n\r Capco Health & Wellbeing";
+                                "If you did not register or wish to be removed from the challenge and your account deleted please email the support team" +
+                                " challenge@capco.com\n\r" +
+                                "Good Luck \n\rCapco Health & Wellbeing";
 
                                 mailer.sendMail(user.email, "Capco Challenge Registration Successfull", emailText, function() {
                                     console.log("email sent to " + user.email);

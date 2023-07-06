@@ -1,73 +1,67 @@
-/**
- * Module dependencies.
- */
-var nodemailer = require('nodemailer');
-var path = require('path');
-var fs = require('fs');
+const nodemailer = require('nodemailer');
+const axios = require('axios');
+const path = require('path');
+const fs = require('fs');
 
-var DEFAULT_FROM_ADDRESS = "challenge@capco.com";
+const DEFAULT_FROM_ADDRESS = "challenge@capco.com";
 
-var emailUser = process.env.EMAIL_USER;
-var emailPassword = process.env.EMAIL_PASSWORD;
+let tenantID = process.env.TENANT_ID;
+let oAuthClientID = process.env.CLIENT_ID;
+let clientSecret = process.env.CLIENT_SECRET;
+let oAuthToken;
 
-if (!emailUser || !emailPassword) {
-    emailUser = fs.readFileSync('./config/keys/emailUser.txt', 'utf8');
-    emailPassword = fs.readFileSync('./config/keys/emailPassword.txt', 'utf8');
+if (!tenantID || !oAuthClientID || !clientSecret) {
+    tenantID = fs.readFileSync('./config/keys/tenantID.txt', 'utf8');
+    oAuthClientID = fs.readFileSync('./config/keys/oAuthClientID.txt', 'utf8');
+    clientSecret = fs.readFileSync('./config/keys/clientSecret.txt', 'utf8');
 }
 
-var emailConnectionDetails = {
-    // host: "smtp.office365.com",
-    port: 587,
-    service: "Outlook365",
-    // secure: false,
-    auth: {
-        user: emailUser,
-        pass: emailPassword
-    // },
-    // tls: {
-    //     ciphers: 'SSLv3'
+exports.sendMail = async function(to, subject, text, callback) {
+
+    try {
+        await axios({ // Get OAuth token to connect as OAuth client
+            method: 'post',
+            url: `https://login.microsoftonline.com/${tenantID}/oauth2/token`,
+            data: new URLSearchParams({
+                client_id: oAuthClientID,
+                client_secret: clientSecret,
+                resource: "https://graph.microsoft.com",
+                grant_type: "client_credentials"
+            }).toString()
+        })
+        .then(r => oAuthToken = r.data.access_token);
+
+    } catch (err) {
+        console.log("Email Token Failure");
+        console.log(err);
     }
-};
 
-exports.sendMail = function(to, subject, text, callback) {
-    
-    if (process.env.NODE_ENV === 'production') {
-        var transporter = nodemailer.createTransport(emailConnectionDetails);
-        var from_address = DEFAULT_FROM_ADDRESS;
+    let payload = { 
+        message: {
+          subject: subject,
+          body: {
+            contentType: 'TEXT',
+            content: text
+          },
+          toRecipients: [{emailAddress: {address: to}}]
+        }
+      };
 
-        transporter.sendMail({
-            from: from_address,
-            to: to,
-            subject: subject,
-            text: text
-        }, function(err, info) {
-            if (err) {
-                console.error(err);
-            }
-        });
+    try {
+
+        await axios ({ // Send Email using Microsoft Graph
+            method: 'post',
+            url: `https://graph.microsoft.com/v1.0/users/${DEFAULT_FROM_ADDRESS}/sendMail`,
+            headers: {
+                'Authorization': "Bearer " + oAuthToken,
+                'Content-Type': 'application/json'
+            },
+            data: payload
+        })
+    } catch (err) {
+        console.log("Email Send Failure");
+        console.log(err);
     }
 
     callback(null, true);
 };
-
-exports.sendMailFromTemplate = function(to, subject, templateFunction, locals, callback) {
-
-    if (process.env.NODE_ENV === 'production') {
-        var transporter = nodemailer.createTransport(emailConnectionDetails);
-        var from_address = DEFAULT_FROM_ADDRESS;
-
-        transporter.sendMail({
-            from: from_address,
-            to: to,
-            subject: subject,
-            html: templateFunction(locals)
-        }, function(err, info) {
-            if (err) {
-                console.error(err);
-            }
-        });
-    }
-    
-    callback(null, true);
-};
-

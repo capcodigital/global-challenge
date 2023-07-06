@@ -44,15 +44,13 @@ const AboutPage = () => (
               <br />
               <br />
               Run, walk, or cycle while raising funds for our chosen charity, Medicine sans Frontières.
-              {/*
               <a
-                href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/donate"
+                href="https://www.justgiving.com/page/capco-global-csr-global-challenge"
                 target="_blank"
               >
                 World Health Organization COVID-19 Solidarity Response Fund
               </a>
                 .
-              */}
               </p>
               <p>
               All distances will be tracked via the Capco Global Challenge platform and will help us to achieve our collective target of 50,000 Kms - the distance* between all our Capco offices.
@@ -74,13 +72,13 @@ const AboutPage = () => (
                 <b>Event Details</b> <br />
                 <br />
                 <b>Registration Deadline: </b>
-                <p className="red">July, 9th 2023</p>
+                <p className="red">July, 10th 2023</p>
                 <br />
                 <b>Challenge Starts: </b>
-                <p className="red">July 10th, 2023</p>
+                <p className="red">July 17th, 2023</p>
                 <br />
                 <b>Challenge Ends: </b>
-                <p className="red">July 24th, 2022</p>
+                <p className="red">July 30th, 2023</p>
                 <br />
                 <br />
                 <p>
