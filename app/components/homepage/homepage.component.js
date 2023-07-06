@@ -5,7 +5,7 @@ import { Grid, Segment, Container, List, Button } from "semantic-ui-react";
 import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
 import RegistrationForm from "../register";
 import landing from "./images/landing.svg";
-import landingGlobal from "./images/landing-global.png";
+import landingGlobal from "./images/landing-global23.jpg";
 import "./style.scss";
 
 const challenge_name = process.env.CHALLENGE_NAME
