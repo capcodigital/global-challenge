@@ -8,8 +8,8 @@
   "homepage.teams": "Register a new team or join an exitsing one  ",
 
   "homepage.success": "Registration Completed Successfully",
-  "homepage.fitbitRegistered": "You are already logged in to Fitbit with a Capco user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Fitbit and try again",
-  "homepage.stravaRegistered": "You are already logged in to Strava with a Capco user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Strava and try again",
+  "homepage.fitbitRegistered": "You are already logged in to FitBit or Strava with a Capco user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Fitbit/Strava and try again",
+  "homepage.stravaRegistered": "You are already logged in to Strava or FitBit with a Capco user that has previously registered for the Global Challenge. If you need to register someone else, please log out of Strava/FitBit and try again",
   "homepage.capcoRegistered": "The Capco ID or Email you entered has already been registered",
   "homepage.serverError": "Server error please try again later", 
   "homepage.stravaError": "Error contacting Strava, please try again later",

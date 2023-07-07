@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
     name: String,
     username: String,
-    email: String,
+    email: { type:String, unique:true},
     app: String,
     location: String,
     level: String,

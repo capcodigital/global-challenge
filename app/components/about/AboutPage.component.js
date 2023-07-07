@@ -43,12 +43,12 @@ const AboutPage = () => (
               compete while raising important funds for charity. 
               <br />
               <br />
-              Run, walk, or cycle while raising funds for our chosen charity, Medicine sans Frontières.
+              Run, walk, or cycle while raising funds for our chosen charity,
               <a
                 href="https://www.justgiving.com/page/capco-global-csr-global-challenge"
                 target="_blank"
               >
-                World Health Organization COVID-19 Solidarity Response Fund
+                Médicins Sans Frontières
               </a>
                 .
               </p>

@@ -45,7 +45,7 @@ const HomePage = () => (
             To register for the Capco Global Challenge:
             </p>
             <p>
-            1.	Make a donation to our chosen charity for this year’s Challenge, Medicine sans Frontières using the 
+            1.	Make a donation to our chosen charity for this year’s Challenge, Médicins Sans Frontières using the 
             button below. All money raised will be matched by Capco through our Corporate Matching Program 
             (up to a value of $2500).
             </p>
