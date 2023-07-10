@@ -442,7 +442,7 @@ function save(user, res) {
             */
 
             let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
-                            "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
+                            "Once the challenge starts on July 17, you can view your progress here: " + callbackUrl + "\n\r" +
                             "If you did not register or wish to be removed from the challenge and your account deleted please email the support team" +
                             " challenge@capco.com\n\r" +
                             "Good Luck \n\rCapco Health & Wellbeing";
