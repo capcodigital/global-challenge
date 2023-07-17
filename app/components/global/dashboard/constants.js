@@ -197,7 +197,7 @@ export const offices = [
 ];
 
 // Use to allow distances to be "stretched" to meet a certain target, larger or smaller than actual total distance
-const conversion_factor = 1.22270315;
+const conversion_factor = 1; // 1.22270315;
 
 export const allCities = [
   {
