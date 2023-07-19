@@ -314,6 +314,7 @@ function getStats(user, date) {
                                 case 'Run':
                                 // case 'Swim':
                                 case 'Bike':
+                                case 'Outdoor Bike':
                                 case 'Walk':
                                     // Ignore as handled later
                                     break;
@@ -334,7 +335,6 @@ function getStats(user, date) {
                                 case 'Aerobic Workout':
                                 case 'Sport':
                                 case 'Workout':
-                                case 'Outdoor Bike':
                                     user.totalRun = user.totalRun + (((activityEntry.duration/60000)*160)/1000);
                                     user.totalDistanceConverted = user.totalDistanceConverted + (((activityEntry.duration/60000)*160)/1000);
                                     user.totalDistance = user.totalDistance + (((activityEntry.duration/60000)*160)/1000);
@@ -358,6 +358,7 @@ function getStats(user, date) {
                                 //     user.totalSwim = user.totalSwim + activityEntry.distance;
                                 //     break;
                                 case 'Bike':
+                                case 'Outdoor Bike':
                                     user.totalCycling = user.totalCycling + activityEntry.distance;
                                     user.totalCyclingConverted = user.totalCyclingConverted + (activityEntry.distance/CYCLING_CONVERSION);
                                     break;
