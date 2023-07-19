@@ -120,18 +120,14 @@ div.row {
 
     &.global{
       .ui.input>input {
-        background: transparent !important;
-        color: white !important;
+        background: white !important;
         border: 1px solid #005F65 !important;
       }
       ::placeholder { 
-        color: white !important;
         opacity: 1;
       }
-      .icon {
-        color: white !important
-      }
     }
+
     .search {
       .input {
         width: 80%;
@@ -147,7 +143,7 @@ div.row {
     }
     .button {
       margin-left: 5px;
-      height: 50px;
+      height: 48px;
       border-radius: 1rem;
       min-width: 18%;
 
