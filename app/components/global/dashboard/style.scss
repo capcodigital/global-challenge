@@ -120,22 +120,36 @@ div.row {
 
     &.global{
       .ui.input>input {
-        background: transparent !important;
-        color: white !important;
+        background: white !important;
         border: 1px solid #005F65 !important;
       }
       ::placeholder { 
-        color: white !important;
         opacity: 1;
       }
-      .icon {
-        color: white !important
-      }
     }
+
     .search {
       .input {
-        width: 100%;
+        width: 80%;
         font-size: 18px;
+        float:left;
+        @media (max-width: 1024px) {
+          width:73%;
+        }
+      }
+      .prompt {
+        border-radius: 1rem;
+      }
+    }
+    .button {
+      margin-left: 5px;
+      height: 48px;
+      border-radius: 1rem;
+      min-width: 18%;
+
+      @media (max-width: 810px) {
+        margin-top: 1px;
+        height: 46px;
       }
     }
   }

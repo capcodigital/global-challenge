@@ -168,4 +168,4 @@ TeamLeaderboardTable.defaultProps = {
   isLoading: false,
 };
 
-export default TeamLeaderboardTable;
+export default React.memo(TeamLeaderboardTable);
