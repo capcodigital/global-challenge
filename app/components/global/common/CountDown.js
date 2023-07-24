@@ -50,6 +50,13 @@ const CountDown = ({ totalDistance }) => {
         </div>
         <div className="count">
           <div>
+              <span className="days">LIVE!</span>
+              <div className="small-text">CHALLENGE CURRENTLY IN PROGRESS</div>
+          </div>
+        </div>
+        {/*
+        <div className="count">
+          <div>
             <span className="days">{timeLeft.days}</span>
             <div className="small-text">DAYS</div>
           </div>
@@ -66,6 +73,7 @@ const CountDown = ({ totalDistance }) => {
             <div className="small-text">SEC</div>
           </div>
         </div>
+  */}
       </div>
       <hr />
     </>
