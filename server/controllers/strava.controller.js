@@ -254,7 +254,7 @@ function buildRequest(options, callback) {
 function getStats(user) {
     // Month is an index
     var integerTime = ((new Date(challengeDates[0])).getTime())/1000;
-    strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime }, function(err, result) {
+    strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime, per_page: 100 }, function(err, result) {
         if (err) {
             console.log("Error Accessing Strava activities for " + user.name);
             if (err.toString().includes("Authorization Error")){
