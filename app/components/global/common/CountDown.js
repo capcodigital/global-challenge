@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import worldmap from "./worldmap.svg";
 
 const challengeStartDate = new Date(2023, 6, 17, 0, 0, 0, 0);
-const challengeEndDate = new Date(2023, 6, 30, 23, 59, 59, 0);
+const challengeEndDate = new Date(2023, 7, 7, 9, 0, 0, 0);
 
 function getTimeRemaining() {
   let total = new Date();
@@ -48,13 +48,14 @@ const CountDown = ({ totalDistance }) => {
           <div>{Math.round(totalDistance)}km</div>
           <div>TOTAL DISTANCE</div>
         </div>
+        {/*
         <div className="count">
           <div>
               <span className="days">LIVE!</span>
               <div className="small-text">CHALLENGE CURRENTLY IN PROGRESS</div>
           </div>
         </div>
-        {/*
+        */}
         <div className="count">
           <div>
             <span className="days">{timeLeft.days}</span>
@@ -73,7 +74,6 @@ const CountDown = ({ totalDistance }) => {
             <div className="small-text">SEC</div>
           </div>
         </div>
-  */}
       </div>
       <hr />
     </>
