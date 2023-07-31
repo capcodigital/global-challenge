@@ -197,7 +197,7 @@ export const offices = [
 ];
 
 // Use to allow distances to be "stretched" to meet a certain target, larger or smaller than actual total distance
-const conversion_factor = 1; // 1.22270315;
+const conversion_factor = 1; // 1.27547766;
 
 export const allCities = [
   {
@@ -297,10 +297,10 @@ export const allCities = [
     name: 'Kuala Lumpur', country: 'Malaysia', region: 'Asia', coordinates: [101.6869, 3.1390], distance: conversion_factor * 36610
   },
   {
-    name: 'Singapore', country: 'Singapore', region: 'Asia', coordinates: [103.8000, 1.3000], distance: conversion_factor * 39201
+    name: 'Singapore', country: 'Singapore', region: 'Asia', coordinates: [103.8000, 1.3000], distance: conversion_factor * /*39201*/ 50000
   },
   {
-    name: 'Hong Kong', country: 'Hong Kong', region: 'Asia', coordinates: [114.1589, 22.2783], distance: conversion_factor * 39202
+    name: 'Hong Kong', country: 'Hong Kong', region: 'Asia', coordinates: [114.1589, 22.2783], distance: conversion_factor * /*39202*/ 50000
   }
 ];
 
