@@ -78,7 +78,7 @@ const AboutPage = () => (
                 <p className="red">July 17th, 2023</p>
                 <br />
                 <b>Challenge Ends: </b>
-                <p className="red">July 30th, 2023</p>
+                <p className="red">August 7th, 2023</p>
                 <br />
                 <br />
                 <p>

@@ -125,6 +125,20 @@ exports.inactiveUsers = function(req, res, next) {
 };
 
 /**
+ * User App Totals
+ */
+exports.userAppTotals = function(req, res, next) {
+    User.find({}).select('name email app location level totalDistance').exec(function(err, users) {
+        if (err) {
+          console.log(err);
+            res.json({error: "Server error please try again later" });
+        } else {
+          res.jsonp(users);
+        }
+    });
+};
+
+/**
  * Remove member from a team
  */
 exports.removeById = function(req, res) {
