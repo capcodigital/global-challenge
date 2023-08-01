@@ -197,7 +197,7 @@ export const offices = [
 ];
 
 // Use to allow distances to be "stretched" to meet a certain target, larger or smaller than actual total distance
-const conversion_factor = 1.22270315;
+const conversion_factor = 1; // 1.27547766;
 
 export const allCities = [
   {
@@ -231,76 +231,76 @@ export const allCities = [
     name: 'Hartford', country: 'USA', region: 'North America', coordinates: [-72.673728, 41.768609], distance: conversion_factor * 13530
   },
   {
-    name: 'Toronto', country: 'Canada', region: 'North America', coordinates: [-79.4000, 43.7000], distance: conversion_factor * 14120
+    name: 'Toronto', country: 'Canada', region: 'North America', coordinates: [-79.4000, 43.7000], distance: conversion_factor * 19404
   },
   {
-    name: 'Edinburgh', country: 'United Kingdom', region: 'Europe', coordinates: [-3.1883, 55.9533], distance: conversion_factor * 19404
+    name: 'Edinburgh', country: 'United Kingdom', region: 'Europe', coordinates: [-3.1883, 55.9533], distance: conversion_factor * 19814
   },
   {
-    name: 'London', country: 'United Kingdom', region: 'Europe', coordinates: [0.1275, 51.5072], distance: conversion_factor * 19814
+    name: 'London', country: 'United Kingdom', region: 'Europe', coordinates: [0.1275, 51.5072], distance: conversion_factor * 20158
   },
   {
-    name: 'Paris', country: 'France', region: 'Europe', coordinates: [2.3508, 48.8567], distance: conversion_factor * 20158
+    name: 'Paris', country: 'France', region: 'Europe', coordinates: [2.3508, 48.8567], distance: conversion_factor * 20384
   },
   {
-    name: 'Geneva', country: 'Switzerland', region: 'Europe', coordinates: [6.15, 46.2000], distance: conversion_factor * 20384
+    name: 'Geneva', country: 'Switzerland', region: 'Europe', coordinates: [6.15, 46.2000], distance: conversion_factor * 20872
   },
   {
-    name: 'Zurich', country: 'Switzerland', region: 'Europe', coordinates: [8.5500, 47.3667], distance: conversion_factor * 20872
+    name: 'Zurich', country: 'Switzerland', region: 'Europe', coordinates: [8.5500, 47.3667], distance: conversion_factor * 21045
   },
   {
-    name: 'Brussels', country: 'Belgium', region: 'Europe', coordinates: [4.3517, 50.8503], distance: conversion_factor * 21045
+    name: 'Brussels', country: 'Belgium', region: 'Europe', coordinates: [4.3517, 50.8503], distance: conversion_factor * 21227
   },
   {
-    name: 'Dusseldorf', country: 'Germany', region: 'Europe', coordinates: [6.7833, 51.2333], distance: conversion_factor * 21227
+    name: 'Dusseldorf', country: 'Germany', region: 'Europe', coordinates: [6.7833, 51.2333], distance: conversion_factor * 21649
   },
   {
-    name: 'Frankfurt', country: 'Germany', region: 'Europe', coordinates: [8.6858, 50.1117], distance: conversion_factor * 21649
+    name: 'Frankfurt', country: 'Germany', region: 'Europe', coordinates: [8.6858, 50.1117], distance: conversion_factor * 22151
   },
   {
-    name: 'Berlin', country: 'Germany', region: 'Europe', coordinates: [13.391061, 52.509511], distance: conversion_factor * 22151
+    name: 'Berlin', country: 'Germany', region: 'Europe', coordinates: [13.391061, 52.509511], distance: conversion_factor * 22499
   },
   {
-    name: 'Munich', country: 'Germany', region: 'Europe', coordinates: [11.574569, 48.142242], distance: conversion_factor * 22499
+    name: 'Munich', country: 'Germany', region: 'Europe', coordinates: [11.574569, 48.142242], distance: conversion_factor * 23124
   },
   {
-    name: 'Milan', country: 'Italy', region: 'Europe', coordinates: [9.1900, 45.4642], distance: conversion_factor * 23124
+    name: 'Milan', country: 'Italy', region: 'Europe', coordinates: [9.1900, 45.4642], distance: conversion_factor * 23711
   },
   {
-    name: 'Vienna', country: 'Austria', region: 'Europe', coordinates: [16.3738, 48.2082], distance: conversion_factor * 23179
+    name: 'Vienna', country: 'Austria', region: 'Europe', coordinates: [16.3738, 48.2082], distance: conversion_factor * 23766
   },
   {
-    name: 'Bratislava', country: 'Slovakia', region: 'Europe', coordinates: [17.1097, 48.1439], distance: conversion_factor * 23711
+    name: 'Bratislava', country: 'Slovakia', region: 'Europe', coordinates: [17.1097, 48.1439], distance: conversion_factor * 24295
   },
   {
-    name: 'Warsaw', country: 'Poland', region: 'Europe', coordinates: [21.0122, 52.2297], distance: conversion_factor * 27863 - 534
+    name: 'Warsaw', country: 'Poland', region: 'Europe', coordinates: [21.0122, 52.2297], distance: conversion_factor * 28447
   },
   {
-    name: 'Dubai', country: 'Dubai', region: 'Asia', coordinates: [55.2708, 25.2048], distance: conversion_factor * 30052
+    name: 'Dubai', country: 'Dubai', region: 'Asia', coordinates: [55.2708, 25.2048], distance: conversion_factor * 30632
   },
   {
-    name: 'Gurgaon', country: 'India', region: 'Asia', coordinates: [77.0266, 28.4595], distance: conversion_factor * 31177
+    name: 'Gurgaon', country: 'India', region: 'Asia', coordinates: [77.0266, 28.4595], distance: conversion_factor * 31757
   },
   {
-    name: 'Mumbai', country: 'India', region: 'Asia', coordinates: [72.845742, 19.120655], distance: conversion_factor * 31297
+    name: 'Mumbai', country: 'India', region: 'Asia', coordinates: [72.845742, 19.120655], distance: conversion_factor * 31877
   },
   {
-    name: 'Pune', country: 'India', region: 'Asia', coordinates: [73.8567, 18.5204], distance: conversion_factor * 32044
+    name: 'Pune', country: 'India', region: 'Asia', coordinates: [73.8567, 18.5204], distance: conversion_factor * 32624
   },
   {
-    name: 'Bangalore', country: 'India', region: 'Asia', coordinates: [77.5667, 12.9667], distance: conversion_factor * 34515
+    name: 'Bangalore', country: 'India', region: 'Asia', coordinates: [77.5667, 12.9667], distance: conversion_factor * 35095
   },
   {
-    name: 'Bangkok', country: 'Thailand', region: 'Asia', coordinates: [100.5018, 13.7563], distance: conversion_factor * 35724
+    name: 'Bangkok', country: 'Thailand', region: 'Asia', coordinates: [100.5018, 13.7563], distance: conversion_factor * 36304
   },
   {
-    name: 'Kuala Lumpur', country: 'Malaysia', region: 'Asia', coordinates: [101.6869, 3.1390], distance: conversion_factor * 36030
+    name: 'Kuala Lumpur', country: 'Malaysia', region: 'Asia', coordinates: [101.6869, 3.1390], distance: conversion_factor * 36610
   },
   {
-    name: 'Singapore', country: 'Singapore', region: 'Asia', coordinates: [103.8000, 1.3000], distance: conversion_factor * 38621
+    name: 'Singapore', country: 'Singapore', region: 'Asia', coordinates: [103.8000, 1.3000], distance: conversion_factor * /*39201*/ 50000
   },
   {
-    name: 'Hong Kong', country: 'Hong Kong', region: 'Asia', coordinates: [114.1589, 22.2783], distance: conversion_factor * 40893
+    name: 'Hong Kong', country: 'Hong Kong', region: 'Asia', coordinates: [114.1589, 22.2783], distance: conversion_factor * /*39202*/ 50000
   }
 ];
 

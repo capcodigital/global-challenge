@@ -2,7 +2,7 @@ import React from "react";
 import { feature } from "topojson-client";
 import { keyBy } from "lodash";
 import PropTypes from "prop-types";
-import { Segment, Grid, Header, Search } from "semantic-ui-react";
+import { Segment, Grid, Header, Search, Button } from "semantic-ui-react";
 import Map from "../map";
 import {
   TeamLeaderboardTable,
@@ -178,15 +178,35 @@ class DashboardGlobal extends React.Component {
   };
 
   handleSearchChange = (e, { value }) => {
-    this.setState({
-      isSearchLoading: true,
-      value,
-      filteredData: this.state.currentData,
+    if (!value || value === "") {
+      this.setState({
+        ...this.state,
+        isSearchLoading: true,
+        value,
+        filteredData: this.state.currentData,
+      }, () => this.filterSearchResult());
+    } else {
+      this.setState({
+        ...this.state,
+        value,
+      });
+    }
+  };
+
+  handleClickSearch = (e) => {
+    e.preventDefault();
+    this.filterSearchResult();
+  };
+
+  filterSearchResult = () => {
+    const { currentData, value } = this.state
+
+    const filteredResults = currentData.filter((data) => {
+      const name = data.name.toLowerCase();
+      const newSearchValue = value.toLowerCase().trim();
+      return name.includes(newSearchValue);
     });
 
-    const filteredResults = this.state.currentData.filter((data) =>
-      data.name.toLowerCase().includes(value.toLowerCase().trim())
-    );
     this.setState({
       isSearchLoading: false,
       filteredData: filteredResults,
@@ -294,6 +314,11 @@ class DashboardGlobal extends React.Component {
                       value={value}
                       placeholder={"Search Name"}
                     />
+                    <Button 
+                      inverted color='teal'
+                      content='Search'
+                      onClick={this.handleClickSearch}
+                      />
                   </div>
                   <TeamLeaderboardTable
                     isLoading={isSearchLoading}
@@ -314,11 +339,9 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={filteredData.map((team) => ({
-                            name: team.name,
-                            distance: team.activities["Run"],
-                            position: team.activities.runPosition,
-                          }))}
+                          data={filteredData}
+                          activity={"Run"}
+                          activityPosition={"runPosition"}
                         />
                       </div>
                     </Grid.Row>
@@ -330,11 +353,9 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={filteredData.map((team) => ({
-                            name: team.name,
-                            distance: team.activities["Walk"],
-                            position: team.activities.walkPosition,
-                          }))}
+                          data={filteredData}
+                          activity={"Walk"}
+                          activityPosition={"walkPosition"}
                         />
                       </div>
                     </Grid.Row>
@@ -346,11 +367,9 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={filteredData.map((team) => ({
-                            name: team.name,
-                            distance: team.activities["Cycling"],
-                            position: team.activities.cyclingPosition,
-                          }))}
+                          data={filteredData}
+                          activity={"Cycling"}
+                          activityPosition={"cyclingPosition"}
                         />
                       </div>
                     </Grid.Row>
