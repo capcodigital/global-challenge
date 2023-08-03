@@ -51,11 +51,38 @@ class Map extends React.PureComponent {
     return '';
   }
 
+  getLastRedCity = () => {
+    const { cities, distance } = this.props
+    let count = 0
+    const targetCity = cities.map((city, i) => {
+      const prevCityDistance = cities && cities[i - 1]?.distance
+      // if (city.distance <= distance) {
+      //   count = i += 1
+      // }
+      if ((city.distance > distance) && (distance > prevCityDistance)) {
+        count = i++
+      }
+    })
+    console.log(count)
+    return count
+  }
+
+  isLinearGradient = (cityIndex, cityDistance, totalDistance) => {
+    console.log(cityIndex)
+    if (cityIndex === 0 && cityDistance > totalDistance) {
+      return "url(#myGradient)"
+    }
+    if (this.getLastRedCity() === cityIndex && cityDistance < totalDistance) {
+      return "url(#myGradient)"
+    }
+    return null
+  }
   render() {
     const {
       worldData, cities, width, height, statistics, distance
     } = this.props;
-
+    const lastRedCity = this.getLastRedCity()
+    console.log(lastRedCity)
     return (
       <div className="map">
         <svg width={width} height={height || 450}>
@@ -81,27 +108,39 @@ class Map extends React.PureComponent {
                   cx={this.projection()(city.coordinates)[0]}
                   cy={this.projection()(city.coordinates)[1]}
                   r={4}
-                  fill={city.distance >= distance ? '#00aabb' : '#b4181b'}
+                  fill={(city.distance >= distance) ? '#00aabb' : '#b4181b'}
                   // fill={city.distance >= distance ? '#b4181b' : '#00aabb'}
                   opacity={0.8}
                 />
               ))
             }
           </g>
-        
+
           <g className="routes">
             {
               // stroke
-              cities.map((city, i) => (
+              cities.map((city, i) => {
+                console.log(city, (lastRedCity === i) && (city.distance < distance))
+                const prevCityDistance = cities[i - 1]?.distance
+
+                return(
+                <>
                 <path
                   key={`route-${i + 0}`}
                   d={this.getRoute(city, i)}
                   className="route-path"
                   fill="none"
-                  stroke={city.distance >= distance ? '#00aabb' : '#b4181b'}
+                  stroke={(city.distance > distance && i !== 0) ? '#00aabb' : this.isLinearGradient(i, city.distance, distance) ||  "#b4181b"}
                   strokeWidth={2.5}
                 />
-              ))
+                <defs>
+                  <linearGradient id="myGradient" gradientTransform="rotate(90)">
+                    <stop offset="0%" stop-color="#b4181b" />
+                    <stop offset={`${(city.distance / distance) * 100}%`} stop-color="#00aabb" />
+                  </linearGradient>
+                 </defs>
+                 </>)
+  })
             }
           </g>
           <g className="markercircle">
