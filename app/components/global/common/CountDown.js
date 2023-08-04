@@ -7,19 +7,27 @@ const challengeEndDate = new Date(2023, 7, 7, 9, 0, 0, 0);
 
 function getTimeRemaining() {
   let total = new Date();
-  // countdown to the start of the challenge
-  if (new Date() <= challengeStartDate)
-    total = Date.parse(challengeStartDate) - Date.parse(new Date());
-  // countdown during the challenge
-  else if (new Date() > challengeStartDate && new Date() < challengeEndDate)
-    total = Date.parse(challengeEndDate) - Date.parse(new Date());
-  // countdown after the challenge ends
-  else if (new Date() > challengeEndDate) total = new Date() - challengeEndDate
-  const seconds = Math.floor((total / 1000) % 60);
-  const minutes = Math.floor((total / 1000 / 60) % 60);
-  const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
-  const days = Math.floor(total / (1000 * 60 * 60 * 24));
+  let seconds = 0;
+  let minutes = 0;
+  let hours = 0;
+  let days = 0;
 
+  // countdown to the start of the challenge
+  if (new Date() <= challengeStartDate) {
+    total = Date.parse(challengeStartDate) - Date.parse(new Date());
+    seconds = Math.floor((total / 1000) % 60);
+    minutes = Math.floor((total / 1000 / 60) % 60);
+    hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    days = Math.floor(total / (1000 * 60 * 60 * 24));
+  // countdown during the challenge
+  } else if (new Date() > challengeStartDate && new Date() < challengeEndDate) {
+    total = Date.parse(challengeEndDate) - Date.parse(new Date());
+    seconds = Math.floor((total / 1000) % 60);
+    minutes = Math.floor((total / 1000 / 60) % 60);
+    hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    days = Math.floor(total / (1000 * 60 * 60 * 24));
+  }
+  
   return {
     total,
     days,
@@ -30,6 +38,8 @@ function getTimeRemaining() {
 }
 
 const CountDown = ({ totalDistance }) => {
+  // Temporary update as HR do not want the distance to go over 50000km
+  if(totalDistance > 50000) totalDistance = 50000;
   const [timeLeft, setTimeLeft] = useState(getTimeRemaining());
   useEffect(() => {
     const timer = setTimeout(() => {
