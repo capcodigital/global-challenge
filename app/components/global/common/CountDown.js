@@ -38,6 +38,8 @@ function getTimeRemaining() {
 }
 
 const CountDown = ({ totalDistance }) => {
+  // Temporary update as HR do not want the distance to go over 50000km
+  if(totalDistance > 50000) totalDistance = 50000;
   const [timeLeft, setTimeLeft] = useState(getTimeRemaining());
   useEffect(() => {
     const timer = setTimeout(() => {
