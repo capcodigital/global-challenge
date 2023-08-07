@@ -76,7 +76,7 @@
     "redux": "3.7.2",
     "redux-immutable": "4.0.0",
     "reselect": "4.1.8",
-    "sanitize.css": "8.0.0",
+    "sanitize.css": "8.0.1",
     "sass": "^1.63.6",
     "simple-oauth2": "^2.2.1",
     "ssri": "6.0.2",
