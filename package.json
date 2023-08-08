@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
-    "@react-google-maps/api": "^2.18.1",
+    "@react-google-maps/api": "^2.19.0",
     "@semantic-ui-react/css-patch": "^1.1.2",
     "axios": "^0.27.2",
     "chalk": "^2.4.2",
