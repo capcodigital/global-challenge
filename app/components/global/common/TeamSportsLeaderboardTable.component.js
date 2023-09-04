@@ -19,69 +19,19 @@ const TeamSportsLeaderboardTable = ({
   data,
   height,
   showActualDistance = false,
-  activity,
-  activityPosition,
 }) => {
-  const leaderBoardFilteredData = data.map((team) => ({
-      name: team.name,
-      distance: team.activities[activity],
-      position: team.activities[activityPosition],
-    }));
-
-  let sortedData = leaderBoardFilteredData.sort((a, b) => {
+  let sortedData = data.sort((a, b) => {
     if (b.position) {
       return a.position - b.position;
     } else {
       return b.distance - a.distance;
     }
   });
+  let maxDistance = Math.max(...data.map((item) => item.distance));
 
-  let maxDistance = Math.max(...leaderBoardFilteredData.map((item) => item.distance));
-
-  const popUpContent = (name, actualDistance) => (
-    <>
-      <div>{name}</div>
-      {showActualDistance && (
-        <div>Actual distance: {actualDistance.toFixed(2)}km</div>
-      )}
-    </>
-  );
-
-  const triggerContents = (item, idx) => {
-    const { position, name, distance} = item;
-    const fixedDistance = distance ? distance.toFixed(2) : "0.00";
-    const newPosition = position ? position : idx + 1;
-    const svgTotalWidth = (svgBarWidth * (distance ? distance : 0)) / maxDistance + 10;
-
-    return (
-      <Table.Row>
-        <Table.Cell className="sports-position">
-          {newPosition}
-        </Table.Cell>
-        <Table.Cell>
-          <Avatar name={name} color={'#FDC437'} size={30} />
-        </Table.Cell>
-        <Table.Cell className="distance">
-          {fixedDistance}km
-        </Table.Cell>
-        <Table.Cell>
-          <svg
-            width={svgBarWidth + 10}
-            height="16"
-            viewBox="0 0 210 16"
-            fill="#00AABB"
-          >
-            <rect
-              width={svgTotalWidth} // 10px minimum width
-              height="16"
-              fill={"#00AABB"}
-              rx={8}
-            />
-          </svg>
-        </Table.Cell>
-      </Table.Row>
-    );
-  };
+  const challenge_name = process.env.CHALLENGE_NAME
+    ? `${process.env.CHALLENGE_NAME}`
+    : "global";
 
   return (
     <>
@@ -95,10 +45,46 @@ const TeamSportsLeaderboardTable = ({
               {sortedData.map((item, idx) => (
                 <Popup
                   key={item.name}
-                  content={popUpContent(item.name, item.actualDistance)}
+                  content={
+                    <div>
+                      <div>{item.name}</div>
+                      {showActualDistance && (
+                        <div>Actual distance: {item.actualDistance ? item.actualDistance.toFixed(2) : item.actualDistance.toFixed(2)}km</div>
+                      )}
+                    </div>
+                  }
                   position="top center"
                   style={popupStyle}
-                  trigger={triggerContents(item, idx)}
+                  trigger={
+                    <Table.Row>
+                      <Table.Cell className="sports-position">
+                        {item.position ? item.position : idx + 1}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Avatar name={item.name} location={item.location} color={'#FDC437'} size={30} />
+                      </Table.Cell>
+                      <Table.Cell className="distance">
+                        {item.distance ? item.distance.toFixed(2) : item.distance.toFixed(2)}km
+                      </Table.Cell>
+                      <Table.Cell>
+                        <svg
+                          width={svgBarWidth + 10}
+                          height="16"
+                          viewBox="0 0 210 16"
+                          fill="#00AABB"
+                        >
+                          <rect
+                            width={
+                              (svgBarWidth * (item.distance ? item.distance : 0)) / maxDistance + 10
+                            } // 10px minimum width
+                            height="16"
+                            fill={"#00AABB"}
+                            rx={8}
+                          />
+                        </svg>
+                      </Table.Cell>
+                    </Table.Row>
+                  }
                 />
               ))}
             </Table.Body>
@@ -153,4 +139,4 @@ TeamSportsLeaderboardTable.propTypes = {
   showActualDistance: PropTypes.bool,
 };
 
-export default React.memo(TeamSportsLeaderboardTable);
+export default TeamSportsLeaderboardTable;
