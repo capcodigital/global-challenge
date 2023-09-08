@@ -178,15 +178,32 @@ class DashboardGlobal extends React.Component {
   };
 
   handleSearchChange = (e, { value }) => {
+    e.preventDefault();
+    if (value) {
     this.setState({
+        ...this.state,
       isSearchLoading: true,
       value,
       filteredData: this.state.currentData,
+      }, () => this.filterSearchResult());
+    } else {
+      this.setState({
+        ...this.state,
+        value,
+        filteredData: this.state.currentData,
+      });
+    }
+  };
+
+  filterSearchResult = () => {
+    const { currentData, value } = this.state
+
+    const filteredResults = currentData.filter((data) => {
+      const name = data.name.toLowerCase();
+      const newSearchValue = value.toLowerCase().trim();
+      return name.includes(newSearchValue);
     });
 
-    const filteredResults = this.state.currentData.filter((data) =>
-      data.name.toLowerCase().includes(value.toLowerCase().trim())
-    );
     this.setState({
       isSearchLoading: false,
       filteredData: filteredResults,
@@ -314,11 +331,9 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={filteredData.map((team) => ({
-                            name: team.name,
-                            distance: team.activities["Run"],
-                            position: team.activities.runPosition,
-                          }))}
+                          data={filteredData}
+                          activity="Run"
+                          activityPosition="runPosition"
                         />
                       </div>
                     </Grid.Row>
@@ -330,11 +345,9 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={filteredData.map((team) => ({
-                            name: team.name,
-                            distance: team.activities["Walk"],
-                            position: team.activities.walkPosition,
-                          }))}
+                          data={filteredData}
+                          activity="Walk"
+                          position="walkPosition"
                         />
                       </div>
                     </Grid.Row>
@@ -346,11 +359,9 @@ class DashboardGlobal extends React.Component {
                         </Header>
                         <TeamSportsLeaderboardTable
                           height={170}
-                          data={filteredData.map((team) => ({
-                            name: team.name,
-                            distance: team.activities["Cycling"],
-                            position: team.activities.cyclingPosition,
-                          }))}
+                          data={filteredData}
+                          activity="Cycling"
+                          position="cyclingPosition"
                         />
                       </div>
                     </Grid.Row>
