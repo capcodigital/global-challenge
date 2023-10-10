@@ -32,7 +32,12 @@ const formatCompletionDate = (compDate) => {
   )} ${completionDate.getDate()} ${monthNames[completionDate.getMonth()]}`;
 };
 
-const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
+const TeamLeaderboardTable = ({
+  data,
+  isMainDashboard,
+  isLoading,
+  activeTab,
+}) => {
   const history = useHistory();
 
   const handleClick = (teamName) => {
@@ -83,7 +88,13 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
                       {item.position ? item.position : idx + 1}
                     </Table.Cell>
                     <Table.Cell className={"main avatar"}>
-                      <Avatar name={item.name} location={item.location} color={"#00AABB"} size={40} />
+                      <Avatar
+                        name={item.name}
+                        location={item.location}
+                        activeTab={activeTab}
+                        color={"#00AABB"}
+                        size={40}
+                      />
                     </Table.Cell>
                     <Table.Cell
                       className={`main team-name ${!isMainDashboard && "team"}`}
@@ -133,7 +144,13 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
                 {item.position ? item.position : idx + 1}
               </span>
               <span className={"avatar"}>
-                <Avatar name={item.name} location={item.location} color={"#00AABB"} size={40} />
+                <Avatar
+                  name={item.name}
+                  location={item.location}
+                  activeTab={activeTab}
+                  color={"#00AABB"}
+                  size={40}
+                />
               </span>
               <span>
                 <div className={"date"}>
@@ -145,7 +162,9 @@ const TeamLeaderboardTable = ({ data, isMainDashboard, isLoading }) => {
 
                 {isMainDashboard && (
                   <div className="distance">
-                    {item.totalDistanceConverted ? item.totalDistanceConverted.toFixed(2) : item.totalDistanceConverted}
+                    {item.totalDistanceConverted
+                      ? item.totalDistanceConverted.toFixed(2)
+                      : item.totalDistanceConverted}
                     km
                   </div>
                 )}

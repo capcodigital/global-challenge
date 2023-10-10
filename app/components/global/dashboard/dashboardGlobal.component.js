@@ -316,6 +316,7 @@ class DashboardGlobal extends React.Component {
                     isLoading={isSearchLoading}
                     data={filteredData}
                     isMainDashboard={activeTab === "team"}
+                    activeTab={activeTab}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -332,8 +333,9 @@ class DashboardGlobal extends React.Component {
                         <TeamSportsLeaderboardTable
                           height={170}
                           data={filteredData}
-                          activity="Run"
-                          activityPosition="runPosition"
+                          activity={"Run"}
+                          activityPosition={"runPosition"}
+                          activeTab={activeTab}
                         />
                       </div>
                     </Grid.Row>
@@ -346,8 +348,9 @@ class DashboardGlobal extends React.Component {
                         <TeamSportsLeaderboardTable
                           height={170}
                           data={filteredData}
-                          activity="Walk"
-                          position="walkPosition"
+                          activity={"Walk"}
+                          activityPosition={"walkPosition"}
+                          activeTab={activeTab}
                         />
                       </div>
                     </Grid.Row>
@@ -360,8 +363,9 @@ class DashboardGlobal extends React.Component {
                         <TeamSportsLeaderboardTable
                           height={170}
                           data={filteredData}
-                          activity="Cycling"
-                          position="cyclingPosition"
+                          activity={"Cycling"}
+                          activityPosition={"cyclingPosition"}
+                          activeTab={activeTab}
                         />
                       </div>
                     </Grid.Row>
