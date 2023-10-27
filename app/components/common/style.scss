@@ -231,6 +231,16 @@
   }
 }
 
+.flag-img-cropper {
+  overflow: hidden;
+  border-radius: 50%;
+  border:2px solid #00AABB;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: auto;
+  margin: auto;
+}
+
 .map-pop-up {
   display: flex;
   align-items: center;

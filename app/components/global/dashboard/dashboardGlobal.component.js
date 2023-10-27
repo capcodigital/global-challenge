@@ -2,7 +2,7 @@ import React from "react";
 import { feature } from "topojson-client";
 import { keyBy } from "lodash";
 import PropTypes from "prop-types";
-import { Segment, Grid, Header, Search, Button } from "semantic-ui-react";
+import { Segment, Grid, Header, Search } from "semantic-ui-react";
 import Map from "../map";
 import {
   TeamLeaderboardTable,
@@ -178,24 +178,21 @@ class DashboardGlobal extends React.Component {
   };
 
   handleSearchChange = (e, { value }) => {
-    if (!value || value === "") {
-      this.setState({
+    e.preventDefault();
+    if (value) {
+    this.setState({
         ...this.state,
-        isSearchLoading: true,
-        value,
-        filteredData: this.state.currentData,
+      isSearchLoading: true,
+      value,
+      filteredData: this.state.currentData,
       }, () => this.filterSearchResult());
     } else {
       this.setState({
         ...this.state,
         value,
+        filteredData: this.state.currentData,
       });
     }
-  };
-
-  handleClickSearch = (e) => {
-    e.preventDefault();
-    this.filterSearchResult();
   };
 
   filterSearchResult = () => {
@@ -314,16 +311,12 @@ class DashboardGlobal extends React.Component {
                       value={value}
                       placeholder={"Search Name"}
                     />
-                    <Button 
-                      inverted color='teal'
-                      content='Search'
-                      onClick={this.handleClickSearch}
-                      />
                   </div>
                   <TeamLeaderboardTable
                     isLoading={isSearchLoading}
                     data={filteredData}
                     isMainDashboard={activeTab === "team"}
+                    activeTab={activeTab}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -342,6 +335,7 @@ class DashboardGlobal extends React.Component {
                           data={filteredData}
                           activity={"Run"}
                           activityPosition={"runPosition"}
+                          activeTab={activeTab}
                         />
                       </div>
                     </Grid.Row>
@@ -356,6 +350,7 @@ class DashboardGlobal extends React.Component {
                           data={filteredData}
                           activity={"Walk"}
                           activityPosition={"walkPosition"}
+                          activeTab={activeTab}
                         />
                       </div>
                     </Grid.Row>
@@ -370,6 +365,7 @@ class DashboardGlobal extends React.Component {
                           data={filteredData}
                           activity={"Cycling"}
                           activityPosition={"cyclingPosition"}
+                          activeTab={activeTab}
                         />
                       </div>
                     </Grid.Row>

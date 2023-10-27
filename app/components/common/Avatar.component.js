@@ -15,40 +15,46 @@ export const getInitials = (name) => {
     }`.toUpperCase();
 };
 
-const hasFlag = (location) => {
+const getFlag = (location, size) => {
+  const locationLabel = location.replaceAll(".", "");
 
-  // if (!location) return false;
-
-  // const img = new Image();
-  // img.url = "./images/" + location + ".png";
-  // if (img.complete) {
-  //   return true;
-  // } else {
+  try {
+    const imgUrl = require("../../images/" + locationLabel + ".png");
+    const imageStyle = {
+      "background-image": `url(${imgUrl})`,
+      "width": size,
+      "height": size,
+    };
+    return <div className="flag-img-cropper" style={imageStyle} />;
+  } catch (err) {
     return false;
-  // }
-} 
+  }
+};
 
-const Avatar = ({ name, location, color, size }) => (
-  <svg className="avatar" width={size} height={size}>
-    <circle fill={color} cx={size / 2} cy={size / 2} r={size / 2} />
-    {hasFlag(location) && (
-     <img src={"./images/" + location + ".png"} alt="Country Flag" />
-    )}
-    {!hasFlag(location) && (
-    <text
-      textAnchor="middle"
-      x={size / 2}
-      y={size / 2 + 5}
-      fill="white"
-      fontSize="15"
-      fontFamily="Helvetica"
-    >
-      {getInitials(name)}
-    </text>
-    )}
-  </svg>
+const Avatar = ({ name, activeTab, color, size }) => {
+  const locationFlag = getFlag(name, size);
 
-);
+  return (
+    <>
+      {activeTab === "office" && name && locationFlag}
+      {(activeTab !== "office" || !locationFlag) && name && (
+        <svg className="avatar" width={size} height={size}>
+          <circle fill={color} cx={size / 2} cy={size / 2} r={size / 2} />
+          <text
+            textAnchor="middle"
+            x={size / 2}
+            y={size / 2 + 5}
+            fill="white"
+            fontSize="15"
+            fontFamily="Helvetica"
+          >
+            {getInitials(name)}
+          </text>
+        </svg>
+      )}
+    </>
+  );
+};
 
 Avatar.propTypes = {
   name: PropTypes.string.isRequired,
