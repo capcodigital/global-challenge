@@ -34,9 +34,14 @@ var TeamSchema = new Schema({
 }, {strict: false});
 
 TeamSchema.statics = {
-  load: function (id, cb) {
-    this.findOne({ _id : id }).exec(cb);
-  }
-};
+    load: function (id, cb) {
+        this.findOne({ _id : id })
+        .then(() => {
+          cb();
+        }).catch((err) => {
+            
+        });
+      }
+    };
 
 var Team = mongoose.model('Team', TeamSchema);

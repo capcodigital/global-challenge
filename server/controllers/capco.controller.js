@@ -8,15 +8,12 @@ var Capco = mongoose.model('Capco');
  * List all Capco Employees
  */
  exports.list = function(req, res, next) {
-    Level.find({}).select('name').sort('name').exec(function(err, capcoites) {
-        if (err) {
-            res.render('error', {
-                status: 500
-            });
-        } else {
+    Level.find({}).select('name').sort('name')
+        .then((capcoites) => {
             res.jsonp(capcoites);
-        }
-    });
+        }).catch((err) => {
+            res.render('error', { status: 500 });
+        });
 };
 
 /**

@@ -31,7 +31,12 @@ var LevelSchema = new Schema({
 
 LevelSchema.statics = {
   load: function (id, cb) {
-    this.findOne({ _id : id }).exec(cb);
+    this.findOne({ _id : id })
+    .then(() => {
+      cb();
+    }).catch((err) => {
+        
+    });
   }
 };
 

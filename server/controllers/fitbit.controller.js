@@ -85,63 +85,66 @@ exports.authorize = function(req, res) {
                 console.log(result.errors[0].message);
             } else {
 
-                Capco.findOne({email: email.toLowerCase()}).exec(function(err, profile) {
-                    if (err || !profile) {
-                        res.json({error: "Could not find your Capco email [" + email + "]"});
-                    } else {
-                        var user = new User();
-
-                        var date = new Date();
-                        var datemillis = date.getTime();
-
-                        var expiresTime = new Date(result.expires_in*1000);
-                        var expiresTimeMillis = expiresTime.getTime();
-
-                        var expiration = new Date();
-                        expiration.setTime(datemillis + expiresTimeMillis);
-
-                        user.email = email.toLowerCase();
-                        user.app = "FitBit";
-                        user.user_id = result.user_id;
-                        user.token_type = result.token_type;
-                        user.expires_in = expiration;
-                        user.access_token = result.access_token;
-                        user.refresh_token = result.refresh_token;
-
-                        user.level = profile.level;
-                        user.name = profile.name;
-
-                        if (profile.location === "New York RISC") {
-                            user.location = "New York";
-                        } else if (profile.location === "Washington DC Metro") {
-                            user.location = "Washington DC";
-                        } else if (profile.location === "Orlando RISC") {
-                            user.location = "Orlando";
-                        } else if (profile.location === "Antwerp") {
-                            user.location = "Brussels";
-                        } else if (profile.location === "Malaysia") {
-                            user.location = "Kuala Lumpur";
+                Capco.findOne({email: email.toLowerCase()})
+                    .then((profile) => {
+                        if (err || !profile) {
+                            res.json({error: "Could not find your Capco email [" + email + "]"});
                         } else {
-                            user.location = profile.location;
+                            var user = new User();
+    
+                            var date = new Date();
+                            var datemillis = date.getTime();
+    
+                            var expiresTime = new Date(result.expires_in*1000);
+                            var expiresTimeMillis = expiresTime.getTime();
+    
+                            var expiration = new Date();
+                            expiration.setTime(datemillis + expiresTimeMillis);
+    
+                            user.email = email.toLowerCase();
+                            user.app = "FitBit";
+                            user.user_id = result.user_id;
+                            user.token_type = result.token_type;
+                            user.expires_in = expiration;
+                            user.access_token = result.access_token;
+                            user.refresh_token = result.refresh_token;
+    
+                            user.level = profile.level;
+                            user.name = profile.name;
+    
+                            if (profile.location === "New York RISC") {
+                                user.location = "New York";
+                            } else if (profile.location === "Washington DC Metro") {
+                                user.location = "Washington DC";
+                            } else if (profile.location === "Orlando RISC") {
+                                user.location = "Orlando";
+                            } else if (profile.location === "Antwerp") {
+                                user.location = "Brussels";
+                            } else if (profile.location === "Malaysia") {
+                                user.location = "Kuala Lumpur";
+                            } else {
+                                user.location = profile.location;
+                            }
+    
+                            user.activities = {};
+                            user.totalSteps = 0;
+                            user.totalCalories = 0;
+                            user.totalDistance = 0;
+                            user.totalDistanceConverted = 0;
+                            user.totalDuration = 0;
+                            user.totalWalk = 0;
+                            user.totalRun = 0;
+                            // user.totalSwim = 0;
+                            user.totalCycling = 0;
+                            user.totalCyclingConverted = 0;
+                            user.totalRowing = 0;
+                            user.totalYoga = 0;
+    
+                            save(user, res);
                         }
-
-                        user.activities = {};
-                        user.totalSteps = 0;
-                        user.totalCalories = 0;
-                        user.totalDistance = 0;
-                        user.totalDistanceConverted = 0;
-                        user.totalDuration = 0;
-                        user.totalWalk = 0;
-                        user.totalRun = 0;
-                        // user.totalSwim = 0;
-                        user.totalCycling = 0;
-                        user.totalCyclingConverted = 0;
-                        user.totalRowing = 0;
-                        user.totalYoga = 0;
-
-                        save(user, res);
-                    }
-                });
+                    }).catch((err) => {
+                        res.json({error: "Could not find your Capco email [" + email + "]"});
+                    });
             }
         });
 
@@ -153,10 +156,8 @@ exports.authorize = function(req, res) {
 * Loop through all users and update their stats from fitbit
 */
 exports.update = function(req, res) {
-    User.find({app: 'FitBit'}).exec(function(err, users) {
-        if (err) {
-            res.json({error: "Server error please try again later"});
-        } else {
+    User.find({app: 'FitBit'})
+        .then((users) => {
             var userCount = users.length;
             for (var i = 0; i < userCount; i++) {
                 if (users[i].access_token) {
@@ -164,33 +165,35 @@ exports.update = function(req, res) {
                 }
             }
             res.end();
-        }
-    });
+        }).catch((err) => {
+            res.json({error: "Server error please try again later"});
+        });
 };
 
 /**
 * Update specified user's stats from fitbit
 */
 exports.updateIndividualUser = function(req, res) {
-    User.find({email: req.params.user}).exec(function(err, users) {
-        if (err) {
+    User.find({email: req.params.user})
+        .then((users) => {
+            if (!users || users.length == 0) {
+                res.json({error: "User not found"});
+            } else {
+                console.log("Updating User: " + users[0].name);
+                challengeDates.forEach(function(date) {
+                    getStats(users[0], date);
+                });
+                res.json({
+                    name: users[0].name,
+                    email: users[0].email,
+                    location: users[0].location,
+                    level: users[0].level,
+                    totalDistance: users[0].totalDistance
+                });
+            }
+        }).catch((err) => {
             res.json({error: "Server error please try again later"});
-        } else if (!users || users.length == 0) {
-            res.json({error: "User not found"});
-        } else {
-            console.log("Updating User: " + users[0].name);
-            challengeDates.forEach(function(date) {
-                getStats(users[0], date);
-            });
-            res.json({
-                name: users[0].name,
-                email: users[0].email,
-                location: users[0].location,
-                level: users[0].level,
-                totalDistance: users[0].totalDistance
-            });
-        }
-    });
+        });
 };
 
 function buildRequest(options, callback) {
@@ -458,31 +461,32 @@ function save(user, res) {
 }
 
 function updateAccessTokens(user) {
-    User.findOne({
-        email: user.email.toLowerCase()
-    }).exec(function(err, existingUser) {
-        if (err || !existingUser) {
+    User.findOne({email: user.email.toLowerCase()})
+        .then((existingUser) => {
+            if (!existingUser) {
+                console.log("Error updating existing useer access tokens during re-registration");
+            } else {
+                existingUser.access_token = user.access_token;
+                existingUser.refresh_token = user.refresh_token;
+                existingUser.expires_in = user.expires_in;
+    
+                existingUser.markModified('access_token');
+                existingUser.markModified('refresh_token');
+                existingUser.markModified('expires_in');
+    
+                existingUser.save(function(err, updatedUser) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        challengeDates.forEach(function(date) {
+                            getStats(updatedUser, date);
+                        });
+                    }
+                });
+            }
+        }).catch((err) => {
             console.log("Error updating existing useer access tokens during re-registration");
-        } else {
-            existingUser.access_token = user.access_token;
-            existingUser.refresh_token = user.refresh_token;
-            existingUser.expires_in = user.expires_in;
-
-            existingUser.markModified('access_token');
-            existingUser.markModified('refresh_token');
-            existingUser.markModified('expires_in');
-
-            existingUser.save(function(err, updatedUser) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    challengeDates.forEach(function(date) {
-                        getStats(updatedUser, date);
-                    });
-                }
-            });
-        }
-    });
+        });
 }
 
 /**
@@ -495,10 +499,8 @@ function updateEveryInterval(minutes) {
 
     setInterval(function(){
         console.log("Updating FitBit user stats");
-        User.find({app: 'FitBit'}).exec(function(err, users) {
-            if (err) {
-                console.log("Data update error please try again later");
-            } else {
+        User.find({app: 'FitBit'})
+            .then((users) => {
                 var userCount = users.length;
                 console.log("Found " + userCount + " FitBit users");
                 for (var i = 0; i < userCount; i++) {
@@ -507,7 +509,9 @@ function updateEveryInterval(minutes) {
                     }
                 }
                 console.log("All User updates complete");
-          }
-      });
+            }).catch((err) => {
+                console.log("Data update error please try again later");
+            });
+
     }, millis);
 }
