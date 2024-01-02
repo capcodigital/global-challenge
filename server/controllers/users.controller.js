@@ -4,6 +4,12 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Capco = mongoose.model('Capco');
+var challenges = require('./challenges.controller');
+
+var challengeDates = [];
+challenges.getCurrentChallengeDates(function(dates) {
+    challengeDates = dates;
+});
 
 /**
  * List of Users Stats
@@ -127,9 +133,34 @@ exports.inactiveUsers = function(req, res, next) {
                     inactiveUser.issue = "Activity API returning an error";
                 } else if (users[i].activities.length == 0) {
                     inactiveUser.issue = "No activity data returned from Tracking API";
-
                 } else {
-                    inactiveUser.issue = "Unknown";
+                    let validActivityDays = 0;
+
+                    if (users[i].app === "FitBit") {
+
+                        var activityCount = challengeDates.length;
+                        for (var j = 0; j < activityCount; j++) {
+                            if (users[i].activities[challengeDates[j]]) {
+                                validActivityDays++;
+                            }
+                        }
+
+                    } else if (users[i].app === "Strava") {
+                        let activityCount = users[i].activities.length;
+
+                        for (var j = 0; j < activityCount; j++) {
+                            if (challengeDates.includes(users[i].activities[j].start_date.substring(0,10))) {
+                                validActivityDays++;
+                            }
+                        }
+                    }
+
+                    if (validActivityDays == 0) {
+                        inactiveUser.issue = "No data retruned for challenge dates but API is returning other data";
+
+                    } else {
+                        inactiveUser.issue = "Data returned for challenge dates is all zero";
+                    }
                 }
 
                 resultList.push(inactiveUser);
