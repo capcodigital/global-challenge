@@ -77,7 +77,7 @@ exports.authorize = function(req, res) {
         var email = req.query.state.toLowerCase();
         options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=" + callbackUrl + "fitbit/auth";
 
-        var newReq = buildRequest(options, function(err, result) {
+        var newReq = buildRequest("Register " + email, options, function(err, result) {
             if (err) {
                 console.log("Request Error: " + err);
                 res.redirect(callbackUrl + 'register?success=fitBitError');
@@ -196,7 +196,7 @@ exports.updateIndividualUser = function(req, res) {
         });
 };
 
-function buildRequest(options, callback) {
+function buildRequest(requestDetail, options, callback) {
     var req = https.request(options, function(res) {
         res.setEncoding('utf8');
         res.body = '';
@@ -209,7 +209,7 @@ function buildRequest(options, callback) {
             var result = JSON.parse(res.body);
             if (result.code) {
                 console.log(res.statusCode);
-                console.log("result.code: " + result.code);
+                console.log("Error code for -  " + requestDetail + " - " + result.code);
                 callback(result, null);
             } else {
                 callback(null, result);
@@ -217,7 +217,11 @@ function buildRequest(options, callback) {
         });
 
         res.on('error', function(err) {
-            console.log('Error sending request: ' + err.message);
+            console.log("Error sending request to -  " + requestDetail + " - " + err.message);
+        });
+
+        res.on('timeout', function(err) {
+            console.log("Request timed out to -  " + requestDetail + " - " + err.message);
         });
     });
     return req;
@@ -231,7 +235,7 @@ function updateUser(user) {
         options.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
          // If token is expired, refresh access token and get a new refresh token
-        var newReq2 = buildRequest(options, function(err, result) {
+        var newReq2 = buildRequest("Update token for " + user.name, options, function(err, result) {
             if (err) {
                 console.log(user.name + " : " + err);
             } else if (result.errors && result.errors.length > 0) {
@@ -276,7 +280,7 @@ function getStats(user, date) {
     getOptions.path = "/1/user/" + user.user_id + "/activities/date/" + date + ".json";
     getOptions.headers.Authorization = "Bearer " + user.access_token;
 
-    var statsReq = buildRequest(getOptions, function(err, result) {
+    var statsReq = buildRequest("Update stats for " + user.name, getOptions, function(err, result) {
         if (err) {
             console.log(err);
         } else if (result.errors && result.errors.length > 0) {

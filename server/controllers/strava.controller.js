@@ -65,7 +65,7 @@ exports.authorize = function(req, res) {
         var userOptions = authOptions;
         userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "&code=" + req.query.code;
 
-        var newReq = buildRequest(userOptions, function(err, result){
+        var newReq = buildRequest("Register " + email, userOptions, function(err, result){
             if (err) {
                 console.log("Request Error: " + err);
                 res.redirect(callbackUrl + 'register?success=stravaError');
@@ -227,7 +227,7 @@ exports.update = function(req, res) {
         });
 };
 
-function buildRequest(options, callback) {
+function buildRequest(requestDetail, options, callback) {
     console.log(options);
     var req = https.request(options, function(res) {
         res.setEncoding('utf8');
@@ -241,7 +241,7 @@ function buildRequest(options, callback) {
             var result = JSON.parse(res.body);
             if (result.code) {
                 console.log(res.statusCode);
-                console.log("result.code: " + result.code);
+                console.log("Error code for -  " + requestDetail + " - " + result.code);
                 callback(result, null);
             } else {
                 callback(null, result);
@@ -249,7 +249,11 @@ function buildRequest(options, callback) {
         });
 
         res.on('error', function(err) {
-            console.log('Error sending request: ' + err.message);
+            console.log("Error sending request to -  " + requestDetail + " - " + err.message);
+        });
+
+        res.on('timeout', function(err) {
+            console.log("Request timed out to -  " + requestDetail + " - " + err.message);
         });
     });
     return req;
@@ -390,7 +394,7 @@ function updateUser(user) {
         userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "&grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
          // If token is expired refresh access token and get a new refresh token
-        var newReq2 = buildRequest(userOptions, function(err, result) {
+        var newReq2 = buildRequest("Update token for " + user.name, userOptions, function(err, result) {
             if (err) {
                 console.log(user.name + " : " + err.message);
             } else if (result.errors && result.errors.length > 0) {
