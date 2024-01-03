@@ -129,7 +129,13 @@ exports.inactiveUsers = function(req, res, next) {
                     tokenExpiry: users[i].expires_in
                 };
 
-                if (!users[i].activities || users[i].activities == null) {
+                let today = new Date();
+
+                if (users[i].expires_in && users[i].expires_in.getTime() < today.getTime()) {
+                    let timeDifference = today.getTime() - users[i].expires_in.getTime();
+                    let dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 24))
+                    inactiveUser.issue = "API Access Token expired " + dayDifference + " day" + (dayDifference > 1 ? "s" : "")  + " ago";
+                } else if (!users[i].activities || users[i].activities == null) {
                     inactiveUser.issue = "Activity API returning an error";
                 } else if (users[i].activities.length == 0) {
                     inactiveUser.issue = "No activity data returned from Tracking API";
