@@ -111,20 +111,7 @@ exports.authorize = function(req, res) {
     
                             user.level = profile.level;
                             user.name = profile.name;
-    
-                            if (profile.location === "New York RISC") {
-                                user.location = "New York";
-                            } else if (profile.location === "Washington DC Metro") {
-                                user.location = "Washington DC";
-                            } else if (profile.location === "Orlando RISC") {
-                                user.location = "Orlando";
-                            } else if (profile.location === "Antwerp") {
-                                user.location = "Brussels";
-                            } else if (profile.location === "Malaysia") {
-                                user.location = "Kuala Lumpur";
-                            } else {
-                                user.location = profile.location;
-                            }
+                            user.location = profile.location;
     
                             user.activities = {};
                             user.totalSteps = 0;
