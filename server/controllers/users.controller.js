@@ -82,19 +82,18 @@ exports.addManual = function(req, res) {
         user.totalDuration = req.query.steps;
         user.totalCalories = req.query.steps;
 
-        user.save(function(err, newUser) {
-            if (err) {
+        user.save()
+            .then((newUser) => {
+                console.log("Added " + newUser.totalSteps + " for " + newUser.username);
+                res.json({success: {}});
+            }).catch((err) => {
                 console.log(err);
                 if (err.code == 11000) {
                     res.json({error: "Manual event not added - Event Name has already been registered" });
                 } else {
                     res.json({error: "Manual event not added - Server error please try again later" });
                 }
-            } else {
-                console.log("Added " + newUser.totalSteps + " for " + newUser.username);
-                res.json({success: {}});
-            }
-        })
+            });
     }
 };
 

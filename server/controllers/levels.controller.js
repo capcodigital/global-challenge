@@ -128,11 +128,11 @@ function updateEveryInterval(minutes) {
                             level.markModified('totalDistance');
                             level.markModified('totalDistanceConverted');
     
-                            level.save(function(err) {
-                                if (err) {
+                            level.save()
+                                .then((updatedLevel) => {
+                                }).catch((err) => {
                                     console.log("Error updating level stats: " + level.name + ", err: " + err);
-                                }
-                            });
+                                });
                         });
     
                         console.log("All Level updates complete");
@@ -190,12 +190,13 @@ function updateEveryInterval(minutes) {
                 level.totalDistanceConverted = 0; 
             }
     
-            level.save(function(err) {
-                if (err) {
+            level.save()
+                .then((newLevel) => {
+                }).catch((err) => {
                     console.log("Error creating level: " + level.name);
                     console.log(err);
-                }
-            });
+                });
+
         }).catch((err) => {
             console.log("Error retrieving Level details for: " + name);
         });
@@ -222,11 +223,12 @@ exports.remove = function(user) {
             level.members.splice(index, 1);
             level.markModified('members');
                 
-            level.save(function(err) {
-                if (err) {
+            level.save()
+                .then((updatedLevel) => {
+                }).catch((err) => {
                     console.log("Error removing user from level: " + user.name + " - " + user.level);
-                }
-            });
+                });
+
         }).catch((err) => {
             console.log("Error removing user from level: " + user.name + " - " + user.level);
         });

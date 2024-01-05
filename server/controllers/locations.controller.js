@@ -128,11 +128,11 @@ function updateEveryInterval(minutes) {
                             location.markModified('totalDistance');
                             location.markModified('totalDistanceConverted');
     
-                            location.save(function(err) {
-                                if (err) {
+                            location.save()
+                                .then((updatedLocation) => {
+                                }).catch((err) => {
                                     console.log("Error updating location stats: " + location.name + ", err: " + err);
-                                }
-                            });
+                                });
                         });
     
                         console.log("All Location updates complete");
@@ -190,12 +190,13 @@ function updateEveryInterval(minutes) {
                 location.totalDistanceConverted = 0; 
             }
     
-            location.save(function(err) {
-                if (err) {
+            location.save()
+                .then((newLocation) => {
+                }).catch((err) => {
                     console.log("Error creating location: " + location.name);
                     console.log(err);
-                }
-            });
+                });
+
         }).catch((err) => {
             console.log("Error retrieving Location details for: " + name);
         });
@@ -222,11 +223,12 @@ exports.remove = function(user) {
             location.members.splice(index, 1);
             location.markModified('members');
                 
-            location.save(function(err) {
-                if (err) {
+            location.save()
+                .then((updatedLocation) => {
+                }).catch((err) => {
                     console.log("Error removing user from location: " + user.name + " - " + user.location);
-                }
-            });
+                });
+
         }).catch((err) => {
             console.log("Error removing user from location: " + user.name + " - " + user.location);
         });

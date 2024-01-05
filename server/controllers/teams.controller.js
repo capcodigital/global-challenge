@@ -188,18 +188,8 @@ exports.create = function(req, res) {
             team.totalDistance = 0;
             team.totalDistanceConverted = 0;
     
-            team.save(function(err) {
-                if (err) {
-                    if (err.code == 11000) {
-                        console.log("Duplicate team: " + team.name);
-                        console.log(err);
-                        res.status(400).send({ message: 'createTeamDuplicate'});
-                    } else {
-                        console.log("Error creating team: " + team.name);
-                        console.log(err);
-                        res.status(400).send({ message: 'createTeamFailed'});
-                    }
-                } else {
+            team.save()
+                .then((updatedTeam) => {
                     let memberIDs = [];
                     req.body.members.forEach(function(member) {
                         memberIDs.push(mongoose.Types.ObjectId(member));
@@ -223,8 +213,18 @@ exports.create = function(req, res) {
                         });
     
                     res.jsonp(team);
-                }
-            });
+                }).catch((err) => {
+                    if (err.code == 11000) {
+                        console.log("Duplicate team: " + team.name);
+                        console.log(err);
+                        res.status(400).send({ message: 'createTeamDuplicate'});
+                    } else {
+                        console.log("Error creating team: " + team.name);
+                        console.log(err);
+                        res.status(400).send({ message: 'createTeamFailed'});
+                    }
+                });
+            
         }).catch((err) => {
             res.status(400).send({ message: 'createTeamFailed'});
             return;
@@ -266,11 +266,8 @@ exports.update = function(req, res) {
                     team.members.push(user._id);
                     team.markModified('members');
                         
-                    team.save(function(err) {
-                        if (err) {
-                            console.log("Error joining team: " + team.name);
-                            res.send(400, { message: 'joinTeamFailed'});
-                        } else {
+                    team.save()
+                        .then((updatedTeam) => {
                             emailTeamMember(user, team);
         
                             User.findOne({_id: mongoose.Types.ObjectId(team.captain)})
@@ -288,8 +285,11 @@ exports.update = function(req, res) {
                                 });
         
                             res.jsonp(team);
-                        }
-                    });
+                        }).catch((err) => {
+                            console.log("Error joining team: " + team.name);
+                            res.send(400, { message: 'joinTeamFailed'});
+                        });
+                    
                 }).catch((err) => {
                     res.status(400).send({ message: 'joinTeamFailed'});
                     return;
@@ -337,14 +337,13 @@ function emailTeamMember(user, team) {
             team.members.splice(index, 1);
             team.markModified('members');
                 
-            team.save(function(err) {
-                if (err) {
+            team.save()
+                .then((updatedTeam) => {
+                    res.jsonp(updatedTeam);
+                }).catch((err) => {
                     console.log("Error joining team: " + team.name);
-                    res.send(400, { message: 'joinTeamFailed'});
-                } else {
-                    res.jsonp(team);
-                }
-            });
+                        res.send(400, { message: 'joinTeamFailed'});
+                });
         }).catch((err) => {
             res.send(400, { message: 'removeFromTeamFailed'});
             return;
@@ -391,14 +390,14 @@ exports.removeById = function(req, res) {
                     team.members.splice(index, 1);
                     team.markModified('members');
                         
-                    team.save(function(err) {
-                        if (err) {
+                    team.save()
+                        .then((updatedTeam) => {
+                            res.send(200, {message: 'Successfully removed from Team'});
+                        }).catch((err) => {
                             console.log(errorMessage);
                             res.send(400, { message: errorMessage});
-                        } else {
-                            res.send(200, {message: 'Successfully removed from Team'});
-                        }
-                    });
+                        });
+                    
                 }).catch((err) => {
                     res.send(400, { message: errorMessage});
                     return;
@@ -470,11 +469,11 @@ function updateEveryInterval(minutes) {
                                 team.markModified('completionDate');
                             }
     
-                            team.save(function(err) {
-                                if (err) {
+                            team.save()
+                                .then((updatedTeam) => {
+                                }).catch((err) => {
                                     console.log("Error updating team stats: " + team.name);
-                                }
-                            });
+                                });
                         });
     
                         console.log("All Team updates complete");

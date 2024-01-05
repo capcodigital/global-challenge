@@ -132,21 +132,8 @@ exports.authorize = function(req, res) {
                             // user.totalRowing = 0;
                             user.totalYoga = 0;
     
-                            user.save(function(err, newUser) {
-                                if (err) {
-                                    console.log(err.message);
-                                    if (err.code == 11000) {
-                                        if (user.app === "FitBit") {
-                                            res.redirect(callbackUrl + 'register?success=fitBitRegistered');
-                                        } else {
-                                            // Already registered but update the users access tokens anyway so we have the latest expiry
-                                            updateAccessTokens(user);
-                                            res.redirect(callbackUrl + 'register?success=stravaRegistered');
-                                        }
-                                    } else {
-                                        res.redirect(callbackUrl + 'register?success=serverError');
-                                    }
-                                } else {
+                            user.save()
+                                .then((newUser) => {
                                     locations.AddOrUpdate(newUser.location, newUser._id);
                                     levels.AddOrUpdate(newUser.level, newUser._id);
     
@@ -168,8 +155,21 @@ exports.authorize = function(req, res) {
                                     });
     
                                     res.redirect(callbackUrl + 'register?success=stravaSuccess');
-                                }
-                            });
+                                }).catch((err) => {
+                                    console.log(err.message);
+                                    if (err.code == 11000) {
+                                        if (user.app === "FitBit") {
+                                            res.redirect(callbackUrl + 'register?success=fitBitRegistered');
+                                        } else {
+                                            // Already registered but update the users access tokens anyway so we have the latest expiry
+                                            updateAccessTokens(user);
+                                            res.redirect(callbackUrl + 'register?success=stravaRegistered');
+                                        }
+                                    } else {
+                                        res.redirect(callbackUrl + 'register?success=serverError');
+                                    }
+                                });
+                            
                         }
 
                     }).catch((err) => {
@@ -198,11 +198,14 @@ function updateAccessTokens(user) {
                 existingUser.markModified('expires_in');
                 existingUser.markModified('expires_at');
     
-                existingUser.save(function(err, updatedUser) {
-                    if (err) {
+                existingUser.save()
+                    .then((updatedUser) => {
+                        challengeDates.forEach(function(date) {
+                            getStats(updatedUser, date);
+                        });
+                    }).catch((err) => {
                         console.log(err);
-                    }
-                });
+                    });
             }
         }).catch((err) => {
             console.log("Error updating existing useer access tokens during re-registration");
@@ -375,11 +378,11 @@ function getStats(user) {
             user.totalDistance = Math.floor(user.totalDistance*100)/100;
 
             user.markModified('activities');
-            user.save(function(err, newUser) {
-                if (err) {
+            user.save()
+                .then((newUser) => {
+                }).catch((err) => {
                     console.log(err);
-                }
-            });
+                });
         }
     });
 };

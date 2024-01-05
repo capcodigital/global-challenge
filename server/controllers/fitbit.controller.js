@@ -139,8 +139,57 @@ exports.authorize = function(req, res) {
                             user.totalCyclingConverted = 0;
                             user.totalRowing = 0;
                             user.totalYoga = 0;
-    
-                            save(user, res);
+
+                            console.log("Saving new user: " + user.name);
+                            user.save()
+                                .then((newUser) => {
+                                    locations.AddOrUpdate(newUser.location, newUser._id);
+                                    levels.AddOrUpdate(newUser.level, newUser._id);
+
+                                    // If User has joined part way through the competition. Retrieve previous days stats in the background
+                                    console.log("Updtaing stats before saving user:" + user.name);
+                                    challengeDates.forEach(function(date) {
+                                        getStats(newUser, date);
+                                    });
+
+                                    newUser.save()
+                                        .then((updatedUser) => {
+                                        }).catch((err) => {
+                                            console.log(err);
+                                        });
+
+                                    /*
+                                    let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
+                                                    "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
+                                                    "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
+                                                    "Good Luck \n\rCapco Health & Wellbeing";
+                                    */
+
+                                    let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
+                                                    "Once the challenge starts on July 17, you can view your progress here: " + callbackUrl + "\n\r" +
+                                                    "If you did not register or wish to be removed from the challenge and your account deleted please email the support team" +
+                                                    " challenge@capco.com\n\r" +
+                                                    "Good Luck \n\rCapco Health & Wellbeing";
+
+                                    mailer.sendMail(user.email, "Capco Challenge Registration Successfull", emailText, function() {
+                                        console.log("email sent to " + user.email);
+                                    });
+
+                                    res.redirect(callbackUrl + 'register?success=fitBitSuccess');
+                                }).catch((err) => {
+                                    console.log(err.message);
+                                    if (err.code == 11000) {
+                                        if (user.app === "Strava") {
+                                            res.redirect(callbackUrl + 'register?success=stravaRegistered');
+                                        } else {
+                                            // Already registered but update the users access tokens anyway so we have the latest expiry
+                                            updateAccessTokens(user);
+                                            res.redirect(callbackUrl + 'register?success=fitbitRegistered');
+                                        }
+                                    } else {
+                                        res.redirect(callbackUrl + 'register?success=serverError');
+                                    }
+                                });
                         }
                     }).catch((err) => {
                         res.json({error: "Could not find your Capco email [" + email + "]"});
@@ -183,6 +232,14 @@ exports.updateIndividualUser = function(req, res) {
                 challengeDates.forEach(function(date) {
                     getStats(users[0], date);
                 });
+
+                users[0].save()
+                    .then((updatedUser) => {
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+
+
                 res.json({
                     name: users[0].name,
                     email: users[0].email,
@@ -262,6 +319,11 @@ function updateUser(user) {
                 console.log("Successfully obtained new FitBit Token for:" + user.name);
 
                 getStats(user);
+                user.save()
+                    .then((updatedUser) => {
+                    }).catch((err) => {
+                        console.log(err);
+                    });
             }
         });
 
@@ -269,6 +331,11 @@ function updateUser(user) {
 
     } else {
         getStats(user);
+        user.save()
+            .then((updatedUser) => {
+            }).catch((err) => {
+                console.log(err);
+            });
     }
 }
 
@@ -407,61 +474,10 @@ function getStats(user, date) {
             user.totalDistance = Math.floor(user.totalDistance*100)/100;
 
             user.markModified('activities');
-            user.save(function(err, newUser) {
-                if (err) {
-                    console.log(err);
-                }
-            });
         }
     });
 
     statsReq.end();
-}
-
-function save(user, res) {
-    user.save(function(err, newUser) {
-        if (err) {
-            console.log(err.message);
-            if (err.code == 11000) {
-                if (user.app === "Strava") {
-                    res.redirect(callbackUrl + 'register?success=stravaRegistered');
-                } else {
-                    // Already registered but update the users access tokens anyway so we have the latest expiry
-                    updateAccessTokens(user);
-                    res.redirect(callbackUrl + 'register?success=fitbitRegistered');
-                }
-            } else {
-                res.redirect(callbackUrl + 'register?success=serverError');
-            }
-        } else {
-            locations.AddOrUpdate(newUser.location, newUser._id);
-            levels.AddOrUpdate(newUser.level, newUser._id);
-
-            // If User has joined part way through the competition. Retrieve previous days stats in the background
-            challengeDates.forEach(function(date) {
-                getStats(newUser, date);
-            });
-
-            /*
-            let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
-                            "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
-                            "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
-                            "Good Luck \n\rCapco Health & Wellbeing";
-            */
-
-            let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
-                            "Once the challenge starts on July 17, you can view your progress here: " + callbackUrl + "\n\r" +
-                            "If you did not register or wish to be removed from the challenge and your account deleted please email the support team" +
-                            " challenge@capco.com\n\r" +
-                            "Good Luck \n\rCapco Health & Wellbeing";
-
-            mailer.sendMail(user.email, "Capco Challenge Registration Successfull", emailText, function() {
-                console.log("email sent to " + user.email);
-            });
-
-            res.redirect(callbackUrl + 'register?success=fitBitSuccess');
-        }
-    });
 }
 
 function updateAccessTokens(user) {
@@ -478,15 +494,22 @@ function updateAccessTokens(user) {
                 existingUser.markModified('refresh_token');
                 existingUser.markModified('expires_in');
     
-                existingUser.save(function(err, updatedUser) {
-                    if (err) {
-                        console.log(err);
-                    } else {
+                console.log("Saving new access token for:" + existingUser.name);
+                existingUser.save()
+                    .then((updatedUser) => {
                         challengeDates.forEach(function(date) {
                             getStats(updatedUser, date);
                         });
-                    }
-                });
+
+                        updatedUser.save()
+                            .then((fullyUpdatedUser) => {
+                            }).catch((err) => {
+                                console.log(err);
+                            });
+
+                    }).catch((err) => {
+                        console.log(err);
+                    });
             }
         }).catch((err) => {
             console.log("Error updating existing useer access tokens during re-registration");
