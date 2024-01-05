@@ -28,15 +28,12 @@ if (cluster.isMaster) {
  * List of Locations
  */
 exports.list = function(req, res, next) {
-    Location.find({}).select('name').sort('name').exec(function(err, locations) {
-        if (err) {
-            res.render('error', {
-                status: 500
-            });
-        } else {
+    Location.find({}).select('name').sort('name')
+        .then((locations) => {
             res.jsonp(locations);
-        }
-    });
+        }).catch((err) => {
+            res.render('error', { status: 500 });
+        });
 };
 
 /**
@@ -45,23 +42,15 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted').sort({totalDistanceConverted: -1}).exec(function(err, users) {
-        if (err) {
-            console.log("Data update error please try again later");
-        } else {
-
+    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted').sort({totalDistanceConverted: -1})
+        .then((users) => {
             let userMap = [];
             users.forEach(function(user) {
                 userMap[user._id] = user;
             });
 
-            Location.find({}).exec(function(err, locations) {
-                if (err) {
-                    res.render('error', {
-                        status: 500
-                    });
-                } else {
-
+            Location.find({})
+                .then((locations) => {
                     locations.forEach(function(location) {
                         let updatedMembers = [];
 
@@ -75,10 +64,12 @@ exports.all = function(req, res, next) {
                     });
 
                     res.jsonp(locations);
-                }
-            });
-        }
-    });
+                }).catch((err) => {
+                    res.render('error', { status: 500 });
+                });
+        }).catch((err) => {
+            console.log("Data update error please try again later");
+        });
 };
 
 /**
@@ -91,66 +82,67 @@ function updateEveryInterval(minutes) {
 
     setInterval(function(){
 
-        User.find().exec(function(err, users) {
-            if (err) {
-                console.log("Data update error please try again later");
-            } else {
-
+        User.find()
+            .then((users) => {
                 let userMap = [];
                 users.forEach(function(user) {
                     userMap[user._id] = user;
                 });
 
-                Location.find().exec(function(err, locations) {
+                Location.find()
+                    .then((locations) => {
+                        locations.forEach(function(location) {
 
-                    locations.forEach(function(location) {
-
-                        if (!location.activities) {
-                            location.activities = {};
-                        }
-
-                        location.activities.Walk = 0;
-                        location.activities.Run = 0;
-                        // location.activities.Swim = 0;
-                        location.activities.Cycling = 0;
-                        location.activities.CyclingConverted = 0;
-                        // location.activities.Rowing = 0;
-                        location.activities.Yoga = 0;
-                        location.totalDistance = 0;
-                        location.totalDistanceConverted = 0;
-
-                        location.members.forEach(function(member) {
-
-                            if (userMap[member]) {
-                                let teamMember = userMap[member];
-                                location.activities.Walk += teamMember.totalWalk;
-                                location.activities.Run += teamMember.totalRun;
-                                // location.activities.Swim += teamMember.totalSwim;
-                                location.activities.Cycling += teamMember.totalCycling;
-                                location.activities.CyclingConverted += teamMember.totalCyclingConverted;
-                                // location.activities.Rowing += teamMember.totalRowing;
-                                location.activities.Yoga += teamMember.totalYoga;
-
-                                location.totalDistance += teamMember.totalDistance;
-                                location.totalDistanceConverted += Math.round(teamMember.totalDistanceConverted);
+                            if (!location.activities) {
+                                location.activities = {};
                             }
+    
+                            location.activities.Walk = 0;
+                            location.activities.Run = 0;
+                            // location.activities.Swim = 0;
+                            location.activities.Cycling = 0;
+                            location.activities.CyclingConverted = 0;
+                            // location.activities.Rowing = 0;
+                            location.activities.Yoga = 0;
+                            location.totalDistance = 0;
+                            location.totalDistanceConverted = 0;
+    
+                            location.members.forEach(function(member) {
+    
+                                if (userMap[member]) {
+                                    let teamMember = userMap[member];
+                                    location.activities.Walk += teamMember.totalWalk;
+                                    location.activities.Run += teamMember.totalRun;
+                                    // location.activities.Swim += teamMember.totalSwim;
+                                    location.activities.Cycling += teamMember.totalCycling;
+                                    location.activities.CyclingConverted += teamMember.totalCyclingConverted;
+                                    // location.activities.Rowing += teamMember.totalRowing;
+                                    location.activities.Yoga += teamMember.totalYoga;
+    
+                                    location.totalDistance += teamMember.totalDistance;
+                                    location.totalDistanceConverted += Math.round(teamMember.totalDistanceConverted);
+                                }
+                            });
+    
+                            location.markModified('activities');
+                            location.markModified('totalDistance');
+                            location.markModified('totalDistanceConverted');
+    
+                            location.save()
+                                .then((updatedLocation) => {
+                                }).catch((err) => {
+                                    console.log("Error updating location stats: " + location.name + ", err: " + err);
+                                });
                         });
-
-                        location.markModified('activities');
-                        location.markModified('totalDistance');
-                        location.markModified('totalDistanceConverted');
-
-                        location.save(function(err) {
-                            if (err) {
-                                console.log("Error updating location stats: " + location.name + ", err: " + err);
-                            }
-                        });
+    
+                        console.log("All Location updates complete");
+                    }).catch((err) => {
+                        console.log("Error retrieving Location details");
                     });
-
-                    console.log("All Location updates complete");
-                });
-          }
-      });
+            }).catch((err) => {
+                console.log("Data update error please try again later");
+            });
+            
     }, millis);
 }
 
@@ -169,44 +161,45 @@ function updateEveryInterval(minutes) {
         return;
     }
 
-    Location.findOne({
-        name: name
-    }).exec(function(err, location) {
-
-        if (location && location.name) {
-            console.log("Updating location: " + name);
-            if (!location.members.includes(id)) {
+    Location.findOne({name: name})
+        .then((location) => {
+            if (location && location.name) {
+                console.log("Updating location: " + name);
+                if (!location.members.includes(id)) {
+                    location.members.push(id);
+                    location.markModified('members');
+                }
+            } else {
+                console.log("Creating location: " + name);
+                location = new Location();
+    
+                location.name = name;
+                location.members = [];
                 location.members.push(id);
-                location.markModified('members');
+    
+                location.activities = {};
+    
+                location.activities.Walk = 0;
+                location.activities.Run = 0;
+                // location.activities.Swim = 0;
+                location.activities.Cycling = 0;
+                location.activities.CyclingConverted = 0;
+                // location.activities.Rowing = 0;
+                location.activities.Yoga = 0;
+                location.totalDistance = 0;
+                location.totalDistanceConverted = 0; 
             }
-        } else {
-            console.log("Creating location: " + name);
-            location = new Location();
+    
+            location.save()
+                .then((newLocation) => {
+                }).catch((err) => {
+                    console.log("Error creating location: " + location.name);
+                    console.log(err);
+                });
 
-            location.name = name;
-            location.members = [];
-            location.members.push(id);
-
-            location.activities = {};
-
-            location.activities.Walk = 0;
-            location.activities.Run = 0;
-            // location.activities.Swim = 0;
-            location.activities.Cycling = 0;
-            location.activities.CyclingConverted = 0;
-            // location.activities.Rowing = 0;
-            location.activities.Yoga = 0;
-            location.totalDistance = 0;
-            location.totalDistanceConverted = 0; 
-        }
-
-        location.save(function(err) {
-            if (err) {
-                console.log("Error creating location: " + location.name);
-                console.log(err);
-            }
+        }).catch((err) => {
+            console.log("Error retrieving Location details for: " + name);
         });
-    });
 };
 
 /**
@@ -214,28 +207,30 @@ function updateEveryInterval(minutes) {
  */
 exports.remove = function(user) {
 
-    Location.findOne({
-        name: user.location
-    }).exec(function(err, location) {
-        if (err || !location || locaion == null) {
-            console.log("Error removing user from location: " + user.name + " - " + user.location);
-        }
-
-        const index = location.members.indexOf(user.name);
-
-        if (index < 0) {
-            console.log("Error removing user from location: " + user.name + " - " + user.location);
-            return;
-        }
-
-        location.members.splice(index, 1);
-        location.markModified('members');
-            
-        location.save(function(err) {
-            if (err) {
+    Location.findOne({name: user.location})
+        .then((location) => {
+            if (!location || locaion == null) {
                 console.log("Error removing user from location: " + user.name + " - " + user.location);
             }
+    
+            const index = location.members.indexOf(user.name);
+    
+            if (index < 0) {
+                console.log("Error removing user from location: " + user.name + " - " + user.location);
+                return;
+            }
+    
+            location.members.splice(index, 1);
+            location.markModified('members');
+                
+            location.save()
+                .then((updatedLocation) => {
+                }).catch((err) => {
+                    console.log("Error removing user from location: " + user.name + " - " + user.location);
+                });
+
+        }).catch((err) => {
+            console.log("Error removing user from location: " + user.name + " - " + user.location);
         });
-    });
 };
 

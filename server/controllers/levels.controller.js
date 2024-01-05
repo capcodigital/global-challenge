@@ -28,15 +28,12 @@ if (cluster.isMaster) {
  * List of Levels
  */
 exports.list = function(req, res, next) {
-    Level.find({}).select('name').sort('name').exec(function(err, levels) {
-        if (err) {
-            res.render('error', {
-                status: 500
-            });
-        } else {
+    Level.find({}).select('name').sort('name')
+        .then((levels) => {
             res.jsonp(levels);
-        }
-    });
+        }).catch((err) => {
+            res.render('error', { status: 500 });
+        });
 };
 
 /**
@@ -45,23 +42,15 @@ exports.list = function(req, res, next) {
 exports.all = function(req, res, next) {
 
     // Get all the users first so we can include their real names etc.
-    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted').sort({totalDistanceConverted: -1}).exec(function(err, users) {
-        if (err) {
-            console.log("Data update error please try again later");
-        } else {
-
+    User.find({}).select('name _id location level totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalCycling totalCyclingConverted').sort({totalDistanceConverted: -1})
+        .then((users) => {
             let userMap = [];
             users.forEach(function(user) {
                 userMap[user._id] = user;
             });
 
-            Level.find({}).exec(function(err, levels) {
-                if (err) {
-                    res.render('error', {
-                        status: 500
-                    });
-                } else {
-
+            Level.find({})
+                .then((levels) => {
                     levels.forEach(function(level) {
                         let updatedMembers = [];
 
@@ -75,10 +64,12 @@ exports.all = function(req, res, next) {
                     });
 
                     res.jsonp(levels);
-                }
-            });
-        }
-    });
+                }).catch((err) => {
+                    res.render('error', { status: 500 });
+                });
+        }).catch((err) => {
+            console.log("Data update error please try again later");
+        });
 };
 
 /**
@@ -91,67 +82,67 @@ function updateEveryInterval(minutes) {
 
     setInterval(function(){
 
-        User.find().exec(function(err, users) {
-            if (err) {
-                console.log("Data update error please try again later");
-            } else {
-
+        User.find()
+            .then((users) => {
                 let userMap = [];
                 users.forEach(function(user) {
                     userMap[user._id] = user;
                 });
 
-                Level.find().exec(function(err, levels) {
+                Level.find()
+                    .then((levels) => {
+                        levels.forEach(function(level) {
 
-                    levels.forEach(function(level) {
-
-                        if (!level.activities) {
-                            level.activities = {};
-                        }
-
-                        level.activities.Walk = 0;
-                        level.activities.Run = 0;
-                        // level.activities.Swim = 0;
-                        level.activities.Cycling = 0;
-                        level.activities.CyclingConverted = 0;
-                        // level.activities.Rowing = 0;
-                        level.activities.Yoga = 0;
-                        level.totalDistance = 0;
-                        level.totalDistanceConverted = 0;
-
-                        level.members.forEach(function(member) {
-
-                            if (userMap[member]) {
-                                let teamMember = userMap[member];
-                                level.activities.Walk += teamMember.totalWalk;
-                                level.activities.Run += teamMember.totalRun;
-                                // level.activities.Swim += teamMember.totalSwim;
-                                level.activities.Cycling += teamMember.totalCycling;
-                                level.activities.CyclingConverted += teamMember.totalCyclingConverted;
-                                // level.activities.Rowing += teamMember.totalRowing;
-                                level.activities.Yoga += teamMember.totalYoga;
-
-                                level.totalDistance += teamMember.totalDistance;
-                                level.totalDistanceConverted += Math.round(teamMember.totalDistanceConverted);
+                            if (!level.activities) {
+                                level.activities = {};
                             }
+    
+                            level.activities.Walk = 0;
+                            level.activities.Run = 0;
+                            // level.activities.Swim = 0;
+                            level.activities.Cycling = 0;
+                            level.activities.CyclingConverted = 0;
+                            // level.activities.Rowing = 0;
+                            level.activities.Yoga = 0;
+                            level.totalDistance = 0;
+                            level.totalDistanceConverted = 0;
+    
+                            level.members.forEach(function(member) {
+    
+                                if (userMap[member]) {
+                                    let teamMember = userMap[member];
+                                    level.activities.Walk += teamMember.totalWalk;
+                                    level.activities.Run += teamMember.totalRun;
+                                    // level.activities.Swim += teamMember.totalSwim;
+                                    level.activities.Cycling += teamMember.totalCycling;
+                                    level.activities.CyclingConverted += teamMember.totalCyclingConverted;
+                                    // level.activities.Rowing += teamMember.totalRowing;
+                                    level.activities.Yoga += teamMember.totalYoga;
+    
+                                    level.totalDistance += teamMember.totalDistance;
+                                    level.totalDistanceConverted += Math.round(teamMember.totalDistanceConverted);
+                                }
+                            });
+    
+                            level.markModified('activities');
+                            level.markModified('totalDistance');
+                            level.markModified('totalDistanceConverted');
+    
+                            level.save()
+                                .then((updatedLevel) => {
+                                }).catch((err) => {
+                                    console.log("Error updating level stats: " + level.name + ", err: " + err);
+                                });
                         });
-
-                        level.markModified('activities');
-                        level.markModified('totalDistance');
-                        level.markModified('totalDistanceConverted');
-
-                        level.save(function(err) {
-                            if (err) {
-                                console.log("Error updating level stats: " + level.name + ", err: " + err);
-                                
-                            }
-                        });
+    
+                        console.log("All Level updates complete");
+                    }).catch((err) => {
+                        console.log("Error retrieving Level details");
                     });
+            }).catch((err) => {
+                console.log("Data update error please try again later");
+            });
 
-                    console.log("All Level updates complete");
-                });
-          }
-      });
     }, millis);
 }
 
@@ -170,44 +161,45 @@ function updateEveryInterval(minutes) {
         return;
     }
 
-    Level.findOne({
-        name: name
-    }).exec(function(err, level) {
-
-        if (level && level.name) {
-            console.log("Updating level: " + name);
-            if (!level.members.includes(id)) {
+    Level.findOne({name: name})
+        .then((level) => {
+            if (level && level.name) {
+                console.log("Updating level: " + name);
+                if (!level.members.includes(id)) {
+                    level.members.push(id);
+                    level.markModified('members');
+                }
+            } else {
+                console.log("Creating level: " + name);
+                level = new Level();
+    
+                level.name = name;
+                level.members = [];
                 level.members.push(id);
-                level.markModified('members');
+    
+                level.activities = {};
+    
+                level.activities.Walk = 0;
+                level.activities.Run = 0;
+                // level.activities.Swim = 0;
+                level.activities.Cycling = 0;
+                level.activities.CyclingConverted = 0;
+                // level.activities.Rowing = 0;
+                level.activities.Yoga = 0;
+                level.totalDistance = 0;
+                level.totalDistanceConverted = 0; 
             }
-        } else {
-            console.log("Creating level: " + name);
-            level = new Level();
+    
+            level.save()
+                .then((newLevel) => {
+                }).catch((err) => {
+                    console.log("Error creating level: " + level.name);
+                    console.log(err);
+                });
 
-            level.name = name;
-            level.members = [];
-            level.members.push(id);
-
-            level.activities = {};
-
-            level.activities.Walk = 0;
-            level.activities.Run = 0;
-            // level.activities.Swim = 0;
-            level.activities.Cycling = 0;
-            level.activities.CyclingConverted = 0;
-            // level.activities.Rowing = 0;
-            level.activities.Yoga = 0;
-            level.totalDistance = 0;
-            level.totalDistanceConverted = 0; 
-        }
-
-        level.save(function(err) {
-            if (err) {
-                console.log("Error creating level: " + level.name);
-                console.log(err);
-            }
+        }).catch((err) => {
+            console.log("Error retrieving Level details for: " + name);
         });
-    });
 };
 
 /**
@@ -215,28 +207,30 @@ function updateEveryInterval(minutes) {
  */
 exports.remove = function(user) {
 
-    Level.findOne({
-        name: user.level
-    }).exec(function(err, level) {
-        if (err || !level || level == null) {
-            console.log("Error removing user from level: " + user.name + " - " + user.level);
-        }
-
-        const index = level.members.indexOf(user.name);
-
-        if (index < 0) {
-            console.log("Error removing user from level: " + user.name + " - " + user.level);
-            return;
-        }
-
-        level.members.splice(index, 1);
-        level.markModified('members');
-            
-        level.save(function(err) {
-            if (err) {
+    Level.findOne({name: user.level})
+        .then((level) => {
+            if (!level || level == null) {
                 console.log("Error removing user from level: " + user.name + " - " + user.level);
             }
+    
+            const index = level.members.indexOf(user.name);
+    
+            if (index < 0) {
+                console.log("Error removing user from level: " + user.name + " - " + user.level);
+                return;
+            }
+    
+            level.members.splice(index, 1);
+            level.markModified('members');
+                
+            level.save()
+                .then((updatedLevel) => {
+                }).catch((err) => {
+                    console.log("Error removing user from level: " + user.name + " - " + user.level);
+                });
+
+        }).catch((err) => {
+            console.log("Error removing user from level: " + user.name + " - " + user.level);
         });
-    });
 };
 

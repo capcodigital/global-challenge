@@ -4,7 +4,11 @@ var mongoose = require("mongoose");
 var bootStatus = require("./status");
 var fs = require("fs");
 // Bootstrap db connection
-var db = exports.db = mongoose.connect(config.db.toString(), bootStatus.dependency());
+// var db = exports.db = mongoose.connect(config.db.toString(), bootStatus.dependency());
+
+var db = exports.db = mongoose.connect(config.db.toString())
+.then(() => bootStatus.dependency())
+.catch((err) => { console.error(err); });
 
 mongoose.connection.on("connected", function(ref){
     console.log("Database Connection Connected");

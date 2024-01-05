@@ -33,7 +33,12 @@ var LocationSchema = new Schema({
 
 LocationSchema.statics = {
   load: function (id, cb) {
-    this.findOne({ _id : id }).exec(cb);
+    this.findOne({ _id : id })
+    .then(() => {
+      cb();
+    }).catch((err) => {
+        
+    });
   }
 };
 
