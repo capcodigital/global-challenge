@@ -284,7 +284,7 @@ class DashboardGlobal extends React.Component {
                     worldData={worldData}
                     statistics={statistics}
                     cities={cities}
-                    distance={8000}
+                    distance={46431}
                     width={width}
                     scale={width < 400 ? 70 : 150}
                     geoCenter={[0, 10]}
