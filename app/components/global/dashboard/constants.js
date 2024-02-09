@@ -306,6 +306,7 @@ export const allCities = [
 
 //add 1000km difference between each point 
 //Check existing location against capco.com
+// Tysons corner does not exist anymore
 
 export const additionalCities = [
   {
@@ -317,11 +318,27 @@ export const additionalCities = [
     markerOffset: -5,
   },
   {
+    name: "Doverlândia",
+    country: "Brazil",
+    region: "South America",
+    coordinates: [-52.7254, -16.8867],
+    distance: conversion_factor * 8201,
+    markerOffset: -5,
+  },
+  {
     name: "Juruena",
     country: "Brazil",
     region: "South America",
     coordinates: [-58.8175, -10.2228],
     distance: conversion_factor * 9817,
+    markerOffset: -5,
+  },
+  {
+    name: "Tefé, Região Geográfica Intermediária de Tefé",
+    country: "Brazil",
+    region: "South America",
+    coordinates: [-64.9096, -3.5589],
+    distance: conversion_factor * 10852,
     markerOffset: -5,
   },
   {
@@ -333,7 +350,15 @@ export const additionalCities = [
     markerOffset: -5,
   },
   {
-    name: "Caribbean Sea",
+    name: "Caribbean Sea 1",
+    country: "",
+    region: "South America",
+    coordinates: [-77.0937, 9.7689],
+    distance: conversion_factor * 12700,
+    markerOffset: -5,
+  },
+  {
+    name: "Caribbean Sea 2",
     country: "",
     region: "South America",
     coordinates: [-83.1857, 16.4327],
@@ -430,7 +455,15 @@ export const additionalCities = [
     markerOffset: -5,
   },
   {
-    name: "Sea",
+    name: "Sea 1",
+    country: "",
+    region: "",
+    coordinates: [-50.8207, 48.2951],
+    distance: conversion_factor * 23690,
+    markerOffset: -5,
+  },
+  {
+    name: "Sea 2",
     country: "",
     region: "",
     coordinates: [-41.2942, 49.8267],
@@ -634,7 +667,7 @@ export const additionalCities = [
     country: "",
     region: "Asia",
     coordinates: [89.0343, 13.3615],
-    distance: conversion_factor * 42344,
+    distance: conversion_factor * 41044,
     markerOffset: 30,
   },
   {
@@ -666,7 +699,7 @@ export const additionalCities = [
     country: "Vietnam",
     region: "Asia",
     coordinates: [108.9795, 11.7892],
-    distance: conversion_factor * 46431,
+    distance: conversion_factor * 45143,
     markerOffset: -10,
   },
   {
