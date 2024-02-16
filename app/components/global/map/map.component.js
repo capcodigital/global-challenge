@@ -2,6 +2,7 @@ import React from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import PropTypes from 'prop-types';
 import { scaleLinear } from 'd3-scale';
+import { additionalCities, allCities } from '../dashboard/constants';
 import "./style.scss";
 
 const SCALE = scaleLinear()
@@ -25,7 +26,8 @@ class Map extends React.PureComponent {
     const dy = d.destination.y - d.origin.y;
     const dr = Math.sqrt(dx * dx + dy * dy);
     const spath = !s ? ' 0 0,0 ' : ' 0 0,1 ';
-    return `M${d.origin.x},${d.origin.y}A${dr},${dr}${spath}${d.destination.x},${d.destination.y}`;
+    return `M${d.origin.x},${d.origin.y}l${dx},${dy}`;
+    // return `M${d.origin.x},${d.origin.y}A${dr},${dr}${spath}${d.destination.x},${d.destination.y}`;
   }
 
   getRoute = (city, i) => {
@@ -48,6 +50,28 @@ class Map extends React.PureComponent {
 
       return this.getArc(d, s);
     }
+    return '';
+  }
+
+  getLiveRoute = (city, i) => {
+    const source = additionalCities[i];
+    const destination = additionalCities[i + 1];
+
+    const sourcePosition = this.projection()(source.coordinates);
+    const destinationPosition = destination ? this.projection()(destination.coordinates) : destination;
+
+    const connection = [sourcePosition, destinationPosition];
+
+    if (destination) {
+      const d = {
+        origin: { x: connection[0][0], y: connection[0][1] },
+        destination: { x: connection[1][0], y: connection[1][1] }
+      };
+      const s = d.destination.x > d.origin.x;
+
+      return this.getArc(d, s);
+    }
+
     return '';
   }
 
@@ -92,10 +116,10 @@ class Map extends React.PureComponent {
           <g className="routes">
             {
               // stroke
-              cities.map((city, i) => (
+              additionalCities.map((city, i) => (
                 <path
                   key={`route-${i + 0}`}
-                  d={this.getRoute(city, i)}
+                  d={this.getLiveRoute(city, i)}
                   className="route-path"
                   fill="none"
                   stroke={city.distance >= distance ? '#00aabb' : '#b4181b'}
