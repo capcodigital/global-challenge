@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var https = require("https");
 var challenges = require('./challenges.controller');
 var levels = require('./levels.controller');
@@ -37,7 +37,7 @@ var headers = {
     'Content-Type': 'application/x-www-form-urlencoded'
 };
 
-var options = {
+var postOptions = {
   hostname: 'api.fitbit.com',
   method: 'POST',
   port: 443,
@@ -75,19 +75,13 @@ exports.authorize = function(req, res) {
         res.redirect(callbackUrl + 'register?success=fitBitError');
     } else {
         var email = req.query.state.toLowerCase();
-        options.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=" + callbackUrl + "fitbit/auth";
+        postOptions.path = "/oauth2/token?" + "code=" + req.query.code + "&grant_type=authorization_code" + "&client_id=" + client_id + "&client_secret=" + secret + "&redirect_uri=" + callbackUrl + "fitbit/auth";
 
-        var newReq = buildRequest("Register " + email, options, function(err, result) {
-            if (err) {
-                console.log("Request Error: " + err);
-                res.redirect(callbackUrl + 'register?success=fitBitError');
-            } else if (result.errors && result.errors.length > 0) {
-                console.log(result.errors[0].message);
-            } else {
-
+        buildRequest("Register " + email, postOptions)
+            .then((result) => {
                 Capco.findOne({email: email.toLowerCase()})
                     .then((profile) => {
-                        if (err || !profile) {
+                        if (!profile) {
                             res.json({error: "Could not find your Capco email [" + email + "]"});
                         } else {
                             var user = new User();
@@ -134,35 +128,52 @@ exports.authorize = function(req, res) {
                                     levels.AddOrUpdate(newUser.level, newUser._id);
 
                                     // If User has joined part way through the competition. Retrieve previous days stats in the background
-                                    console.log("Updtaing stats before saving user:" + user.name);
-                                    challengeDates.forEach(function(date) {
-                                        getStats(newUser, date);
+                                    console.log("Updtaing stats in case user joined part way through:" + user.name);
+
+                                    let statUpdateList = [];
+
+                                    challengeDates.forEach((date) => {
+                                        let statUpdate = getStats(newUser, date);
+                                        statUpdateList.push(statUpdate);
                                     });
 
-                                    newUser.save()
-                                        .then((updatedUser) => {
-                                        }).catch((err) => {
-                                            console.log(err);
+                                    Promise.allSettled(statUpdateList).then((results) => {
+
+                                        results.forEach((result) => {
+                                            if (result.status === 'rejected') {
+                                                console.log("Error occured getting stats for: " + user.name);
+                                            }
+                                        });
+                                    
+                                        console.log("Saving after updating stats:" + user.name);
+                                        newUser.save()
+                                            .then((updatedUser) => {
+                                            }).catch((err) => {
+                                                console.log(err);
+                                            });
+
+                                        /*
+                                        let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
+                                                        "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
+                                                        "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
+                                                        "Good Luck \n\rCapco Health & Wellbeing";
+                                        */
+
+                                        let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
+                                                        "Once the challenge starts on July 17, you can view your progress here: " + callbackUrl + "\n\r" +
+                                                        "If you did not register or wish to be removed from the challenge and your account deleted please email the support team" +
+                                                        " challenge@capco.com\n\r" +
+                                                        "Good Luck \n\rCapco Health & Wellbeing";
+
+                                        mailer.sendMail(user.email, "Capco Challenge Registration Successfull", emailText, function() {
+                                            console.log("email sent to " + user.email);
                                         });
 
-                                    /*
-                                    let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
-                                                    "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
-                                                    "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
-                                                    "Good Luck \n\rCapco Health & Wellbeing";
-                                    */
-
-                                    let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
-                                                    "Once the challenge starts on July 17, you can view your progress here: " + callbackUrl + "\n\r" +
-                                                    "If you did not register or wish to be removed from the challenge and your account deleted please email the support team" +
-                                                    " challenge@capco.com\n\r" +
-                                                    "Good Luck \n\rCapco Health & Wellbeing";
-
-                                    mailer.sendMail(user.email, "Capco Challenge Registration Successfull", emailText, function() {
-                                        console.log("email sent to " + user.email);
+                                        res.redirect(callbackUrl + 'register?success=fitBitSuccess');
                                     });
 
-                                    res.redirect(callbackUrl + 'register?success=fitBitSuccess');
+                                    console.log("After promise all settled:" + user.name);
+
                                 }).catch((err) => {
                                     console.log(err.message);
                                     if (err.code == 11000) {
@@ -181,10 +192,10 @@ exports.authorize = function(req, res) {
                     }).catch((err) => {
                         res.json({error: "Could not find your Capco email [" + email + "]"});
                     });
-            }
-        });
-
-        newReq.end();
+            }).catch((err) => {
+                console.log("Request Error: " + err);
+                res.redirect(callbackUrl + 'register?success=fitBitError');
+            });
     }
 };
 
@@ -226,7 +237,6 @@ exports.updateIndividualUser = function(req, res) {
                         console.log(err);
                     });
 
-
                 res.json({
                     name: users[0].name,
                     email: users[0].email,
@@ -240,35 +250,44 @@ exports.updateIndividualUser = function(req, res) {
         });
 };
 
-function buildRequest(requestDetail, options, callback) {
-    var req = https.request(options, function(res) {
-        res.setEncoding('utf8');
-        res.body = '';
+function buildRequest(requestDetail, requestOptions) {
+    return new Promise((resolve, reject) => {
+        var req = https.request(requestOptions, (res) => {
+            res.setEncoding('utf8');
+            res.body = '';
 
-        res.on('data', function(chunk) {
-            res.body += chunk;
+            res.on('data', function(chunk) {
+                res.body += chunk;
+            });
+
+            res.on('end', () => {
+                var result = JSON.parse(res.body);
+                if (result.code) {
+                    console.log(res.statusCode);
+                    console.log("Error code for -  " + requestDetail + " - " + result.code);
+                    if (result.errors && result.errors.length > 0) {
+                        console.log(result.errors[0].message);
+                        console.log(JSON.stringify(result.errors[0]));
+                    }
+                    reject(result);
+                } else {
+                    resolve(result);
+                }
+            });
         });
 
-        res.on('end', function() {
-            var result = JSON.parse(res.body);
-            if (result.code) {
-                console.log(res.statusCode);
-                console.log("Error code for -  " + requestDetail + " - " + result.code);
-                callback(result, null);
-            } else {
-                callback(null, result);
-            }
-        });
-
-        res.on('error', function(err) {
+        req.on('error', function(err) {
             console.log("Error sending request to -  " + requestDetail + " - " + err.message);
+            reject(err);
         });
 
-        res.on('timeout', function(err) {
+        req.on('timeout', function(err) {
             console.log("Request timed out to -  " + requestDetail + " - " + err.message);
+            reject(err);
         });
+
+        req.end();
     });
-    return req;
 };
 
 function updateUser(user) {
@@ -276,16 +295,11 @@ function updateUser(user) {
     // Temporary fix for strange date issue
     if (user.expires_in && (user.expires_in.getTime() < today.getTime() || user.expires_in.getFullYear() > today.getFullYear())) {
         console.log("FitBit Token Expired:" + user.name);
-        options.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
+        postOptions.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
          // If token is expired, refresh access token and get a new refresh token
-        var newReq2 = buildRequest("Update token for " + user.name, options, function(err, result) {
-            if (err) {
-                console.log(user.name + " : " + err);
-            } else if (result.errors && result.errors.length > 0) {
-                console.log(user.name + ": " + result.errors[0].message);
-                console.log(JSON.stringify(result.errors[0]));
-            } else {
+        buildRequest("Update token for " + user.name, postOptions)
+            .then((result) => {
                 var date = new Date();
                 var datemillis = date.getTime();
 
@@ -311,11 +325,10 @@ function updateUser(user) {
                     }).catch((err) => {
                         console.log(err);
                     });
-            }
-        });
-
-        newReq2.end();
-
+                
+            }).catch((err) => {
+                console.log(user.name + " : " + err);
+            });
     } else {
         getStats(user);
         user.save()
@@ -334,18 +347,17 @@ function getStats(user, date) {
     getOptions.path = "/1/user/" + user.user_id + "/activities/date/" + date + ".json";
     getOptions.headers.Authorization = "Bearer " + user.access_token;
 
-    var statsReq = buildRequest("Update stats for " + user.name, getOptions, function(err, result) {
-        if (err) {
-            console.log(err);
-        } else if (result.errors && result.errors.length > 0) {
-            console.log(user.name + " : " + result.errors[0].message);
-        } else {
+    return buildRequest("Update stats for " + user.name, getOptions)
+        .then((result) => {
             result.date = date;
+            if (!user.activities) {
+                user.activities = {};
+            }
+
             if (result.summary) {
-                if (!user.activities) {
-                    user.activities = {};
-                }
                 user.activities[date] = result;
+            } else {
+                console.log("No FitBit result summary for: " + user.name);
             }
 
             console.log("Updating FitBit Stats for: " + user.name);
@@ -460,11 +472,12 @@ function getStats(user, date) {
             user.totalDistanceConverted = Math.floor(user.totalDistanceConverted*100)/100;
             user.totalDistance = Math.floor(user.totalDistance*100)/100;
 
+            console.log("User stats modified:" + date);
             user.markModified('activities');
-        }
-    });
-
-    statsReq.end();
+        
+        }).catch((err) => {
+            console.log(user.name + " : " + err);
+        });
 }
 
 function updateAccessTokens(user) {

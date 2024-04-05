@@ -187,9 +187,7 @@ function updateAccessTokens(user) {
     
                 existingUser.save()
                     .then((updatedUser) => {
-                        challengeDates.forEach(function(date) {
-                            getStats(updatedUser, date);
-                        });
+                        getStats(updatedUser);
                     }).catch((err) => {
                         console.log(err);
                     });
