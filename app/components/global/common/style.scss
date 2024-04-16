@@ -79,6 +79,139 @@
   }
 }
 
+.personal-leaderboard-desktop-global {
+  @media screen and (max-width: 1000px) {
+    display: none !important;
+  }
+  width: 100%;
+  height: 1000px;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    background-color: #002023;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #fdc437;
+  }
+
+  .ui.very.basic.table {
+    width: 100%;
+    color: white !important;
+
+    thead tr:first-child > th {
+      position: sticky !important;
+      top: 0;
+      background-color: #000000;
+    }
+
+    th {
+      border: none;
+      color: white !important;
+      font-weight: 400;
+    }
+
+    tbody.main-table {
+      tr td {
+        background: rgba(0, 170, 187, 0.19) !important;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+    }
+
+    tr td {
+      border: none;
+      padding-left: 0;
+      padding-bottom: 0rem;
+    }
+
+    tbody.main-table {
+      // cursor: pointer;
+      .finish {
+        td {
+          background: #dbfaec;
+        }
+      }
+      :hover {
+        td {
+          background: #00aabb !important;
+        }
+      }
+      &.loading {
+        td {
+          background: linear-gradient(90deg, #d9d9d9, #ffffff);
+          background-size: 200% 200%;
+          animation: Animation 1s ease infinite;
+
+          @keyframes Animation {
+            50% {
+              background-position: 0% 50%;
+            }
+            100% {
+              background-position: 50% 100%;
+            }
+          }
+        }
+      }
+    }
+
+    &.main {
+      text-align: center;
+      padding-left: 0px;
+      border-spacing: 0px 5px;
+      thead > tr,
+      tbody tr {
+        // :first-child {
+        //   width: 130px;
+        // }
+        :nth-child(2) {
+          text-align: left;
+          width: 180px;
+        }
+      }
+
+      tbody {
+        display: block;
+        height: 100%;
+        overflow: auto;
+      }
+
+      thead,
+      tbody tr {
+        border: none;
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        // padding-right: 5px;
+      }
+
+      tr td {
+        padding: 10px 0 10px 0;
+        background: rgba(0, 170, 187, 0.19) !important;
+        height: 82px;
+        // &.loading {
+        //   height: 52px;
+        // }
+        // &.position {
+        //   width: 50px !important;
+        // }
+        // &.avatar {
+        //   width: 60px;
+        // }
+        // &.team-name {
+        //   text-align: left;
+        //   width: 210px;
+        // }
+        // &.distance {
+        //   width: 80px;
+        // }
+        // &.date {
+        //   width: 120px;
+        // }
+      }
+    }
+  }
+}
+
 .leaderboard-desktop-global {
   @media screen and (max-width: 1000px) {
     display: none !important;
@@ -360,5 +493,29 @@ div.ui.popup {
     padding-top: 4px;
     font-size: 16px;
     color: grey;
+  }
+}
+
+.leaderboard-filter {
+  background-color: #000000;
+
+  .filter-button-container {
+    color: #00AABB;
+    position: relative;
+  }
+
+  .filter-button,
+  .filter-button-empty {
+    background: none;
+    border: none;
+    padding: 0px 0px 20px 0px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .filter-button-empty {
+    position: absolute;
+    bottom: 80px;
+    padding: 0;
   }
 }
