@@ -6,8 +6,10 @@ var https = require("https");
 var challenges = require('./challenges.controller');
 var levels = require('./levels.controller');
 var locations = require('./locations.controller');
+var countries = require('./countries.controller');
 var User = mongoose.model('User');
 var Capco = mongoose.model('Capco');
+var constants = require('../util/constants');
 
 var strava = require('strava-v3');
 var cluster = require('cluster');
@@ -123,6 +125,7 @@ exports.authorize = function(req, res) {
                                 .then((newUser) => {
                                     locations.AddOrUpdate(newUser.location, newUser._id);
                                     levels.AddOrUpdate(newUser.level, newUser._id);
+                                    countries.AddOrUpdate(constants.officeMap[newUser.location].country, newUser._id);
     
                                     /*
                                     let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +

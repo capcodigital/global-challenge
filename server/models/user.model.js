@@ -13,6 +13,7 @@ var UserSchema = new Schema({
     email: { type:String, unique:true},
     app: String,
     location: String,
+    country: String,
     level: String,
     challengeName: String,
     access_token: String,
