@@ -9,7 +9,6 @@ import {
   TeamSportsLeaderboardTable,
   CountDown,
   PersonalLeaderboardTable,
-  LeaderboardFilter,
 } from "../common";
 import LeaderboardTabs from "../leaderboardTabs";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
@@ -346,12 +345,11 @@ class DashboardGlobal extends React.Component {
                       placeholder={"Search Name"}
                     />
                   </div>
-                  { activeTab === 'personal' ? <PersonalLeaderboardTable data={filteredData} />
+                  { activeTab === 'personal' ? <PersonalLeaderboardTable data={filteredData} filterByCountry={this.filterByCountry} filterByCity={this.filterByCity}/>
                     : <TeamLeaderboardTable isLoading={isSearchLoading} data={filteredData} isMainDashboard={activeTab === "team"} activeTab={activeTab} />
                   }
                 </Grid.Column>
                 <Grid.Column width={6}>
-                  <LeaderboardFilter filterByCountry={this.filterByCountry} filterByCity={this.filterByCity} />
                   <Header size="large" className="global-header">
                     SPORTS TOTAL
                   </Header>
