@@ -9,11 +9,6 @@ const findCityByCountry = (countries) => {
   return filteredCityData.map((city) => city.name);
 };
 
-const findCountryByCity = (cities) => {
-  const filteredCountryData = cities.reduce((flatten, city) => flatten.concat(...allCities.filter((item) => item.name === city)), []);
-  return filteredCountryData.map((city) => city.country);
-};
-
 const PersonalLeaderboardTable = ({ data, filterByCountry, filterByCity }) => {
   const [countryValue, setCountryValue] = useState([]);
   const [cityValue, setCityValue] = useState([]);
@@ -45,11 +40,10 @@ const PersonalLeaderboardTable = ({ data, filterByCountry, filterByCity }) => {
     const isExistingCity = cityValue.includes(value.label);
     if (isExistingCity) {
       const newList = cityValue.filter((item) => item !== value.label);
-      setCountryValue(findCountryByCity(newList)); // change country list based on new filtered city
+      setCityValue(newList);
     } else {
       const cities = cityValue.concat(value.label);
       setCityValue(cities);
-      setCountryValue(findCountryByCity(cities));
     }
   };
 
