@@ -39,9 +39,14 @@ var ChallengeSchema = new Schema({
 }, {strict: false});
 
 ChallengeSchema.statics = {
-  load: function (id, cb) {
-    this.findOne({ _id : id }).exec(cb);
-  }
-};
+    load: function (id, cb) {
+        this.findOne({ _id : id })
+        .then(() => {
+            cb();
+        }).catch((err) => {
+            
+        });
+        }
+    };
 
 var Team = mongoose.model('Challenge', ChallengeSchema);

@@ -11,45 +11,33 @@ const challengeName = process.env.CHALLENGE_NAME ? `${process.env.CHALLENGE_NAME
  * List all Challenges
  */
 exports.list = function(req, res, next) {
-    Challenge.find({}).exec(function(err, users) {
-        if (err) {
-            res.render('error', {
-                status: 500
-            });
-        } else {
+    Challenge.find({})
+        .then((users) => {
             res.jsonp(users);
-        }
-    });
+        }).catch((err) => {
+            res.render('error', { status: 500 });
+        });
 };
 
 /**
  * Get specific challenge
  */
 exports.get = function(req, res, next) {
-    Challenge.findOne({
-        name: req.body.name
-    }).exec(function(err, challenge) {
-        if (err) {
-            res.render('error', {
-                status: 500
-            });
-        } else {
+    Challenge.findOne({name: req.body.name})
+        .then((challenge) => {
             res.jsonp(challenge);
-        }
-    });
+        }).catch((err) => {
+            res.render('error', { status: 500 });
+        });
 };
 
 /**
  * Get dates for current challenge
  */
 exports.getCurrentChallengeDates = function(cb) {
-    Challenge.findOne({
-        status: 'In Progress', challengeName: challengeName
-    }).exec(function(err, challenge) {
-        if (err) {
-            return [];
-        } else {
-            let dates = [];
+    Challenge.findOne({status: 'In Progress', challengeName: challengeName})
+    .then((challenge) => {
+        let dates = [];
             let dateAsString = challenge.startDate.toISOString().split('T')[0];
             dates.push(dateAsString);
 
@@ -66,8 +54,9 @@ exports.getCurrentChallengeDates = function(cb) {
             dates.push(dateAsString);
 
             cb(dates);
-        }
-    });
+    }).catch((err) => {
+        return [];
+    })
 };
 
 /**
@@ -75,22 +64,23 @@ exports.getCurrentChallengeDates = function(cb) {
  */
 exports.create = function(req, res) {
 
-    User.findOne({
-        _id: mongoose.Types.ObjectId(req.body.owner)
-    }).exec(function(err, user) {
-        if (err) return res.send(401, 'Error creating challenge');
-        if (!user) return res.send(401, 'Owner not reqcognised');
+    User.findOne({_id: mongoose.Types.ObjectId(req.body.owner)})
+        .then((user) => {
+            if (!user) return res.send(401, 'Owner not reqcognised');
 
-        var challenge = new Challenge(req.body);
+            var challenge = new Challenge(req.body);
 
-        challenge.save(function(err) {
-            if (err) {
-                console.log("Error creating challenge: " + challenge.name);
-            } else {
-                res.jsonp(challenge);
-            }
+            challenge.save(function(err) {
+                if (err) {
+                    console.log("Error creating challenge: " + challenge.name);
+                } else {
+                    res.jsonp(challenge);
+                }
+            });
+
+        }).catch((err) => {
+            return res.send(401, 'Error creating challenge');
         });
-    });
 };
 
 /**
@@ -98,20 +88,21 @@ exports.create = function(req, res) {
  */
 exports.update = function(req, res) {
 
-    Challenge.findOne({
-        name: req.body.challenge
-    }).exec(function(err, challenge) {
-        if (err || !challenge) return res.send(401, 'Challenge not found');
+    Challenge.findOne({name: req.body.challenge})
+        .then((challenge) => {
+            if (!challenge) return res.send(401, 'Challenge not found');
 
-        challenge = req.body;
+            challenge = req.body;
             
-        challenge.save(function(err) {
-            if (err) {
-                console.log("Error saving challenge: " + challenge.name);
-            } else {
-                res.jsonp(challenge);
-            }
+            challenge.save(function(err) {
+                if (err) {
+                    console.log("Error saving challenge: " + challenge.name);
+                } else {
+                    res.jsonp(challenge);
+                }
+            });
+        }).catch((err) => {
+            return res.send(401, 'Challenge not found');
         });
-    });
 };
 

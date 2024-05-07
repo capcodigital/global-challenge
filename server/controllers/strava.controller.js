@@ -65,7 +65,7 @@ exports.authorize = function(req, res) {
         var userOptions = authOptions;
         userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "&code=" + req.query.code;
 
-        var newReq = buildRequest(userOptions, function(err, result){
+        var newReq = buildRequest("Register " + email, userOptions, function(err, result){
             if (err) {
                 console.log("Request Error: " + err);
                 res.redirect(callbackUrl + 'register?success=stravaError');
@@ -75,102 +75,93 @@ exports.authorize = function(req, res) {
                 res.redirect(callbackUrl + 'register?success=stravaError');
             } else {
                 
-                Capco.findOne({email: email.toLowerCase()}).exec(function(err, profile) {
-                    if (err || !profile) {
-                        res.json({error: "Could not find your Capco email [" + email + "]"});
-                    } else {
-                        var user = new User();
-
-                        user.email = email.toLowerCase();
-                        user.app = "Strava";
-                        user.access_token = result.access_token;
-                        user.refresh_token = result.refresh_token;
-
-                        var date = new Date();
-                        var datemillis = date.getTime();
-
-                        var expiresTime = new Date(result.expires_in*1000);
-                        var expiresTimeMillis = expiresTime.getTime();
-
-                        var expiration = new Date();
-                        expiration.setTime(datemillis + expiresTimeMillis);
-
-                        user.expires_in = expiration;
-                        user.expires_at = result.expires_at;
-                        user.user_id = result.athlete.id;
-
-                        user.name = profile.name;
-                        user.location = profile.location;
-                        user.level = profile.level;
-
-                        if (profile.location === "New York RISC") {
-                            user.location = "New York";
-                        } else if (profile.location === "Washington DC Metro") {
-                            user.location = "Washington DC";
-                        } else if (profile.location === "Orlando RISC") {
-                            user.location = "Orlando";
-                        } else if (profile.location === "Antwerp") {
-                            user.location = "Brussels";
-                        } else if (profile.location === "Malaysia") {
-                            user.location = "Kuala Lumpur";
+                Capco.findOne({email: email.toLowerCase()})
+                    .then((profile) => {
+                        if (!profile) {
+                            res.json({error: "Could not find your Capco email [" + email + "]"});
                         } else {
+                            var user = new User();
+    
+                            user.email = email.toLowerCase();
+                            user.app = "Strava";
+                            user.access_token = result.access_token;
+                            user.refresh_token = result.refresh_token;
+    
+                            var date = new Date();
+                            var datemillis = date.getTime();
+    
+                            var expiresTime = new Date(result.expires_in*1000);
+                            var expiresTimeMillis = expiresTime.getTime();
+    
+                            var expiration = new Date();
+                            expiration.setTime(datemillis + expiresTimeMillis);
+    
+                            user.expires_in = expiration;
+                            user.expires_at = result.expires_at;
+                            user.user_id = result.athlete.id;
+    
+                            user.name = profile.name;
                             user.location = profile.location;
+                            user.level = profile.level;
+                            user.location = profile.location;
+    
+                            user.activities = {};
+                            user.totalSteps = 0;
+                            user.totalCalories = 0;
+                            user.totalDistance = 0;
+                            user.totalDistanceConverted = 0;
+                            user.totalDuration = 0;
+                            user.totalWalk = 0;
+                            user.totalRun = 0;
+                            // user.totalSwim = 0;
+                            user.totalCycling = 0;
+                            user.totalCyclingConverted = 0;
+                            // user.totalRowing = 0;
+                            user.totalYoga = 0;
+    
+                            user.save()
+                                .then((newUser) => {
+                                    locations.AddOrUpdate(newUser.location, newUser._id);
+                                    levels.AddOrUpdate(newUser.level, newUser._id);
+    
+                                    /*
+                                    let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
+                                    "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
+                                    "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
+                                    "Good Luck \n\rCapco Health & Wellbeing";
+                                    */
+    
+                                    let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
+                                    "Once the challenge starts on July 17, you can view your progress here: " + callbackUrl + "\n\r" +
+                                    "If you did not register or wish to be removed from the challenge and your account deleted please email the support team" +
+                                    " challenge@capco.com\n\r" +
+                                    "Good Luck \n\rCapco Health & Wellbeing";
+    
+                                    mailer.sendMail(user.email, "Capco Challenge Registration Successfull", emailText, function() {
+                                        console.log("email sent to " + user.email);
+                                    });
+    
+                                    res.redirect(callbackUrl + 'register?success=stravaSuccess');
+                                }).catch((err) => {
+                                    console.log(err.message);
+                                    if (err.code == 11000) {
+                                        if (user.app === "FitBit") {
+                                            res.redirect(callbackUrl + 'register?success=fitBitRegistered');
+                                        } else {
+                                            // Already registered but update the users access tokens anyway so we have the latest expiry
+                                            updateAccessTokens(user);
+                                            res.redirect(callbackUrl + 'register?success=stravaRegistered');
+                                        }
+                                    } else {
+                                        res.redirect(callbackUrl + 'register?success=serverError');
+                                    }
+                                });
+                            
                         }
 
-                        user.activities = {};
-                        user.totalSteps = 0;
-                        user.totalCalories = 0;
-                        user.totalDistance = 0;
-                        user.totalDistanceConverted = 0;
-                        user.totalDuration = 0;
-                        user.totalWalk = 0;
-                        user.totalRun = 0;
-                        // user.totalSwim = 0;
-                        user.totalCycling = 0;
-                        user.totalCyclingConverted = 0;
-                        // user.totalRowing = 0;
-                        user.totalYoga = 0;
-
-                        user.save(function(err, newUser) {
-                            if (err) {
-                                console.log(err.message);
-                                if (err.code == 11000) {
-                                    if (user.app === "FitBit") {
-                                        res.redirect(callbackUrl + 'register?success=fitBitRegistered');
-                                    } else {
-                                        // Already registered but update the users access tokens anyway so we have the latest expiry
-                                        updateAccessTokens(user);
-                                        res.redirect(callbackUrl + 'register?success=stravaRegistered');
-                                    }
-                                } else {
-                                    res.redirect(callbackUrl + 'register?success=serverError');
-                                }
-                            } else {
-                                locations.AddOrUpdate(newUser.location, newUser._id);
-                                levels.AddOrUpdate(newUser.level, newUser._id);
-
-                                /*
-                                let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
-                                "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
-                                "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
-                                "Good Luck \n\rCapco Health & Wellbeing";
-                                */
-
-                                let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +
-                                "Once the challenge starts on July 17, you can view your progress here: " + callbackUrl + "\n\r" +
-                                "If you did not register or wish to be removed from the challenge and your account deleted please email the support team" +
-                                " challenge@capco.com\n\r" +
-                                "Good Luck \n\rCapco Health & Wellbeing";
-
-                                mailer.sendMail(user.email, "Capco Challenge Registration Successfull", emailText, function() {
-                                    console.log("email sent to " + user.email);
-                                });
-
-                                res.redirect(callbackUrl + 'register?success=stravaSuccess');
-                            }
-                        });
-                    }
-                });
+                    }).catch((err) => {
+                        res.json({error: "Could not find your Capco email [" + email + "]"});
+                    });
             }
         });
 
@@ -179,39 +170,39 @@ exports.authorize = function(req, res) {
 };
 
 function updateAccessTokens(user) {
-    User.findOne({
-        email: user.email.toLowerCase()
-    }).exec(function(err, existingUser) {
-        if (err || !existingUser) {
+    User.findOne({email: user.email.toLowerCase()})
+        .then((existingUser) => {
+            if (existingUser) {
+                console.log("Error updating existing useer access tokens during re-registration");
+            } else {
+                existingUser.access_token = user.access_token;
+                existingUser.refresh_token = user.refresh_token;
+                existingUser.expires_in = user.expires_in;
+                user.expires_at = user.expires_at;
+    
+                existingUser.markModified('access_token');
+                existingUser.markModified('refresh_token');
+                existingUser.markModified('expires_in');
+                existingUser.markModified('expires_at');
+    
+                existingUser.save()
+                    .then((updatedUser) => {
+                        getStats(updatedUser);
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+            }
+        }).catch((err) => {
             console.log("Error updating existing useer access tokens during re-registration");
-        } else {
-            existingUser.access_token = user.access_token;
-            existingUser.refresh_token = user.refresh_token;
-            existingUser.expires_in = user.expires_in;
-            user.expires_at = user.expires_at;
-
-            existingUser.markModified('access_token');
-            existingUser.markModified('refresh_token');
-            existingUser.markModified('expires_in');
-            existingUser.markModified('expires_at');
-
-            existingUser.save(function(err, updatedUser) {
-                if (err) {
-                    console.log(err);
-                }
-            });
-        }
-    });
+        });
 }
 
 /**
  * Loop through all users and update their stats from Strava
  */
 exports.update = function(req, res) {
-    User.find({app: 'Strava'}).exec(function(err, users) {
-        if (err) {
-            res.render('error', { errormsg: "Server error please try again later" });
-        } else {
+    User.find({app: 'Strava'})
+        .then((users) => {
             var userCount = users.length;
             for (var i = 0; i < userCount; i++) {
                 if (users[i].access_token) {
@@ -219,11 +210,12 @@ exports.update = function(req, res) {
                 }
             }
             res.end();
-        }
-    });
+        }).catch((err) => {
+            res.render('error', { errormsg: "Server error please try again later" });
+        });
 };
 
-function buildRequest(options, callback) {
+function buildRequest(requestDetail, options, callback) {
     console.log(options);
     var req = https.request(options, function(res) {
         res.setEncoding('utf8');
@@ -237,7 +229,7 @@ function buildRequest(options, callback) {
             var result = JSON.parse(res.body);
             if (result.code) {
                 console.log(res.statusCode);
-                console.log("result.code: " + result.code);
+                console.log("Error code for -  " + requestDetail + " - " + result.code);
                 callback(result, null);
             } else {
                 callback(null, result);
@@ -245,7 +237,11 @@ function buildRequest(options, callback) {
         });
 
         res.on('error', function(err) {
-            console.log('Error sending request: ' + err.message);
+            console.log("Error sending request to -  " + requestDetail + " - " + err.message);
+        });
+
+        res.on('timeout', function(err) {
+            console.log("Request timed out to -  " + requestDetail + " - " + err.message);
         });
     });
     return req;
@@ -367,11 +363,11 @@ function getStats(user) {
             user.totalDistance = Math.floor(user.totalDistance*100)/100;
 
             user.markModified('activities');
-            user.save(function(err, newUser) {
-                if (err) {
+            user.save()
+                .then((newUser) => {
+                }).catch((err) => {
                     console.log(err);
-                }
-            });
+                });
         }
     });
 };
@@ -386,7 +382,7 @@ function updateUser(user) {
         userOptions.path = "/oauth/token?client_id=" + client_id + "&client_secret=" + secret + "&grant_type=refresh_token&refresh_token=" + user.refresh_token;
 
          // If token is expired refresh access token and get a new refresh token
-        var newReq2 = buildRequest(userOptions, function(err, result) {
+        var newReq2 = buildRequest("Update token for " + user.name, userOptions, function(err, result) {
             if (err) {
                 console.log(user.name + " : " + err.message);
             } else if (result.errors && result.errors.length > 0) {
@@ -436,10 +432,8 @@ function updateEveryInterval(minutes) {
 
     setInterval(function(){
         console.log("Updating Strava user stats");
-        User.find({app: 'Strava'}).exec(function(err, users) {
-            if (err) {
-                console.log("Data update error please try again later");
-            } else {
+        User.find({app: 'Strava'})
+            .then((users) => {
                 var userCount = users.length;
                 console.log("Found " + userCount + " Strava users");
                 for (var i = 0; i < userCount; i++) {
@@ -448,7 +442,9 @@ function updateEveryInterval(minutes) {
                     }
                 }
                 console.log("All User updates complete");
-          }
-      });
+            }).catch((err) => {
+                console.log("Data update error please try again later");
+            });
+
     }, millis);
 }
