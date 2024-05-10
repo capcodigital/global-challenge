@@ -17,7 +17,6 @@ const PersonalLeaderboardTable = ({ data }) => (
       <Table.Body className="main-table">
         {data && data.map((player) => {
           const { position, location, name, totalDistance } = player;
-
           return (
             <Table.Row key={name}>
               <Table.Cell>{position}</Table.Cell>

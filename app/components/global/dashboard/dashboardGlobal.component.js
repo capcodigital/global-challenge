@@ -10,6 +10,7 @@ import {
   CountDown,
   PersonalLeaderboardTable,
   LeaderboardFilter,
+  CountryLeaderboardTable,
 } from "../common";
 import LeaderboardTabs from "../leaderboardTabs";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
@@ -212,6 +213,7 @@ class DashboardGlobal extends React.Component {
 
   filterByCity = (values) => {
     const { currentData } = this.state;
+    console.log('currentData', currentData)
     if (values.length) {
       const filteredItems = currentData.filter((data) => {
         const cityLocation = data.location;
@@ -262,8 +264,8 @@ class DashboardGlobal extends React.Component {
         return this.forceUpdate();
       case "team":
         this.setState({
-          currentData: locations,
-          filteredData: locations,
+          currentData: teams,
+          filteredData: teams,
           activeTab: "team",
         });
         return this.forceUpdate();
@@ -347,7 +349,7 @@ class DashboardGlobal extends React.Component {
                     />
                   </div>
                   { activeTab === 'personal' ? <PersonalLeaderboardTable data={filteredData} />
-                    : <TeamLeaderboardTable isLoading={isSearchLoading} data={filteredData} isMainDashboard={activeTab === "team"} activeTab={activeTab} />
+                    : <CountryLeaderboardTable isLoading={isSearchLoading} data={filteredData} isMainDashboard={activeTab === "team"} activeTab={activeTab} />
                   }
                 </Grid.Column>
                 <Grid.Column width={6}>

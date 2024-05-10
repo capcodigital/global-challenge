@@ -18,11 +18,17 @@ export default function LeaderboardTabs({ changeTab }) {
           onClick={() => onClickTab("personal")}
         />
         <Menu.Item
-          name="TEAM"
+          name="COUNTRY"
           className="leaderboard-tab"
           active={activeItem === "team"}
           onClick={() => onClickTab("team")}
         />
+        {/* <Menu.Item
+          name="TEAM"
+          className="leaderboard-tab"
+          active={activeItem === "team"}
+          onClick={() => onClickTab("team")}
+        /> */}
         <Menu.Item
           name="OFFICE"
           className="leaderboard-tab"
