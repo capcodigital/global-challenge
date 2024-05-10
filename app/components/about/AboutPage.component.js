@@ -71,14 +71,14 @@ const AboutPage = () => (
               <p>
                 <b>Event Details</b> <br />
                 <br />
-                <b>Registration Deadline: </b>
-                <p className="red">July, 10th 2023</p>
+                <b>Registration Opens: </b>
+                <p className="red">May, 22nd 2024</p>
                 <br />
                 <b>Challenge Starts: </b>
-                <p className="red">July 17th, 2023</p>
+                <p className="red">June 5th, 2024</p>
                 <br />
                 <b>Challenge Ends: </b>
-                <p className="red">August 7th, 2023</p>
+                <p className="red">July 26th, 2024</p>
                 <br />
                 <br />
                 <p>

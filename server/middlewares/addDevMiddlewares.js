@@ -12,6 +12,7 @@ var fitbit = require('../controllers/fitbit.controller');
 var strava = require('../controllers/strava.controller');
 var levels = require('../controllers/levels.controller');
 var locations = require('../controllers/locations.controller');
+var countries = require('../controllers/countries.controller');
 
 module.exports = function addDevMiddlewares(app, webpackConfig) {
   const compiler = webpack(webpackConfig);
@@ -63,6 +64,9 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
 
   app.get('/locations/list', locations.list);
   app.get('/locations', locations.all);
+
+  app.get('/countries/list', countries.list);
+  app.get('/countries', countries.all);
 
   app.get("*", async (req, res) => {
     try {

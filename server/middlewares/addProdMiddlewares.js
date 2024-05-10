@@ -9,6 +9,7 @@ var fitbit = require('../controllers/fitbit.controller');
 var strava = require('../controllers/strava.controller');
 var levels = require('../controllers/levels.controller');
 var locations = require('../controllers/locations.controller');
+var countries = require('../controllers/countries.controller');
 
 module.exports = function addProdMiddlewares(app, options) {
   const publicPath = options.publicPath || '/';
@@ -56,6 +57,9 @@ module.exports = function addProdMiddlewares(app, options) {
 
   app.get('/locations/list', locations.list);
   app.get('/locations', telocationsams.all);
+
+  app.get('/countries/list', countries.list);
+  app.get('/countries', countries.all);
 
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
 };
