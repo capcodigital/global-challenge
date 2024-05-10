@@ -6,10 +6,12 @@ var https = require("https");
 var challenges = require('./challenges.controller');
 var levels = require('./levels.controller');
 var locations = require('./locations.controller');
+var countries = require('./countries.controller');
 var User = mongoose.model('User');
 var Capco = mongoose.model('Capco');
 var config = require("../config/config");
 var mailer = require('../services/mail.service');
+var constants = require('../util/constants');
 
 var _ = require('lodash');
 var cluster = require('cluster');
@@ -126,6 +128,7 @@ exports.authorize = function(req, res) {
                                 .then((newUser) => {
                                     locations.AddOrUpdate(newUser.location, newUser._id);
                                     levels.AddOrUpdate(newUser.level, newUser._id);
+                                    countries.AddOrUpdate(constants.officeMap[newUser.location].country, newUser._id);
 
                                     // If User has joined part way through the competition. Retrieve previous days stats in the background
                                     console.log("Updtaing stats in case user joined part way through:" + user.name);
@@ -156,14 +159,14 @@ exports.authorize = function(req, res) {
                                         let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
                                                         "If you wish to create or join a team as part of the challenge, please go here: " + callbackUrl + "teams/register \n\r" +
                                                         "Once the challenge starts you can view your progress here: " + callbackUrl + "\n\r" +
-                                                        "Good Luck \n\rCapco Health & Wellbeing";
+                                                        "Thank you for your support - and good luck \n\rCapco Health & Wellbeing";
                                         */
 
                                         let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your FitBit account. \n\r" +
-                                                        "Once the challenge starts on July 17, you can view your progress here: " + callbackUrl + "\n\r" +
+                                                        "Once the challenge starts on June 5th, you can view your progress here: " + callbackUrl + "\n\r" +
                                                         "If you did not register or wish to be removed from the challenge and your account deleted please email the support team" +
                                                         " challenge@capco.com\n\r" +
-                                                        "Good Luck \n\rCapco Health & Wellbeing";
+                                                        "Thank you for your support - and good luck \n\rCapco Health & Wellbeing";
 
                                         mailer.sendMail(user.email, "Capco Challenge Registration Successfull", emailText, function() {
                                             console.log("email sent to " + user.email);
