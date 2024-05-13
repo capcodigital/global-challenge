@@ -303,6 +303,11 @@ function updateUser(user) {
          // If token is expired, refresh access token and get a new refresh token
         buildRequest("Update token for " + user.name, postOptions)
             .then((result) => {
+
+                if (result.errors && result.errors[0]) {
+                    console.log("Token Refresh Error: " + result.errors[0].message);
+                }
+
                 var date = new Date();
                 var datemillis = date.getTime();
 
@@ -322,23 +327,25 @@ function updateUser(user) {
 
                 console.log("Successfully obtained new FitBit Token for:" + user.name);
 
-                getStats(user);
-                user.save()
-                    .then((updatedUser) => {
-                    }).catch((err) => {
-                        console.log(err);
+                getStats(user).then((results) => {
+                    user.save()
+                        .then((updatedUser) => {
+                        }).catch((err) => {
+                            console.log(err);
+                        });
                     });
                 
             }).catch((err) => {
                 console.log(user.name + " : " + err);
             });
     } else {
-        getStats(user);
-        user.save()
-            .then((updatedUser) => {
-            }).catch((err) => {
-                console.log(err);
-            });
+        getStats(user).then((results) => {
+            user.save()
+                .then((updatedUser) => {
+                }).catch((err) => {
+                    console.log(err);
+                });
+        });
     }
 }
 
@@ -500,14 +507,27 @@ function updateAccessTokens(user) {
                 console.log("Saving new access token for:" + existingUser.name);
                 existingUser.save()
                     .then((updatedUser) => {
-                        challengeDates.forEach(function(date) {
-                            getStats(updatedUser, date);
+
+                        let statUpdateList = [];
+                        challengeDates.forEach((date) => {
+                            let statUpdate = getStats(updatedUser, date);
+                            statUpdateList.push(statUpdate);
                         });
 
-                        updatedUser.save()
-                            .then((fullyUpdatedUser) => {
-                            }).catch((err) => {
-                                console.log(err);
+                        Promise.allSettled(statUpdateList).then((results) => {
+
+                            results.forEach((result) => {
+                                if (result.status === 'rejected') {
+                                    console.log("Error occured getting stats for: " + user.name);
+                                }
+                            });
+                        
+                            console.log("Saving after updating stats:" + user.name);
+                            updatedUser.save()
+                                .then((fullyUpdatedUser) => {
+                                }).catch((err) => {
+                                    console.log(err);
+                                });
                             });
 
                     }).catch((err) => {
@@ -538,7 +558,7 @@ function updateEveryInterval(minutes) {
                         updateUser(users[i]);
                     }
                 }
-                console.log("All User updates complete");
+                console.log("All User updates triggered");
             }).catch((err) => {
                 console.log("Data update error please try again later");
             });
