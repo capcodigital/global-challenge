@@ -54,8 +54,8 @@ const PersonalLeaderboardTable = ({ data, filterByCountry, filterByCity }) => {
           <Table.Row>
             <Table.HeaderCell>#</Table.HeaderCell>
             <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Country <MenuFilter filterValue={countryValue} filterHandler={handleCountryFilter} name="country" /></Table.HeaderCell>
-            <Table.HeaderCell>City <MenuFilter filterValue={cityValue} filterHandler={handleCityFilter} name="city" /></Table.HeaderCell>
+            <Table.HeaderCell>Country<MenuFilter filterValue={countryValue} filterHandler={handleCountryFilter} name="country" /></Table.HeaderCell>
+            <Table.HeaderCell>Office<MenuFilter filterValue={cityValue} filterHandler={handleCityFilter} name="city" /></Table.HeaderCell>
             <Table.HeaderCell>Distance</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
