@@ -49,14 +49,9 @@ function MenuFilter({ filterValue, filterHandler, name }) {
     }
   };
 
-  const handleFilterButton = (e) => {
-    e.preventDefault();
-    setFilterActive(!filterActive);
-  };
-
   const trigger = () => (
-    <button type="button" className="direction-icon" onClick={handleFilterButton}>
-      {filterActive ? <span> &#9660;</span> : <span> &#9650;</span>}
+    <button type="button" className="direction-icon">
+      {filterActive ? <span> &#9650;</span> : <span> &#9660;</span>}
     </button>
   );
 
@@ -66,7 +61,10 @@ function MenuFilter({ filterValue, filterHandler, name }) {
         trigger={trigger()}
         content={getFilterContent(name)}
         position="top center"
+        pinned
         on="click"
+        onOpen={() => setFilterActive(true)}
+        onClose={() => setFilterActive(false)}
       />
     </span>
   );
