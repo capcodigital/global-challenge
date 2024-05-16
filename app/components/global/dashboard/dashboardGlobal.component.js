@@ -9,7 +9,6 @@ import {
   TeamSportsLeaderboardTable,
   CountDown,
   PersonalLeaderboardTable,
-  LeaderboardFilter,
   CountryLeaderboardTable,
 } from "../common";
 import LeaderboardTabs from "../leaderboardTabs";
@@ -204,7 +203,6 @@ class DashboardGlobal extends React.Component {
 
   filterByCountry = (values) => {
     const { currentData } = this.state;
-    console.log('currentData', currentData)
     if (values.length) {
       const filteredItems = currentData.filter((data) => {
         const countryLocation = data.country;
@@ -218,7 +216,6 @@ class DashboardGlobal extends React.Component {
 
   filterByCity = (values) => {
     const { currentData } = this.state;
-    // console.log('currentData', currentData)
     if (values.length) {
       const filteredItems = currentData.filter((data) => {
         const cityLocation = data.location;
@@ -288,13 +285,6 @@ class DashboardGlobal extends React.Component {
           activeTab: "personal",
         });
         return this.forceUpdate();
-      // case "grade":
-      //   this.setState({
-      //     currentData: levels,
-      //     filteredData: levels,
-      //     activeTab: "grade",
-      //   });
-      //   return this.forceUpdate();
     }
   };
 
@@ -361,12 +351,11 @@ class DashboardGlobal extends React.Component {
                       placeholder={"Search Name"}
                     />
                   </div>
-                  { activeTab === 'personal' ? <PersonalLeaderboardTable data={filteredData} />
+                  { activeTab === 'personal' ? <PersonalLeaderboardTable data={filteredData} filterByCountry={this.filterByCountry} filterByCity={this.filterByCity}/>
                     : <CountryLeaderboardTable isLoading={isSearchLoading} data={filteredData} isMainDashboard={activeTab === "country"} activeTab={activeTab} />
                   }
                 </Grid.Column>
                 <Grid.Column width={6}>
-                  <LeaderboardFilter filterByCountry={this.filterByCountry} filterByCity={this.filterByCity} />
                   <Header size="large" className="global-header">
                     SPORTS TOTAL
                   </Header>

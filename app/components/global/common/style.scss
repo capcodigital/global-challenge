@@ -496,26 +496,29 @@ div.ui.popup {
   }
 }
 
-.leaderboard-filter {
-  background-color: #000000;
-
-  .filter-button-container {
-    color: #00AABB;
-    position: relative;
-  }
-
-  .filter-button,
-  .filter-button-empty {
+.leaderboard-filter-box {
+  .direction-icon {
+    background-color: #000000;
     background: none;
     border: none;
-    padding: 0px 0px 20px 0px;
-    font-size: 14px;
-    cursor: pointer;
-  }
-
-  .filter-button-empty {
-    position: absolute;
-    bottom: 80px;
-    padding: 0;
   }
 }
+
+.filter-checkbox {
+  height: 170px;
+  width: 200px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  .ui.checkbox label {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px !important;
+    padding-top: 0 !important;
+    color:#00AABB !important;
+
+    &:hover {
+      color: #fdc437 !important;
+    }
+  }
+}
+
