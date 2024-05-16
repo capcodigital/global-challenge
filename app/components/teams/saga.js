@@ -12,7 +12,10 @@ import {
   fetchUsersApi,
   fetchTeamsApi,
   FETCH_USERS_REQUEST,
-  FETCH_TEAMS_REQUEST
+  FETCH_TEAMS_REQUEST,
+  FETCH_COUNTRY_REQUEST,
+  fetchCountryApi,
+  countriesRecieved
 } from './actions';
 import { getUsers, getTeams } from './reducer';
 
@@ -34,7 +37,18 @@ export function* fetchTeamsSaga() {
   }
 }
 
+export function* fetchCountrySaga() {
+  try {
+    const countryList = yield call(fetchCountryApi);
+    yield put(countriesRecieved(countryList));
+  } catch (error) {
+    yield put(countriesRecieved(error));
+  }
+}
+
+
 export default function* rootSaga() {
   yield takeEvery(FETCH_USERS_REQUEST, fetchUsersSaga);
   yield takeEvery(FETCH_TEAMS_REQUEST, fetchTeamsSaga);
+  yield takeEvery(FETCH_COUNTRY_REQUEST, fetchTeamsSaga);
 }

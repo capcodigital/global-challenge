@@ -55,9 +55,10 @@ const CountryLeaderboardTable = ({
           <Table.Header>
           <Table.Row>
           <Table.HeaderCell>#</Table.HeaderCell>
-          <Table.HeaderCell>Country</Table.HeaderCell>
-          <Table.HeaderCell></Table.HeaderCell>
-          <Table.HeaderCell>Distance</Table.HeaderCell>
+          <Table.HeaderCell style={{width: '177px'}}>Country</Table.HeaderCell>
+          <Table.HeaderCell style={{width: '161px'}}></Table.HeaderCell>
+          <Table.HeaderCell>Total Distance</Table.HeaderCell>
+          <Table.HeaderCell>Avg Distance</Table.HeaderCell>
         </Table.Row>
           </Table.Header>
           {isLoading ? (
@@ -97,6 +98,9 @@ const CountryLeaderboardTable = ({
                         size={40}
                       />
                     </Table.Cell>
+                      <Table.Cell>
+                        {totalDistanceConverted}km
+                      </Table.Cell>
                       <Table.Cell>
                         {totalDistanceConverted}km
                       </Table.Cell>
