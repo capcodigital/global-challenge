@@ -27,6 +27,7 @@ var Capco = mongoose.model('Capco');
         capcoite.email = employee.email;
         capcoite.location = employee.location;
         capcoite.level = employee.level;
+        capcoite.country = employee.country;
 
         capcoite.save()
             .then((newCapcoite) => {

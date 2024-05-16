@@ -82,5 +82,14 @@ exports.officeMap = {
     },
     'Sao Paulo': {
       name: 'Sao Paulo', country: 'Brazil', region: 'South America', subRegion: '', coordinates: [-46.6333, -23.5505]
+    },
+    Glasgow: {
+      name: 'Edinburgh', country: 'United Kingdom', region: 'Europe', subRegion: 'UK'
+    },
+    POI: {
+      name: 'POI', country: 'USA', region: 'North America', subRegion: ''
+    },
+    'Energy Remote': {
+      name: 'Energy Remote', country: 'Brazil', region: 'South America', subRegion: ''
     }
   };
