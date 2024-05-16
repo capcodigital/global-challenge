@@ -106,6 +106,7 @@ exports.authorize = function(req, res) {
                             user.location = profile.location;
                             user.level = profile.level;
                             user.location = profile.location;
+                            user.country = profile.country;
     
                             user.activities = {};
                             user.totalSteps = 0;
@@ -125,7 +126,7 @@ exports.authorize = function(req, res) {
                                 .then((newUser) => {
                                     locations.AddOrUpdate(newUser.location, newUser._id);
                                     levels.AddOrUpdate(newUser.level, newUser._id);
-                                    countries.AddOrUpdate(constants.officeMap[newUser.location].country, newUser._id);
+                                    countries.AddOrUpdate(newUser.country, newUser._id);
     
                                     /*
                                     let emailText = "Hello " + user.name + ",\n\rYou have successfully registered for the Capco Global Challenge with your Strava account. \n\r" +

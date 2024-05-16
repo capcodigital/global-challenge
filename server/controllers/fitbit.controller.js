@@ -108,6 +108,7 @@ exports.authorize = function(req, res) {
                             user.level = profile.level;
                             user.name = profile.name;
                             user.location = profile.location;
+                            user.country = profile.country;
     
                             user.activities = {};
                             user.totalSteps = 0;
@@ -128,7 +129,7 @@ exports.authorize = function(req, res) {
                                 .then((newUser) => {
                                     locations.AddOrUpdate(newUser.location, newUser._id);
                                     levels.AddOrUpdate(newUser.level, newUser._id);
-                                    countries.AddOrUpdate(constants.officeMap[newUser.location].country, newUser._id);
+                                    countries.AddOrUpdate(newUser.country, newUser._id);
 
                                     // If User has joined part way through the competition. Retrieve previous days stats in the background
                                     console.log("Updtaing stats in case user joined part way through:" + user.name);
