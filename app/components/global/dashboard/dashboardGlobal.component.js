@@ -259,13 +259,20 @@ class DashboardGlobal extends React.Component {
           activeTab: "office",
         });
         return this.forceUpdate();
-      case "team":
+      case "grade":
         this.setState({
-          currentData: locations,
-          filteredData: locations,
-          activeTab: "team",
+          currentData: levels,
+          filteredData: levels,
+          activeTab: "grade",
         });
         return this.forceUpdate();
+      // case "team":
+      //   this.setState({
+      //     currentData: teams,
+      //     filteredData: teams,
+      //     activeTab: "team",
+      //   });
+      //   return this.forceUpdate();
       default:
         this.setState({
           currentData: personal,
@@ -273,13 +280,6 @@ class DashboardGlobal extends React.Component {
           activeTab: "personal",
         });
         return this.forceUpdate();
-      // case "grade":
-      //   this.setState({
-      //     currentData: levels,
-      //     filteredData: levels,
-      //     activeTab: "grade",
-      //   });
-      //   return this.forceUpdate();
     }
   };
 
