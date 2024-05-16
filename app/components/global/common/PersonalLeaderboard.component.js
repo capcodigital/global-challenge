@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "semantic-ui-react";
 import Avatar from "../../common/Avatar.component";
-import MenuFilter from "./menuFilter.component";
+import MenuFilter from "./MenuFilter.component";
 import { allCities } from "../dashboard/constants";
 
 const findCityByCountry = (countries) => {

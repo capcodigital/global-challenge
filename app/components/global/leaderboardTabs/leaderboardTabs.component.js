@@ -20,8 +20,8 @@ export default function LeaderboardTabs({ changeTab }) {
         <Menu.Item
           name="COUNTRY"
           className="leaderboard-tab"
-          active={activeItem === "team"}
-          onClick={() => onClickTab("team")}
+          active={activeItem === "country"}
+          onClick={() => onClickTab("country")}
         />
         {/* <Menu.Item
           name="TEAM"

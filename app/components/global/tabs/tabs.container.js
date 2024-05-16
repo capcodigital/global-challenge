@@ -3,21 +3,21 @@ import { connect } from "react-redux";
 import injectSaga from "utils/injectSaga";
 import injectReducer from "utils/injectReducer";
 import Tabs from "./tabs.component";
-import { fetchTeamsList } from "../dashboard/actions";
-import { teamsSelector } from "../dashboard/selectors";
+import { fetchCountriesList } from "../dashboard/actions";
+import { countriesSelector } from "../dashboard/selectors";
 import reducer from "../dashboard/reducer";
 import saga from "../dashboard/saga";
 
 function mapStateToProps(state) {
-  const teams = teamsSelector(state);
+  const country = countriesSelector(state);
   return {
-    teams,
+    country,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getTeamsList: () => dispatch(fetchTeamsList()),
+    getTeamsList: () => dispatch(fetchCountriesList()),
   };
 }
 const withSaga = injectSaga({ key: "dashboard", saga });
