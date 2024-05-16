@@ -8,6 +8,7 @@ import {
   TeamLeaderboardTable,
   TeamSportsLeaderboardTable,
   CountDown,
+  PersonalLeaderboardTable,
 } from "../common";
 import LeaderboardTabs from "../leaderboardTabs";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
@@ -195,8 +196,34 @@ class DashboardGlobal extends React.Component {
     }
   };
 
+  filterByCountry = (values) => {
+    const { currentData } = this.state;
+    if (values.length) {
+      const filteredItems = currentData.filter((data) => {
+        const countryLocation = data.country;
+        return values.includes(countryLocation);
+      });
+      this.setState({ filteredData: filteredItems });
+    } else {
+      this.setState({ filteredData: currentData });
+    }
+  }
+
+  filterByCity = (values) => {
+    const { currentData } = this.state;
+    if (values.length) {
+      const filteredItems = currentData.filter((data) => {
+        const cityLocation = data.location;
+        return values.includes(cityLocation);
+      });
+      this.setState({ filteredData: filteredItems });
+    } else {
+      this.setState({ filteredData: currentData });
+    }
+  }
+
   filterSearchResult = () => {
-    const { currentData, value } = this.state
+    const { currentData, value } = this.state;
 
     const filteredResults = currentData.filter((data) => {
       const name = data.name.toLowerCase();
@@ -225,13 +252,6 @@ class DashboardGlobal extends React.Component {
           activeTab: "personal",
         });
         return this.forceUpdate();
-      // case "team":
-      //   this.setState({
-      //     currentData: teams,
-      //     filteredData: teams,
-      //     activeTab: "team",
-      //   });
-      //   return this.forceUpdate();
       case "office":
         this.setState({
           currentData: locations,
@@ -244,6 +264,20 @@ class DashboardGlobal extends React.Component {
           currentData: levels,
           filteredData: levels,
           activeTab: "grade",
+        });
+        return this.forceUpdate();
+      // case "team":
+      //   this.setState({
+      //     currentData: teams,
+      //     filteredData: teams,
+      //     activeTab: "team",
+      //   });
+      //   return this.forceUpdate();
+      default:
+        this.setState({
+          currentData: personal,
+          filteredData: personal,
+          activeTab: "personal",
         });
         return this.forceUpdate();
     }
@@ -265,7 +299,6 @@ class DashboardGlobal extends React.Component {
       personal,
     } = this.state;
     const { isLoading, distance, error } = this.props;
-
     let totalOverallDistance = personal
       .map((team) => team.totalDistance)
       .reduce((a, b) => a + b, 0);
@@ -298,7 +331,7 @@ class DashboardGlobal extends React.Component {
             <LeaderboardTabs changeTab={this.handleClickTab} />
             <Grid container stackable columns={2} verticalAlign="middle">
               <Grid.Row>
-                <Grid.Column>
+                <Grid.Column width={10}>
                   <Header size="large" className="global-header">
                     LEADERBOARDS
                   </Header>
@@ -312,14 +345,11 @@ class DashboardGlobal extends React.Component {
                       placeholder={"Search Name"}
                     />
                   </div>
-                  <TeamLeaderboardTable
-                    isLoading={isSearchLoading}
-                    data={filteredData}
-                    isMainDashboard={activeTab === "team"}
-                    activeTab={activeTab}
-                  />
+                  { activeTab === 'personal' ? <PersonalLeaderboardTable data={filteredData} filterByCountry={this.filterByCountry} filterByCity={this.filterByCity}/>
+                    : <TeamLeaderboardTable isLoading={isSearchLoading} data={filteredData} isMainDashboard={activeTab === "team"} activeTab={activeTab} />
+                  }
                 </Grid.Column>
-                <Grid.Column>
+                <Grid.Column width={6}>
                   <Header size="large" className="global-header">
                     SPORTS TOTAL
                   </Header>

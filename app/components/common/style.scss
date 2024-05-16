@@ -231,6 +231,10 @@
   }
 }
 
+.avatar {
+  margin: auto;
+}
+
 .flag-img-cropper {
   overflow: hidden;
   border-radius: 50%;
@@ -278,7 +282,7 @@ div.ui.popup {
     font-size: 18px;
   }
   :nth-child(2) {
-    padding-top: 4px;
+    // padding-top: 4px;
     font-size: 16px;
     color: grey;
   }
