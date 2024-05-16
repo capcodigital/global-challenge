@@ -19,9 +19,9 @@ const getFlag = (location, size) => {
   const locationLabel = location.replaceAll(".", "");
 
   try {
-    const imgUrl = require("../../images/" + locationLabel + ".png");
+    const imgUrl = require("../../images/" + locationLabel + ".png").default;
     const imageStyle = {
-      "background-image": `url(${imgUrl})`,
+      "backgroundImage": `url(${imgUrl})`,
       "width": size,
       "height": size,
     };
@@ -31,13 +31,12 @@ const getFlag = (location, size) => {
   }
 };
 
-const Avatar = ({ name, activeTab, color, size }) => {
-  const locationFlag = getFlag(name, size);
+const Avatar = ({ name, location, activeTab, color, size }) => {
+  const displayFlag = (activeTab === "office" || activeTab === "personal") && location
 
   return (
     <>
-      {activeTab === "office" && name && locationFlag}
-      {(activeTab !== "office" || !locationFlag) && name && (
+      {displayFlag && getFlag(location, size) ||
         <svg className="avatar" width={size} height={size}>
           <circle fill={color} cx={size / 2} cy={size / 2} r={size / 2} />
           <text
@@ -51,7 +50,7 @@ const Avatar = ({ name, activeTab, color, size }) => {
             {getInitials(name)}
           </text>
         </svg>
-      )}
+      }
     </>
   );
 };
