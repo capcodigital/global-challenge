@@ -15,6 +15,7 @@ var CapcoSchema = new Schema({
     },
     email: String,
     location: String,
+    country: String,
     level: String
 }, {strict: false});
 
