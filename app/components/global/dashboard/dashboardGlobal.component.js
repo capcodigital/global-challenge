@@ -90,8 +90,6 @@ class DashboardGlobal extends React.Component {
       const statistics = keyBy(breakdown.offices, "name");
       this.setState({ statistics });
     }
-
-    console.log('country', country)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -273,6 +271,7 @@ class DashboardGlobal extends React.Component {
         return this.forceUpdate();
       case "country":
         this.setState({
+          userData: personal,
           currentData: country,
           filteredData: country,
           activeTab: "country",
@@ -303,6 +302,7 @@ class DashboardGlobal extends React.Component {
       teams,
       personal,
       country,
+      userData,
     } = this.state;
     const { isLoading, distance, error } = this.props;
     let totalOverallDistance = personal
@@ -352,7 +352,7 @@ class DashboardGlobal extends React.Component {
                     />
                   </div>
                   { activeTab === 'personal' ? <PersonalLeaderboardTable data={filteredData} filterByCountry={this.filterByCountry} filterByCity={this.filterByCity}/>
-                    : <CountryLeaderboardTable isLoading={isSearchLoading} data={filteredData} isMainDashboard={activeTab === "country"} activeTab={activeTab} />
+                    : <CountryLeaderboardTable isLoading={isSearchLoading} data={filteredData} userData={userData} isMainDashboard={activeTab === "country"} activeTab={activeTab} />
                   }
                 </Grid.Column>
                 <Grid.Column width={6}>

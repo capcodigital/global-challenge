@@ -45,10 +45,8 @@ const TeamSportsLeaderboardTable = ({
     : "global";
 
   const popRowsDesktop = (data) => {
-    console.log('data', data)
     return ({ index, style }) => {
       const item = data[index]
-console.log('ITEM', item)
       return (
         <div style={style}>
           <Popup

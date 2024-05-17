@@ -34,7 +34,7 @@ export const fetchTeamsApi = () => axios.get(`${SERVER_URL}teams`).then(({ data 
 export const fetchLevelsApi = () => axios.get(`${SERVER_URL}levels`).then(({ data }) => data);
 export const fetchLocationsApi = () => axios.get(`${SERVER_URL}locations`).then(({ data }) => data);
 export const fetchPersonalApi = () => axios.get(`${SERVER_URL}users`).then(({ data }) => data);
-export const fetchCountryApi = () => axios.get(`${SERVER_URL}country`).then(({ data }) => data);
+export const fetchCountryApi = () => axios.get(`${SERVER_URL}countries`).then(({ data }) => data);
 
 // action creators
 export const activitiesRecieved = (activities) => ({ type: FETCH_ACTIVITIES_SUCCESS, payload: activities });

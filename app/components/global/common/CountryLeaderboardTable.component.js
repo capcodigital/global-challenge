@@ -37,6 +37,7 @@ const CountryLeaderboardTable = ({
   isMainDashboard,
   isLoading,
   activeTab,
+  userData,
 }) => {
   const history = useHistory();
 
@@ -47,6 +48,17 @@ const CountryLeaderboardTable = ({
   const challenge_name = process.env.CHALLENGE_NAME
     ? `${process.env.CHALLENGE_NAME}`
     : "global";
+
+  const allLocations = userData.map(({location}) => location)
+  const numberOfUsers = { }
+
+  for (let ele of allLocations) {
+    if (numberOfUsers[ele]) {
+      numberOfUsers[ele] += 1
+    } else {
+      numberOfUsers[ele] = 1
+    }
+  }
 
   return (
     <>
@@ -73,8 +85,8 @@ const CountryLeaderboardTable = ({
             <Table.Body className={isMainDashboard ? "main-table" : ""}>
               {data.map((item, idx) => {
                 let dateCompletion = item.completionDate ? "finish" : "pending";
-                const {name, members, position, totalDistanceConverted} = item;
-                const location = members[0].location
+                const {name, members, position, totalDistance} = item;
+                const location = name;
                 return (
                   <Table.Row
                     key={name}
@@ -99,10 +111,10 @@ const CountryLeaderboardTable = ({
                       />
                     </Table.Cell>
                       <Table.Cell>
-                        {totalDistanceConverted}km
+                        {totalDistance}km
                       </Table.Cell>
                       <Table.Cell>
-                        {totalDistanceConverted}km
+                        {totalDistance}km
                       </Table.Cell>
                   </Table.Row>
                 );
@@ -118,8 +130,8 @@ const CountryLeaderboardTable = ({
 
         {data.map((item, idx) => {
             let completionDate = item.completionDate ? "finish" : "pending";
-            const {name, members, position, totalDistanceConverted} = item;
-            const location = members[0].location
+            const {name, members, position, totalDistance} = item;
+            const location = name;
           return (
             <List.Item
               key={name}
@@ -150,9 +162,9 @@ const CountryLeaderboardTable = ({
 
                 {isMainDashboard && (
                   <div className="distance">
-                    {totalDistanceConverted
-                      ? totalDistanceConverted.toFixed(2)
-                      : totalDistanceConverted}
+                    {totalDistance
+                      ? totalDistance.toFixed(2)
+                      : totalDistance}
                     km
                   </div>
                 )}
