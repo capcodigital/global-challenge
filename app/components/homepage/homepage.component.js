@@ -55,7 +55,7 @@ const HomePage = () => (
               fluid
               size="large"
               as="a"
-              href="https://www.justgiving.com/page/capco-global-csr-global-challenge"
+              href="https://www.justgiving.com/page/capco-global-csr-globalchallenge2024"
               target="_blank"
               className="donate"
             >
