@@ -45,7 +45,7 @@ const AboutPage = () => (
               <br />
               Run, walk, or cycle while raising funds for our chosen charity,
               <a
-                href="https://www.justgiving.com/page/capco-global-csr-global-challenge"
+                href="https://www.justgiving.com/page/capco-global-csr-globalchallenge2024"
                 target="_blank"
               >
                 Médicins Sans Frontières
