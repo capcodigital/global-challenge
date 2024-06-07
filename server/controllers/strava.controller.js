@@ -447,7 +447,7 @@ function updateEveryInterval(minutes) {
                 }
                 console.log("All User updates complete");
             }).catch((err) => {
-                console.log("Data update error please try again later");
+                console.log("Strava Data update error please try again later:" + err);
             });
 
     }, millis);
