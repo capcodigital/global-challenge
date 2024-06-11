@@ -78,7 +78,7 @@
     "redux-immutable": "4.0.0",
     "reselect": "4.1.8",
     "sanitize.css": "8.0.1",
-    "sass": "^1.70.0",
+    "sass": "^1.77.0",
     "simple-oauth2": "^5.0.0",
     "ssri": "6.0.2",
     "strava-v3": "^2.2.0",
