@@ -1,8 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import PropTypes from "prop-types";
+import PropTypes, { number } from "prop-types";
 import { Table, List } from "semantic-ui-react";
 import Avatar from "../../common/Avatar.component";
+import { allNewCities } from "../dashboard/constants";
 import "./style.scss";
 
 const orange = "#fa451b";
@@ -49,7 +50,18 @@ const CountryLeaderboardTable = ({
     ? `${process.env.CHALLENGE_NAME}`
     : "global";
 
-  const allLocations = userData.map(({location}) => location)
+  const userCountryData = userData.map((data) => {
+      // check if the id in orderArray exist
+      if (allNewCities.some((sort) => sort.name === data.location)) {
+         data.country = allNewCities.find((sort) => sort.name === data.location).country;
+         return data;
+      } else {
+         //if not just return the object without order
+         return data;
+      }
+   });
+
+  const allLocations = userCountryData.map(({country}) => country)
   const numberOfUsers = { }
 
   for (let ele of allLocations) {
@@ -58,6 +70,23 @@ const CountryLeaderboardTable = ({
     } else {
       numberOfUsers[ele] = 1
     }
+  }
+
+  const usersByLocation = Object.keys(numberOfUsers).reduce((acc, key) => {
+    acc.push({ country: key, number: numberOfUsers[key]})
+    return acc
+  }, [])
+
+  function averageDistance(distance, arr, location) {
+    let startDistance = 0
+    arr.forEach(({country, number}) => {
+      if (country === location) {
+      const avgDistance = distance/number
+      const formattedDistance = Math.round(avgDistance * 100) / 100
+      startDistance = formattedDistance
+      }
+    })
+    return startDistance
   }
 
   return (
@@ -85,7 +114,7 @@ const CountryLeaderboardTable = ({
             <Table.Body className={isMainDashboard ? "main-table" : ""}>
               {data.map((item, idx) => {
                 let dateCompletion = item.completionDate ? "finish" : "pending";
-                const {name, members, position, totalDistance} = item;
+                const {name, members, position, totalDistanceCovered} = item;
                 const location = name;
                 return (
                   <Table.Row
@@ -98,24 +127,22 @@ const CountryLeaderboardTable = ({
                     <Table.Cell className={"main position"}>
                       {position ? position : idx + 1}
                     </Table.Cell>
-                    <Table.Cell>
-                      {location}
-                    </Table.Cell>
+                    <Table.Cell>{location}</Table.Cell>
                     <Table.Cell>
                       <Avatar
                         name={location}
                         location={location}
-                        activeTab={'office'}
+                        activeTab={"office"}
                         color="#00AABB"
                         size={40}
                       />
                     </Table.Cell>
-                      <Table.Cell>
-                        {totalDistance}km
-                      </Table.Cell>
-                      <Table.Cell>
-                        {totalDistance}km
-                      </Table.Cell>
+                    <Table.Cell>
+                      {totalDistanceCovered}km
+                    </Table.Cell>
+                    <Table.Cell>
+                      {averageDistance(totalDistanceCovered, usersByLocation, location)}km
+                    </Table.Cell>
                   </Table.Row>
                 );
               })}
@@ -130,7 +157,7 @@ const CountryLeaderboardTable = ({
 
         {data.map((item, idx) => {
             let completionDate = item.completionDate ? "finish" : "pending";
-            const {name, members, position, totalDistance} = item;
+            const {name, members, position, totalDistanceCovered} = item;
             const location = name;
           return (
             <List.Item
@@ -154,20 +181,12 @@ const CountryLeaderboardTable = ({
               </span>
               <span>
                 <div className={"date"}>
-                  {completionDate
-                    ? formatCompletionDate(completionDate)
-                    : "Still to finish"}
+                  {totalDistanceCovered}
                 </div>
-                {name}
-
-                {isMainDashboard && (
                   <div className="distance">
-                    {totalDistance
-                      ? totalDistance.toFixed(2)
-                      : totalDistance}
+                    {averageDistance(totalDistanceCovered, usersByLocation, location)}
                     km
                   </div>
-                )}
               </span>
             </List.Item>
           );
@@ -179,6 +198,7 @@ const CountryLeaderboardTable = ({
 
 CountryLeaderboardTable.propTypes = {
   data: PropTypes.array.isRequired,
+  userData: PropTypes.array,
   isLoading: PropTypes.bool,
   isMainDashboard: PropTypes.bool.isRequired,
 };

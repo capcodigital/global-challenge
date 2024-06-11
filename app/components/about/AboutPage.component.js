@@ -48,12 +48,12 @@ const AboutPage = () => (
                 href="https://www.justgiving.com/page/capco-global-csr-global-challenge"
                 target="_blank"
               >
-                Médicins Sans Frontières
+                 Médicins Sans Frontières
               </a>
                 .
               </p>
               <p>
-              All distances will be tracked via the Capco Global Challenge platform and will help us to achieve our collective target of 50,000 Kms - the distance* between all our Capco offices.
+              All distances will be tracked via the Capco Global Challenge platform and will help us to achieve our collective target of 50,000 KM - the distance* between all our Capco offices.
               </p>
               <p>
                 <b><a href='/register'>Sign up for the Challenge today!</a></b>
@@ -71,19 +71,13 @@ const AboutPage = () => (
               <p>
                 <b>Event Details</b> <br />
                 <br />
-                <b>Registration Opens: </b>
-                <p className="red">May, 22nd 2024</p>
-                <br />
                 <b>Challenge Starts: </b>
-                <p className="red">June 5th, 2024</p>
-                <br />
-                <b>Challenge Ends: </b>
-                <p className="red">July 26th, 2024</p>
+                <p className="red">June 26th, 2024</p>
                 <br />
                 <br />
                 <p>
                   <b>Registration: </b>
-                  Register using the button in the top right-hand corner.
+                  Make a donation to our chosen charity, Médicins Sans Frontières <a href={'https://www.justgiving.com/page/capco-global-csr-globalchallenge2024'} target="_blank">here</a> and register using the button in the top right-hand corner.
                 </p>
                 <br />
                 <br />
