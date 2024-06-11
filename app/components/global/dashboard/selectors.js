@@ -25,6 +25,11 @@ const teamsListSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("teamsList")
 );
 
+// Country selectors
+const countryListSelector = createSelector(getState, (state) =>
+  state.get("dashboard").get("countryList")
+);
+
 // Locations selectors
 const locationsListSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("locations")
@@ -88,6 +93,22 @@ const locationsSelector = createSelector([locationsListSelector], (locations) =>
         .map((location, idx) => ({ ...location, position: idx + 1 }));
     } else [];
   }
+);
+
+const countriesSelector = createSelector([countryListSelector], (countryList) => {
+  if (countryList) {
+    let countriesData = countryList.toJS();
+
+    ["Run", "Walk", /*"Swim", "Rowing",*/ "CyclingConverted", "Yoga"].map(
+      (activity) =>
+        (countriesData = getPositionByActivity(countriesData, activity))
+    );
+
+    return countriesData
+      .sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)
+      .map((country, idx) => ({ ...country, position: idx + 1 }));
+  } else [];
+}
 );
 
 const levelsSelector = createSelector([levelsListSelector], (levels) => {
@@ -253,4 +274,5 @@ export {
   locationsSelector,
   levelsSelector,
   personalSelector,
+  countriesSelector,
 };

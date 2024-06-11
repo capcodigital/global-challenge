@@ -9,6 +9,7 @@ export const FETCH_TEAMS_REQUEST = 'FETCH_TEAMS_REQUEST';
 export const FETCH_TEAMS_SUCCESS = 'FETCH_TEAMS_SUCCESS';
 export const FETCH_TEAMS_ERROR = 'FETCH_TEAMS_ERROR';
 
+
 // used by standard redux
 export const fetchUsers = () => (dispatch) => {
   axios
@@ -36,3 +37,4 @@ export const teamsFailed = (error) => ({ type: FETCH_TEAMS_ERROR, error });
 
 export const fetchUsersList = () => ({ type: FETCH_USERS_REQUEST });
 export const fetchTeamsList = () => ({ type: FETCH_TEAMS_REQUEST });
+

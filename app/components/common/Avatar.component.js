@@ -32,7 +32,7 @@ const getFlag = (location, size) => {
 };
 
 const Avatar = ({ name, location, activeTab, color, size }) => {
-  const displayFlag = (activeTab === "office" || activeTab === "personal") && location
+  const displayFlag = (activeTab === "office" || activeTab === "personal" || activeTab === "country") && location
 
   return (
     <>

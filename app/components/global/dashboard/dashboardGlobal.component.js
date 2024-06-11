@@ -9,6 +9,7 @@ import {
   TeamSportsLeaderboardTable,
   CountDown,
   PersonalLeaderboardTable,
+  CountryLeaderboardTable,
 } from "../common";
 import LeaderboardTabs from "../leaderboardTabs";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
@@ -36,6 +37,7 @@ class DashboardGlobal extends React.Component {
       value: "",
       isSearchLoading: false,
       teams: props.teams,
+      country: props.country,
       locations: props.locations,
       levels: props.levels,
       personal: props.personal,
@@ -73,7 +75,7 @@ class DashboardGlobal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { breakdown, teams, locations, levels, personal } = nextProps;
+    const { breakdown, teams, locations, levels, personal, country } = nextProps;
 
     this.setState({
       teams: teams,
@@ -82,6 +84,7 @@ class DashboardGlobal extends React.Component {
       locations: locations,
       levels: levels,
       personal: personal,
+      country: country,
     });
     if (breakdown.offices && breakdown.offices.length) {
       const statistics = keyBy(breakdown.offices, "name");
@@ -243,7 +246,7 @@ class DashboardGlobal extends React.Component {
   }
 
   handleClickTab = (tabName) => {
-    const { teams, locations, levels, personal } = this.props;
+    const { teams, locations, levels, personal, country } = this.props;
     switch (tabName) {
       case "personal":
         this.setState({
@@ -259,20 +262,21 @@ class DashboardGlobal extends React.Component {
           activeTab: "office",
         });
         return this.forceUpdate();
-      case "grade":
+      case "team":
         this.setState({
-          currentData: levels,
-          filteredData: levels,
-          activeTab: "grade",
+          currentData: teams,
+          filteredData: teams,
+          activeTab: "team",
         });
         return this.forceUpdate();
-      // case "team":
-      //   this.setState({
-      //     currentData: teams,
-      //     filteredData: teams,
-      //     activeTab: "team",
-      //   });
-      //   return this.forceUpdate();
+      case "country":
+        this.setState({
+          userData: personal,
+          currentData: country,
+          filteredData: country,
+          activeTab: "country",
+        });
+        return this.forceUpdate();
       default:
         this.setState({
           currentData: personal,
@@ -297,6 +301,8 @@ class DashboardGlobal extends React.Component {
       activeTab,
       teams,
       personal,
+      country,
+      userData,
     } = this.state;
     const { isLoading, distance, error } = this.props;
     let totalOverallDistance = personal
@@ -346,7 +352,7 @@ class DashboardGlobal extends React.Component {
                     />
                   </div>
                   { activeTab === 'personal' ? <PersonalLeaderboardTable data={filteredData} filterByCountry={this.filterByCountry} filterByCity={this.filterByCity}/>
-                    : <TeamLeaderboardTable isLoading={isSearchLoading} data={filteredData} isMainDashboard={activeTab === "team"} activeTab={activeTab} />
+                    : <CountryLeaderboardTable isLoading={isSearchLoading} data={filteredData} userData={userData} isMainDashboard={activeTab === "country"} activeTab={activeTab} />
                   }
                 </Grid.Column>
                 <Grid.Column width={6}>

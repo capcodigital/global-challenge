@@ -47,7 +47,6 @@ const TeamSportsLeaderboardTable = ({
   const popRowsDesktop = (data) => {
     return ({ index, style }) => {
       const item = data[index]
-
       return (
         <div style={style}>
           <Popup
@@ -60,9 +59,9 @@ const TeamSportsLeaderboardTable = ({
                 <Table.Cell className="sports-position">
                   {item.position ? item.position : index + 1}
                 </Table.Cell>
-                <Table.Cell>
+                {/* <Table.Cell>
                   <Avatar name={item.name} location={item.location} activeTab={activeTab} color={'#FDC437'} size={30} />
-                </Table.Cell>
+                </Table.Cell> */}
                 <Table.Cell className="distance">
                   {item.distance.toFixed(2)}km
                 </Table.Cell>
@@ -107,9 +106,9 @@ const TeamSportsLeaderboardTable = ({
                 <span className="sports-position">
                   {item.position ? item.position : index + 1}
                 </span>
-                <span>
+                {/* <span>
                   <Avatar name={item.name} location={item.location} activeTab={activeTab} color={'#FDC437'} size={30} />
-                </span>
+                </span> */}
                 <span className="distance">{item.distance.toFixed(2)}km</span>
                 <span>
                   <svg width={180} height="16" viewBox="0 0 210 16">

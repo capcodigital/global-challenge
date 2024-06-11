@@ -2,7 +2,7 @@ import React from "react";
 import { Menu, Container, Button, Icon } from "semantic-ui-react";
 import ESTRChallenge from "./images/uk-challenge-logo.png";
 import ESTRChallengeMobile from "./images/estr-mobile-logo.png";
-import GlobalChallenge from "./images/global_challenge_banner23.png";
+import GlobalChallenge from "./images/JN_5157_Global Challenge Campaign_logo_2024_02.png";
 import "./style.scss";
 
 class Header extends React.Component {

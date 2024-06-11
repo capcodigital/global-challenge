@@ -15,7 +15,10 @@ import {
   FETCH_TEAMS_REQUEST,
   levelsRecieved,
   locationsRecieved,
-  personalRecieved
+  personalRecieved,
+  countriesRecieved,
+  countriesFailed,
+  fetchCountryApi
 } from './actions';
 
 const officeByRegion = keyBy(allCities, 'region');
@@ -35,17 +38,19 @@ const filterData = (data, payload, searchString) => data.filter((activity) => {
 
 export function* fetchTeamsSaga() {
   try {
-    const [teamsList, locations, levels, personalList] = yield all([
+    const [teamsList, locations, levels, personalList, countryList] = yield all([
       call(fetchTeamsApi),
       call(fetchLocationsApi),
       call(fetchLevelsApi),
-      call(fetchPersonalApi)
+      call(fetchPersonalApi),
+      call(fetchCountryApi)
     ])
     yield all([
       put(teamsRecieved(teamsList)),
       put(locationsRecieved(locations)),
       put(levelsRecieved(levels)),
-      put(personalRecieved(personalList))
+      put(personalRecieved(personalList)),
+      put(countriesRecieved(countryList))
     ])
   } catch (error) {
     yield put(teamsFailed(error));
