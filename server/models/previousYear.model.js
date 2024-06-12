@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 /**
  * Previous Year Schema
  */
-var PreviousYearSchema = new Schema({
+var PreviousyearSchema = new Schema({
     day: {
         type: Number,
         unique: true
@@ -18,7 +18,7 @@ var PreviousYearSchema = new Schema({
     perHour: Number
 }, {strict: false});
 
-PreviousYearSchema.statics = {
+PreviousyearSchema.statics = {
   load: function (id, cb) {
     this.findOne({ _id : id })
     .then(() => {
@@ -29,4 +29,4 @@ PreviousYearSchema.statics = {
   }
 };
 
-var PreviousYear = mongoose.model('PreviousYear', PreviousYearSchema);
+var Previousyear = mongoose.model('Previousyear', PreviousyearSchema);

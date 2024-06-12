@@ -77,7 +77,7 @@ exports.all = function(req, res, next) {
  */
 function updateEveryInterval(minutes) {
 
-    console.log("Begin Level stats refresh every " + minutes + " minutes");
+    console.log("Begin Country stats refresh every " + minutes + " minutes");
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){

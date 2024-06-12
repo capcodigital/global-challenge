@@ -50,10 +50,10 @@ const CYCLING_CONVERSION = config.cyclingConversion || 3;
 // the child nodes will automatically pick up the changes
 if (cluster.isMaster) {
     if (process.env.UPDATE_INTERVAL) {
-        updateEveryInterval(process.env.UPDATE_INTERVAL);
+        // updateEveryInterval(process.env.UPDATE_INTERVAL);
     }
     else {
-        updateEveryInterval(60);
+        // updateEveryInterval(60);
     }
 }
 

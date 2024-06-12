@@ -19,7 +19,7 @@ if (cluster.isMaster) {
             updateEveryInterval(process.env.UPDATE_INTERVAL);
         }
         else {
-            updateEveryInterval(60);
+            updateEveryInterval(5);
         }
     }, locationStatsDelay);
 }
@@ -77,7 +77,7 @@ exports.all = function(req, res, next) {
  */
 function updateEveryInterval(minutes) {
 
-    console.log("Begin Level stats refresh every " + minutes + " minutes");
+    console.log("Begin Location stats refresh every " + minutes + " minutes");
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){

@@ -13,7 +13,7 @@ var strava = require('../controllers/strava.controller');
 var levels = require('../controllers/levels.controller');
 var locations = require('../controllers/locations.controller');
 var countries = require('../controllers/countries.controller');
-var previousYear = require('../controllers/previousYears.controller');
+var previousyear = require('../controllers/previousyears.controller');
 
 module.exports = function addDevMiddlewares(app, webpackConfig) {
   const compiler = webpack(webpackConfig);
@@ -69,7 +69,7 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   app.get('/countries/list', countries.list);
   app.get('/countries', countries.all);
 
-  app.get('/previousYearTotal', previousYear.getLastYear);
+  app.get('/previousYearTotal', previousyear.getLastYear);
 
   app.get("*", async (req, res) => {
     try {
