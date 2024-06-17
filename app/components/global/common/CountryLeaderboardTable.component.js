@@ -81,7 +81,7 @@ const CountryLeaderboardTable = ({
     let startDistance = 0
     arr.forEach(({country, number}) => {
       if (country === location) {
-      const avgDistance = distance/number
+      const avgDistance = distance ? distance/number : 0
       const formattedDistance = Math.round(avgDistance * 100) / 100
       startDistance = formattedDistance
       }
@@ -138,7 +138,7 @@ const CountryLeaderboardTable = ({
                       />
                     </Table.Cell>
                     <Table.Cell>
-                      {totalDistanceCovered}km
+                      {totalDistanceCovered ? totalDistanceCovered : 0}km
                     </Table.Cell>
                     <Table.Cell>
                       {averageDistance(totalDistanceCovered, usersByLocation, location)}km
