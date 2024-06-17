@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import worldmap from "./worldmap.svg";
 
-const challengeStartDate = new Date(2024, 4, 1, 0, 0, 0, 0);
+const challengeStartDate = new Date(2024, 5, 26, 0, 0, 0, 0);
 const challengeEndDate = new Date(2024, 4, 20, 9, 0, 0, 0);
 
 function getTimeRemaining() {
@@ -13,8 +13,8 @@ function getTimeRemaining() {
   let days = 0;
 
   // countdown to the start of the challenge
-  if (new Date() <= challengeStartDate) {
-    total = Date.parse(challengeStartDate) - Date.parse(new Date());
+  if (new Date() >= challengeStartDate) {
+    total = Date.parse(new Date()) - Date.parse(challengeStartDate);
     seconds = Math.floor((total / 1000) % 60);
     minutes = Math.floor((total / 1000 / 60) % 60);
     hours = Math.floor((total / (1000 * 60 * 60)) % 24);
@@ -43,7 +43,7 @@ const CountDown = ({ totalDistance }) => {
   const [timeLeft, setTimeLeft] = useState(getTimeRemaining());
   useEffect(() => {
     const timer = setTimeout(() => {
-      setTimeLeft(getTimeRemaining());
+      totalDistance < 50000 && setTimeLeft(getTimeRemaining());
     }, 1000);
     return () => clearTimeout(timer);
   });
