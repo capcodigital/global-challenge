@@ -19,7 +19,7 @@ if (cluster.isMaster) {
             updateEveryInterval(process.env.UPDATE_INTERVAL);
         }
         else {
-            updateEveryInterval(5);
+            updateEveryInterval(60);
         }
     }, locationStatsDelay);
 }
