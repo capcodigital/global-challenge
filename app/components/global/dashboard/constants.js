@@ -288,7 +288,13 @@ export const allCities = [
     name: 'Pune', country: 'India', region: 'Asia', coordinates: [73.8567, 18.5204], distance: conversion_factor * 39131
   },
   {
+    name: 'Hyderabad', country: 'India', region: 'Asia', coordinates: [78.4740, 17.3605], distance: conversion_factor * 39636
+  },
+  {
     name: 'Bangalore', country: 'India', region: 'Asia', coordinates: [77.5667, 12.9667], distance: conversion_factor * 39864
+  },
+  {
+    name: 'Chennai', country: 'India', region: 'Asia', coordinates: [80.2701, 13.0836], distance: conversion_factor * 40148
   },
   {
     name: 'Bangkok', country: 'Thailand', region: 'Asia', coordinates: [100.5018, 13.7563], distance: conversion_factor * 42344
@@ -393,7 +399,13 @@ export const allNewCities = [
     name: 'Pune', country: 'India', region: 'Asia', coordinates: [73.8567, 18.5204], distance: conversion_factor * 39131
   },
   {
+    name: 'Hyderabad', country: 'India', region: 'Asia', coordinates: [78.4740, 17.3605], distance: conversion_factor * 39636
+  },
+  {
     name: 'Bangalore', country: 'India', region: 'Asia', coordinates: [77.5667, 12.9667], distance: conversion_factor * 39864
+  },
+  {
+    name: 'Chennai', country: 'India', region: 'Asia', coordinates: [80.2701, 13.0836], distance: conversion_factor * 40148
   },
   {
     name: 'Bangkok', country: 'Thailand', region: 'Asia', coordinates: [100.5018, 13.7563], distance: conversion_factor * 42344
@@ -756,12 +768,18 @@ export const additionalCities = [
     markerOffset: 20,
   },
   {
+    name: 'Hyderabad', country: 'India', region: 'Asia', coordinates: [78.4740, 17.3605], distance: conversion_factor * 39636, markerOffset: 10,
+  },
+  {
     name: "Bangalore",
     country: "India",
     region: "Asia",
     coordinates: [77.5667, 12.9667],
     distance: conversion_factor * 39864,
     markerOffset: -10,
+  },
+  {
+    name: 'Chennai', country: 'India', region: 'Asia', coordinates: [80.2701, 13.0836], distance: conversion_factor * 40148, markerOffset: 10,
   },
   {
     name: "Bay of Bengal",
