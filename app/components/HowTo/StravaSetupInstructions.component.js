@@ -32,13 +32,13 @@ const StravaSetupInstructions = () => (
           </List.Item>
           <List.Item>
             Strava Mobile App:{" "}
-            <a href="www.strava.com/mobile" target="_blank">
+            <a href="https://www.strava.com/mobile" target="_blank">
               www.strava.com/mobile
             </a>
           </List.Item>
           <List.Item>
             Sign Up to Strava:{" "}
-            <a href="www.strava.com/register/free" target="_blank">
+            <a href="https://www.strava.com/register/free" target="_blank">
               www.strava.com/register/free
             </a>
           </List.Item>

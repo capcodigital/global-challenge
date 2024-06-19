@@ -5,7 +5,7 @@ import {
   FETCH_USERS_ERROR,
   FETCH_TEAMS_REQUEST,
   FETCH_TEAMS_SUCCESS,
-  FETCH_TEAMS_ERROR
+  FETCH_TEAMS_ERROR,
 } from './actions';
 
 const initialState = fromJS({

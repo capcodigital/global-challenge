@@ -4,7 +4,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import DashboardGlobal from './dashboardGlobal.component';
 import TeamDashboardGlobal from './TeamDashboardGlobal.component';
-import { filterActivities, fetchEmployeeActivities, fetchTeamsList } from './actions';
+import { filterActivities, fetchEmployeeActivities, fetchTeamsList, fetchCountriesList } from './actions';
 import {
   filteredActivitiesSelector,
   loadingStateSelector,
@@ -18,7 +18,8 @@ import {
   teamsSelector,
   locationsSelector,
   levelsSelector,
-  personalSelector
+  personalSelector,
+  countriesSelector
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -38,6 +39,7 @@ function mapStateToProps(state) {
   const levels = levelsSelector(state);
   const teams = teamsSelector(state);
   const personal = personalSelector(state);
+  const country = countriesSelector(state);
 
   return {
     activities,
@@ -55,6 +57,7 @@ function mapStateToProps(state) {
     locations,
     levels,
     personal,
+    country
   };
 }
 
@@ -62,7 +65,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getActivities: () => dispatch(fetchEmployeeActivities()),
     filterActivities: (query, type) => dispatch(filterActivities({ query, type })),
-    getTeamsList: () => dispatch(fetchTeamsList())
+    getTeamsList: () => dispatch(fetchTeamsList()),
+    getCountryList: () => dispatch(fetchCountriesList())
   };
 }
 const withSaga = injectSaga({ key: 'dashboard', saga });

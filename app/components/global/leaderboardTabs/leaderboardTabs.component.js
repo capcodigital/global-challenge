@@ -17,6 +17,12 @@ export default function LeaderboardTabs({ changeTab }) {
           active={activeItem === "personal"}
           onClick={() => onClickTab("personal")}
         />
+        <Menu.Item
+          name="COUNTRY"
+          className="leaderboard-tab"
+          active={activeItem === "country"}
+          onClick={() => onClickTab("country")}
+        />
         {/* <Menu.Item
           name="TEAM"
           className="leaderboard-tab"
@@ -29,12 +35,12 @@ export default function LeaderboardTabs({ changeTab }) {
           active={activeItem === "office"}
           onClick={() => onClickTab("office")}
         />
-        <Menu.Item
+        {/* <Menu.Item
           name="GRADE"
           className="leaderboard-tab"
           active={activeItem === "grade"}
           onClick={() => onClickTab("grade")}
-        />
+        /> */}
       </Menu>
     </Container>
   );

@@ -1,4 +1,5 @@
 import TeamLeaderboardTable from "./TeamLeaderboardTable.component";
+import CountryLeaderboardTable from "./CountryLeaderboardTable.component";
 import TeamSportsLeaderboardTable from "./TeamSportsLeaderboardTable.component";
 import CountDown from "./CountDown";
 import TeamPageHeader from "./TeamPageHeader";
@@ -9,5 +10,6 @@ export {
   TeamSportsLeaderboardTable,
   TeamPageHeader,
   CountDown,
+  CountryLeaderboardTable,
   PersonalLeaderboardTable,
 };

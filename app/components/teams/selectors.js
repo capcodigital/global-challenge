@@ -42,5 +42,5 @@ export {
   teamsListSelector,
   loadingStateSelector,
   usersSelector,
-  teamsSelector
+  teamsSelector,
 };

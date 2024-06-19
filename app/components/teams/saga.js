@@ -12,7 +12,7 @@ import {
   fetchUsersApi,
   fetchTeamsApi,
   FETCH_USERS_REQUEST,
-  FETCH_TEAMS_REQUEST
+  FETCH_TEAMS_REQUEST,
 } from './actions';
 import { getUsers, getTeams } from './reducer';
 
@@ -33,6 +33,7 @@ export function* fetchTeamsSaga() {
     yield put(teamsFailed(error));
   }
 }
+
 
 export default function* rootSaga() {
   yield takeEvery(FETCH_USERS_REQUEST, fetchUsersSaga);

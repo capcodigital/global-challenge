@@ -11,6 +11,9 @@ import {
   FETCH_LEVELS_SUCCESS,
   FETCH_LOCATIONS_SUCCESS,
   FETCH_PERSONAL_SUCCESS,
+  FETCH_COUNTRY_REQUEST,
+  FETCH_COUNTRY_SUCCESS,
+  FETCH_COUNTRY_ERROR
 } from "./actions";
 
 const initialState = fromJS({
@@ -21,7 +24,8 @@ const initialState = fromJS({
   teamName: "",
   levels: [],
   locations: [],
-  personalList: []
+  personalList: [],
+  countryList: []
 });
 
 export const getTeams = (state) => state.get("dashboard").get("teamsList");
@@ -56,6 +60,16 @@ export default (state = initialState, action) => {
         error: null,
         isLoading: false,
       });
+    case FETCH_COUNTRY_REQUEST:
+      return state.merge({ isLoading: true, error: null });
+    case FETCH_COUNTRY_SUCCESS:
+      return state.merge({
+        countryList: action.payload,
+        error: null,
+        isLoading: false,
+      });
+    case FETCH_COUNTRY_ERROR:
+      return state.merge({ isLoading: false, error: action.payload });
     case FETCH_LEVELS_SUCCESS:
       return state.merge({
         levels: action.payload,
