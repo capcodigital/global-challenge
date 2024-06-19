@@ -33,6 +33,8 @@ const formatCompletionDate = (compDate) => {
   )} ${completionDate.getDate()} ${monthNames[completionDate.getMonth()]}`;
 };
 
+const capitalize = (str) => str[0].toUpperCase() + str.slice(1)
+
 const CountryLeaderboardTable = ({
   data,
   isMainDashboard,
@@ -96,7 +98,7 @@ const CountryLeaderboardTable = ({
           <Table.Header>
           <Table.Row>
           <Table.HeaderCell>#</Table.HeaderCell>
-          <Table.HeaderCell style={{width: '177px'}}>Country</Table.HeaderCell>
+          <Table.HeaderCell style={{width: '177px'}}>{capitalize(activeTab)}</Table.HeaderCell>
           <Table.HeaderCell style={{width: '161px'}}></Table.HeaderCell>
           <Table.HeaderCell>Total Distance</Table.HeaderCell>
           <Table.HeaderCell>Avg Distance</Table.HeaderCell>
@@ -111,7 +113,7 @@ const CountryLeaderboardTable = ({
               ))}
             </Table.Body>
           ) : (
-            <Table.Body className={isMainDashboard ? "main-table" : ""}>
+            <Table.Body className="main-table">
               {data.map((item, idx) => {
                 let dateCompletion = item.completionDate ? "finish" : "pending";
                 const {name, members, position, totalDistanceCovered} = item;
@@ -120,9 +122,9 @@ const CountryLeaderboardTable = ({
                   <Table.Row
                     key={name}
                     className={dateCompletion}
-                    onClick={
-                      isMainDashboard ? () => handleClick(name) : undefined
-                    }
+                    // onClick={
+                    //   isMainDashboard ? () => handleClick(name) : undefined
+                    // }
                   >
                     <Table.Cell className={"main position"}>
                       {position ? position : idx + 1}
@@ -152,7 +154,7 @@ const CountryLeaderboardTable = ({
       </div>
       <List className="leaderboard-mobile">
         <List.Item className="leaderboard-header">
-          <span>#</span> {isMainDashboard ? "TEAM" : "MEMBER"}
+          <span>#</span> {capitalize(activeTab)}
         </List.Item>
 
         {data.map((item, idx) => {
