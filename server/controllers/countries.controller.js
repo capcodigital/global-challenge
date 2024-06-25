@@ -77,7 +77,7 @@ exports.all = function(req, res, next) {
  */
 function updateEveryInterval(minutes) {
 
-    console.log("Begin Level stats refresh every " + minutes + " minutes");
+    console.log("Begin Country stats refresh every " + minutes + " minutes");
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){
@@ -106,6 +106,8 @@ function updateEveryInterval(minutes) {
                             country.activities.Yoga = 0;
                             country.totalDistance = 0;
                             country.totalDistanceConverted = 0;
+                            country.averageDistance = 0;
+                            country.averageDistanceConverted = 0;
     
                             country.members.forEach(function(member) {
     
@@ -123,10 +125,15 @@ function updateEveryInterval(minutes) {
                                     country.totalDistanceConverted += Math.round(teamMember.totalDistanceConverted);
                                 }
                             });
+
+                            country.averageDistance = Math.round(country.totalDistance / country.members.length);
+                            country.averageDistanceConverted = Math.round(country.totalDistanceConverted / country.members.length);
     
                             country.markModified('activities');
                             country.markModified('totalDistance');
                             country.markModified('totalDistanceConverted');
+                            country.markModified('averageDistance');
+                            country.markModified('averageDistanceConverted');
     
                             country.save()
                                 .then((updatedLocation) => {
@@ -187,7 +194,9 @@ function updateEveryInterval(minutes) {
                 // country.activities.Rowing = 0;
                 country.activities.Yoga = 0;
                 country.totalDistance = 0;
-                country.totalDistanceConverted = 0; 
+                country.totalDistanceConverted = 0;
+                country.averageDistance = 0;
+                country.averageDistanceConverted = 0;
             }
     
             country.save()

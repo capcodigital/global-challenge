@@ -10,6 +10,7 @@ var strava = require('../controllers/strava.controller');
 var levels = require('../controllers/levels.controller');
 var locations = require('../controllers/locations.controller');
 var countries = require('../controllers/countries.controller');
+var previousyear = require('../controllers/previousYears.controller');
 
 module.exports = function addProdMiddlewares(app, options) {
   const publicPath = options.publicPath || '/';
@@ -60,6 +61,8 @@ module.exports = function addProdMiddlewares(app, options) {
 
   app.get('/countries/list', countries.list);
   app.get('/countries', countries.all);
+
+  app.get('/previousYearTotal', previousyear.getLastYear);
 
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
 };

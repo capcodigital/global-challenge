@@ -32,6 +32,18 @@ exports.get = function(req, res, next) {
 };
 
 /**
+ * Get specific in Progress challenge
+ */
+exports.getInProgressChallenge = function(cb) {
+    Challenge.findOne({status: 'In Progress', challengeName: challengeName})
+        .then((challenge) => {
+            cb(challenge);
+        }).catch((err) => {
+            cb({});
+        });
+};
+
+/**
  * Get dates for current challenge
  */
 exports.getCurrentChallengeDates = function(cb) {

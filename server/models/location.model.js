@@ -27,6 +27,8 @@ var LocationSchema = new Schema({
     avatar: String,
     totalDistance: Number,
     totalDistanceConverted: Number,
+    averageDistance: Number,
+    averageDistanceConverted: Number,
     totalDuration: Number,
     
 }, {strict: false});

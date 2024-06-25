@@ -561,7 +561,7 @@ function updateEveryInterval(minutes) {
                 }
                 console.log("All User updates triggered");
             }).catch((err) => {
-                console.log("Data update error please try again later");
+                console.log("FitBit Data update error please try again later:" + err);
             });
 
     }, millis);

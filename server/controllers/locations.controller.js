@@ -77,7 +77,7 @@ exports.all = function(req, res, next) {
  */
 function updateEveryInterval(minutes) {
 
-    console.log("Begin Level stats refresh every " + minutes + " minutes");
+    console.log("Begin Location stats refresh every " + minutes + " minutes");
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){
@@ -106,6 +106,8 @@ function updateEveryInterval(minutes) {
                             location.activities.Yoga = 0;
                             location.totalDistance = 0;
                             location.totalDistanceConverted = 0;
+                            location.averageDistance = 0;
+                            location.averageDistanceConverted = 0;
     
                             location.members.forEach(function(member) {
     
@@ -123,10 +125,15 @@ function updateEveryInterval(minutes) {
                                     location.totalDistanceConverted += Math.round(teamMember.totalDistanceConverted);
                                 }
                             });
+
+                            location.averageDistance = Math.round(location.totalDistance / location.members.length);
+                            location.averageDistanceConverted = Math.round(location.totalDistanceConverted / location.members.length);
     
                             location.markModified('activities');
                             location.markModified('totalDistance');
                             location.markModified('totalDistanceConverted');
+                            location.markModified('averageDistance');
+                            location.markModified('averageDistanceConverted');
     
                             location.save()
                                 .then((updatedLocation) => {
@@ -187,7 +194,9 @@ function updateEveryInterval(minutes) {
                 // location.activities.Rowing = 0;
                 location.activities.Yoga = 0;
                 location.totalDistance = 0;
-                location.totalDistanceConverted = 0; 
+                location.totalDistanceConverted = 0;
+                location.averageDistance = 0;
+                location.averageDistanceConverted = 0;
             }
     
             location.save()
