@@ -24,7 +24,6 @@ exports.getLastYear = function(req, res) {
                 nextDate.setDate(nextDate.getDate() + 1);
             }
 
-            console.log("dayNumber: " + dayNumber);
             Previousyear.findOne({day: dayNumber})
             .then((previousDay) => {
                 if (!previousDay || previousDay == null) {
