@@ -257,6 +257,7 @@ class DashboardGlobal extends React.Component {
         return this.forceUpdate();
       case "office":
         this.setState({
+          userData: personal,
           currentData: locations,
           filteredData: locations,
           activeTab: "office",

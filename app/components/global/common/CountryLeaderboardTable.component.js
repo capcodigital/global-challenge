@@ -116,7 +116,7 @@ const CountryLeaderboardTable = ({
             <Table.Body className="main-table">
               {data.map((item, idx) => {
                 let dateCompletion = item.completionDate ? "finish" : "pending";
-                const {name, members, position, totalDistanceCovered} = item;
+                const {name, members, position, averageDistanceConverted, totalDistanceConverted} = item;
                 const location = name;
                 return (
                   <Table.Row
@@ -140,10 +140,10 @@ const CountryLeaderboardTable = ({
                       />
                     </Table.Cell>
                     <Table.Cell>
-                      {totalDistanceCovered ? totalDistanceCovered : 0}km
+                      {totalDistanceConverted ? totalDistanceConverted : 0}km
                     </Table.Cell>
                     <Table.Cell>
-                      {averageDistance(totalDistanceCovered, usersByLocation, location)}km
+                    {averageDistanceConverted ? averageDistanceConverted : 0}km
                     </Table.Cell>
                   </Table.Row>
                 );
@@ -183,10 +183,10 @@ const CountryLeaderboardTable = ({
               </span>
               <span>
                 <div className={"date"}>
-                  {totalDistanceCovered}
+                {totalDistanceConverted ? totalDistanceConverted : 0}km
                 </div>
                   <div className="distance">
-                    {averageDistance(totalDistanceCovered, usersByLocation, location)}
+                  {averageDistanceConverted ? averageDistanceConverted : 0}km
                     km
                   </div>
               </span>
