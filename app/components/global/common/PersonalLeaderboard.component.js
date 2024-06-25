@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "semantic-ui-react";
 import Avatar from "../../common/Avatar.component";
 import MenuFilter from "./MenuFilter.component";
-import { allCities } from "../dashboard/constants";
+import { allNewCities as allCities } from "../dashboard/constants";
 
 const findCityByCountry = (countries) => {
   const filteredCityData = countries.reduce((flatten, country) => flatten.concat(...allCities.filter((item) => item.country === country)), []);

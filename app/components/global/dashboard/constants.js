@@ -348,7 +348,10 @@ export const allNewCities = [
     name: 'Edinburgh', country: 'Scotland', region: 'Europe', coordinates: [-3.1883, 55.9533], distance: conversion_factor * 26426
   },
   {
-    name: 'London', country: 'United Kingdom', region: 'Europe', coordinates: [0.1275, 51.5072], distance: conversion_factor * 26960
+    name: 'Glasgow', country: 'Scotland', region: 'Europe',
+  },
+  {
+    name: 'London', country: 'England', region: 'Europe', coordinates: [0.1275, 51.5072], distance: conversion_factor * 26960
   },
   {
     name: 'Paris', country: 'France', region: 'Europe', coordinates: [2.3508, 48.8567], distance: conversion_factor * 27302

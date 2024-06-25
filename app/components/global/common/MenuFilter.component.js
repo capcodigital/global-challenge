@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Popup, Checkbox } from "semantic-ui-react";
-import { allCities } from "../dashboard/constants";
+import { allNewCities as allCities } from "../dashboard/constants";
 import "./style.scss";
 
 const sortedOptions = (options) => options.sort((a, b) => (a.text.toLowerCase() > b.text.toLowerCase() ? 1 : -1));
