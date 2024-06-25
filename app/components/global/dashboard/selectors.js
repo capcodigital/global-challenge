@@ -1,6 +1,6 @@
 import { cloneDeep, keyBy } from "lodash";
 import { createSelector } from "reselect";
-import { additionalCities, allCities, levelMap } from "./constants";
+import { allCities, levelMap, allNewCities } from "./constants";
 const getState = (state) => state;
 
 const activitiesSelector = createSelector(getState, (state) =>
@@ -135,10 +135,10 @@ const personalSelector = createSelector([personalListSelector], (personalList) =
 
     /**
      * Temporary solution:
-     * Find all members where member city is equal to the additionalCities list
+     * Find all members where member city is equal to the allNewCities list
      */
     const addCountryData = membersData.map(member => {
-      const findCountry = additionalCities.find(city => city.name.toLowerCase() === member.location.toLowerCase());
+      const findCountry = allNewCities.find(city => city.name.toLowerCase() === member.location.toLowerCase());
       return { ...member, country: findCountry?.country };
     });
 
