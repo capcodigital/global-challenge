@@ -159,7 +159,7 @@ const CountryLeaderboardTable = ({
 
         {data.map((item, idx) => {
             let completionDate = item.completionDate ? "finish" : "pending";
-            const {name, members, position, totalDistanceCovered} = item;
+            const {name, members, position, totalDistanceConverted, averageDistanceConverted} = item;
             const location = name;
           return (
             <List.Item
