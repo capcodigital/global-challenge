@@ -61,7 +61,7 @@ const PersonalLeaderboardTable = ({ data, filterByCountry, filterByCity }) => {
         </Table.Header>
         <Table.Body className="main-table">
           {data && data.map((player) => {
-            const { position, location, name, totalDistance } = player;
+            const { position, location, name, totalDistanceConverted } = player;
 
             return (
               <Table.Row key={name}>
@@ -77,7 +77,7 @@ const PersonalLeaderboardTable = ({ data, filterByCountry, filterByCity }) => {
                   />
                 </Table.Cell>
                 <Table.Cell>{location}</Table.Cell>
-                <Table.Cell>{`${totalDistance} km`}</Table.Cell>
+                <Table.Cell>{`${totalDistanceConverted.toFixed(2)} km`}</Table.Cell>
               </Table.Row>
             );
           })}
