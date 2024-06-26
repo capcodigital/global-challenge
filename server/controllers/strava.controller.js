@@ -256,11 +256,11 @@ function getStats(user) {
     var integerTime = ((new Date(challengeDates[0])).getTime())/1000;
     strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime, per_page: 100 }, function(err, result) {
         if (err) {
-            console.log("Error Accessing Strava activities for " + user.name);
             if (err.toString().includes("Authorization Error")){
-                console.log(user.name + " - User authentication error with Strava");
-            } 
-            console.log(err);
+                console.log("User authentication error with Strava for  " + user.name + " - " + err.errors.toString());
+            } else {
+                console.log("Error Accessing Strava activities for " + user.name + " - " + err.errors.toString());
+            }
         } else {
             console.log("Updating Strava Stats for: " + user.name);
             user.activities = result;
