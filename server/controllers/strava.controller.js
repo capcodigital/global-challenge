@@ -435,20 +435,25 @@ function updateEveryInterval(minutes) {
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){
-        console.log("Updating Strava user stats");
-        User.find({app: 'Strava'})
-            .then((users) => {
-                var userCount = users.length;
-                console.log("Found " + userCount + " Strava users");
-                for (var i = 0; i < userCount; i++) {
-                    if (users[i].access_token) {
-                        updateUser(users[i]);
+        let challengeStartTime = (new Date(challengeDates[0])).getTime();
+
+        // If Challenge has not started yet, no need to request stats for the future
+        if (challengeStartTime < (new Date().getTime())) {
+            console.log("Updating Strava user stats");
+            User.find({app: 'Strava'})
+                .then((users) => {
+                    var userCount = users.length;
+                    console.log("Found " + userCount + " Strava users");
+                    for (var i = 0; i < userCount; i++) {
+                        if (users[i].access_token) {
+                            updateUser(users[i]);
+                        }
                     }
-                }
-                console.log("All User updates complete");
-            }).catch((err) => {
-                console.log("Strava Data update error please try again later:" + err);
-            });
+                    console.log("All User updates complete");
+                }).catch((err) => {
+                    console.log("Strava Data update error please try again later:" + err);
+                });
+        }
 
     }, millis);
 }
