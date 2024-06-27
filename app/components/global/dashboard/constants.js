@@ -430,7 +430,7 @@ export const additionalCities = [
     country: "Brazil",
     region: "South America",
     coordinates: [-46.6333, -23.5505],
-    distance: conversion_factor * 7883,
+    distance: conversion_factor * /*7883*/ 900,
     markerOffset: -5,
   },
   {
@@ -438,7 +438,7 @@ export const additionalCities = [
     country: "Brazil",
     region: "South America",
     coordinates: [-52.7254, -16.8867],
-    distance: conversion_factor * 8201,
+    distance: conversion_factor * /*8201*/ 1800,
     markerOffset: -5,
   },
   {
@@ -446,7 +446,7 @@ export const additionalCities = [
     country: "Brazil",
     region: "South America",
     coordinates: [-58.8175, -10.2228],
-    distance: conversion_factor * 9817,
+    distance: conversion_factor * /*9817*/ 3600,
     markerOffset: -5,
   },
   {
@@ -454,7 +454,7 @@ export const additionalCities = [
     country: "Brazil",
     region: "South America",
     coordinates: [-64.9096, -3.5589],
-    distance: conversion_factor * 10852,
+    distance: conversion_factor * /*10852*/ 5700,
     markerOffset: -5,
   },
   {
@@ -462,7 +462,7 @@ export const additionalCities = [
     country: "Colombia",
     region: "South America",
     coordinates: [-71.0016, 3.1050],
-    distance: conversion_factor * 11880,
+    distance: conversion_factor * /*1180*/ 7150,
     markerOffset: -5,
   },
   {
@@ -470,7 +470,7 @@ export const additionalCities = [
     country: "",
     region: "South America",
     coordinates: [-77.0937, 9.7689],
-    distance: conversion_factor * 12700,
+    distance: conversion_factor * /*12700*/ 9650,
     markerOffset: -5,
   },
   {
@@ -478,7 +478,7 @@ export const additionalCities = [
     country: "",
     region: "South America",
     coordinates: [-83.1857, 16.4327],
-    distance: conversion_factor * 14000,
+    distance: conversion_factor * /*14000*/ 11950,
     markerOffset: -5,
   },
   {
