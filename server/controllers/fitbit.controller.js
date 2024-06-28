@@ -368,7 +368,7 @@ function getStats(user, date) {
             if (result.summary) {
                 user.activities[date] = result;
             } else {
-                console.log("No FitBit result summary for: " + user.name);
+                console.log("No FitBit result summary for: " + user.name + " Response: " + result.toString());
             }
 
             console.log("Updating FitBit Stats for: " + user.name);
@@ -487,7 +487,7 @@ function getStats(user, date) {
             user.markModified('activities');
         
         }).catch((err) => {
-            console.log(user.name + " : " + err);
+            console.log(user.name + " FitBit Data Error : " + err);
         });
 }
 
