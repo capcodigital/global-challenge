@@ -549,20 +549,25 @@ function updateEveryInterval(minutes) {
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){
-        console.log("Updating FitBit user stats");
-        User.find({app: 'FitBit'})
-            .then((users) => {
-                var userCount = users.length;
-                console.log("Found " + userCount + " FitBit users");
-                for (var i = 0; i < userCount; i++) {
-                    if (users[i].access_token) {
-                        updateUser(users[i]);
+        let challengeStartTime = (new Date(challengeDates[0])).getTime();
+
+        // If Challenge has not started yet, no need to request stats for the future
+        if (challengeStartTime < (new Date().getTime())) {
+            console.log("Updating FitBit user stats");
+            User.find({app: 'FitBit'})
+                .then((users) => {
+                    var userCount = users.length;
+                    console.log("Found " + userCount + " FitBit users");
+                    for (var i = 0; i < userCount; i++) {
+                        if (users[i].access_token) {
+                            updateUser(users[i]);
+                        }
                     }
-                }
-                console.log("All User updates triggered");
-            }).catch((err) => {
-                console.log("FitBit Data update error please try again later:" + err);
-            });
+                    console.log("All User updates triggered");
+                }).catch((err) => {
+                    console.log("FitBit Data update error please try again later:" + err);
+                });
+        }
 
     }, millis);
 }
