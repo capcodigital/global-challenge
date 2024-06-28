@@ -525,11 +525,11 @@ function updateAccessTokens(user) {
                             });
 
                     }).catch((err) => {
-                        console.log(err);
+                        console.log("Error saving user tokens " + user.name + " : " + err);
                     });
             }
         }).catch((err) => {
-            console.log("Error updating existing useer access tokens during re-registration");
+            console.log("Error updating existing user access tokens during re-registration - " + user.name);
         });
 }
 
@@ -538,7 +538,7 @@ function updateAccessTokens(user) {
  */
 function updateEveryInterval(minutes) {
 
-    console.log("Begin stats refresh every " + minutes + " minutes");
+    console.log("Begin FitBit stats refresh every " + minutes + " minutes");
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){
