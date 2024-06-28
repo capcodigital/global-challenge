@@ -388,9 +388,9 @@ function updateUser(user) {
          // If token is expired refresh access token and get a new refresh token
         var newReq2 = buildRequest("Update token for " + user.name, userOptions, function(err, result) {
             if (err) {
-                console.log(user.name + " : " + err.message);
+                console.log("Strava token update error for  " + user.name + " : " + err.message);
             } else if (result.errors && result.errors.length > 0) {
-                console.log(user.name + " : " + JSON.stringify(result.errors[0]));
+                console.log("Strava token update error for  " + user.name + " : " + JSON.stringify(result.errors[0]));
             } else {
 
                 user.access_token = result.access_token;
@@ -431,7 +431,7 @@ function updateUser(user) {
  */
 function updateEveryInterval(minutes) {
 
-    console.log("Begin stats refresh every " + minutes + " minutes");
+    console.log("Begin Strava stats refresh every " + minutes + " minutes");
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){
