@@ -31,7 +31,8 @@ challenges.getCurrentChallengeDates(function(dates) {
 });
 
 var headers = {
-    "api-token" : apiKey
+    "api-token" : apiKey,
+    "Content-Type" : "application/json"
 };
 
 var authOptions = {
@@ -176,8 +177,8 @@ exports.authorize = function(req, res) {
 function updateAccessTokens(user) {
     User.findOne({email: user.email.toLowerCase()})
         .then((existingUser) => {
-            if (existingUser) {
-                console.log("Error updating existing useer access tokens during re-registration");
+            if (!existingUser) {
+                console.log("Error updating existing useer access tokens during re-registration:" + user.name);
             } else {
                 existingUser.access_token = user.access_token;
                 existingUser.refresh_token = user.refresh_token;
@@ -197,7 +198,7 @@ function updateAccessTokens(user) {
                     });
             }
         }).catch((err) => {
-            console.log("Error updating existing useer access tokens during re-registration");
+            console.log("Error updating existing useer access tokens during re-registration:" + user.name);
         });
 }
 
@@ -416,7 +417,7 @@ function updateUser(user) {
 
                 console.log("Successfully obtained new Strava Token for:" + user.name);
 
-                getStats(user);
+                updateAccessTokens(user);
             }
         });
 
