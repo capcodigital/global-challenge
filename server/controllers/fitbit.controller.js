@@ -488,7 +488,7 @@ function updateAccessTokens(user) {
     User.findOne({email: user.email.toLowerCase()})
         .then((existingUser) => {
             if (!existingUser) {
-                console.log("Error updating existing useer access tokens during re-registration");
+                console.log("Error updating existing useer access tokens during re-registration:" + user.name);
             } else {
                 existingUser.access_token = user.access_token;
                 existingUser.refresh_token = user.refresh_token;
