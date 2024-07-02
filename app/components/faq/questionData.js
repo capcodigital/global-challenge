@@ -78,7 +78,7 @@ export const questionData = {
       questionText:
         "Why is my data not syncing with the Capco Global Challenge platform?",
       answerText:
-        "Please confirm that you have registered correctly by trying to register again. If this does not work, please open and refresh your app (Strava/Fitbit) and allow one hour for the data to sync. We also recommend opening your app daily throughout the Challenge to allow the data to sync. If this still does not work, please contact <a href='mailto:3cd19d49.capco.com@apac.teams.ms'>Challenge Team Support</a> for further assistance.",
+        "Please confirm that you have registered correctly by trying to register again. If this does not work, please open and refresh your app (Strava/Fitbit) and allow one hour for the data to sync. We also recommend opening your app daily throughout the Challenge to allow the data to sync. If this still does not work, please contact <a href='mailto:challenge@capco.com'>Challenge Team Support</a> for further assistance.",
     },
     {
       questionId: "will-you-see-my-location",

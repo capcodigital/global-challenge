@@ -31,7 +31,8 @@ challenges.getCurrentChallengeDates(function(dates) {
 });
 
 var headers = {
-    "api-token" : apiKey
+    "api-token" : apiKey,
+    "Content-Type" : "application/json"
 };
 
 var authOptions = {
@@ -53,7 +54,7 @@ if (cluster.isMaster) {
         updateEveryInterval(process.env.UPDATE_INTERVAL);
     }
     else {
-        updateEveryInterval(60);
+        updateEveryInterval(120);
     }
 }
 
@@ -176,8 +177,8 @@ exports.authorize = function(req, res) {
 function updateAccessTokens(user) {
     User.findOne({email: user.email.toLowerCase()})
         .then((existingUser) => {
-            if (existingUser) {
-                console.log("Error updating existing useer access tokens during re-registration");
+            if (!existingUser) {
+                console.log("Error updating existing useer access tokens during re-registration:" + user.name);
             } else {
                 existingUser.access_token = user.access_token;
                 existingUser.refresh_token = user.refresh_token;
@@ -197,7 +198,7 @@ function updateAccessTokens(user) {
                     });
             }
         }).catch((err) => {
-            console.log("Error updating existing useer access tokens during re-registration");
+            console.log("Error updating existing useer access tokens during re-registration:" + user.name);
         });
 }
 
@@ -256,11 +257,12 @@ function getStats(user) {
     var integerTime = ((new Date(challengeDates[0])).getTime())/1000;
     strava.athlete.listActivities({ 'access_token':user.access_token, after: integerTime, per_page: 100 }, function(err, result) {
         if (err) {
-            console.log("Error Accessing Strava activities for " + user.name);
+            let errorText = err.errors ? JSON.stringify(err.errors) : JSON.stringify(err);
             if (err.toString().includes("Authorization Error")){
-                console.log(user.name + " - User authentication error with Strava");
-            } 
-            console.log(err);
+                console.log("User authentication error with Strava for  " + user.name + " - " + errorText);
+            } else {
+                console.log("Error Accessing Strava activities for " + user.name + " - " + errorText);
+            }
         } else {
             console.log("Updating Strava Stats for: " + user.name);
             user.activities = result;
@@ -388,9 +390,9 @@ function updateUser(user) {
          // If token is expired refresh access token and get a new refresh token
         var newReq2 = buildRequest("Update token for " + user.name, userOptions, function(err, result) {
             if (err) {
-                console.log(user.name + " : " + err.message);
+                console.log("Strava token update error for  " + user.name + " : " + err.message);
             } else if (result.errors && result.errors.length > 0) {
-                console.log(user.name + " : " + JSON.stringify(result.errors[0]));
+                console.log("Strava token update error for  " + user.name + " : " + JSON.stringify(result.errors[0]));
             } else {
 
                 user.access_token = result.access_token;
@@ -415,7 +417,7 @@ function updateUser(user) {
 
                 console.log("Successfully obtained new Strava Token for:" + user.name);
 
-                getStats(user);
+                updateAccessTokens(user);
             }
         });
 
@@ -431,24 +433,29 @@ function updateUser(user) {
  */
 function updateEveryInterval(minutes) {
 
-    console.log("Begin stats refresh every " + minutes + " minutes");
+    console.log("Begin Strava stats refresh every " + minutes + " minutes");
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){
-        console.log("Updating Strava user stats");
-        User.find({app: 'Strava'})
-            .then((users) => {
-                var userCount = users.length;
-                console.log("Found " + userCount + " Strava users");
-                for (var i = 0; i < userCount; i++) {
-                    if (users[i].access_token) {
-                        updateUser(users[i]);
+        let challengeStartTime = (new Date(challengeDates[0])).getTime();
+
+        // If Challenge has not started yet, no need to request stats for the future
+        if (challengeStartTime < (new Date().getTime())) {
+            console.log("Updating Strava user stats");
+            User.find({app: 'Strava'})
+                .then((users) => {
+                    var userCount = users.length;
+                    console.log("Found " + userCount + " Strava users");
+                    for (var i = 0; i < userCount; i++) {
+                        if (users[i].access_token) {
+                            updateUser(users[i]);
+                        }
                     }
-                }
-                console.log("All User updates complete");
-            }).catch((err) => {
-                console.log("Strava Data update error please try again later:" + err);
-            });
+                    console.log("All User updates complete");
+                }).catch((err) => {
+                    console.log("Strava Data update error please try again later:" + err);
+                });
+        }
 
     }, millis);
 }

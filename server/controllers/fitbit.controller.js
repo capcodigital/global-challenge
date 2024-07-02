@@ -296,7 +296,6 @@ function buildRequest(requestDetail, requestOptions) {
 
 function updateUser(user) {
     var today = new Date();
-    // Temporary fix for strange date issue
     if (user.expires_in && (user.expires_in.getTime() < today.getTime() || user.expires_in.getFullYear() > today.getFullYear())) {
         console.log("FitBit Token Expired:" + user.name);
         postOptions.path = "/oauth2/token?" + "grant_type=refresh_token&refresh_token=" + user.refresh_token;
@@ -306,35 +305,29 @@ function updateUser(user) {
             .then((result) => {
 
                 if (result.errors && result.errors[0]) {
-                    console.log("Token Refresh Error: " + result.errors[0].message);
+                    console.log("Re-register request Error for " + user.name  + " : " + err);
+                } else {
+                    var date = new Date();
+                    var datemillis = date.getTime();
+
+                    var expiresTime = new Date(result.expires_in*1000);
+                    var expiresTimeMillis = expiresTime.getTime();
+
+                    var expiration = new Date();
+                    expiration.setTime(datemillis + expiresTimeMillis);
+
+                    user.access_token = result.access_token;
+                    user.refresh_token = result.refresh_token;
+                    user.expires_in = expiration;
+
+                    user.markModified('access_token');
+                    user.markModified('refresh_token');
+                    user.markModified('expires_in');
+
+                    console.log("Successfully obtained new FitBit Token for:" + user.name);
+
+                    updateAccessTokens(user);
                 }
-
-                var date = new Date();
-                var datemillis = date.getTime();
-
-                var expiresTime = new Date(result.expires_in*1000);
-                var expiresTimeMillis = expiresTime.getTime();
-
-                var expiration = new Date();
-                expiration.setTime(datemillis + expiresTimeMillis);
-
-                user.access_token = result.access_token;
-                user.refresh_token = result.refresh_token;
-                user.expires_in = expiration;
-
-                user.markModified('access_token');
-                user.markModified('refresh_token');
-                user.markModified('expires_in');
-
-                console.log("Successfully obtained new FitBit Token for:" + user.name);
-
-                getStats(user).then((results) => {
-                    user.save()
-                        .then((updatedUser) => {
-                        }).catch((err) => {
-                            console.log(err);
-                        });
-                    });
                 
             }).catch((err) => {
                 console.log(user.name + " : " + err);
@@ -368,7 +361,7 @@ function getStats(user, date) {
             if (result.summary) {
                 user.activities[date] = result;
             } else {
-                console.log("No FitBit result summary for: " + user.name);
+                console.log("No FitBit result summary for: " + user.name + " Response: " + JSON.stringify(result));
             }
 
             console.log("Updating FitBit Stats for: " + user.name);
@@ -487,7 +480,7 @@ function getStats(user, date) {
             user.markModified('activities');
         
         }).catch((err) => {
-            console.log(user.name + " : " + err);
+            console.log(user.name + " FitBit Data Error : " + err);
         });
 }
 
@@ -495,7 +488,7 @@ function updateAccessTokens(user) {
     User.findOne({email: user.email.toLowerCase()})
         .then((existingUser) => {
             if (!existingUser) {
-                console.log("Error updating existing useer access tokens during re-registration");
+                console.log("Error updating existing useer access tokens during re-registration:" + user.name);
             } else {
                 existingUser.access_token = user.access_token;
                 existingUser.refresh_token = user.refresh_token;
@@ -532,11 +525,11 @@ function updateAccessTokens(user) {
                             });
 
                     }).catch((err) => {
-                        console.log(err);
+                        console.log("Error saving user tokens " + user.name + " : " + err);
                     });
             }
         }).catch((err) => {
-            console.log("Error updating existing useer access tokens during re-registration");
+            console.log("Error updating existing user access tokens during re-registration - " + user.name);
         });
 }
 
@@ -545,24 +538,29 @@ function updateAccessTokens(user) {
  */
 function updateEveryInterval(minutes) {
 
-    console.log("Begin stats refresh every " + minutes + " minutes");
+    console.log("Begin FitBit stats refresh every " + minutes + " minutes");
     var millis = minutes * 60 * 1000;
 
     setInterval(function(){
-        console.log("Updating FitBit user stats");
-        User.find({app: 'FitBit'})
-            .then((users) => {
-                var userCount = users.length;
-                console.log("Found " + userCount + " FitBit users");
-                for (var i = 0; i < userCount; i++) {
-                    if (users[i].access_token) {
-                        updateUser(users[i]);
+        let challengeStartTime = (new Date(challengeDates[0])).getTime();
+
+        // If Challenge has not started yet, no need to request stats for the future
+        if (challengeStartTime < (new Date().getTime())) {
+            console.log("Updating FitBit user stats");
+            User.find({app: 'FitBit'})
+                .then((users) => {
+                    var userCount = users.length;
+                    console.log("Found " + userCount + " FitBit users");
+                    for (var i = 0; i < userCount; i++) {
+                        if (users[i].access_token) {
+                            updateUser(users[i]);
+                        }
                     }
-                }
-                console.log("All User updates triggered");
-            }).catch((err) => {
-                console.log("FitBit Data update error please try again later:" + err);
-            });
+                    console.log("All User updates triggered");
+                }).catch((err) => {
+                    console.log("FitBit Data update error please try again later:" + err);
+                });
+        }
 
     }, millis);
 }

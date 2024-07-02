@@ -19,9 +19,15 @@ exports.getLastYear = function(req, res) {
             res.json({previousTotal: 0});
         } else {
             let dayNumber = 1;
-            while (!(nextDate.getDate() === today.getDate() && nextDate.getMonth() === today.getMonth())) {
-                dayNumber++;
-                nextDate.setDate(nextDate.getDate() + 1);
+            let endDateAsString = challenge.endDate.toISOString().split('T')[0];
+            let endDate = new Date(endDateAsString);
+            if (today.getTime() >= endDate.getTime()) {
+                dayNumber = Math.round((endDate.getTime() - nextDate.getTime()) / (1000 * 3600 * 24));
+            } else {
+                while (!(nextDate.getDate() === today.getDate() && nextDate.getMonth() === today.getMonth())) {
+                    dayNumber++;
+                    nextDate.setDate(nextDate.getDate() + 1);
+                }
             }
 
             Previousyear.findOne({day: dayNumber})
