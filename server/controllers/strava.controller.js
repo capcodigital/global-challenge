@@ -54,7 +54,7 @@ if (cluster.isMaster) {
         updateEveryInterval(process.env.UPDATE_INTERVAL);
     }
     else {
-        updateEveryInterval(120);
+        updateEveryInterval(60);
     }
 }
 
@@ -261,7 +261,7 @@ function getStats(user) {
             if (err.toString().includes("Authorization Error")){
                 console.log("User authentication error with Strava for  " + user.name + " - " + errorText);
             } else {
-                console.log("Error Accessing Strava activities for " + user.name + " - " + errorText);
+                console.log("Error accessing Strava activities for " + user.name + " - " + errorText);
             }
         } else {
             console.log("Updating Strava Stats for: " + user.name);
