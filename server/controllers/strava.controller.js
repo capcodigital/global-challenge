@@ -54,7 +54,7 @@ if (cluster.isMaster) {
         updateEveryInterval(process.env.UPDATE_INTERVAL);
     }
     else {
-        updateEveryInterval(120);
+        updateEveryInterval(60);
     }
 }
 
