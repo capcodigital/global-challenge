@@ -16,10 +16,10 @@ const callbackUrl = process.env.SERVER_URL ? `https://${process.env.SERVER_URL}/
 if (cluster.isMaster) {
     setTimeout(function(){
         if (process.env.UPDATE_INTERVAL) {
-            updateEveryInterval(process.env.UPDATE_INTERVAL);
+            // updateEveryInterval(process.env.UPDATE_INTERVAL);
         }
         else {
-            updateEveryInterval(60);
+            // updateEveryInterval(60);
         }
     }, locationStatsDelay);
 }
