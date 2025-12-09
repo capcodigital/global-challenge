@@ -1,5 +1,5 @@
-@import "./variables.scss";
-@import "./global-styles.scss";
+@use "./variables.scss" as *;
+@use "./global-styles.scss" as *;
 
 body {
   .segment {
