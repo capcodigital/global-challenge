@@ -81,7 +81,7 @@
     "sass": "^1.77.2",
     "simple-oauth2": "^5.0.0",
     "ssri": "6.0.2",
-    "strava-v3": "^2.2.0",
+    "strava-v3": "^3.1.0",
     "topojson-client": "^3.0.0",
     "underscore": "^1.13.6",
     "warning": "^4.0.1",
