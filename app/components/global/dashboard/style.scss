@@ -1,5 +1,4 @@
-@import "../../../styles/variables.scss";
-@import "../../../styles/breakpoints.scss";
+@use "../../../styles/breakpoints.scss" as *;
 
 div.row {
   display: block !important;
