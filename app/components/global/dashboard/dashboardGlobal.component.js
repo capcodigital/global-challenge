@@ -292,7 +292,6 @@ class DashboardGlobal extends React.Component {
     const {
       currentData,
       filteredData,
-      cities,
       worldData,
       width,
       height,
@@ -304,6 +303,7 @@ class DashboardGlobal extends React.Component {
       personal,
       country,
       userData,
+      locations,
     } = this.state;
     const { isLoading, distance, error } = this.props;
     let totalOverallDistance = personal
@@ -322,13 +322,12 @@ class DashboardGlobal extends React.Component {
                 <div ref={this.saveRef}>
                   <Map
                     worldData={worldData}
-                    statistics={statistics}
-                    cities={cities}
                     distance={totalOverallDistance}
                     width={width}
                     scale={width < 400 ? 70 : 150}
                     geoCenter={[0, 10]}
                     height={height}
+                    locationsData={locations}
                   />
                 </div>
               </Grid.Row>

@@ -522,3 +522,23 @@ div.ui.popup {
   }
 }
 
+.city-popup-content {
+  h3 {
+    margin: 0;
+    font-size: 14px !important;
+    padding-bottom: 4px;
+  }
+
+  ul {
+    margin: 0 !important;
+    padding-left: 0;
+    list-style-type:none;
+
+    li {
+      padding-top: 0 !important;
+      font-size: 12px !important;
+      line-height: 1.5 !important;
+    }
+  }
+}
+

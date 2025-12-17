@@ -40,6 +40,8 @@ const levelsListSelector = createSelector(getState, (state) =>
   state.get("dashboard").get("levels")
 );
 
+const getTopScorer = (members) => members.sort((a, b) => b.totalDistanceConverted - a.totalDistanceConverted)[0];
+
 const getPositionByActivity = (teamData, activity) =>
   teamData
     .sort((a, b) => b.activities[activity] - a.activities[activity])
@@ -49,6 +51,7 @@ const getPositionByActivity = (teamData, activity) =>
         ...team.activities,
         [`${activity.charAt(0).toLowerCase() + activity.slice(1)}Position`]: idx + 1,
       },
+      memberTopScorer: getTopScorer(team.members),
     }));
 
 const getPositionByMemberActivity = (memberData, activity) => {
