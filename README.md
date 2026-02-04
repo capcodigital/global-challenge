@@ -61,7 +61,7 @@ Confirm by ($ show collections).
 
     Please check for the files with the product owner.
 
-2.	Check your version of Node ($ node -v). If it is not 14.17.5 then follow the guide:
+2.	Check your version of Node ($ node -v). If it is not 20.18.1 then follow the guide:
 
 - Confirm that nvm (Node Version Manager) is installed ($ nvm -v). It should output file location. 
 
@@ -75,7 +75,7 @@ $ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || 
 ```
 - Confirm the correct version of node 
 ```
-$ nvm install 14.17.5
+$ nvm install 20.18.1
 ```
 - You can also verify by running ($ node -v).
 
