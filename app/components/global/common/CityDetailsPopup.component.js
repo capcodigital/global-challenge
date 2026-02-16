@@ -36,12 +36,18 @@ function CityDetailsPopup({
 
   const content = () => (
     <div className="city-popup-content">
-      <h3>{city.name || ''}</h3>
-      <ul>
-        <li>Office ranking: {cityRanking || 'N/A'}</li>
-        <li>Top scorer: {cityData.memberTopScorer?.name || 'N/A'}</li>
-        <li>Registered users: {cityData.members?.length || 0}</li>
-      </ul>
+      <img
+        src={city?.img || ''}
+        alt={`${city.name} location`}
+      />
+      <section>
+        <h3>{city.name || ''}</h3>
+        <ul>
+          <li>Office ranking: {cityRanking || 'N/A'}</li>
+          <li>Top scorer: {cityData.memberTopScorer?.name || 'N/A'}</li>
+          <li>Registered users: {cityData.members?.length || 0}</li>
+        </ul>
+      </section>
     </div>
   );
 
@@ -49,13 +55,9 @@ function CityDetailsPopup({
     <Popup
       trigger={trigger()}
       content={content()}
-      position="bottom center"
-      style={{
-        borderRadius: 0,
-        opacity: 0.8,
-      }}
       basic
       disabled={!shouldDisplay}
+      className="city-popup-content"
     />
   );
 }

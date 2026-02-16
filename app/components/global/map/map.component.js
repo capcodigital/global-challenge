@@ -2,7 +2,7 @@ import React from 'react';
 import { geoMercator, geoPath } from 'd3-geo';
 import PropTypes from 'prop-types';
 import { scaleLinear } from 'd3-scale';
-import { allCities as cities } from '../dashboard/constants';
+import { newCities as cities } from '../dashboard/constants';
 import "./style.scss";
 import CityDetailsPopup from '../common/CityDetailsPopup.component';
 
