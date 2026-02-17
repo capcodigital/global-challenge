@@ -1,6 +1,6 @@
 import { cloneDeep, keyBy } from "lodash";
 import { createSelector } from "reselect";
-import { allCities, levelMap, allNewCities } from "./constants";
+import { levelMap, allNewCities } from "./constants";
 const getState = (state) => state;
 
 const activitiesSelector = createSelector(getState, (state) =>
@@ -226,7 +226,7 @@ const breakdownSelector = createSelector(
     const levels = {};
     const offices = {};
     if (activities) {
-      const officeByCity = keyBy(allCities, "name");
+      const officeByCity = keyBy(allNewCities, "name");
 
       activities.forEach((element) => {
         const steps = element.get("totalSteps");

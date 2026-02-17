@@ -13,7 +13,7 @@ import {
 } from "../common";
 import LeaderboardTabs from "../leaderboardTabs";
 import { runIcon, cycleIcon, rowIcon, swimIcon, walkIcon } from "./images";
-import { allCities, geometries, officeMap } from "./constants";
+import { allNewCities as allCities, geometries, officeMap } from "./constants";
 import "./style.scss";
 
 const challenge_name = process.env.CHALLENGE_NAME
