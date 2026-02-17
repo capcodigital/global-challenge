@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, Grid } from "semantic-ui-react";
-import { allCities } from "../dashboard/constants";
+import { allNewCities as allCities } from "../dashboard/constants";
 import "./style.scss";
 
 
