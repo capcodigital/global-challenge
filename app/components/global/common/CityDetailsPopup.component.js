@@ -39,6 +39,7 @@ function CityDetailsPopup({
       <img
         src={city?.img || ''}
         alt={`${city.name} location`}
+        onError={(e) => { e.target.style.display = 'none'; }}
       />
       <section>
         <h3>{city.name || ''}</h3>
