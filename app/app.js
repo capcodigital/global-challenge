@@ -10,7 +10,7 @@ import '@babel/polyfill';
 
 // Import all the third party stuff
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import FontFaceObserver from 'fontfaceobserver';
@@ -48,23 +48,19 @@ const initialState = {};
 const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
+const root = createRoot(MOUNT_NODE);
 
-const render = () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      {/* <LanguageProvider messages={messages}> */}
-      <ConnectedRouter history={history}>
-        <IntlProvider locale="en" messages={enMessages}>
-          <App />
-        </IntlProvider>
-      </ConnectedRouter>
-      {/* </LanguageProvider> */}
-    </Provider>,
-    MOUNT_NODE
-  );
-};
+const renderApp = () => (
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <IntlProvider locale="en" messages={enMessages}>
+        <App />
+      </IntlProvider>
+    </ConnectedRouter>
+  </Provider>
+);
 
-render();
+root.render(renderApp());
 
 // Refresh every hour to pick up the latest updates
 var hourlyRefresh = 60 * 60 * 1000;
