@@ -65,6 +65,7 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
 
   app.get('/locations/list', locations.list);
   app.get('/locations', locations.all);
+  app.get('/locations/:location/employees', locations.officeEmployees);
 
   app.get('/countries/list', countries.list);
   app.get('/countries', countries.all);

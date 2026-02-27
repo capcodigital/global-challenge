@@ -72,6 +72,203 @@ exports.all = function(req, res, next) {
         });
 };
 
+function toSafeNumber(value) {
+    var parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function parsePositiveInt(value, fallback) {
+    var parsed = parseInt(value, 10);
+    if (Number.isNaN(parsed) || parsed <= 0) {
+        return fallback;
+    }
+    return parsed;
+}
+
+/**
+ * Office competition drill-down by employee
+ */
+exports.officeEmployees = function(req, res) {
+    var locationName = req.params.location ? decodeURIComponent(req.params.location) : null;
+    if (!locationName) {
+        res.status(400).json({ error: 'Location is required' });
+        return;
+    }
+
+    var page = parsePositiveInt(req.query.page, 1);
+    var limit = Math.min(parsePositiveInt(req.query.limit, 25), 100);
+    var sortBy = req.query.sortBy || 'totalDistanceConverted';
+    var sortDirection = req.query.order && req.query.order.toLowerCase() === 'asc' ? 'asc' : 'desc';
+    var challengeFilter = req.query.challengeName;
+
+    var allowedSortFields = {
+        totalDistanceConverted: true,
+        totalDistance: true,
+        totalRun: true,
+        totalWalk: true,
+        totalCycling: true,
+        totalCyclingConverted: true,
+        totalYoga: true,
+        totalSteps: true,
+        totalDuration: true,
+        totalCalories: true,
+        name: true,
+    };
+
+    if (!allowedSortFields[sortBy]) {
+        res.status(400).json({ error: 'Invalid sortBy field' });
+        return;
+    }
+
+    var query = { location: locationName };
+    if (challengeFilter) {
+        query.challengeName = challengeFilter;
+    }
+    if (req.query.app) {
+        query.app = req.query.app;
+    }
+    if (req.query.level) {
+        query.level = req.query.level;
+    }
+
+    User.find(query)
+        .select('name email app location country level team challengeName totalDistance totalDistanceConverted totalWalk totalRun totalSwim totalYoga totalCycling totalCyclingConverted totalDuration totalSteps totalCalories')
+        .then((users) => {
+            var employeeRows = users.map((user) => {
+                var totalDistance = toSafeNumber(user.totalDistance);
+                var totalDistanceConverted = toSafeNumber(user.totalDistanceConverted);
+                var totalRun = toSafeNumber(user.totalRun);
+                var totalWalk = toSafeNumber(user.totalWalk);
+                var totalCycling = toSafeNumber(user.totalCycling);
+                var totalCyclingConverted = toSafeNumber(user.totalCyclingConverted);
+                var totalYoga = toSafeNumber(user.totalYoga);
+
+                return {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    app: user.app,
+                    location: user.location,
+                    country: user.country,
+                    level: user.level,
+                    challengeName: user.challengeName,
+                    totalDistance: totalDistance,
+                    totalDistanceConverted: totalDistanceConverted,
+                    totalRun: totalRun,
+                    totalWalk: totalWalk,
+                    totalCycling: totalCycling,
+                    totalCyclingConverted: totalCyclingConverted,
+                    totalYoga: totalYoga,
+                    totalSwim: toSafeNumber(user.totalSwim),
+                    totalDuration: toSafeNumber(user.totalDuration),
+                    totalSteps: toSafeNumber(user.totalSteps),
+                    totalCalories: toSafeNumber(user.totalCalories),
+                    activityMix: {
+                        runPct: totalDistanceConverted > 0 ? Math.round((totalRun / totalDistanceConverted) * 100) : 0,
+                        walkPct: totalDistanceConverted > 0 ? Math.round((totalWalk / totalDistanceConverted) * 100) : 0,
+                        cyclePct: totalDistanceConverted > 0 ? Math.round((totalCyclingConverted / totalDistanceConverted) * 100) : 0,
+                        yogaPct: totalDistanceConverted > 0 ? Math.round((totalYoga / totalDistanceConverted) * 100) : 0,
+                    }
+                };
+            });
+
+            employeeRows.sort((a, b) => {
+                var aValue = a[sortBy];
+                var bValue = b[sortBy];
+
+                if (sortBy === 'name') {
+                    var compare = String(aValue || '').localeCompare(String(bValue || ''));
+                    return sortDirection === 'asc' ? compare : (compare * -1);
+                }
+
+                var numericA = toSafeNumber(aValue);
+                var numericB = toSafeNumber(bValue);
+                if (sortDirection === 'asc') {
+                    return numericA - numericB;
+                }
+                return numericB - numericA;
+            });
+
+            employeeRows = employeeRows.map((row, index) => ({
+                rank: index + 1,
+                ...row,
+            }));
+
+            var totalEmployees = employeeRows.length;
+            var startIndex = (page - 1) * limit;
+            var paginatedEmployees = employeeRows.slice(startIndex, startIndex + limit);
+
+            var summary = employeeRows.reduce((accumulator, row) => {
+                accumulator.totalDistance += row.totalDistance;
+                accumulator.totalDistanceConverted += row.totalDistanceConverted;
+                accumulator.totalRun += row.totalRun;
+                accumulator.totalWalk += row.totalWalk;
+                accumulator.totalCycling += row.totalCycling;
+                accumulator.totalCyclingConverted += row.totalCyclingConverted;
+                accumulator.totalYoga += row.totalYoga;
+                accumulator.totalSteps += row.totalSteps;
+                accumulator.totalDuration += row.totalDuration;
+                accumulator.totalCalories += row.totalCalories;
+                return accumulator;
+            }, {
+                totalDistance: 0,
+                totalDistanceConverted: 0,
+                totalRun: 0,
+                totalWalk: 0,
+                totalCycling: 0,
+                totalCyclingConverted: 0,
+                totalYoga: 0,
+                totalSteps: 0,
+                totalDuration: 0,
+                totalCalories: 0,
+            });
+
+            var topPerformer = employeeRows.length > 0 ? {
+                rank: employeeRows[0].rank,
+                id: employeeRows[0].id,
+                name: employeeRows[0].name,
+                totalDistanceConverted: employeeRows[0].totalDistanceConverted,
+            } : null;
+
+            res.json({
+                office: locationName,
+                filters: {
+                    challengeName: challengeFilter || null,
+                    app: req.query.app || null,
+                    level: req.query.level || null,
+                },
+                summary: {
+                    totalEmployees: totalEmployees,
+                    totalDistance: Math.round(summary.totalDistance * 100) / 100,
+                    totalDistanceConverted: Math.round(summary.totalDistanceConverted * 100) / 100,
+                    averageDistance: totalEmployees > 0 ? Math.round((summary.totalDistance / totalEmployees) * 100) / 100 : 0,
+                    averageDistanceConverted: totalEmployees > 0 ? Math.round((summary.totalDistanceConverted / totalEmployees) * 100) / 100 : 0,
+                    totalRun: Math.round(summary.totalRun * 100) / 100,
+                    totalWalk: Math.round(summary.totalWalk * 100) / 100,
+                    totalCycling: Math.round(summary.totalCycling * 100) / 100,
+                    totalCyclingConverted: Math.round(summary.totalCyclingConverted * 100) / 100,
+                    totalYoga: Math.round(summary.totalYoga * 100) / 100,
+                    totalSteps: Math.round(summary.totalSteps),
+                    totalDuration: Math.round(summary.totalDuration * 100) / 100,
+                    totalCalories: Math.round(summary.totalCalories),
+                    topPerformer: topPerformer,
+                },
+                pagination: {
+                    page: page,
+                    limit: limit,
+                    total: totalEmployees,
+                    totalPages: totalEmployees > 0 ? Math.ceil(totalEmployees / limit) : 1,
+                    sortBy: sortBy,
+                    order: sortDirection,
+                },
+                employees: paginatedEmployees,
+            });
+        }).catch((err) => {
+            console.log('Error building office drill-down: ' + locationName + ', err: ' + err);
+            res.status(500).json({ error: 'Server error please try again later' });
+        });
+};
+
 /**
  * Refresh Location data every x minutes
  */
@@ -242,4 +439,3 @@ exports.remove = function(user) {
             console.log("Error removing user from location: " + user.name + " - " + user.location);
         });
 };
-

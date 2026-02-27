@@ -57,7 +57,8 @@ module.exports = function addProdMiddlewares(app, options) {
   app.get('/levels', levels.all);
 
   app.get('/locations/list', locations.list);
-  app.get('/locations', telocationsams.all);
+  app.get('/locations', locations.all);
+  app.get('/locations/:location/employees', locations.officeEmployees);
 
   app.get('/countries/list', countries.list);
   app.get('/countries', countries.all);
