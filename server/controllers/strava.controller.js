@@ -16,6 +16,7 @@ var cluster = require('cluster');
 var fs = require('fs');
 var config = require("../config/config");
 var mailer = require('../services/mail.service');
+var spuriousDataService = require('../services/spuriousData.service');
 
 var apiKey = process.env.STRAVA_API_KEY;
 var secret = process.env.STRAVA_SECRET;
@@ -266,6 +267,10 @@ function getStats(user) {
         } else {
             console.log("Updating Strava Stats for: " + user.name);
             user.activities = result;
+            var stravaAlerts = spuriousDataService.detectStravaSpuriousData(user, result);
+            spuriousDataService.processDetectedAlerts(stravaAlerts).catch((spuriousErr) => {
+                console.log("Spurious data processing error for " + user.name + " : " + spuriousErr);
+            });
 
             // Update Stats Totals
             user.totalSteps = 0;

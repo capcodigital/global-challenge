@@ -11,6 +11,7 @@ var User = mongoose.model('User');
 var Capco = mongoose.model('Capco');
 var config = require("../config/config");
 var mailer = require('../services/mail.service');
+var spuriousDataService = require('../services/spuriousData.service');
 var constants = require('../util/constants');
 
 var _ = require('lodash');
@@ -357,6 +358,11 @@ function getStats(user, date) {
             if (!user.activities) {
                 user.activities = {};
             }
+
+            var fitbitAlerts = spuriousDataService.detectFitbitSpuriousData(user, date, result);
+            spuriousDataService.processDetectedAlerts(fitbitAlerts).catch((spuriousErr) => {
+                console.log("Spurious data processing error for " + user.name + " : " + spuriousErr);
+            });
 
             if (result.summary) {
                 user.activities[date] = result;
