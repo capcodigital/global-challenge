@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects';
 import { keyBy } from 'lodash';
 import { delay } from 'redux-saga';
-import { allCities } from './constants';
+import { allNewCities as allCities } from './constants';
 
 import {
   teamsRecieved,

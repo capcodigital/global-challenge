@@ -9,6 +9,7 @@ const numCPUs = require('os').cpus().length;
 const { resolve } = require('path');
 const logger = require('./util//logger');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const argv = require('./util/argv');
 const port = require('./util//port');

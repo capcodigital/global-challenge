@@ -4,6 +4,7 @@ import TeamSportsLeaderboardTable from "./TeamSportsLeaderboardTable.component";
 import CountDown from "./CountDown";
 import TeamPageHeader from "./TeamPageHeader";
 import PersonalLeaderboardTable from "./PersonalLeaderboard.component";
+import CityDetailsPopup from "./CityDetailsPopup.component";
 
 export {
   TeamLeaderboardTable,
@@ -12,4 +13,5 @@ export {
   CountDown,
   CountryLeaderboardTable,
   PersonalLeaderboardTable,
+  CityDetailsPopup,
 };

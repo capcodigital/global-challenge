@@ -522,3 +522,43 @@ div.ui.popup {
   }
 }
 
+.city-popup-content {
+  max-width: 15rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 2px;
+  border: none !important;
+  padding: 5px !important;
+  border-radius: 0 !important;
+
+  section {
+    background-color: #ffffff;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1rem !important;
+    padding-bottom: 4px;
+  }
+
+  ul {
+    margin: 0 !important;
+    padding-left: 0;
+    list-style-type:none;
+
+    li {
+      padding-top: 0 !important;
+      font-size: 0.875rem !important;
+      line-height: 1.5 !important;
+    }
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    margin: 0 !important;
+  }
+}
+
